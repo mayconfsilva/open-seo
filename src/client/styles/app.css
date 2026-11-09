@@ -352,3 +352,9 @@ html[data-theme="openseo-dark"] {
   --trend-tooltip-border: oklch(40% 0.01 255 / 0.65);
   --trend-tooltip-shadow: oklch(0% 0 0 / 0.35);
 }
+
+/* The dataSEO logo is drawn dark on transparent. On the dark theme, invert
+   it and turn the hues back so the navy reads light and the coral stays coral. */
+[data-theme="openseo-dark"] img[src="/logo-dataseo.png"] {
+  filter: invert(1) hue-rotate(180deg);
+}
