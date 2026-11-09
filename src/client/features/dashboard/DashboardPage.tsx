@@ -25,6 +25,7 @@ import {
   GscCard,
 } from "@/client/features/dashboard/DashboardCards";
 import { Ga4Card } from "@/client/features/dashboard/Ga4Card";
+import { RankSummary } from "@/client/features/dashboard/RankSummary";
 import { WorkspaceMergeBanner } from "@/client/features/dashboard/WorkspaceMergeBanner";
 import { QueryError } from "@/client/components/QueryState";
 import {
@@ -99,12 +100,14 @@ export function DashboardPage({
       <div className="mx-auto flex max-w-7xl flex-col gap-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-semibold">
-              {activation.domain || "Dashboard"}
+            <h1 className="text-[26px] font-semibold tracking-[-.01em]">
+              Resumo
             </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Search visibility, links and site health in one place.
-            </p>
+            {activation.domain ? (
+              <p className="mt-1 font-mono text-[13px] text-muted-foreground">
+                {activation.domain}
+              </p>
+            ) : null}
           </div>
           <Button
             variant="outline"
@@ -112,7 +115,7 @@ export function DashboardPage({
             render={<Link to="/p/$projectId/settings" params={{ projectId }} />}
           >
             <Settings />
-            Project settings
+            Configurações do projeto
           </Button>
         </div>
 
@@ -150,6 +153,8 @@ export function DashboardPage({
           />
         ) : null}
 
+        <RankSummary projectId={projectId} domain={activation.domain} />
+
         <DashboardOnboarding
           key={projectId}
           projectId={projectId}
@@ -164,11 +169,11 @@ export function DashboardPage({
           }}
           className="gap-4"
         >
-          <TabsList aria-label="Your website dashboard" className="h-9">
+          <TabsList aria-label="Painel do site" className="h-9">
             {(
               [
-                ["overview", "Overview"],
-                ["keywords", "Keywords"],
+                ["overview", "Google e site"],
+                ["keywords", "Consultas do Google"],
                 ["backlinks", "Backlinks"],
               ] as const
             ).map(([value, label]) => (
