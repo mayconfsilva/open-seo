@@ -391,6 +391,7 @@ async function updateKeywordMetrics(
     searchVolume: number | null;
     keywordDifficulty: number | null;
     cpc: number | null;
+    searchIntent: string;
     metricsFetchedAt: string;
   }>,
 ) {
@@ -401,6 +402,7 @@ async function updateKeywordMetrics(
         searchVolume: u.searchVolume,
         keywordDifficulty: u.keywordDifficulty,
         cpc: u.cpc,
+        searchIntent: u.searchIntent,
         metricsFetchedAt: u.metricsFetchedAt,
       })
       .where(eq(rankTrackingKeywords.id, u.id)),

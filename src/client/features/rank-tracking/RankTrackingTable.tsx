@@ -24,10 +24,18 @@ import {
   type KeywordTrendTarget,
 } from "./KeywordTrendModal";
 import type { SelectionAnchor } from "@/client/components/table/tableSelection";
+import {
+  filterRowsByGroup,
+  GroupFilterBar,
+  KeywordBulkOrganizeActions,
+  ManageGroupsDialog,
+  useKeywordGroups,
+  type GroupFilter,
+} from "./KeywordGroupControls";
 
 export function RankTrackingTable({
   totalCount,
-  rows,
+  rows: allRows,
   showDesktop,
   showMobile,
   sorting,
@@ -64,6 +72,26 @@ export function RankTrackingTable({
     null,
   );
   const selectAnchorRef = useRef<SelectionAnchor | null>(null);
+  const [groupFilter, setGroupFilter] = useState<GroupFilter>("all");
+  const [showManageGroups, setShowManageGroups] = useState(false);
+  const groupsQuery = useKeywordGroups(projectId, configId);
+  const groups = useMemo(() => groupsQuery.data ?? [], [groupsQuery.data]);
+  const groupNames = useMemo(
+    () => new Map(groups.map((group) => [group.id, group.name])),
+    [groups],
+  );
+  // A deleted group falls back to "all" instead of showing an empty table.
+  const activeGroupFilter =
+    groupFilter === "all" ||
+    groupFilter === "none" ||
+    groupNames.has(groupFilter)
+      ? groupFilter
+      : "all";
+  const rows = useMemo(
+    () => filterRowsByGroup(allRows, activeGroupFilter),
+    [allRows, activeGroupFilter],
+  );
+  const showTarget = allRows.some((row) => row.targetUrl !== null);
 
   const handleKeywordClick = useCallback(
     (row: RankTrackingRow) =>
@@ -83,6 +111,8 @@ export function RankTrackingTable({
     onKeywordClick: handleKeywordClick,
     onSetPinned: setKeywordPinned,
     locationName,
+    groupNames,
+    showTarget,
   });
 
   // The pinned column sorts first and stays out of the sorting the page owns.
@@ -154,6 +184,13 @@ export function RankTrackingTable({
         onClear={() => table.resetRowSelection()}
         actions={
           <div className="flex items-center px-1.5">
+            <KeywordBulkOrganizeActions
+              projectId={projectId}
+              configId={configId}
+              groups={groups}
+              keywordIds={selectedRows.map((row) => row.id)}
+              onDone={() => table.resetRowSelection()}
+            />
             <TableBulkActionButton
               icon={<Trash2 className="size-3.5" />}
               onClick={() => setShowConfirm(true)}
@@ -188,9 +225,10 @@ export function RankTrackingTable({
           onConfirm={() => removeMutation.mutate(selectedRows.map((r) => r.id))}
           onClose={() => setShowConfirm(false)}
         >
-          This will stop tracking {selectedCount} keyword
-          {selectedCount !== 1 ? "s" : ""}. Historical ranking data is preserved
-          but won't appear in the table.
+          {selectedCount} palavra{selectedCount !== 1 ? "s" : ""} deixa
+          {selectedCount !== 1 ? "m" : ""} de ser acompanhada
+          {selectedCount !== 1 ? "s" : ""}. O histórico de posições fica
+          guardado, mas não aparece mais na tabela.
         </ConfirmDialog>
       )}
 
@@ -208,10 +246,33 @@ export function RankTrackingTable({
         />
       )}
 
+      {showManageGroups && (
+        <ManageGroupsDialog
+          projectId={projectId}
+          configId={configId}
+          groups={groups}
+          onClose={() => setShowManageGroups(false)}
+        />
+      )}
+
+      <GroupFilterBar
+        groups={groups}
+        rows={allRows}
+        value={activeGroupFilter}
+        onChange={(value) => {
+          setGroupFilter(value);
+          table.resetRowSelection();
+        }}
+        onManage={() => setShowManageGroups(true)}
+      />
+
       <DataTable
         table={table}
         isFiltered={totalCount > 0}
-        onClearFilters={onClearFilters}
+        onClearFilters={() => {
+          setGroupFilter("all");
+          onClearFilters();
+        }}
         empty={{
           title: "Nenhuma palavra ainda",
           description:

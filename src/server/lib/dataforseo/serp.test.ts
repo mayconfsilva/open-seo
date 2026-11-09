@@ -160,7 +160,7 @@ describe("rank check task queue", () => {
     expect(outcome).toEqual({ status: "pending" });
   });
 
-  it("parses a completed queued task into a rank check result", async () => {
+  it("parses a completed queued task into a rank check result with competitors", async () => {
     const fetchMock = vi.fn<typeof fetch>().mockResolvedValue(
       Response.json({
         status_code: 20000,
@@ -173,6 +173,7 @@ describe("rank check task queue", () => {
             result: [
               {
                 items: [
+                  { type: "organic", rank_group: 1, domain: "rival.com" },
                   {
                     type: "organic",
                     rank_group: 3,
@@ -194,6 +195,7 @@ describe("rank check task queue", () => {
       keywordId: "kw-1",
       keyword: "alpha",
       targetDomain: "example.com",
+      competitorDomains: ["rival.com", "absent.com"],
     });
 
     expect(outcome).toEqual({
@@ -204,6 +206,7 @@ describe("rank check task queue", () => {
         position: 3,
         url: "https://www.example.com/page",
         serpFeatures: ["organic"],
+        competitors: [{ domain: "rival.com", position: 1, url: null }],
       },
     });
   });

@@ -13,6 +13,7 @@ import {
   Search,
   SlidersHorizontal,
   Swords,
+  ListChecks,
   TrendingUp,
 } from "lucide-react";
 import { linkOptions } from "@tanstack/react-router";
@@ -56,6 +57,11 @@ const projectNavItems = [
     to: "/p/$projectId/competitors" as const,
     label: "Concorrentes",
     icon: Swords,
+  },
+  {
+    to: "/p/$projectId/plan" as const,
+    label: "Plano de ação",
+    icon: ListChecks,
   },
   {
     to: "/p/$projectId/domain" as const,
@@ -161,7 +167,7 @@ export function getProjectNavGroups(projectId: string) {
     },
     {
       label: "Execução",
-      items: [byPath("/p/$projectId/reports")],
+      items: [byPath("/p/$projectId/plan"), byPath("/p/$projectId/reports")],
     },
     {
       label: "Outras ferramentas",

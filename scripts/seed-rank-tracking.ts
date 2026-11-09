@@ -14,6 +14,7 @@
  *   pnpm db:migrate:local                 # once — creates the local D1
  *   pnpm seed:rank-tracking               # seed demo data
  *   pnpm seed:rank-tracking --domain=acme.com --runs=20 --keywords=30
+ *   pnpm seed:rank-tracking --domain=acme.com --competitors=rival.com,other.com
  *   pnpm seed:rank-tracking --projectId=<existing-project-uuid>
  *
  * Then view it:
@@ -30,16 +31,24 @@ import { drizzle } from "drizzle-orm/d1";
 import { and, eq } from "drizzle-orm";
 // This local D1 script runs in Node; the provider-aware barrel requires Workers.
 import * as appSchema from "../src/db/app.schema";
+import { projectCompetitors } from "../src/db/project-context.schema";
 import { organization, user } from "../src/db/better-auth-schema";
 import { parseArgs } from "./cli-utils";
 
-const schema = { ...appSchema, organization, user };
+const schema = { ...appSchema, projectCompetitors, organization, user };
 
 const LOCAL_ADMIN_USER_ID = "local-admin";
 const LOCAL_ADMIN_EMAIL = "admin@localhost";
 const LOCAL_ORG_ID = `delegated-${LOCAL_ADMIN_USER_ID}`;
 const LOCATION_CODE = 2840; // United States
 const SERP_DEPTH = 20; // positions beyond this are stored null ("not in top 20")
+
+const DEMO_INTENTS = [
+  "commercial",
+  "informational",
+  "transactional",
+  "navigational",
+];
 
 type SeedDb = ReturnType<typeof drizzle<typeof schema>>;
 type BatchStatement = Parameters<SeedDb["batch"]>[0][number];
@@ -92,13 +101,14 @@ async function main() {
       createdAt: dbTimestamp(runDates[0]),
     });
 
-    const keywordRows = keywords.map((k) => ({
+    const keywordRows = keywords.map((k, index) => ({
       id: crypto.randomUUID(),
       configId,
       keyword: k.keyword,
       searchVolume: k.volume,
       keywordDifficulty: k.kd,
       cpc: k.cpc,
+      searchIntent: DEMO_INTENTS[index % DEMO_INTENTS.length],
       metricsFetchedAt: dbTimestamp(newest),
     }));
     await batched(db, keywordRows, (row) =>
@@ -148,6 +158,14 @@ async function main() {
       `Inserted ${runRows.length} runs and ${snapshotValues.length} snapshots.`,
     );
 
+    const competitors = (args.competitors ?? "")
+      .split(",")
+      .map((value) => normalizeDomain(value))
+      .filter((value): value is string => value !== null && value !== domain);
+    if (competitors.length > 0) {
+      await seedCompetitors(db, projectId, competitors, snapshotValues);
+    }
+
     const start = runDates[0].toISOString().slice(0, 10);
     const end = newest.toISOString().slice(0, 10);
     console.log(
@@ -161,6 +179,57 @@ async function main() {
   } finally {
     await dispose();
   }
+}
+
+// ---------------------------------------------------------------------------
+// Competitors (--competitors=a.com,b.com): added to the project's context and
+// placed in the same results pages as the seeded domain.
+// ---------------------------------------------------------------------------
+
+async function seedCompetitors(
+  db: SeedDb,
+  projectId: string,
+  competitors: string[],
+  snapshots: (typeof schema.rankSnapshots.$inferInsert)[],
+) {
+  for (const competitor of competitors) {
+    await db
+      .insert(schema.projectCompetitors)
+      .values({
+        id: crypto.randomUUID(),
+        projectId,
+        domain: competitor,
+        updatedBy: "user",
+      })
+      .onConflictDoNothing();
+  }
+  const rows: (typeof schema.rankCompetitorSnapshots.$inferInsert)[] = [];
+  snapshots.forEach((snap, index) => {
+    competitors.forEach((competitor, competitorIndex) => {
+      const rng = makeRng(index * 31 + competitorIndex * 7919);
+      if (rng() < 0.3) return; // not in the top results this time
+      const anchor = snap.position ?? 12;
+      const position = Math.max(
+        1,
+        Math.min(SERP_DEPTH, Math.round(anchor + (rng() - 0.5) * 10)),
+      );
+      rows.push({
+        runId: snap.runId,
+        trackingKeywordId: snap.trackingKeywordId,
+        device: snap.device,
+        domain: competitor,
+        position,
+        url: `https://${competitor}/`,
+        checkedAt: snap.checkedAt,
+      });
+    });
+  });
+  await batched(db, rows, (row) =>
+    db.insert(schema.rankCompetitorSnapshots).values(row),
+  );
+  console.log(
+    `Added ${competitors.length} competitor(s) and ${rows.length} competitor positions.`,
+  );
 }
 
 // ---------------------------------------------------------------------------

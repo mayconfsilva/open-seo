@@ -340,6 +340,27 @@ export const rankTrackingConfigs = sqliteTable(
   ],
 );
 
+// dataSEO: named groups of a tracker's keywords ("Instalação", "Reparo").
+export const rankKeywordGroups = sqliteTable(
+  "rank_keyword_groups",
+  {
+    id: text("id").primaryKey(),
+    configId: text("config_id")
+      .notNull()
+      .references(() => rankTrackingConfigs.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    createdAt: text("created_at")
+      .notNull()
+      .default(sql`(current_timestamp)`),
+  },
+  (table) => [
+    uniqueIndex("rank_keyword_groups_config_name_idx").on(
+      table.configId,
+      table.name,
+    ),
+  ],
+);
+
 // Keywords tracked per domain config
 export const rankTrackingKeywords = sqliteTable(
   "rank_tracking_keywords",
@@ -359,6 +380,13 @@ export const rankTrackingKeywords = sqliteTable(
     keywordDifficulty: integer("keyword_difficulty"),
     cpc: real("cpc"),
     metricsFetchedAt: text("metrics_fetched_at"),
+    // dataSEO: optional group, the page that should rank for the keyword,
+    // and the search intent from the keyword-metrics refresh.
+    groupId: text("group_id").references(() => rankKeywordGroups.id, {
+      onDelete: "set null",
+    }),
+    targetUrl: text("target_url"),
+    searchIntent: text("search_intent"),
     // Set when a user pins the keyword to the top of the tracker's table.
     // Pins are shared by everyone in the project.
     pinnedAt: text("pinned_at"),
@@ -448,6 +476,68 @@ export const rankSnapshots = sqliteTable(
       table.trackingKeywordId,
       table.device,
     ),
+  ],
+);
+
+// dataSEO: where the project's competitors ranked in the same results pages a
+// rank check read for the tracked domain. Only found positions are stored; a
+// competitor missing from a checked keyword/device was not in the top results.
+// Keyed by domain (no FK to project_competitors) so history survives removing
+// a competitor, like rank_snapshots survives removing a keyword.
+export const rankCompetitorSnapshots = sqliteTable(
+  "rank_competitor_snapshots",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    runId: text("run_id")
+      .notNull()
+      .references(() => rankCheckRuns.id, { onDelete: "cascade" }),
+    trackingKeywordId: text("tracking_keyword_id").notNull(),
+    device: text("device", { enum: ["desktop", "mobile"] }).notNull(),
+    domain: text("domain").notNull(),
+    position: integer("position").notNull(),
+    url: text("url"),
+    checkedAt: text("checked_at")
+      .notNull()
+      .default(sql`(current_timestamp)`),
+  },
+  (table) => [
+    uniqueIndex("rank_competitor_snapshots_run_key_idx").on(
+      table.runId,
+      table.trackingKeywordId,
+      table.device,
+      table.domain,
+    ),
+  ],
+);
+
+// dataSEO: the project's action plan, the manual SEO tasks someone has to do
+// ("Reescrever o título da página de instalação"), optionally tied to a tracked
+// keyword. The assignee is a free-text name for now.
+export const projectTasks = sqliteTable(
+  "project_tasks",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    reason: text("reason"),
+    trackingKeywordId: text("tracking_keyword_id").references(
+      () => rankTrackingKeywords.id,
+      { onDelete: "set null" },
+    ),
+    pageUrl: text("page_url"),
+    status: text("status", { enum: ["todo", "doing", "done"] })
+      .notNull()
+      .default("todo"),
+    assignee: text("assignee"),
+    createdAt: text("created_at")
+      .notNull()
+      .default(sql`(current_timestamp)`),
+    completedAt: text("completed_at"),
+  },
+  (table) => [
+    index("project_tasks_project_idx").on(table.projectId, table.status),
   ],
 );
 

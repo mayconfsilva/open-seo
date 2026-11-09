@@ -35,6 +35,12 @@ vi.mock(
 vi.mock("@/server/features/rank-tracking/services/rankCheckRunGuards", () => ({
   failRunIfActive: mocks.failRunIfActive,
 }));
+vi.mock(
+  "@/server/features/rank-tracking/services/RankCompetitorService",
+  () => ({
+    RankCompetitorService: { loadCompetitorDomains: async () => [] },
+  }),
+);
 vi.mock("@/server/workflows/rankCheckPaths", () => ({
   runQueuedCheck: mocks.runQueuedCheck,
 }));

@@ -45,6 +45,10 @@ export interface RankTrackingRow {
   searchVolume: number | null;
   keywordDifficulty: number | null;
   cpc: number | null;
+  /** dataSEO: keyword group, the page that should rank, and search intent. */
+  groupId: string | null;
+  targetUrl: string | null;
+  searchIntent: string | null;
   desktop: RankTrackingDeviceResult;
   mobile: RankTrackingDeviceResult;
 }

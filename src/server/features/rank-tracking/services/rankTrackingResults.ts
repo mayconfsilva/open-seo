@@ -106,6 +106,9 @@ export async function getLatestResults(
         searchVolume: keyword.searchVolume,
         keywordDifficulty: keyword.keywordDifficulty,
         cpc: keyword.cpc,
+        groupId: keyword.groupId,
+        targetUrl: keyword.targetUrl,
+        searchIntent: keyword.searchIntent,
         desktop: createEmptyDeviceResult(
           previousPositions.get(`${keyword.id}:desktop`) ?? null,
         ),

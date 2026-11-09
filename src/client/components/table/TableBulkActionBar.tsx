@@ -10,7 +10,7 @@ import {
 
 export function TableBulkActionBar({
   selectedCount,
-  selectedLabel = "selected",
+  selectedLabel = "selecionada(s)",
   actions,
   onClear,
 }: {
@@ -96,7 +96,7 @@ export function TableBulkExportMenu({
         render={<Button variant="ghost" size="sm" pending={busy} />}
       >
         {busy ? null : <Download data-icon="inline-start" />}
-        Export
+        Exportar
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="end" className="w-52">
         {actions.map((action, index) => (

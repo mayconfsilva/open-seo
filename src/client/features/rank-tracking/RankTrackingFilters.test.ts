@@ -26,6 +26,9 @@ function makeRow(
     searchVolume: metrics.volume ?? null,
     keywordDifficulty: metrics.kd ?? null,
     cpc: metrics.cpc ?? null,
+    groupId: null,
+    targetUrl: null,
+    searchIntent: null,
     desktop: {
       position: desktopPosition,
       previousPosition: null,

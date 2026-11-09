@@ -1,3 +1,4 @@
+import { normalizeIntent } from "@/server/features/keywords/services/research/helpers";
 import { env } from "cloudflare:workers";
 import {
   customerHasPaidPlan,
@@ -354,21 +355,18 @@ async function refreshKeywordMetrics(
     locationName: config.locationName ?? undefined,
     creditFeature: "rank_tracking",
   });
-  const byKeyword = new Map(
-    metrics.map((metric) => [lower(metric.keyword), metric]),
-  );
-
+  const byKeyword = new Map(metrics.map((m) => [lower(m.keyword), m]));
   const now = new Date().toISOString();
   const updates = keywords
     .map((kw) => {
       const metric = byKeyword.get(lower(kw.keyword));
       if (!metric) return null;
-      // Rank tracking only tracks volume / difficulty / CPC.
       return {
         id: kw.id,
         searchVolume: metric.searchVolume,
         keywordDifficulty: metric.keywordDifficulty,
         cpc: metric.cpc,
+        searchIntent: normalizeIntent(metric.intent),
         metricsFetchedAt: now,
       };
     })

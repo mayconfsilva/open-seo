@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { TrendingUp } from "lucide-react";
 import { sortBy } from "remeda";
 import { Button } from "@/client/components/ui/button";
@@ -10,6 +10,8 @@ import {
   getRankConfigTrend,
   getRankTrackingConfigs,
 } from "@/serverFunctions/rank-tracking";
+import { getRankCompetitorPositions } from "@/serverFunctions/rank-competitors";
+import { AttentionCard } from "@/client/features/action-plan/AttentionCard";
 import type { RankTrackingRow } from "@/types/schemas/rank-tracking";
 import {
   CompetitorsTop10,
@@ -25,7 +27,8 @@ type Device = "desktop" | "mobile";
 /**
  * dataSEO "Resumo" (visual direction v2, board 3a): the monitored keywords of
  * the project's own domain, built from the rank tracker whose domain matches
- * the project. Every other tracker in the project counts as a competitor.
+ * the project. Competitors are the project's competitors, read from the same
+ * results pages.
  */
 export function RankSummary({
   projectId,
@@ -56,13 +59,7 @@ export function RankSummary({
     configs.find((config) => domain && config.domain === domain) ?? configs[0];
   if (!main) return <NoTrackingCard projectId={projectId} />;
 
-  return (
-    <RankSummaryContent
-      projectId={projectId}
-      main={main}
-      competitors={configs.filter((config) => config.id !== main.id)}
-    />
-  );
+  return <RankSummaryContent projectId={projectId} main={main} />;
 }
 
 type Config = Awaited<ReturnType<typeof getRankTrackingConfigs>>[number];
@@ -70,11 +67,9 @@ type Config = Awaited<ReturnType<typeof getRankTrackingConfigs>>[number];
 function RankSummaryContent({
   projectId,
   main,
-  competitors,
 }: {
   projectId: string;
   main: Config;
-  competitors: Config[];
 }) {
   const device: Device = main.devices === "desktop" ? "desktop" : "mobile";
   const trendQuery = useQuery({
@@ -84,28 +79,30 @@ function RankSummaryContent({
         data: { projectId, configId: main.id, device, sinceDays: 90 },
       }),
   });
-  const latestQueries = useQueries({
-    queries: [main, ...competitors].map((config) => ({
-      queryKey: ["rankLatestResults", projectId, config.id, "90d"],
-      queryFn: () =>
-        getLatestRankResults({
-          data: { projectId, configId: config.id, comparePeriod: "90d" },
-        }),
-    })),
+  const mainLatest = useQuery({
+    queryKey: ["rankLatestResults", projectId, main.id, "90d"],
+    queryFn: () =>
+      getLatestRankResults({
+        data: { projectId, configId: main.id, comparePeriod: "90d" },
+      }),
   });
-  const mainLatest = latestQueries[0];
+  const competitorsQuery = useQuery({
+    queryKey: ["rankCompetitorPositions", projectId, main.id],
+    queryFn: () =>
+      getRankCompetitorPositions({ data: { projectId, configId: main.id } }),
+  });
 
-  if (trendQuery.isPending || mainLatest?.isPending) {
+  if (trendQuery.isPending || mainLatest.isPending) {
     return <RankSummarySkeleton />;
   }
-  if (trendQuery.isError || !mainLatest || mainLatest.isError) {
+  if (trendQuery.isError || mainLatest.isError) {
     return (
       <QueryError
-        error={trendQuery.error ?? mainLatest?.error}
+        error={trendQuery.error ?? mainLatest.error}
         fallback="Não foi possível carregar o resumo de posições"
         onRetry={() => {
           void trendQuery.refetch();
-          void mainLatest?.refetch();
+          void mainLatest.refetch();
         }}
         isRetrying={trendQuery.isFetching}
       />
@@ -115,13 +112,16 @@ function RankSummaryContent({
   const rows = mainLatest.data.rows;
   const stats = summarize(rows, device);
   const lastCheckedAt = mainLatest.data.run?.lastCheckedAt ?? null;
-  const competitorCounts = competitors.map((config, index) => {
-    const data = latestQueries[index + 1]?.data;
-    return {
-      name: config.domain,
-      value: data ? countTop10(data.rows, device) : null,
-    };
-  });
+  const competitorData = competitorsQuery.data;
+  const competitorCounts = (competitorData?.domains ?? []).map((name) => ({
+    name,
+    value: competitorData!.positions.filter(
+      (entry) =>
+        entry.domain === name &&
+        entry.device === device &&
+        entry.position <= 10,
+    ).length,
+  }));
 
   return (
     <section aria-label="Resumo das posições" className="flex flex-col gap-4">
@@ -129,7 +129,7 @@ function RankSummaryContent({
         {lastCheckedAt
           ? `Última coleta em ${formatDateTime(lastCheckedAt)}`
           : "Aguardando a primeira coleta"}{" "}
-        · {rows.length} palavras · {competitors.length} concorrentes ·{" "}
+        · {rows.length} palavras · {competitorCounts.length} concorrentes ·{" "}
         {device === "mobile" ? "Celular" : "Computador"}
       </p>
 
@@ -162,16 +162,24 @@ function RankSummaryContent({
 
       <PositionBandsChart points={trendQuery.data} />
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid items-start gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <MoversCard projectId={projectId} up={stats.up} down={stats.down} />
         </div>
-        <CompetitorsTop10
-          projectId={projectId}
-          you={{ name: main.domain, value: stats.top10 }}
-          competitors={competitorCounts}
-          base={stats.checked}
-        />
+        <div className="flex flex-col gap-4">
+          <AttentionCard
+            projectId={projectId}
+            rows={rows}
+            device={device}
+            competitors={competitorData?.positions ?? []}
+          />
+          <CompetitorsTop10
+            projectId={projectId}
+            you={{ name: main.domain, value: stats.top10 }}
+            competitors={competitorCounts}
+            base={stats.checked}
+          />
+        </div>
       </div>
     </section>
   );
@@ -256,13 +264,6 @@ function summaryText(stats: ReturnType<typeof summarize>) {
     );
   }
   return parts.join(" ");
-}
-
-function countTop10(rows: RankTrackingRow[], device: Device) {
-  return rows.filter((row) => {
-    const position = row[device].position;
-    return position !== null && position <= 10;
-  }).length;
 }
 
 function formatDateTime(value: string) {
