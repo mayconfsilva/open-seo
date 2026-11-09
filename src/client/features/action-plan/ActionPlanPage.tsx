@@ -32,7 +32,7 @@ const COLUMN_STYLE: Record<
 > = {
   todo: { icon: Flag, className: "text-muted-foreground" },
   doing: { icon: Loader, className: "text-primary" },
-  done: { icon: CircleCheck, className: "text-[#14613f]" },
+  done: { icon: CircleCheck, className: "text-up" },
 };
 
 type DialogState = { mode: "create" } | { mode: "edit"; task: ProjectTask };
@@ -195,7 +195,7 @@ function TaskColumn({
       {tasks.map((task) => (
         <article
           key={task.id}
-          className="flex flex-col gap-1 rounded-md border border-[#f0eff4] bg-[#fafafc] px-3 py-2.5"
+          className="flex flex-col gap-1 rounded-md border border-hairline bg-subtle px-3 py-2.5"
         >
           <div className="flex items-start gap-2">
             <span className="flex-1 text-[13.5px] leading-snug font-medium">

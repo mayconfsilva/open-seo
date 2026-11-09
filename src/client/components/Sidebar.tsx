@@ -61,7 +61,7 @@ import {
 } from "@/client/components/ui/dropdown-menu";
 
 const navButtonClass =
-  "relative h-[34px] text-[13.5px] text-sidebar-foreground hover:bg-secondary hover:text-sidebar-foreground [&>svg]:text-[#8a8698] data-active:bg-sidebar-accent data-active:font-semibold data-active:text-sidebar-accent-foreground data-active:[&>svg]:text-sidebar-accent-foreground data-active:before:absolute data-active:before:inset-y-2 data-active:before:left-0 data-active:before:w-[3px] data-active:before:rounded-r-[3px] data-active:before:bg-[#ff6446]";
+  "relative h-[34px] text-[13.5px] text-sidebar-foreground hover:bg-secondary hover:text-sidebar-foreground [&>svg]:text-faint data-active:bg-sidebar-accent data-active:font-semibold data-active:text-sidebar-accent-foreground data-active:[&>svg]:text-sidebar-accent-foreground data-active:before:absolute data-active:before:inset-y-2 data-active:before:left-0 data-active:before:w-[3px] data-active:before:rounded-r-[3px] data-active:before:bg-[#ff6446]";
 
 function SidebarNavLink({
   icon: Icon,
@@ -192,7 +192,7 @@ export function Sidebar({
             {navGroups.map((group) => (
               <SidebarGroup key={group.label || "main"} className="py-1.5">
                 {group.label ? (
-                  <SidebarGroupLabel className="h-6 text-[10.5px] font-semibold uppercase tracking-[.08em] text-[#8a8698]">
+                  <SidebarGroupLabel className="h-6 text-[10.5px] font-semibold uppercase tracking-[.08em] text-faint">
                     {group.label}
                   </SidebarGroupLabel>
                 ) : null}

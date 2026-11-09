@@ -27,7 +27,7 @@ const cardClass = "rounded-lg border border-border bg-card";
 export function SummaryCard({ text }: { text: string }) {
   return (
     <div className={cn(cardClass, "border-l-[3px] border-l-[#ff6446] p-4")}>
-      <div className="font-mono text-[11px] font-medium tracking-[.08em] text-[#7c788c]">
+      <div className="font-mono text-[11px] font-medium tracking-[.08em] text-faint">
         EM RESUMO
       </div>
       <p className="mt-1.5 text-[15px] leading-relaxed text-pretty">{text}</p>
@@ -57,7 +57,7 @@ export function KpiCard({
           <span
             className={cn(
               "inline-flex items-center text-[12.5px] font-medium tabular-nums",
-              delta > 0 ? "text-[#14613f]" : "text-[#9a2c21]",
+              delta > 0 ? "text-up" : "text-down",
             )}
           >
             {delta > 0 ? (
@@ -69,17 +69,17 @@ export function KpiCard({
           </span>
         ) : null}
       </span>
-      <span className="text-[11.5px] text-[#7c788c]">{note}</span>
+      <span className="text-[11.5px] text-faint">{note}</span>
     </div>
   );
 }
 
 const BANDS: ChartConfig = {
-  top3: { label: "1 a 3", color: "#2e2150" },
-  top4to10: { label: "4 a 10", color: "#8e83b5" },
-  top11to20: { label: "11 a 20", color: "#c9c2e3" },
-  notRanking: { label: "Não encontrado", color: "#e3e2ea" },
-  notChecked: { label: "Coleta falhou", color: "#f2b8ad" },
+  top3: { label: "1 a 3", color: "var(--rank-1)" },
+  top4to10: { label: "4 a 10", color: "var(--rank-2)" },
+  top11to20: { label: "11 a 20", color: "var(--rank-3)" },
+  notRanking: { label: "Não encontrado", color: "var(--rank-4)" },
+  notChecked: { label: "Coleta falhou", color: "var(--rank-failed)" },
 };
 
 export function PositionBandsChart({
@@ -166,7 +166,7 @@ export function MoversCard({
         <MoverList title="SUBIRAM" movers={up} tone="up" />
         <MoverList title="CAÍRAM" movers={down} tone="down" />
       </div>
-      <p className="mt-3 text-[11.5px] text-[#7c788c]">
+      <p className="mt-3 text-[11.5px] text-faint">
         Comparação com 90 dias atrás. Posições: 1 = melhor. «Subiu» significa
         que a palavra ficou mais perto do 1º lugar.
       </p>
@@ -185,7 +185,7 @@ function MoverList({
 }) {
   return (
     <div>
-      <div className="mb-1 font-mono text-[11px] font-medium tracking-[.08em] text-[#7c788c]">
+      <div className="mb-1 font-mono text-[11px] font-medium tracking-[.08em] text-faint">
         {title}
       </div>
       {movers.length === 0 ? (
@@ -193,7 +193,7 @@ function MoverList({
           Nenhuma palavra.
         </p>
       ) : (
-        <ul className="divide-y divide-[#eeedf3]">
+        <ul className="divide-y divide-hairline">
           {movers.map((mover) => (
             <li
               key={mover.keyword}
@@ -208,8 +208,8 @@ function MoverList({
                 className={cn(
                   "min-w-9 rounded px-1.5 text-center text-[11.5px] font-semibold tabular-nums",
                   tone === "up"
-                    ? "bg-[#e5f3ec] text-[#14613f]"
-                    : "bg-[#fbe8e5] text-[#9a2c21]",
+                    ? "bg-up-soft text-up"
+                    : "bg-down-soft text-down",
                 )}
               >
                 {tone === "up" ? "+" : "−"}
@@ -269,12 +269,12 @@ export function CompetitorsTop10({
               </span>
               <span className="tabular-nums">{entry.value ?? "…"}</span>
             </span>
-            <span className="h-1.5 overflow-hidden rounded-full bg-[#f0eff4]">
+            <span className="h-1.5 overflow-hidden rounded-full bg-track">
               <span
                 className="block h-full rounded-full"
                 style={{
                   width: `${((entry.value ?? 0) / max) * 100}%`,
-                  background: entry.isYou ? "#2e2150" : "#8e83b5",
+                  background: entry.isYou ? "var(--rank-1)" : "var(--rank-2)",
                 }}
               />
             </span>

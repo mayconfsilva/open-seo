@@ -183,7 +183,7 @@ function Comparison({
         </p>
         <table className="mt-3 w-full text-[13px]">
           <thead>
-            <tr className="border-y border-[#eeedf3] bg-[#fafafc] text-left text-[11.5px] text-muted-foreground">
+            <tr className="border-y border-hairline bg-subtle text-left text-[11.5px] text-muted-foreground">
               <th className="px-4 py-2 font-medium">Domínio</th>
               <th className="px-4 py-2 text-right font-medium">Top 3</th>
               <th className="px-4 py-2 text-right font-medium">Top 10</th>
@@ -194,7 +194,7 @@ function Comparison({
             {presence.map((entry) => (
               <tr
                 key={entry.domain}
-                className="border-b border-[#eeedf3] last:border-0"
+                className="border-b border-hairline last:border-0"
               >
                 <td
                   className={cn(
@@ -243,7 +243,7 @@ function Comparison({
         <div className="overflow-x-auto">
           <table className="w-full text-[13px]">
             <thead>
-              <tr className="border-y border-[#eeedf3] bg-[#fafafc] text-left text-[11.5px] text-muted-foreground">
+              <tr className="border-y border-hairline bg-subtle text-left text-[11.5px] text-muted-foreground">
                 <th className="px-4 py-2 font-medium">Palavra</th>
                 <SortHeader
                   label="Volume"
@@ -268,7 +268,7 @@ function Comparison({
                 return (
                   <tr
                     key={row.keyword}
-                    className="border-b border-[#eeedf3] last:border-0"
+                    className="border-b border-hairline last:border-0"
                   >
                     <td className="px-4 py-2">{row.keyword}</td>
                     <td className="px-4 py-2 text-right tabular-nums text-muted-foreground">
@@ -338,13 +338,13 @@ function PositionCell({
   isYou: boolean;
 }) {
   if (position === null) {
-    return <span className="text-[#b9b5c7]">—</span>;
+    return <span className="text-faint/60">—</span>;
   }
   return (
     <span
       className={cn(
         "inline-block min-w-8 rounded px-1.5 text-center tabular-nums",
-        best && "bg-[#e5f3ec] font-semibold text-[#14613f]",
+        best && "bg-up-soft font-semibold text-up",
         !best && isYou && "font-semibold text-primary",
       )}
     >

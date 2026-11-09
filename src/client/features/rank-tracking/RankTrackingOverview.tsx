@@ -29,16 +29,16 @@ import {
 import { parseDbTimestamp } from "@/client/lib/db-timestamp";
 
 const BUCKETS = [
-  { key: "top3", label: "Top 3", color: "#2e2150" },
-  { key: "top4to10", label: "4–10", color: "#8e83b5" },
-  { key: "top11to20", label: "11–20", color: "#c9c2e3" },
-  { key: "notRanking", label: "Fora do top 20", color: "#e3e2ea" },
+  { key: "top3", label: "Top 3", color: "var(--rank-1)" },
+  { key: "top4to10", label: "4–10", color: "var(--rank-2)" },
+  { key: "top11to20", label: "11–20", color: "var(--rank-3)" },
+  { key: "notRanking", label: "Fora do top 20", color: "var(--rank-4)" },
   // Missing data, not a ranking: lighter fill so it doesn't read as lost
   // positions.
   {
     key: "notChecked",
     label: "Coleta falhou",
-    color: "#f2b8ad",
+    color: "var(--rank-failed)",
     hint: "O Google não retornou resultado nesta coleta.",
   },
 ] as const;

@@ -67,7 +67,7 @@ export function ProjectSwitcher({
     // button's slot, so nothing moves when the projects arrive.
     return (
       <div
-        className="grid grid-cols-[32px_minmax(0,1fr)] items-center gap-2.5 border-t border-[#eeedf3] bg-[#fafafc] py-2.5 pl-3 pr-2.5"
+        className="grid grid-cols-[32px_minmax(0,1fr)] items-center gap-2.5 border-t border-hairline bg-subtle py-2.5 pl-3 pr-2.5"
         aria-busy
       >
         <Skeleton className="size-8 rounded-full" />
@@ -127,13 +127,13 @@ export function ProjectSwitcher({
         <ComboboxTrigger
           aria-label="Trocar projeto"
           title="Trocar projeto"
-          className="relative grid w-full grid-cols-[32px_minmax(0,1fr)_16px] items-center gap-2.5 border-t border-[#eeedf3] bg-[#fafafc] py-2.5 pl-3 pr-2.5 text-left hover:bg-secondary"
+          className="relative grid w-full grid-cols-[32px_minmax(0,1fr)_16px] items-center gap-2.5 border-t border-hairline bg-subtle py-2.5 pl-3 pr-2.5 text-left hover:bg-secondary"
         >
           <span
             aria-hidden
-            className="absolute -top-px left-[27px] h-2.5 w-px bg-[#c9c6d3]"
+            className="absolute -top-px left-[27px] h-2.5 w-px bg-border"
           />
-          <span className="grid size-8 place-items-center rounded-full border border-[#ddd8ec] bg-accent text-xs font-bold text-primary">
+          <span className="grid size-8 place-items-center rounded-full border border-border bg-accent text-xs font-bold text-primary">
             {(activeProject?.name ?? "?").charAt(0).toUpperCase()}
           </span>
           <span className="flex min-w-0 flex-col gap-px leading-tight">

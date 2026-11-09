@@ -29,7 +29,7 @@ export function SuggestionList({
         {shown.map((suggestion) => (
           <li
             key={suggestion.trackingKeywordId}
-            className="flex items-start gap-3 border-t border-[#eeedf3] px-4 py-3"
+            className="flex items-start gap-3 border-t border-hairline px-4 py-3"
           >
             <div className="flex flex-1 flex-col gap-1">
               <span className="text-[13.5px] leading-snug font-medium">
@@ -38,7 +38,7 @@ export function SuggestionList({
               <span className="text-[12px] leading-relaxed text-muted-foreground">
                 {suggestion.reason}
               </span>
-              <span className="w-fit rounded bg-[#f3f3f6] px-1.5 py-0.5 text-[11px] text-muted-foreground">
+              <span className="w-fit rounded bg-background px-1.5 py-0.5 text-[11px] text-muted-foreground">
                 {suggestion.source}
               </span>
             </div>
@@ -55,7 +55,7 @@ export function SuggestionList({
         ))}
       </ul>
       {suggestions.length > COLLAPSED_COUNT ? (
-        <div className="border-t border-[#eeedf3] px-4 py-2.5">
+        <div className="border-t border-hairline px-4 py-2.5">
           <button
             type="button"
             className="text-[13px] text-primary underline underline-offset-2"
