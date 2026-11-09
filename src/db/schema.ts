@@ -112,6 +112,8 @@ export const {
   projectContextSections,
   projectCompetitors,
   projectServices,
+  projectAccess,
+  invitationProjects,
   projectKeyPages,
   projectResearchLog,
   reports,

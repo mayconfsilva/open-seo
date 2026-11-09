@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { isClientRole } from "@/lib/org-permissions";
 import { z } from "zod";
 import { resolveUserContextFromHeaders } from "@/middleware/ensure-user/resolve";
 import { ProjectRepository } from "@/server/features/projects/repositories/ProjectRepository";
@@ -30,6 +31,8 @@ export const Route = createFileRoute("/api/local-seo/maps/$projectId/$z/$x/$y")(
             const context = await resolveUserContextFromHeaders(
               request.headers,
             );
+            // dataSEO: clients only read through the client portal.
+            if (isClientRole(context.role)) throw new AppError("NOT_FOUND");
             const project = await ProjectRepository.getProjectForOrganization(
               tile.projectId,
               context.organizationId,

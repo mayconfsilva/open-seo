@@ -3,6 +3,7 @@ import { z } from "zod";
 import { AppError } from "@/server/lib/errors";
 import { errorHandlingMiddleware } from "@/middleware/errorHandling";
 import type { EnsuredUserContext } from "@/middleware/ensure-user/types";
+import { isClientRole } from "@/lib/org-permissions";
 import { ensureUserMiddleware } from "@/middleware/ensureUser";
 
 const ensuredUserContextSchema: z.ZodType<EnsuredUserContext> = z.object({
@@ -14,7 +15,7 @@ const ensuredUserContextSchema: z.ZodType<EnsuredUserContext> = z.object({
   project: z.any().optional(),
 });
 
-function getAuthenticatedContext(context: unknown): EnsuredUserContext {
+function parseContext(context: unknown): EnsuredUserContext {
   const result = ensuredUserContextSchema.safeParse(context);
   if (!result.success) {
     throw new AppError(
@@ -23,6 +24,20 @@ function getAuthenticatedContext(context: unknown): EnsuredUserContext {
     );
   }
   return result.data;
+}
+
+// dataSEO: a client (read-only member) is refused by every server function
+// except the few that opt in with requireMemberContext. New functions are
+// therefore closed to clients by default.
+function getAuthenticatedContext(context: unknown): EnsuredUserContext {
+  const parsed = parseContext(context);
+  if (isClientRole(parsed.role)) {
+    throw new AppError(
+      "FORBIDDEN",
+      "Clientes têm acesso só de leitura pelo portal do cliente.",
+    );
+  }
+  return parsed;
 }
 
 export const globalServerFunctionMiddleware = [
@@ -58,5 +73,17 @@ export const requireProjectContext = [
         projectId: authenticatedContext.project.id,
       },
     });
+  }),
+] as const;
+
+/**
+ * dataSEO: like requireAuthenticatedContext, but also lets a client through.
+ * Only for functions that are safe for a read-only client: their own
+ * organization context and the client portal reads, which check project
+ * access themselves.
+ */
+export const requireMemberContext = [
+  createMiddleware({ type: "function" }).server(async ({ next, context }) => {
+    return next({ context: parseContext(context) });
   }),
 ] as const;

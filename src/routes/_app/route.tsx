@@ -1,4 +1,13 @@
-import { Outlet, createFileRoute, useParams } from "@tanstack/react-router";
+import {
+  Outlet,
+  createFileRoute,
+  useNavigate,
+  useParams,
+} from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { organizationContextQueryOptions } from "@/client/features/team/organizationQueries";
+import { usesBetterAuthClient } from "@/lib/auth-mode";
+import { isClientRole } from "@/lib/org-permissions";
 import { useEffect } from "react";
 import { useHostedAuthRouteGuard } from "@/client/features/auth/useHostedAuthRouteGuard";
 import { prefetchBillingAccount } from "@/client/features/billing/billingAccountQuery";
@@ -25,6 +34,7 @@ function AppRouteLayout() {
   // check. The check only redirects (signed out, unverified email): every
   // data call enforces auth on the server.
   const ready = authGate.canRenderAuthenticatedContent;
+  useClientPortalRedirect(ready);
 
   // Billing, fix-payment, and the upgrade page all read this one cached
   // account, so loading it once here lets them open without waiting. The free
@@ -57,4 +67,20 @@ function AppRouteLayout() {
       <Outlet />
     </AuthenticatedAppLayout>
   );
+}
+
+// dataSEO: a client has read-only access through the client portal; the app's
+// own server functions refuse their role, so send them there.
+function useClientPortalRedirect(ready: boolean) {
+  const navigate = useNavigate();
+  const orgQuery = useQuery({
+    ...organizationContextQueryOptions(),
+    enabled: ready && usesBetterAuthClient(),
+  });
+  const role = orgQuery.data?.role;
+  useEffect(() => {
+    if (role && isClientRole(role)) {
+      void navigate({ to: "/portal", replace: true });
+    }
+  }, [role, navigate]);
 }

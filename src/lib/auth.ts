@@ -27,6 +27,7 @@ import {
 } from "@/lib/auth-turnstile";
 import { resolveSignInHostedOrganization } from "@/server/auth/default-hosted-organization";
 import { onInvitationAccepted } from "@/server/auth/invited-member";
+import { ProjectAccessService } from "@/server/features/access/ProjectAccessService";
 import { AuthRepository } from "@/server/auth/repositories/AuthRepository";
 import { GoogleAccountService } from "@/server/features/google/GoogleAccountService";
 import { assertStandaloneSignUpOpen } from "@/server/standalone/sign-up";
@@ -111,10 +112,15 @@ function createAuth() {
               // owner from minting a second owner and leaving — the path
               // that would re-mint a fresh org + free-plan grant at next
               // sign-in.
+              // dataSEO: or as a read-only client of chosen projects.
               beforeCreateInvitation: async ({ invitation }) => {
-                if (invitation.role !== "admin") {
+                if (
+                  invitation.role !== "admin" &&
+                  invitation.role !== "client"
+                ) {
                   throw new APIError("BAD_REQUEST", {
-                    message: "Teammates can only be invited as admins.",
+                    message:
+                      "Teammates can only be invited as admins or clients.",
                   });
                 }
               },
@@ -159,12 +165,26 @@ function createAuth() {
                   removedMember.userId,
                   removedMember.organizationId,
                 );
+                await ProjectAccessService.revokeAll(
+                  removedMember.userId,
+                  removedMember.organizationId,
+                );
               },
-              afterAcceptInvitation: async ({ member: acceptedMember }) => {
+              afterAcceptInvitation: async ({
+                invitation: accepted,
+                member: acceptedMember,
+              }) => {
                 await onInvitationAccepted({
                   userId: acceptedMember.userId,
                   organizationId: acceptedMember.organizationId,
                 });
+                if (accepted.role === "client") {
+                  await ProjectAccessService.grantFromInvitation({
+                    invitationId: accepted.id,
+                    userId: acceptedMember.userId,
+                    organizationId: acceptedMember.organizationId,
+                  });
+                }
               },
             },
           },
@@ -337,11 +357,16 @@ function createAuth() {
         }
         if (ctx.path === "/organization/leave") {
           const left = leftMemberSchema.safeParse(ctx.context.returned);
-          if (left.success)
+          if (left.success) {
             await GoogleAccountService.disconnectMember(
               left.data.userId,
               left.data.organizationId,
             );
+            await ProjectAccessService.revokeAll(
+              left.data.userId,
+              left.data.organizationId,
+            );
+          }
           return;
         }
         // Marked when the user creates an MCP API key, the API-key counterpart

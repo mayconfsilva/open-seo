@@ -1,4 +1,6 @@
 import { env } from "cloudflare:workers";
+import { isClientRole } from "@/lib/org-permissions";
+import { ProjectAccessRepository } from "@/server/features/access/ProjectAccessRepository";
 import { createFileRoute } from "@tanstack/react-router";
 import { usesBetterAuth } from "@/lib/auth-mode";
 import { resolveUserContextFromHeaders } from "@/middleware/ensure-user/resolve";
@@ -56,6 +58,13 @@ async function handleReportRequest(
   // the worker's heap.
   const projectId = await ReportRepository.getReportProjectId(reportId);
   if (!projectId) return reportNotFound();
+  // dataSEO: a client reads reports of the projects granted to them only.
+  if (
+    isClientRole(context.role) &&
+    !(await ProjectAccessRepository.hasAccess(context.userId, projectId))
+  ) {
+    return reportNotFound();
+  }
 
   // The canonical project-access check — org ownership plus "not archived" —
   // the same one ensureUserMiddleware uses for server functions. Org ids are
