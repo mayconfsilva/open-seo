@@ -381,7 +381,7 @@ export function StrikingDistanceTable({
       )}
       <TableBulkActionBar
         selectedCount={selectedQueries.length}
-        selectedLabel={selectedQueries.length === 1 ? "query" : "queries"}
+        selectedLabel={selectedQueries.length === 1 ? "consulta" : "consultas"}
         onClear={() => setRowSelection({})}
         actions={
           <div className="flex items-center gap-1 px-1.5">

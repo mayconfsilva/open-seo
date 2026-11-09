@@ -355,10 +355,7 @@ async function refreshKeywordMetrics(
     locationName: config.locationName ?? undefined,
     creditFeature: "rank_tracking",
   });
-  const byKeyword = new Map(
-    metrics.map((metric) => [lower(metric.keyword), metric]),
-  );
-
+  const byKeyword = new Map(metrics.map((m) => [lower(m.keyword), m]));
   const now = new Date().toISOString();
   const updates = keywords
     .map((kw) => {

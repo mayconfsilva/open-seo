@@ -41,6 +41,13 @@ const LOCAL_ORG_ID = `delegated-${LOCAL_ADMIN_USER_ID}`;
 const LOCATION_CODE = 2840; // United States
 const SERP_DEPTH = 20; // positions beyond this are stored null ("not in top 20")
 
+const DEMO_INTENTS = [
+  "commercial",
+  "informational",
+  "transactional",
+  "navigational",
+];
+
 type SeedDb = ReturnType<typeof drizzle<typeof schema>>;
 type BatchStatement = Parameters<SeedDb["batch"]>[0][number];
 
@@ -92,13 +99,14 @@ async function main() {
       createdAt: dbTimestamp(runDates[0]),
     });
 
-    const keywordRows = keywords.map((k) => ({
+    const keywordRows = keywords.map((k, index) => ({
       id: crypto.randomUUID(),
       configId,
       keyword: k.keyword,
       searchVolume: k.volume,
       keywordDifficulty: k.kd,
       cpc: k.cpc,
+      searchIntent: DEMO_INTENTS[index % DEMO_INTENTS.length],
       metricsFetchedAt: dbTimestamp(newest),
     }));
     await batched(db, keywordRows, (row) =>

@@ -16,6 +16,11 @@ import {
   VolumeCell,
 } from "./RankTrackingTableParts";
 import type { SelectionAnchor } from "@/client/components/table/tableSelection";
+import {
+  intentColumn,
+  makeGroupColumn,
+  makeTargetColumn,
+} from "./KeywordOrganizeColumns";
 
 export const RANK_TRACKING_HEADER_CLASS =
   "text-xs uppercase tracking-wide text-muted-foreground";
@@ -254,6 +259,9 @@ export function useRankTrackingColumns(options: {
   onKeywordClick: (row: RankTrackingRow) => void;
   onSetPinned: (vars: { trackingKeywordId: string; pinned: boolean }) => void;
   locationName?: string | null;
+  /** Group names by id; the group column shows only when there are groups. */
+  groupNames: Map<string, string>;
+  showTarget: boolean;
 }): ColumnDef<RankTrackingRow>[] {
   const {
     showDesktop,
@@ -263,6 +271,8 @@ export function useRankTrackingColumns(options: {
     onKeywordClick,
     onSetPinned,
     locationName,
+    groupNames,
+    showTarget,
   } = options;
   const locationLabel = locationName
     ? formatLocationLabel(locationName, 2)
@@ -273,6 +283,7 @@ export function useRankTrackingColumns(options: {
       makeSelectionColumn<RankTrackingRow>(selectAnchorRef),
       makeKeywordColumn(onKeywordClick, onSetPinned),
     ];
+    if (groupNames.size > 0) cols.push(makeGroupColumn(groupNames));
     if (showDesktop) {
       cols.push(makeDeviceColumn("desktop"));
       cols.push(makeUrlColumn("desktop", domain));
@@ -281,7 +292,18 @@ export function useRankTrackingColumns(options: {
       cols.push(makeDeviceColumn("mobile"));
       cols.push(makeUrlColumn("mobile", domain));
     }
-    cols.push(makeVolumeColumn(locationLabel), kdColumn, cpcColumn);
+    if (showTarget) {
+      const devices: Array<"desktop" | "mobile"> = [];
+      if (showDesktop) devices.push("desktop");
+      if (showMobile) devices.push("mobile");
+      cols.push(makeTargetColumn(devices));
+    }
+    cols.push(
+      makeVolumeColumn(locationLabel),
+      kdColumn,
+      cpcColumn,
+      intentColumn,
+    );
     if (showDesktop) {
       cols.push(makeSerpColumn("desktop"));
     }
@@ -297,5 +319,7 @@ export function useRankTrackingColumns(options: {
     onKeywordClick,
     onSetPinned,
     locationLabel,
+    groupNames,
+    showTarget,
   ]);
 }
