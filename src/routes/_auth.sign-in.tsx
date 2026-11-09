@@ -26,12 +26,12 @@ import { z } from "zod";
 import { pageHead } from "@/client/lib/pageHead";
 
 const signInSchema = z.object({
-  email: z.string().trim().email("Enter a valid email address."),
-  password: z.string().min(1, "Enter your password."),
+  email: z.string().trim().email("Informe um e-mail válido."),
+  password: z.string().min(1, "Informe a senha."),
 });
 
 export const Route = createFileRoute("/_auth/sign-in")({
-  head: () => pageHead("Sign in"),
+  head: () => pageHead("Entrar"),
   validateSearch: authRedirectSearchSchema,
   component: SignInPage,
 });
@@ -108,14 +108,14 @@ function SignInPage() {
 
         formApi.setErrorMap({
           onSubmit: {
-            form: result.error.message || "We couldn't sign you in.",
+            form: "E-mail ou senha incorretos.",
             fields: {},
           },
         });
       } catch {
         formApi.setErrorMap({
           onSubmit: {
-            form: "Unable to sign in right now. Please try again.",
+            form: "Não foi possível entrar agora. Tente de novo.",
             fields: {},
           },
         });
@@ -125,12 +125,13 @@ function SignInPage() {
 
   return (
     <AuthPageCard
-      title="Sign in"
+      title="Entrar"
+      helperText="Acesse a carteira e os projetos que você acompanha."
       footer={
         emailOnly ? (
           <p className="text-sm text-foreground/50">
-            Need an account? Ask an administrator for an invitation. Forgot your
-            password? Ask your server administrator to reset it.
+            Não tem conta? Peça um convite ao administrador. Esqueceu a senha?
+            Peça ao administrador do servidor para redefinir.
           </p>
         ) : isHostedMode ? (
           <div
@@ -146,7 +147,7 @@ function SignInPage() {
                 search={getSignInSearch(redirectTo)}
                 className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
               >
-                Forgot password?
+                Esqueci a senha
               </Link>
             ) : null}
             <Link
@@ -154,7 +155,7 @@ function SignInPage() {
               search={getSignInSearch(redirectTo)}
               className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
             >
-              Create account
+              Criar conta
             </Link>
           </div>
         ) : null
@@ -163,7 +164,7 @@ function SignInPage() {
       {!emailFormVisible ? (
         <>
           <AuthMethodChooser
-            googleLabel="Continue with Google"
+            googleLabel="Continuar com Google"
             disabled={!isHostedMode}
             isBusy={google.isStarting}
             onContinueWithGoogle={() => {
@@ -175,7 +176,7 @@ function SignInPage() {
             }}
           />
           {isHostedMode ? (
-            <TermsAgreementNotice action="By continuing with Google" />
+            <TermsAgreementNotice action="Ao continuar com o Google" />
           ) : null}
           {google.error ? (
             <p className="text-sm text-destructive">{google.error}</p>
@@ -187,11 +188,10 @@ function SignInPage() {
             <form.AppField name="email">
               {(field) => (
                 <field.TextField
-                  label="Email address"
-                  hideLabel
+                  label="E-mail"
                   className={authInputClassName}
                   type="email"
-                  placeholder="Email address..."
+                  placeholder="voce@agencia.com.br"
                   autoComplete="email"
                   required
                 />
@@ -200,11 +200,10 @@ function SignInPage() {
             <form.AppField name="password">
               {(field) => (
                 <field.TextField
-                  label="Password"
-                  hideLabel
+                  label="Senha"
                   className={authInputClassName}
                   type="password"
-                  placeholder="Password..."
+                  placeholder="Sua senha"
                   autoComplete="current-password"
                   required
                 />
@@ -230,7 +229,7 @@ function SignInPage() {
                       className={authSubmitClassName}
                       pending={isSubmitting}
                     >
-                      {isSubmitting ? "Signing in..." : "Sign in"}
+                      {isSubmitting ? "Entrando..." : "Entrar"}
                     </Button>
                   </>
                 );

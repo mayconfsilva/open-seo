@@ -4,7 +4,11 @@ import { Alert, AlertDescription } from "@/client/components/ui/alert";
 import { Button } from "@/client/components/ui/button";
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { AuthPageCard, AuthPageShell } from "@/client/features/auth/AuthPage";
+import {
+  AuthPageCard,
+  AuthPageShell,
+  authSubmitClassName,
+} from "@/client/features/auth/AuthPage";
 import { clearLastProjectId } from "@/client/lib/active-project";
 import { captureClientEvent } from "@/client/lib/posthog";
 import { authClient, signOutAndRedirect, useSession } from "@/lib/auth-client";
@@ -12,7 +16,7 @@ import { usesBetterAuthClient } from "@/lib/auth-mode";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/accept-invitation/$id")({
-  head: () => pageHead("Accept invitation"),
+  head: () => pageHead("Aceitar convite"),
   beforeLoad: () => {
     if (!usesBetterAuthClient()) {
       throw notFound();
@@ -45,20 +49,20 @@ function SignedOutInvitationCard({ invitationId }: { invitationId: string }) {
   const redirect = `/accept-invitation/${invitationId}`;
 
   return (
-    <AuthPageCard title="You&rsquo;re invited">
+    <AuthPageCard title="Você foi convidado">
       <p className="text-sm text-muted-foreground">
-        You&rsquo;ve been invited to join an organization on OpenSEO. Sign in
-        with the email address that received the invitation, or create an
-        account with it, to accept.
+        Você recebeu um convite para entrar numa organização no dataSEO. Para
+        aceitar, entre com o e-mail que recebeu o convite ou crie uma conta com
+        ele.
       </p>
       <div className="space-y-2">
         <Button
           nativeButton={false}
           render={<Link to="/sign-up" search={{ redirect }} />}
           variant="secondary"
-          className="w-full"
+          className={authSubmitClassName}
         >
-          Create account
+          Criar conta
         </Button>
         <Button
           nativeButton={false}
@@ -66,7 +70,7 @@ function SignedOutInvitationCard({ invitationId }: { invitationId: string }) {
           variant="ghost"
           className="w-full"
         >
-          Sign in
+          Entrar
         </Button>
       </div>
     </AuthPageCard>
@@ -93,7 +97,7 @@ function InvitationCard({
         query: { id: invitationId },
       });
       if (result.error) {
-        throw new Error(result.error.message || "Invitation not found");
+        throw new Error(result.error.message || "Convite não encontrado");
       }
       return result.data;
     },
@@ -109,7 +113,7 @@ function InvitationCard({
       });
       if (accepted.error) {
         setActionError(
-          accepted.error.message || "We couldn't accept the invitation.",
+          accepted.error.message || "Não foi possível aceitar o convite.",
         );
         setPendingAction(null);
         return;
@@ -130,7 +134,7 @@ function InvitationCard({
       clearLastProjectId();
       window.location.assign("/");
     } catch {
-      setActionError("We couldn't accept the invitation. Please try again.");
+      setActionError("Não foi possível aceitar o convite. Tente de novo.");
       setPendingAction(null);
     }
   }
@@ -144,7 +148,7 @@ function InvitationCard({
       });
       if (result.error) {
         setActionError(
-          result.error.message || "We couldn't decline the invitation.",
+          result.error.message || "Não foi possível recusar o convite.",
         );
         setPendingAction(null);
         return;
@@ -152,14 +156,14 @@ function InvitationCard({
       captureClientEvent("team:invitation_decline");
       setDeclined(true);
     } catch {
-      setActionError("We couldn't decline the invitation. Please try again.");
+      setActionError("Não foi possível recusar o convite. Tente de novo.");
       setPendingAction(null);
     }
   }
 
   if (invitationQuery.isPending) {
     return (
-      <AuthPageCard title="Checking invitation...">
+      <AuthPageCard title="Conferindo o convite...">
         <div className="flex justify-center py-4">
           <Spinner />
         </div>
@@ -169,31 +173,31 @@ function InvitationCard({
 
   if (invitationQuery.isError) {
     return (
-      <AuthPageCard title="Invitation unavailable">
+      <AuthPageCard title="Convite indisponível">
         <p className="text-sm text-muted-foreground">
-          This invitation may have expired, been canceled, or belong to a
-          different email address. You&rsquo;re signed in as{" "}
+          Este convite pode ter expirado, sido cancelado ou ser de outro e-mail.
+          Você entrou como{" "}
           <span className="font-medium" data-ph-mask>
             {userEmail}
           </span>
           .
         </p>
         <p className="text-sm text-muted-foreground">
-          If the invitation was sent to another address, sign out and sign back
-          in with that email. Otherwise ask your teammate to send a new invite.
+          Se o convite foi para outro endereço, saia e entre com esse e-mail. Se
+          não, peça um novo convite a quem enviou.
         </p>
         <div className="space-y-2">
           <Button
             type="button"
             variant="secondary"
-            className="w-full"
+            className={authSubmitClassName}
             onClick={() => {
               // Signs out, then lands on sign-in with a redirect back to this
               // invitation (staying signed in would bounce straight back here).
               signOutAndRedirect();
             }}
           >
-            Use a different account
+            Usar outra conta
           </Button>
           <Button
             nativeButton={false}
@@ -201,7 +205,7 @@ function InvitationCard({
             variant="ghost"
             className="w-full"
           >
-            Go to dashboard
+            Ir para o início
           </Button>
         </div>
       </AuthPageCard>
@@ -210,9 +214,9 @@ function InvitationCard({
 
   if (declined) {
     return (
-      <AuthPageCard title="Invitation declined">
+      <AuthPageCard title="Convite recusado">
         <p className="text-sm text-muted-foreground">
-          You declined the invitation to join{" "}
+          Você recusou o convite para entrar em{" "}
           <span className="font-medium">
             {invitationQuery.data.organizationName}
           </span>
@@ -224,23 +228,23 @@ function InvitationCard({
           variant="ghost"
           className="w-full"
         >
-          Go to dashboard
+          Ir para o início
         </Button>
       </AuthPageCard>
     );
   }
 
   return (
-    <AuthPageCard title="Join organization">
+    <AuthPageCard title="Entrar na organização">
       <p className="text-sm text-muted-foreground">
         <span className="font-medium" data-ph-mask>
           {invitationQuery.data.inviterEmail}
         </span>{" "}
-        invited you to join{" "}
+        convidou você para entrar em{" "}
         <span className="font-medium">
           {invitationQuery.data.organizationName}
         </span>{" "}
-        on OpenSEO.
+        no dataSEO.
       </p>
       {actionError ? (
         <Alert variant="destructive">
@@ -251,12 +255,12 @@ function InvitationCard({
         <Button
           type="button"
           variant="secondary"
-          className="w-full"
+          className={authSubmitClassName}
           pending={pendingAction === "accept"}
           disabled={pendingAction !== null}
           onClick={() => void handleAccept()}
         >
-          {pendingAction === "accept" ? "Joining..." : "Accept invitation"}
+          {pendingAction === "accept" ? "Entrando..." : "Aceitar convite"}
         </Button>
         <Button
           type="button"
@@ -266,7 +270,7 @@ function InvitationCard({
           disabled={pendingAction !== null}
           onClick={() => void handleDecline()}
         >
-          {pendingAction === "decline" ? "Declining..." : "Decline"}
+          {pendingAction === "decline" ? "Recusando..." : "Recusar"}
         </Button>
       </div>
     </AuthPageCard>

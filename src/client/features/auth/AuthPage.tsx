@@ -11,12 +11,11 @@ export const authRedirectSearchSchema = z.object({
   redirect: z.string().optional(),
 });
 
-// The auth forms keep their pre-shadcn look: white inputs with 16px text, and a
-// soft grey submit button.
-export const authInputClassName =
-  "border-foreground/20 bg-card text-base md:text-base";
+// dataSEO: the auth forms use the app's own look, white inputs on the card
+// and the primary purple submit button.
+export const authInputClassName = "h-10 bg-card text-base md:text-[15px]";
 export const authSubmitClassName =
-  "w-full border-border bg-[color-mix(in_oklab,var(--card),var(--foreground)_8%)] font-semibold hover:bg-[color-mix(in_oklab,var(--card),var(--foreground)_12%)]";
+  "h-10 w-full border-transparent bg-primary font-semibold text-primary-foreground hover:bg-primary/90";
 
 export function useAuthPageState(redirect: string | undefined) {
   const redirectTo = getCurrentAuthRedirect(redirect);
@@ -45,23 +44,23 @@ const termsLinkClassName =
 export function TermsAgreementNotice({ action }: { action: string }) {
   return (
     <p className="text-center text-sm leading-relaxed text-muted-foreground">
-      {action}, you agree to our{" "}
+      {action}, você concorda com os{" "}
       <a
         href={TERMS_URL}
         target="_blank"
         rel="noreferrer"
         className={termsLinkClassName}
       >
-        Terms
+        Termos
       </a>{" "}
-      and{" "}
+      e a{" "}
       <a
         href={PRIVACY_URL}
         target="_blank"
         rel="noreferrer"
         className={termsLinkClassName}
       >
-        Privacy Policy
+        Política de Privacidade
       </a>
       .
     </p>
@@ -70,7 +69,7 @@ export function TermsAgreementNotice({ action }: { action: string }) {
 
 export function AuthMethodChooser({
   googleLabel,
-  emailLabel = "Continue with email",
+  emailLabel = "Continuar com e-mail",
   isBusy,
   disabled,
   onContinueWithGoogle,
@@ -93,7 +92,7 @@ export function AuthMethodChooser({
         disabled={disabled || isBusy}
       >
         <GoogleLogo />
-        {isBusy ? "Opening Google..." : googleLabel}
+        {isBusy ? "Abrindo o Google..." : googleLabel}
       </Button>
 
       <Button
@@ -144,24 +143,30 @@ export function AuthPageCard({
   footer?: React.ReactNode;
 }) {
   return (
-    <div className="w-full max-w-xs space-y-6">
-      <div className="space-y-3 text-center">
-        <img
-          src="/transparent-logo.png"
-          alt="OpenSEO"
-          className="mx-auto size-10 rounded-lg"
-        />
-        <div>
-          <h1 className="text-xl font-semibold">{title}</h1>
-          {helperText ? (
-            <p className="mt-1 text-sm text-muted-foreground">{helperText}</p>
-          ) : null}
+    <div className="w-full max-w-sm space-y-5">
+      <img
+        src="/logo-dataseo.png"
+        alt="dataSEO"
+        className="mx-auto block h-auto w-[168px]"
+      />
+      <div className="overflow-hidden rounded-[10px] border border-border bg-card shadow-[0_1px_2px_rgba(29,26,43,0.04)]">
+        <div className="h-[3px] bg-[#ff6446]" aria-hidden />
+        <div className="space-y-5 p-6">
+          <div>
+            <h1 className="text-[20px] font-semibold tracking-[-.01em]">
+              {title}
+            </h1>
+            {helperText ? (
+              <p className="mt-1 text-[13.5px] text-muted-foreground">
+                {helperText}
+              </p>
+            ) : null}
+          </div>
+          <div className="space-y-4">{children}</div>
         </div>
       </div>
 
-      <div className="space-y-4">{children}</div>
-
-      {footer ? <div className="text-center">{footer}</div> : null}
+      {footer ? <div className="text-center text-[13px]">{footer}</div> : null}
     </div>
   );
 }

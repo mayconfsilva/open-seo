@@ -6,6 +6,7 @@ import {
   AuthPageCard,
   AuthPageShell,
   authRedirectSearchSchema,
+  authSubmitClassName,
 } from "@/client/features/auth/AuthPage";
 import { getFormError } from "@/client/lib/forms";
 import { authClient } from "@/lib/auth-client";
@@ -15,11 +16,11 @@ import { z } from "zod";
 import { pageHead } from "@/client/lib/pageHead";
 
 const forgotPasswordSchema = z.object({
-  email: z.string().trim().email("Enter a valid email address."),
+  email: z.string().trim().email("Informe um e-mail válido."),
 });
 
 export const Route = createFileRoute("/forgot-password")({
-  head: () => pageHead("Forgot password"),
+  head: () => pageHead("Esqueci a senha"),
   validateSearch: authRedirectSearchSchema,
   component: ForgotPasswordPage,
 });
@@ -52,7 +53,9 @@ function ForgotPasswordPage() {
         if (result.error) {
           formApi.setErrorMap({
             onSubmit: {
-              form: result.error.message || "We couldn't send the reset email.",
+              form:
+                result.error.message ||
+                "Não foi possível enviar o e-mail de redefinição.",
               fields: {},
             },
           });
@@ -61,7 +64,7 @@ function ForgotPasswordPage() {
       } catch {
         formApi.setErrorMap({
           onSubmit: {
-            form: "We couldn't send the reset email right now. Please try again.",
+            form: "Não foi possível enviar o e-mail agora. Tente de novo.",
             fields: {},
           },
         });
@@ -84,15 +87,15 @@ function ForgotPasswordPage() {
 
           return (
             <AuthPageCard
-              title={isSuccess ? "Check your email" : "Forgot password"}
+              title={isSuccess ? "Confira seu e-mail" : "Esqueci a senha"}
               helperText={
                 isSuccess
                   ? undefined
                   : isHostedMode
-                    ? "Enter your email and we'll send you a password reset link."
+                    ? "Informe seu e-mail e enviaremos um link para redefinir a senha."
                     : isOperatorReset
-                      ? "Ask your server administrator to reset your password."
-                      : "Password reset isn't available right now."
+                      ? "Peça ao administrador do servidor para redefinir sua senha."
+                      : "A redefinição de senha não está disponível agora."
               }
               footer={
                 <p className="text-sm">
@@ -101,7 +104,7 @@ function ForgotPasswordPage() {
                     search={getSignInSearch(redirectTo)}
                     className="text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    Back to sign in
+                    Voltar para entrar
                   </Link>
                 </p>
               }
@@ -109,8 +112,8 @@ function ForgotPasswordPage() {
               {isSuccess ? (
                 <Alert variant="success">
                   <AlertDescription>
-                    If an account exists for {submittedEmail}, you'll receive
-                    password reset instructions shortly.
+                    Se existir uma conta para {submittedEmail}, você vai receber
+                    as instruções para redefinir a senha em instantes.
                   </AlertDescription>
                 </Alert>
               ) : (
@@ -119,9 +122,9 @@ function ForgotPasswordPage() {
                     <form.AppField name="email">
                       {(field) => (
                         <field.TextField
-                          label="Email address"
+                          label="E-mail"
                           type="email"
-                          placeholder="Email address..."
+                          placeholder="voce@agencia.com.br"
                           autoComplete="email"
                           disabled={!isHostedMode}
                           required
@@ -137,13 +140,11 @@ function ForgotPasswordPage() {
                     <Button
                       type="submit"
                       variant="secondary"
-                      className="w-full"
+                      className={authSubmitClassName}
                       pending={isSubmitting}
                       disabled={!isHostedMode}
                     >
-                      {isSubmitting
-                        ? "Sending reset link..."
-                        : "Send reset link"}
+                      {isSubmitting ? "Enviando o link..." : "Enviar link"}
                     </Button>
                   </form.Form>
                 </form.AppForm>
