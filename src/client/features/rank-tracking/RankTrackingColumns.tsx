@@ -43,7 +43,7 @@ function makeVolumeColumn(locationLabel?: string): ColumnDef<RankTrackingRow> {
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label={locationLabel ? "Local volume" : "Volume"}
+        label={locationLabel ? "Volume local" : "Volume"}
         title={
           locationLabel
             ? `Estimated monthly searches in ${locationLabel} from Google Ads`
@@ -115,7 +115,7 @@ function makeKeywordColumn(
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Keyword"
+        label="Palavra"
         title={HEADER_TOOLTIPS.keyword}
         className={RANK_TRACKING_HEADER_CLASS}
       />
@@ -135,7 +135,7 @@ function makeKeywordColumn(
           type="button"
           className="text-left font-medium decoration-dotted underline-offset-2 hover:underline"
           onClick={() => onKeywordClick(row.original)}
-          title="View position history"
+          title="Ver histórico de posição"
         >
           {row.original.keyword}
         </button>
@@ -144,7 +144,7 @@ function makeKeywordColumn(
             variant="secondary"
             size="sm"
             className="cursor-help"
-            title="Tracked exactly as typed, not lowercased"
+            title="Acompanhada exatamente como digitada"
           >
             Aa
           </Badge>
@@ -162,7 +162,7 @@ function PinButton({
   pinned: boolean;
   onClick: () => void;
 }) {
-  const label = pinned ? "Unpin keyword" : "Pin keyword to top";
+  const label = pinned ? "Desafixar palavra" : "Fixar palavra no topo";
   return (
     <Button
       variant="ghost"
@@ -190,7 +190,7 @@ function makeDeviceColumn(
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Position"
+        label="Posição"
         title={HEADER_TOOLTIPS[id]}
         className={RANK_TRACKING_HEADER_CLASS}
       />
@@ -214,7 +214,7 @@ function makeUrlColumn(
         className="cursor-help text-xs font-medium tracking-wide uppercase text-muted-foreground"
         title={HEADER_TOOLTIPS.url}
       >
-        URL
+        Página encontrada
       </span>
     ),
     size: 240,
@@ -235,7 +235,7 @@ function makeSerpColumn(
         className="cursor-help text-xs font-medium tracking-wide uppercase text-muted-foreground"
         title={HEADER_TOOLTIPS.serp}
       >
-        SERP Features
+        Recursos da busca
       </span>
     ),
     cell: ({ row }) => {

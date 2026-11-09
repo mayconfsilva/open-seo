@@ -44,14 +44,14 @@ export function AddKeywordsPanel({
           rows={3}
           // The field grows with its text; a long line must wrap, not widen the card.
           className="min-w-0"
-          aria-label="Keywords to add"
-          placeholder="Enter keywords, one per line"
+          aria-label="Palavras para adicionar"
+          placeholder="Digite as palavras, uma por linha"
           value={keywordInput}
           onChange={(e) => setKeywordInput(e.target.value)}
         />
         <div
           className="flex w-fit items-center gap-2"
-          title="Track these keywords exactly as typed instead of lowercasing them. Google can return different results for a capitalized brand name."
+          title="Acompanha as palavras exatamente como digitadas, sem passar para minúsculas. O Google pode mostrar resultados diferentes para uma marca com maiúscula."
         >
           <Checkbox
             id={matchCaseId}
@@ -59,7 +59,7 @@ export function AddKeywordsPanel({
             onCheckedChange={(checked) => setMatchCase(checked)}
           />
           <Label htmlFor={matchCaseId} className="text-xs font-normal">
-            Match case
+            Manter maiúsculas
           </Label>
         </div>
       </div>
@@ -82,10 +82,10 @@ export function AddKeywordsPanel({
           }}
           disabled={!keywordInput.trim()}
         >
-          Add
+          Adicionar
         </Button>
         <Button variant="ghost" size="sm" onClick={onCancel}>
-          Cancel
+          Cancelar
         </Button>
       </div>
     </div>

@@ -56,7 +56,7 @@ function RankTrackingConfigRoute() {
     return (
       <QueryError
         error={configsQuery.error}
-        fallback="Failed to load domain configuration"
+        fallback="Não foi possível carregar o domínio"
         onRetry={() => void configsQuery.refetch()}
         isRetrying={configsQuery.isFetching}
       />
@@ -67,11 +67,11 @@ function RankTrackingConfigRoute() {
     return (
       <EmptyState
         kind="no-data"
-        title="Domain configuration not found"
-        description="This domain was archived or does not exist in this project."
+        title="Domínio não encontrado"
+        description="Este domínio foi arquivado ou não existe neste projeto."
         action={
           <Button variant="outline" size="sm" onClick={handleBack}>
-            Back to domains
+            Voltar para os domínios
           </Button>
         }
       />

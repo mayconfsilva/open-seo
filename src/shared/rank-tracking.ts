@@ -349,16 +349,16 @@ export function computeNextCheckAt(
 // ---------------------------------------------------------------------------
 
 export function devicesLabel(devices: RankTrackingConfig["devices"]): string {
-  if (devices === "both") return "Desktop + Mobile";
-  return devices === "desktop" ? "Desktop" : "Mobile";
+  if (devices === "both") return "Computador + celular";
+  return devices === "desktop" ? "Computador" : "Celular";
 }
 
 export function scheduleLabel(
   interval: RankTrackingConfig["scheduleInterval"],
 ): string {
-  if (interval === "daily") return "Daily";
-  if (interval === "weekly") return "Weekly";
-  if (interval === "monthly") return "Monthly";
+  if (interval === "daily") return "Diária";
+  if (interval === "weekly") return "Semanal";
+  if (interval === "monthly") return "Mensal";
   return "Manual";
 }
 

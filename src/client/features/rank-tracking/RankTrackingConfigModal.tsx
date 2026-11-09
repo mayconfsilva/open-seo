@@ -63,9 +63,9 @@ const LANGUAGE_ITEMS = SERP_LANGUAGE_OPTIONS.map((language) => ({
 }));
 
 const DEVICE_ITEMS: { value: SaveConfigInput["devices"]; label: string }[] = [
-  { value: "both", label: "Desktop + Mobile" },
-  { value: "desktop", label: "Desktop only" },
-  { value: "mobile", label: "Mobile only" },
+  { value: "both", label: "Computador + celular" },
+  { value: "desktop", label: "Só computador" },
+  { value: "mobile", label: "Só celular" },
 ];
 
 const DEPTH_ITEMS = Array.from({ length: 10 }, (_, i) => i + 1).map(
@@ -114,7 +114,7 @@ export function RankTrackingConfigModal({
       >
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle className="sr-only">Add Domain</DialogTitle>
+            <DialogTitle className="sr-only">Adicionar domínio</DialogTitle>
           </DialogHeader>
           <div className="flex min-h-40 items-center justify-center">
             {projectsQuery.isPending ? (
@@ -122,7 +122,7 @@ export function RankTrackingConfigModal({
             ) : (
               <QueryError
                 error={projectsQuery.error}
-                fallback="Failed to load the project."
+                fallback="Não foi possível carregar o projeto."
                 onRetry={() => void projectsQuery.refetch()}
                 isRetrying={projectsQuery.isFetching}
               />
@@ -245,7 +245,7 @@ function RankTrackingConfigModalContent({
             <form.Form className="flex flex-col gap-4">
               <DialogHeader>
                 <DialogTitle>
-                  {isEdit ? "Edit Domain Config" : "Add Domain"}
+                  {isEdit ? "Editar domínio" : "Adicionar domínio"}
                 </DialogTitle>
               </DialogHeader>
 
@@ -264,15 +264,12 @@ function RankTrackingConfigModalContent({
                 }}
               >
                 {(field) => (
-                  <field.TextField
-                    label="Target Domain"
-                    placeholder="example.com"
-                  />
+                  <field.TextField label="Domínio" placeholder="example.com" />
                 )}
               </form.AppField>
 
               <Field>
-                <FieldLabel htmlFor={countryId}>Country</FieldLabel>
+                <FieldLabel htmlFor={countryId}>País</FieldLabel>
                 <CountryCombobox
                   id={countryId}
                   value={values.locationCode}
@@ -306,9 +303,9 @@ function RankTrackingConfigModalContent({
               <form.AppField name="languageCode">
                 {(field) => (
                   <field.SelectField
-                    label="Language"
+                    label="Idioma"
                     items={LANGUAGE_ITEMS}
-                    description="Defaults to the country's language. Any language can be tracked in any country — pick the one your customers search in."
+                    description="O padrão é o idioma do país. Qualquer idioma pode ser acompanhado em qualquer país: escolha o que seus clientes usam na busca."
                   />
                 )}
               </form.AppField>
@@ -317,16 +314,17 @@ function RankTrackingConfigModalContent({
                 <form.AppField name="devices">
                   {(field) => (
                     <field.SelectField
-                      label="Devices"
+                      label="Dispositivos"
                       items={DEVICE_ITEMS}
-                      description="Most Google searches come from mobile, but select this based on your customer."
+                      description="A maioria das buscas vem do celular, mas escolha de acordo com o seu cliente."
                     />
                   )}
                 </form.AppField>
                 {values.devices === "both" && (
                   <p className="flex items-start gap-1.5 text-xs text-info">
                     <Info className="mt-0.5 size-3.5 shrink-0" />
-                    Tracking both devices uses 2x credits per keyword check
+                    Acompanhar os dois dispositivos consome o dobro de créditos
+                    por coleta
                   </p>
                 )}
               </div>
@@ -346,7 +344,7 @@ function RankTrackingConfigModalContent({
               <form.AppField name="serpDepth">
                 {(field) => (
                   <field.SelectField
-                    label="Search Depth"
+                    label="Profundidade da busca"
                     items={DEPTH_ITEMS}
                     description="10 pages is ~8x more expensive than 1 page"
                   />
@@ -366,10 +364,10 @@ function RankTrackingConfigModalContent({
                   onClick={onClose}
                   disabled={isSubmitting}
                 >
-                  Cancel
+                  Cancelar
                 </Button>
                 <form.SubmitButton>
-                  {isEdit ? "Save Changes" : "Add Domain"}
+                  {isEdit ? "Salvar alterações" : "Adicionar domínio"}
                 </form.SubmitButton>
               </DialogFooter>
             </form.Form>

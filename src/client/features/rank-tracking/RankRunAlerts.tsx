@@ -12,7 +12,7 @@ function ReadWhatChangedLink() {
       rel="noopener noreferrer"
       className="font-medium underline underline-offset-4"
     >
-      Read what changed
+      Veja o que mudou
     </a>
   );
 }
@@ -30,7 +30,8 @@ export function RankRunAlerts({
       <Alert variant="warning">
         <AlertTriangle />
         <AlertDescription className="text-foreground">
-          This check stopped responding. You can start a new one to replace it.
+          Esta coleta parou de responder. Você pode iniciar outra para
+          substituí-la.
         </AlertDescription>
       </Alert>
     );
@@ -42,7 +43,9 @@ export function RankRunAlerts({
         <Clock />
         <AlertDescription className="text-foreground">
           <p>
-            <span className="font-medium">This check takes about an hour</span>{" "}
+            <span className="font-medium">
+              Esta coleta leva cerca de uma hora
+            </span>{" "}
             because Google's results have been unreliable lately. You can leave
             this page while it's running. <ReadWhatChangedLink />
           </p>
@@ -52,7 +55,9 @@ export function RankRunAlerts({
   }
 
   if (run.status === "failed" && isOutOfCreditsRunError(run.errorMessage)) {
-    return <InsufficientCreditsError title="Your last rank check didn't run" />;
+    return (
+      <InsufficientCreditsError title="A última coleta de posições não rodou" />
+    );
   }
 
   if (run.status === "failed") {
@@ -62,7 +67,7 @@ export function RankRunAlerts({
         <AlertDescription className="text-foreground">
           <p>
             <span className="font-medium">
-              We couldn't finish your last check.
+              Não conseguimos concluir a última coleta.
             </span>{" "}
             Google's results have been unreliable for all rank trackers lately.
             Please try again later. <ReadWhatChangedLink />
@@ -80,7 +85,7 @@ export function RankRunAlerts({
         <AlertDescription className="text-foreground">
           <p>
             <span className="font-medium">
-              Some keywords couldn't be checked.
+              Algumas palavras não puderam ser coletadas.
             </span>{" "}
             Google's results have been unreliable for all rank trackers lately,
             so these show their last known position. <ReadWhatChangedLink />

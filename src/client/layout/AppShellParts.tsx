@@ -27,7 +27,7 @@ function SeoApiStatusBanners({
       {...dataforseoHelpLinkOptions}
       className="font-medium text-primary underline-offset-4 hover:underline"
     >
-      help page
+      página de ajuda
     </Link>
   );
   return (
@@ -43,8 +43,8 @@ function SeoApiStatusBanners({
             </>
           ) : (
             <>
-              Setup needed: add your DataForSEO API key to use OpenSEO features.
-              See the quick steps on the {helpLink}.
+              Configuração pendente: adicione sua chave da DataForSEO para usar
+              os dados de SEO. Veja os passos na {helpLink}.
             </>
           )}
         </AppBanner>
@@ -52,8 +52,8 @@ function SeoApiStatusBanners({
 
       {seoApiKeyStatusError ? (
         <AppBanner variant="info" icon={icon}>
-          We could not verify your DataForSEO setup. If features are not
-          working, check the setup steps on the {helpLink}.
+          Não conseguimos verificar sua configuração da DataForSEO. Se algo não
+          funcionar, confira os passos na {helpLink}.
         </AppBanner>
       ) : null}
     </>
@@ -113,7 +113,7 @@ function MissingSeoSetupModal({ onClose }: { onClose: () => void }) {
             <DialogTitle>
               {everyApp
                 ? "DataForSEO isn't set up yet"
-                : "One quick setup step"}
+                : "Falta um passo de configuração"}
             </DialogTitle>
             <DialogDescription>
               {everyApp ? (
@@ -125,20 +125,20 @@ function MissingSeoSetupModal({ onClose }: { onClose: () => void }) {
                   setup guide has the steps.
                 </>
               ) : (
-                "Add your DataForSEO API key to start using OpenSEO."
+                "Adicione sua chave da DataForSEO para começar a usar o dataSEO."
               )}
             </DialogDescription>
           </div>
         </DialogHeader>
         <DialogFooter>
           <Button variant="ghost" onClick={onClose}>
-            Dismiss
+            Agora não
           </Button>
           <Button
             nativeButton={false}
             render={<Link {...dataforseoHelpLinkOptions} onClick={onClose} />}
           >
-            Open setup guide
+            Abrir guia de configuração
             <ExternalLink className="size-4" />
           </Button>
         </DialogFooter>

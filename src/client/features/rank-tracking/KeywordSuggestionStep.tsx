@@ -48,8 +48,8 @@ const baseColumns: ColumnDef<SuggestedKeyword>[] = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Keyword"
-        title="The search term this domain ranks for"
+        label="Palavra"
+        title="A busca em que este domínio aparece"
         className={RANK_TRACKING_HEADER_CLASS}
       />
     ),
@@ -64,8 +64,8 @@ const baseColumns: ColumnDef<SuggestedKeyword>[] = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Position"
-        title="Current Google ranking position"
+        label="Posição"
+        title="Posição atual no Google"
         className={RANK_TRACKING_HEADER_CLASS}
       />
     ),
@@ -90,7 +90,7 @@ const baseColumns: ColumnDef<SuggestedKeyword>[] = [
       <SortableHeader
         column={column}
         label="Volume"
-        title="Monthly search volume"
+        title="Buscas por mês"
         className={RANK_TRACKING_HEADER_CLASS}
       />
     ),
@@ -114,8 +114,8 @@ const baseColumns: ColumnDef<SuggestedKeyword>[] = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Traffic"
-        title="Estimated monthly organic traffic"
+        label="Tráfego"
+        title="Tráfego orgânico mensal estimado"
         className={RANK_TRACKING_HEADER_CLASS}
       />
     ),
@@ -229,7 +229,7 @@ export function KeywordSuggestionStep({
       captureClientEvent("rank_tracking:keyword_suggestions_save", {
         outcome: "success",
       });
-      toast.success(`Added ${result.added} keywords for tracking`);
+      toast.success(`${result.added} palavras adicionadas ao acompanhamento`);
       onDone(configId);
     },
   });
@@ -247,11 +247,11 @@ export function KeywordSuggestionStep({
     return (
       <>
         <StepHeader
-          title="Add keywords manually"
-          description="Ranked-keyword suggestions aren't available for this country. Continue and add the keywords you want to track manually."
+          title="Adicionar palavras manualmente"
+          description="Não há sugestões de palavras para este país. Continue e adicione manualmente as palavras que quer acompanhar."
         />
         <DialogFooter>
-          <Button onClick={onClose}>Continue</Button>
+          <Button onClick={onClose}>Continuar</Button>
         </DialogFooter>
       </>
     );
@@ -260,9 +260,9 @@ export function KeywordSuggestionStep({
   if (suggestionsQuery.isLoading) {
     return (
       <>
-        <StepHeader title="Finding your top keywords..." />
+        <StepHeader title="Buscando suas principais palavras..." />
         <div className="flex flex-col items-center justify-center py-16">
-          <Spinner label="This usually takes a few seconds" />
+          <Spinner label="Isso costuma levar alguns segundos" />
         </div>
       </>
     );
@@ -272,11 +272,11 @@ export function KeywordSuggestionStep({
     return (
       <>
         <StepHeader
-          title="Couldn't fetch keywords"
-          description="You can skip this step and add keywords manually later."
+          title="Não foi possível buscar as palavras"
+          description="Você pode pular esta etapa e adicionar palavras manualmente depois."
         />
         <DialogFooter>
-          <Button onClick={onClose}>Skip</Button>
+          <Button onClick={onClose}>Pular</Button>
         </DialogFooter>
       </>
     );
@@ -286,11 +286,11 @@ export function KeywordSuggestionStep({
     return (
       <>
         <StepHeader
-          title="No rankings found"
+          title="Nenhuma posição encontrada"
           description={`We couldn't find any keywords ${domain} currently ranks for. You can add keywords manually.`}
         />
         <DialogFooter>
-          <Button onClick={onClose}>Skip</Button>
+          <Button onClick={onClose}>Pular</Button>
         </DialogFooter>
       </>
     );
@@ -299,13 +299,13 @@ export function KeywordSuggestionStep({
   return (
     <>
       <StepHeader
-        title="Choose keywords to track"
-        description={`We found ${data.length} keywords ${domain} ranks for.`}
+        title="Escolha as palavras para acompanhar"
+        description={`Encontramos ${data.length} palavras em que ${domain} aparece.`}
       />
 
       <DataTable
         table={table}
-        empty={{ title: "No keywords" }}
+        empty={{ title: "Nenhuma palavra" }}
         scrollClassName="max-h-[400px]"
         onRowClick={(row, event) => {
           if (applyShiftRangeSelection(event, row, table, selectAnchorRef)) {
@@ -319,7 +319,7 @@ export function KeywordSuggestionStep({
         <QueryError
           variant="inline"
           error={addMutation.error}
-          fallback="Couldn't save these keywords."
+          fallback="Não foi possível salvar estas palavras."
           onRetry={handleAdd}
         />
       ) : null}
@@ -330,7 +330,7 @@ export function KeywordSuggestionStep({
         </p>
         <div className="flex items-center gap-2">
           <Button variant="ghost" onClick={onClose}>
-            Skip
+            Pular
           </Button>
           <Button
             onClick={handleAdd}

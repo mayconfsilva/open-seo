@@ -142,7 +142,7 @@ export function RankTrackingTable({
         queryKey: ["rankTrackingCostEstimate", projectId, configId],
       });
       toast.success(
-        `${result.removed} keyword${result.removed !== 1 ? "s" : ""} removed`,
+        `${result.removed} palavra${result.removed !== 1 ? "s" : ""} removida${result.removed !== 1 ? "s" : ""}`,
       );
     },
   });
@@ -159,17 +159,17 @@ export function RankTrackingTable({
               onClick={() => setShowConfirm(true)}
               variant="danger"
             >
-              Remove
+              Remover
             </TableBulkActionButton>
             <TableBulkExportMenu
               actions={[
                 {
-                  label: "Export to Sheets",
+                  label: "Exportar para Planilhas",
                   icon: <Sheet className="size-4" />,
                   onClick: () => exportSelection("sheets"),
                 },
                 {
-                  label: "Export CSV",
+                  label: "Exportar CSV",
                   icon: <FileDown className="size-4" />,
                   onClick: () => exportSelection("csv"),
                 },
@@ -181,8 +181,8 @@ export function RankTrackingTable({
 
       {showConfirm && (
         <ConfirmDialog
-          title="Remove keywords?"
-          confirmLabel={`Remove ${selectedCount} keyword${selectedCount !== 1 ? "s" : ""}`}
+          title="Remover palavras?"
+          confirmLabel={`Remover ${selectedCount} palavra${selectedCount !== 1 ? "s" : ""}`}
           destructive
           pending={removeMutation.isPending}
           onConfirm={() => removeMutation.mutate(selectedRows.map((r) => r.id))}
@@ -213,19 +213,20 @@ export function RankTrackingTable({
         isFiltered={totalCount > 0}
         onClearFilters={onClearFilters}
         empty={{
-          title: "No keywords yet",
-          description: "Add the keywords you want to track for this domain.",
+          title: "Nenhuma palavra ainda",
+          description:
+            "Adicione as palavras que quer acompanhar neste domínio.",
           action: (
             <Button size="sm" onClick={onAddKeywords}>
               <Plus data-icon="inline-start" />
-              Add Keywords
+              Adicionar palavras
             </Button>
           ),
         }}
         footer={
           rows.length > 0 ? (
             <p className="border-t border-border px-4 py-2 text-xs text-muted-foreground">
-              {rows.length} of {totalCount} keywords
+              {rows.length} de {totalCount} palavras
             </p>
           ) : null
         }

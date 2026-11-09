@@ -25,10 +25,10 @@ import {
 import { parseDbTimestamp } from "@/client/lib/db-timestamp";
 
 const COMPARE_ITEMS: { value: ComparePeriod; label: string }[] = [
-  { value: "1d", label: "vs yesterday" },
-  { value: "7d", label: "vs last week" },
-  { value: "30d", label: "vs last month" },
-  { value: "90d", label: "vs 90 days ago" },
+  { value: "1d", label: "vs. ontem" },
+  { value: "7d", label: "vs. semana passada" },
+  { value: "30d", label: "vs. mês passado" },
+  { value: "90d", label: "vs. 90 dias atrás" },
 ];
 
 export function RankTrackingDetailHeader({
@@ -83,17 +83,17 @@ export function RankTrackingDetailHeader({
           )}{" "}
           &middot; {scheduleLabel(config.scheduleInterval)}
           {config.scheduleInterval !== "manual" && config.nextCheckAt && (
-            <> &middot; Next: {formatNextCheck(config.nextCheckAt)}</>
+            <> &middot; Próxima: {formatNextCheck(config.nextCheckAt)}</>
           )}
           {run?.lastCheckedAt && (
             <>
               {" "}
-              &middot; Last:{" "}
-              {parseDbTimestamp(run.lastCheckedAt).toLocaleDateString()}
+              &middot; Última:{" "}
+              {parseDbTimestamp(run.lastCheckedAt).toLocaleDateString("pt-BR")}
             </>
           )}
           {costEstimate && costEstimate.keywordCount > 0 && (
-            <> &middot; up to ${costEstimate.costUsd.toFixed(2)}/check</>
+            <> &middot; até US${costEstimate.costUsd.toFixed(2)} por coleta</>
           )}
         </p>
       </div>
@@ -104,12 +104,12 @@ export function RankTrackingDetailHeader({
               {
                 value: "desktop" as const,
                 icon: <Monitor className="size-3.5" />,
-                label: "Desktop",
+                label: "Computador",
               },
               {
                 value: "mobile" as const,
                 icon: <Smartphone className="size-3.5" />,
-                label: "Mobile",
+                label: "Celular",
               },
             ]}
             value={activeDevice}
@@ -126,8 +126,8 @@ export function RankTrackingDetailHeader({
         >
           <SelectTrigger
             size="sm"
-            aria-label="Comparison period"
-            title="Comparison period"
+            aria-label="Comparar com"
+            title="Comparar com"
             className="text-xs"
           >
             <SelectValue />
@@ -143,11 +143,11 @@ export function RankTrackingDetailHeader({
         <div className="hidden h-6 w-px bg-border sm:block" />
         <Button variant="outline" size="sm" onClick={onEdit}>
           <Settings data-icon="inline-start" />
-          Configure
+          Configurar
         </Button>
         <Button size="sm" onClick={onToggleAddKeywords}>
           <Plus data-icon="inline-start" />
-          Add Keywords
+          Adicionar palavras
         </Button>
       </div>
     </div>

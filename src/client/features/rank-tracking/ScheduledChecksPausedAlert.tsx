@@ -27,9 +27,11 @@ export function ScheduledChecksPausedAlert({
       <AlertTriangle />
       <AlertDescription className="text-foreground">
         <p>
-          <span className="font-medium">Scheduled checks are paused</span> while
-          our rankings data provider recovers from an outage. They'll catch up
-          automatically once it's back.
+          <span className="font-medium">
+            As coletas agendadas estão pausadas
+          </span>{" "}
+          while our rankings data provider recovers from an outage. They'll
+          catch up automatically once it's back.
         </p>
       </AlertDescription>
     </Alert>

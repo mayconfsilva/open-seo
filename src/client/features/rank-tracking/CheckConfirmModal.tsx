@@ -25,15 +25,15 @@ export function CheckConfirmModal({
 
   return (
     <ConfirmDialog
-      title={`Check ${keywordCount} keyword${keywordCount !== 1 ? "s" : ""}?`}
-      confirmLabel="Start check"
+      title={`Coletar ${keywordCount} palavra${keywordCount !== 1 ? "s" : ""}?`}
+      confirmLabel="Iniciar coleta"
       pending={isPending}
       onConfirm={onRunNow}
       onClose={onCancel}
     >
       <span className="flex flex-col gap-1">
         <span>
-          {keywordCount} keyword{keywordCount !== 1 ? "s" : ""} &times; {dc}{" "}
+          {keywordCount} palavra{keywordCount !== 1 ? "s" : ""} &times; {dc}{" "}
           device{dc !== 1 ? "s" : ""}
         </span>
         {costUsd != null ? (

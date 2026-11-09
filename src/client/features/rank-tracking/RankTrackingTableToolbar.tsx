@@ -26,7 +26,7 @@ function RankCheckProgress({ startedAt }: { startedAt: string }) {
   return (
     <Progress
       className="ml-1 w-36"
-      aria-label="Rank check progress"
+      aria-label="Andamento da coleta"
       value={clamp(elapsedMs / USUAL_CHECK_MS, { min: 0.03, max: 0.95 })}
       max={1}
     />
@@ -84,12 +84,12 @@ export function RankTrackingTableToolbar({
             {
               value: "table" as const,
               icon: <Table className="size-3.5" />,
-              label: "Latest",
+              label: "Atual",
             },
             {
               value: "history" as const,
               icon: <CalendarDays className="size-3.5" />,
-              label: "History",
+              label: "Histórico",
             },
           ]}
           value={viewMode}
@@ -103,10 +103,10 @@ export function RankTrackingTableToolbar({
         aria-pressed={showFilters}
         className="aria-pressed:bg-muted aria-pressed:text-foreground"
         onClick={onToggleFilters}
-        title="Toggle table filters"
+        title="Mostrar filtros da tabela"
       >
         <SlidersHorizontal data-icon="inline-start" />
-        Filters
+        Filtros
         {activeFilterCount > 0 && <Badge size="sm">{activeFilterCount}</Badge>}
       </Button>
 
@@ -116,7 +116,7 @@ export function RankTrackingTableToolbar({
           <span>
             {latestRun.status === "pending"
               ? "Preparing..."
-              : `Getting rankings for ${latestRun.keywordsTotal || "?"} keyword${latestRun.keywordsTotal !== 1 ? "s" : ""}...`}
+              : `Coletando posições de ${latestRun.keywordsTotal || "?"} palavra${latestRun.keywordsTotal !== 1 ? "s" : ""}...`}
           </span>
           {latestRun.status === "running" && (
             <RankCheckProgress startedAt={latestRun.startedAt} />
@@ -124,7 +124,7 @@ export function RankTrackingTableToolbar({
         </div>
       ) : (
         <span className="text-sm text-muted-foreground">
-          {keywordCount} keywords
+          {keywordCount} palavras
         </span>
       )}
 
@@ -132,7 +132,7 @@ export function RankTrackingTableToolbar({
 
       <ExportMenu
         actions={["sheets", "csv", "copy-list"]}
-        copyListLabel="Copy keywords"
+        copyListLabel="Copiar palavras"
         onExport={onExport}
         disabled={!hasData}
       />
