@@ -1,3 +1,4 @@
+import { normalizeIntent } from "@/server/features/keywords/services/research/helpers";
 import { env } from "cloudflare:workers";
 import {
   customerHasPaidPlan,
@@ -363,12 +364,12 @@ async function refreshKeywordMetrics(
     .map((kw) => {
       const metric = byKeyword.get(lower(kw.keyword));
       if (!metric) return null;
-      // Rank tracking only tracks volume / difficulty / CPC.
       return {
         id: kw.id,
         searchVolume: metric.searchVolume,
         keywordDifficulty: metric.keywordDifficulty,
         cpc: metric.cpc,
+        searchIntent: normalizeIntent(metric.intent),
         metricsFetchedAt: now,
       };
     })

@@ -342,6 +342,25 @@ export const rankTrackingConfigs = pgTable(
   ],
 );
 
+// dataSEO: named groups of a tracker's keywords ("Instalação", "Reparo").
+export const rankKeywordGroups = pgTable(
+  "rank_keyword_groups",
+  {
+    id: text("id").primaryKey(),
+    configId: text("config_id")
+      .notNull()
+      .references(() => rankTrackingConfigs.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    createdAt: timestampColumn("created_at").notNull().default(isoNow),
+  },
+  (table) => [
+    uniqueIndex("rank_keyword_groups_config_name_idx").on(
+      table.configId,
+      table.name,
+    ),
+  ],
+);
+
 // Keywords tracked per domain config
 export const rankTrackingKeywords = pgTable(
   "rank_tracking_keywords",
@@ -359,6 +378,13 @@ export const rankTrackingKeywords = pgTable(
     keywordDifficulty: integer("keyword_difficulty"),
     cpc: real("cpc"),
     metricsFetchedAt: timestampColumn("metrics_fetched_at"),
+    // dataSEO: optional group, the page that should rank for the keyword,
+    // and the search intent from the keyword-metrics refresh.
+    groupId: text("group_id").references(() => rankKeywordGroups.id, {
+      onDelete: "set null",
+    }),
+    targetUrl: text("target_url"),
+    searchIntent: text("search_intent"),
     // Set when a user pins the keyword to the top of the tracker's table.
     // Pins are shared by everyone in the project.
     pinnedAt: timestampColumn("pinned_at"),

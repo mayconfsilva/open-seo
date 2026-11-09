@@ -97,6 +97,7 @@ export const {
   savedKeywordTagAssignments,
   keywordMetrics,
   rankTrackingConfigs,
+  rankKeywordGroups,
   rankTrackingKeywords,
   rankCheckRuns,
   rankSnapshots,
