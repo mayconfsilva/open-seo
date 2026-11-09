@@ -244,7 +244,7 @@ export function CompetitorsTop10({
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-[15px] font-semibold">Concorrentes no top 10</h2>
         <Link
-          to="/p/$projectId/rank-tracking"
+          to="/p/$projectId/competitors"
           params={{ projectId }}
           className="text-[12.5px] text-primary underline underline-offset-2"
         >

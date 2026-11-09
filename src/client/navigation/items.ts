@@ -12,6 +12,7 @@ import {
   MessageSquare,
   Search,
   SlidersHorizontal,
+  Swords,
   TrendingUp,
 } from "lucide-react";
 import { linkOptions } from "@tanstack/react-router";
@@ -52,8 +53,13 @@ const projectNavItems = [
     icon: GoogleGlyphMuted,
   },
   {
-    to: "/p/$projectId/domain" as const,
+    to: "/p/$projectId/competitors" as const,
     label: "Concorrentes",
+    icon: Swords,
+  },
+  {
+    to: "/p/$projectId/domain" as const,
+    label: "Análise de domínio",
     icon: Globe,
   },
   {
@@ -147,6 +153,7 @@ export function getProjectNavGroups(projectId: string) {
         byPath("/p/$projectId/rank-tracking"),
         byPath("/p/$projectId/keywords"),
         byPath("/p/$projectId/saved"),
+        byPath("/p/$projectId/competitors"),
         byPath("/p/$projectId/domain"),
         byPath("/p/$projectId/audit"),
         byPath("/p/$projectId/backlinks"),
