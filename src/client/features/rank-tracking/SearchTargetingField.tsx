@@ -64,8 +64,9 @@ export function SearchTargetingField({
       <FieldDescription>
         {mode === "local" ? (
           <>
-            <span className="font-medium text-success">Ideal para:</span> "near
-            me" queries, city/county keywords, service-area pages.
+            <span className="font-medium text-success">Ideal para:</span> buscas
+            «perto de mim», com nome de cidade ou de bairro, e páginas por
+            região atendida.
           </>
         ) : (
           <>

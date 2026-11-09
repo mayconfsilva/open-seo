@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
 import {
   index,
+  integer,
   pgTable,
   primaryKey,
   text,
@@ -52,6 +53,9 @@ export const projectCompetitors = pgTable(
     domain: text("domain").notNull(),
     name: text("name"),
     notes: text("notes"),
+    // dataSEO: "commercial" (competes for the same customers) or "serp"
+    // (shows up in the searches without being a direct competitor).
+    kind: text("kind", { enum: ["commercial", "serp"] }),
     updatedAt: text("updated_at").notNull().default(isoNow),
     updatedBy: text("updated_by", { enum: ["user", "sam", "mcp"] }).notNull(),
   },
@@ -59,6 +63,26 @@ export const projectCompetitors = pgTable(
     uniqueIndex("project_competitors_project_domain_idx").on(
       table.projectId,
       table.domain,
+    ),
+  ],
+);
+
+// dataSEO: the main services of the business ("Instalação", "Manutenção"),
+// entered in the new-project wizard and used to suggest keywords.
+export const projectServices = pgTable(
+  "project_services",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    position: integer("position").notNull(),
+  },
+  (table) => [
+    uniqueIndex("project_services_project_name_idx").on(
+      table.projectId,
+      table.name,
     ),
   ],
 );

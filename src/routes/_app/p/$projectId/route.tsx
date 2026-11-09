@@ -1,4 +1,5 @@
 import {
+  Link,
   Outlet,
   createFileRoute,
   useMatch,
@@ -11,6 +12,7 @@ import {
   getLastProjectId,
   setLastProjectId,
 } from "@/client/lib/active-project";
+import { projectsQueryOptions } from "@/client/features/projects/projectQueries";
 import { getErrorCode } from "@/client/lib/error-messages";
 import {
   getCurrentAuthRedirectFromHref,
@@ -91,5 +93,31 @@ function ProjectLayout() {
     setLastProjectId(projectId);
   }, [projectId, hasAccess, isSettingsPage]);
 
-  return <Outlet />;
+  return (
+    <>
+      <DraftBanner projectId={projectId} />
+      <Outlet />
+    </>
+  );
+}
+
+/** A project whose new-project wizard is unfinished collects nothing yet. */
+function DraftBanner({ projectId }: { projectId: string }) {
+  const projects = useQuery(projectsQueryOptions());
+  const project = projects.data?.find((item) => item.id === projectId);
+  if (!project?.draftSince) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-3 border-b border-warning/40 bg-warning/15 px-4 py-2 text-[13px] md:px-6">
+      <span className="flex-1">
+        Projeto em rascunho. Nada é coletado até você concluir o cadastro.
+      </span>
+      <Link
+        to="/new-project"
+        search={{ project: projectId, step: 2 }}
+        className="font-medium text-primary hover:underline"
+      >
+        Continuar cadastro
+      </Link>
+    </div>
+  );
 }

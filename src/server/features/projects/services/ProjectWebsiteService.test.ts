@@ -115,6 +115,7 @@ beforeAll(async () => {
       ...readFileSync("drizzle/sqlite/0042_project_memory.sql", "utf8")
         .split("--> statement-breakpoint")
         .filter((sql) => !sql.includes("DROP TABLE")),
+      "ALTER TABLE `project_competitors` ADD `kind` text;",
     ].join("\n"),
   );
 });

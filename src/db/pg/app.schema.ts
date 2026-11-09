@@ -156,6 +156,13 @@ export const projects = pgTable(
     // The IndexNow key the site hosts at /{key}.txt. Public by design, so it
     // is stored as plain text. Null until IndexNow is first used.
     indexnowKey: text("indexnow_key"),
+    // dataSEO: set while the project is a draft of the new-project wizard;
+    // nothing is collected for it until the user confirms the review step.
+    draftSince: text("draft_since"),
+    // dataSEO: what the business does and who it serves, used to suggest
+    // keywords. The main services live in project_services.
+    segment: text("segment"),
+    audience: text("audience"),
   },
   (table) => [
     // Only the auto-created Default/null-domain project is a singleton. This
