@@ -11,6 +11,7 @@ import {
   getRankTrackingConfigs,
 } from "@/serverFunctions/rank-tracking";
 import { getRankCompetitorPositions } from "@/serverFunctions/rank-competitors";
+import { AttentionCard } from "@/client/features/action-plan/AttentionCard";
 import type { RankTrackingRow } from "@/types/schemas/rank-tracking";
 import {
   CompetitorsTop10,
@@ -161,16 +162,24 @@ function RankSummaryContent({
 
       <PositionBandsChart points={trendQuery.data} />
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid items-start gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <MoversCard projectId={projectId} up={stats.up} down={stats.down} />
         </div>
-        <CompetitorsTop10
-          projectId={projectId}
-          you={{ name: main.domain, value: stats.top10 }}
-          competitors={competitorCounts}
-          base={stats.checked}
-        />
+        <div className="flex flex-col gap-4">
+          <AttentionCard
+            projectId={projectId}
+            rows={rows}
+            device={device}
+            competitors={competitorData?.positions ?? []}
+          />
+          <CompetitorsTop10
+            projectId={projectId}
+            you={{ name: main.domain, value: stats.top10 }}
+            competitors={competitorCounts}
+            base={stats.checked}
+          />
+        </div>
       </div>
     </section>
   );

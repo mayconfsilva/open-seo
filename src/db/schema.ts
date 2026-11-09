@@ -102,6 +102,7 @@ export const {
   rankCheckRuns,
   rankSnapshots,
   rankCompetitorSnapshots,
+  projectTasks,
   organizationActivationState,
   projectActivationState,
   dashboardStepDismissals,

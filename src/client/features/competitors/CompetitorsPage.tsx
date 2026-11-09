@@ -35,19 +35,22 @@ export function CompetitorsPage({
   });
   const configs = configsQuery.data ?? [];
   const main =
-    configs.find((config) => domain && config.domain === domain) ?? configs[0];
+    configs.find((config) => domain && config.domain === domain) ??
+    configs.at(0);
   const latestQuery = useQuery({
     queryKey: ["rankLatestResults", projectId, main?.id, "90d"],
     queryFn: () =>
       getLatestRankResults({
-        data: { projectId, configId: main!.id, comparePeriod: "90d" },
+        data: { projectId, configId: main?.id ?? "", comparePeriod: "90d" },
       }),
     enabled: main !== undefined,
   });
   const competitorsQuery = useQuery({
     queryKey: ["rankCompetitorPositions", projectId, main?.id],
     queryFn: () =>
-      getRankCompetitorPositions({ data: { projectId, configId: main!.id } }),
+      getRankCompetitorPositions({
+        data: { projectId, configId: main?.id ?? "" },
+      }),
     enabled: main !== undefined,
   });
   const failed = [configsQuery, latestQuery, competitorsQuery].find(
@@ -273,7 +276,7 @@ function Comparison({
                     </td>
                     {row.positions.map((position, index) => (
                       <td
-                        key={columns[index]!.key}
+                        key={columns.at(index)?.key}
                         className="px-4 py-2 text-right"
                       >
                         <PositionCell

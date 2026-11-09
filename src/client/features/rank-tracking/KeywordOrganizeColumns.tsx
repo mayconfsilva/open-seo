@@ -3,6 +3,7 @@ import { Check, TriangleAlert } from "lucide-react";
 import { Badge } from "@/client/components/ui/badge";
 import { SortableHeader } from "@/client/components/table/SortableHeader";
 import type { RankTrackingRow } from "@/types/schemas/rank-tracking";
+import { comparablePath } from "./comparablePath";
 
 const HEADER_CLASS = "text-xs uppercase tracking-wide text-muted-foreground";
 
@@ -77,18 +78,6 @@ export function makeGroupColumn(
     },
     sortUndefined: "last",
   };
-}
-
-/** Path of a URL or of a path, without query and trailing slash. */
-function comparablePath(url: string): string {
-  let path = url;
-  try {
-    path = new URL(url, "https://placeholder.invalid").pathname;
-  } catch {
-    // Keep the raw value; the comparison then just won't match.
-  }
-  const trimmed = path.replace(/\/+$/, "");
-  return (trimmed === "" ? "/" : trimmed).toLowerCase();
 }
 
 type TargetStatus = "match" | "other" | "none";

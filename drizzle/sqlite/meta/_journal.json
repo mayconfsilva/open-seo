@@ -498,6 +498,13 @@
       "when": 1794236368130,
       "tag": "0070_fancy_mongu",
       "breakpoints": true
+    },
+    {
+      "idx": 71,
+      "version": "6",
+      "when": 1794236986391,
+      "tag": "0071_melted_wild_child",
+      "breakpoints": true
     }
   ]
 }

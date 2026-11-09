@@ -510,6 +510,37 @@ export const rankCompetitorSnapshots = sqliteTable(
   ],
 );
 
+// dataSEO: the project's action plan, the manual SEO tasks someone has to do
+// ("Reescrever o título da página de instalação"), optionally tied to a tracked
+// keyword. The assignee is a free-text name for now.
+export const projectTasks = sqliteTable(
+  "project_tasks",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    reason: text("reason"),
+    trackingKeywordId: text("tracking_keyword_id").references(
+      () => rankTrackingKeywords.id,
+      { onDelete: "set null" },
+    ),
+    pageUrl: text("page_url"),
+    status: text("status", { enum: ["todo", "doing", "done"] })
+      .notNull()
+      .default("todo"),
+    assignee: text("assignee"),
+    createdAt: text("created_at")
+      .notNull()
+      .default(sql`(current_timestamp)`),
+    completedAt: text("completed_at"),
+  },
+  (table) => [
+    index("project_tasks_project_idx").on(table.projectId, table.status),
+  ],
+);
+
 // Dashboard activation milestones. Organization-scoped: MCP OAuth grants are
 // user-level, so any member connecting an external MCP client satisfies the
 // milestone for the whole organization. Timestamps are first-occurrence only

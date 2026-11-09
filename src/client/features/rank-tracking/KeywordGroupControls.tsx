@@ -32,7 +32,7 @@ import {
 } from "@/serverFunctions/rank-keyword-groups";
 import type { RankTrackingRow } from "@/types/schemas/rank-tracking";
 
-export interface KeywordGroup {
+interface KeywordGroup {
   id: string;
   name: string;
 }
@@ -40,7 +40,7 @@ export interface KeywordGroup {
 /** "all", "none" (keywords without a group) or a group id. */
 export type GroupFilter = "all" | "none" | (string & {});
 
-export function keywordGroupsQueryKey(projectId: string, configId: string) {
+function keywordGroupsQueryKey(projectId: string, configId: string) {
   return ["rankKeywordGroups", projectId, configId];
 }
 
