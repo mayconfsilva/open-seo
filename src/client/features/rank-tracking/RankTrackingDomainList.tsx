@@ -145,7 +145,7 @@ export function RankTrackingDomainList({
       void queryClient.invalidateQueries({
         queryKey: ["rankTrackingConfigs", projectId],
       });
-      toast.success("Domain archived");
+      toast.success("Domínio arquivado");
     },
   });
 
@@ -159,12 +159,12 @@ export function RankTrackingDomainList({
       <Card className="gap-0 py-0">
         <CardHeader className="px-5 pt-4 pb-3">
           <CardTitle>
-            <h2 className="text-sm font-semibold">Tracked Domains</h2>
+            <h2 className="text-sm font-semibold">Domínios acompanhados</h2>
           </CardTitle>
           <CardAction className="self-center">
             <Button size="sm" onClick={onAddDomain}>
               <Plus data-icon="inline-start" />
-              Add Domain
+              Adicionar domínio
             </Button>
           </CardAction>
         </CardHeader>
@@ -183,7 +183,7 @@ export function RankTrackingDomainList({
             <div className="px-5 py-4">
               <QueryError
                 error={summariesQuery.error}
-                fallback="Failed to load tracked domains"
+                fallback="Não foi possível carregar os domínios acompanhados"
                 onRetry={() => void summariesQuery.refetch()}
                 isRetrying={summariesQuery.isFetching}
               />
@@ -202,18 +202,18 @@ export function RankTrackingDomainList({
             <EmptyState
               variant="plain"
               icon={Globe}
-              title="No tracked domains yet"
-              description="Add a domain to start monitoring keyword rankings over time."
+              title="Nenhum domínio acompanhado"
+              description="Adicione um domínio para acompanhar as posições das palavras ao longo do tempo."
             />
           ) : filteredSummaries.length === 0 ? (
             <EmptyState
               variant="plain"
               kind="filtered"
-              title="No matching tracked domains"
-              description="Try clearing search or adjusting filters."
+              title="Nenhum domínio encontrado"
+              description="Limpe a busca ou ajuste os filtros."
               action={
                 <Button variant="outline" size="sm" onClick={clearFilters}>
-                  Clear filters
+                  Limpar filtros
                 </Button>
               }
             />
@@ -240,7 +240,7 @@ export function RankTrackingDomainList({
         {archiveTarget && (
           <ConfirmDialog
             title={`Archive ${archiveTarget.domain}?`}
-            confirmLabel="Archive"
+            confirmLabel="Arquivar"
             destructive
             pending={archiveMutation.isPending}
             onConfirm={() => archiveMutation.mutate(archiveTarget.id)}
@@ -310,22 +310,22 @@ function DomainRow({
           &middot; {devicesLabel(summary.devices)} &middot;{" "}
           {scheduleLabel(summary.scheduleInterval)}
           {summary.scheduleInterval !== "manual" && summary.nextCheckAt && (
-            <> &middot; Next: {formatNextCheck(summary.nextCheckAt)}</>
+            <> &middot; Próxima: {formatNextCheck(summary.nextCheckAt)}</>
           )}
           {summary.lastRunCompletedAt && (
             <>
               {" "}
-              &middot; Last:{" "}
-              {parseDbTimestamp(
-                summary.lastRunCompletedAt,
-              ).toLocaleDateString()}
+              &middot; Última:{" "}
+              {parseDbTimestamp(summary.lastRunCompletedAt).toLocaleDateString(
+                "pt-BR",
+              )}
               {summary.lastRunIncomplete && (
                 <Tooltip>
                   <TooltipTrigger
                     render={
                       // Above the row link, like the archive button.
                       <span
-                        aria-label="Last check incomplete"
+                        aria-label="Última coleta incompleta"
                         className="pointer-events-auto relative z-10 ml-1 inline-flex cursor-help align-text-bottom"
                       />
                     }
@@ -333,7 +333,7 @@ function DomainRow({
                     <Info className="size-3.5" aria-hidden />
                   </TooltipTrigger>
                   <TooltipContent>
-                    Some results from the last check are missing.
+                    Faltam alguns resultados da última coleta.
                   </TooltipContent>
                 </Tooltip>
               )}
@@ -346,7 +346,7 @@ function DomainRow({
         {summary.lastSkipReason === "plan_required" && (
           <p className="flex items-center gap-1 text-xs text-warning">
             <AlertTriangle className="size-3" />
-            Scheduled check skipped — paid plan required
+            Coleta agendada pulada: requer plano pago
           </p>
         )}
       </div>
@@ -354,7 +354,7 @@ function DomainRow({
         {summary.keywordCount > 0 && (
           <div className="text-center">
             <p className="text-xs uppercase tracking-wide text-muted-foreground">
-              Keywords
+              Palavras
             </p>
             <p className="font-mono font-medium">{summary.keywordCount}</p>
           </div>
@@ -364,7 +364,7 @@ function DomainRow({
         variant="ghost"
         size="icon-xs"
         className="relative z-10 text-muted-foreground hover:text-destructive"
-        title="Archive domain"
+        title="Arquivar domínio"
         aria-label={`Archive ${summary.domain}`}
         onClick={(e) => {
           e.stopPropagation();

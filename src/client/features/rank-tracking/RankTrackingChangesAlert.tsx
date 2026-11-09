@@ -8,7 +8,7 @@ export function RankTrackingChangesAlert() {
       <AlertDescription className="text-foreground">
         <p>
           <span className="font-medium">
-            Rank tracking now reads every keyword several times.
+            O acompanhamento agora lê cada palavra várias vezes.
           </span>{" "}
           Since September, Google has been serving incomplete results to all
           rank trackers.{" "}
@@ -18,7 +18,7 @@ export function RankTrackingChangesAlert() {
             rel="noopener noreferrer"
             className="font-medium underline underline-offset-4"
           >
-            Read what changed
+            Veja o que mudou
           </a>
         </p>
       </AlertDescription>

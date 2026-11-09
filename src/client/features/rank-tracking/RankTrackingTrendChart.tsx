@@ -27,7 +27,7 @@ export interface TrendSeries {
 /**
  * Shared inverted-axis line chart for rank trends. Y-axis is reversed so #1 is
  * pinned at the top and an improving line moves up. The very bottom of the
- * plot (= serpDepth) is a muted "Not found" band; callers plot
+ * plot (= serpDepth) is a muted "Não encontrada" band; callers plot
  * null positions at `serpDepth` so a drop reads as the line dipping into the
  * band rather than a silent gap.
  */
@@ -53,7 +53,7 @@ export function RankTrendChart({
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between text-[11px] text-muted-foreground">
-        <span>Google position (1 = best)</span>
+        <span>Posição no Google (1 = melhor)</span>
         <span className="inline-flex items-center gap-1">
           Better <span aria-hidden>↑</span>
         </span>
@@ -119,7 +119,7 @@ export const TIME_AXIS = {
 } as const;
 
 function formatDateTick(value: number): string {
-  return new Date(value).toLocaleDateString("en-US", {
+  return new Date(value).toLocaleDateString("pt-BR", {
     month: "short",
     day: "numeric",
   });
@@ -128,7 +128,7 @@ function formatDateTick(value: number): string {
 /** Tooltip label for a `checkedAt` timestamp: "Sep 28, 2026". */
 export function formatDateLabel(label: unknown): string {
   return typeof label === "number"
-    ? new Date(label).toLocaleDateString("en-US", {
+    ? new Date(label).toLocaleDateString("pt-BR", {
         month: "short",
         day: "numeric",
         year: "numeric",
@@ -140,7 +140,7 @@ export function formatDateLabel(label: unknown): string {
 const TREND_RANGES = [
   { value: "30", icon: null, label: "30d" },
   { value: "90", icon: null, label: "90d" },
-  { value: "730", icon: null, label: "All" },
+  { value: "730", icon: null, label: "Tudo" },
 ];
 
 export function TrendRangeToggle({
@@ -166,11 +166,11 @@ export function TrendEmptyState({ checks }: { checks: number }) {
     <EmptyState
       icon={TrendingUp}
       size="sm"
-      title={checks === 0 ? "No history yet" : "Only 1 check so far"}
+      title={checks === 0 ? "Sem histórico ainda" : "Só 1 coleta até agora"}
       description={
         checks === 0
-          ? "Run a check to start tracking positions over time."
-          : "The trend fills in after the next check."
+          ? "Faça uma coleta para começar a acompanhar as posições."
+          : "A tendência aparece depois da próxima coleta."
       }
     />
   );

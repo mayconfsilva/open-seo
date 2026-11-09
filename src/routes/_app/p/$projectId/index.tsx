@@ -6,7 +6,7 @@ import { pageHead } from "@/client/lib/pageHead";
 import { queryClient } from "@/client/tanstack-db/queryClient";
 
 export const Route = createFileRoute("/_app/p/$projectId/")({
-  head: () => pageHead("Dashboard"),
+  head: () => pageHead("Resumo"),
   validateSearch: dashboardSearchSchema,
   loader: ({ params }) => {
     // Without Search Console, the dashboard opens on its connect card, which

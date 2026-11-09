@@ -29,17 +29,17 @@ import {
 import { parseDbTimestamp } from "@/client/lib/db-timestamp";
 
 const BUCKETS = [
-  { key: "top3", label: "Top 3", color: "#1e40af" },
-  { key: "top4to10", label: "4–10", color: "#56b4e9" },
-  { key: "top11to20", label: "11–20", color: "#e69f00" },
-  { key: "notRanking", label: "Not in top 20", color: "#6b7280" },
+  { key: "top3", label: "Top 3", color: "#2e2150" },
+  { key: "top4to10", label: "4–10", color: "#8e83b5" },
+  { key: "top11to20", label: "11–20", color: "#c9c2e3" },
+  { key: "notRanking", label: "Fora do top 20", color: "#e3e2ea" },
   // Missing data, not a ranking: lighter fill so it doesn't read as lost
   // positions.
   {
     key: "notChecked",
-    label: "Not checked",
-    color: "#d1d5db",
-    hint: "No result from Google on this check.",
+    label: "Coleta falhou",
+    color: "#f2b8ad",
+    hint: "O Google não retornou resultado nesta coleta.",
   },
 ] as const;
 
@@ -84,7 +84,7 @@ export function RankTrackingOverview({
     <div className="px-4 pt-4 pb-4">
       <div className="space-y-2 rounded-lg border border-border p-3">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-sm font-medium">Position distribution</span>
+          <span className="text-sm font-medium">Distribuição de posições</span>
           <TrendRangeToggle value={sinceDays} onChange={setSinceDays} />
         </div>
 

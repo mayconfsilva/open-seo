@@ -139,9 +139,11 @@ export function DeviceUrlCell({
             />
           }
         >
-          View page
+          Ver página
         </TooltipTrigger>
-        <TooltipContent>Google hid this page's address.</TooltipContent>
+        <TooltipContent>
+          O Google ocultou o endereço desta página.
+        </TooltipContent>
       </Tooltip>
     );
   }
@@ -192,7 +194,7 @@ function buildRankTrackingExport(
   locationName?: string | null,
 ): { headers: string[]; rows: (string | number)[][] } {
   const headers = [
-    "Keyword",
+    "Palavra",
     // Exports lack the table's tooltip, so name the city inline.
     locationName
       ? `Local volume (${formatLocationLabel(locationName, 2)})`

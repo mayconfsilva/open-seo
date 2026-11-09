@@ -22,6 +22,7 @@ import {
   getProjectNavGroups,
 } from "@/client/navigation/items";
 import { ProjectSwitcher } from "@/client/features/projects/ProjectSwitcher";
+import { OrganizationRow } from "@/client/features/team/OrganizationRow";
 import {
   SamChatListSkeleton,
   SamSidebarPanel,
@@ -60,7 +61,7 @@ import {
 } from "@/client/components/ui/dropdown-menu";
 
 const navButtonClass =
-  "relative text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground data-active:before:absolute data-active:before:inset-y-1 data-active:before:left-0 data-active:before:w-[3px] data-active:before:rounded-r-full data-active:before:bg-primary";
+  "relative h-[34px] text-[13.5px] text-sidebar-foreground hover:bg-secondary hover:text-sidebar-foreground [&>svg]:text-[#8a8698] data-active:bg-sidebar-accent data-active:font-semibold data-active:text-sidebar-accent-foreground data-active:[&>svg]:text-sidebar-accent-foreground data-active:before:absolute data-active:before:inset-y-2 data-active:before:left-0 data-active:before:w-[3px] data-active:before:rounded-r-[3px] data-active:before:bg-[#ff6446]";
 
 function SidebarNavLink({
   icon: Icon,
@@ -147,21 +148,28 @@ export function Sidebar({
   return (
     <UiSidebar variant="inset" collapsible="offcanvas" className="md:!p-0">
       <SidebarHeader
-        className={cn("gap-0 px-3 pb-1", everyApp ? "pt-2" : "pt-3")}
+        className={cn("gap-0 px-3 pb-1", everyApp ? "pt-2" : "pt-0")}
       >
         {everyApp ? <EveryAppLink /> : null}
         <Link
           to="/"
           onClick={() => setOpenMobile(false)}
-          className="px-1 pb-2 text-base font-semibold text-sidebar-foreground"
+          className="flex h-16 items-center px-2"
         >
-          OpenSEO
+          <img
+            src="/logo-dataseo.png"
+            alt="dataSEO"
+            className="block h-auto w-[142px]"
+          />
         </Link>
-        <ProjectSwitcher
-          activeProjectId={projectId}
-          ready={ready}
-          onCloseDrawer={() => setOpenMobile(false)}
-        />
+        <div className="overflow-hidden rounded-[10px] border border-sidebar-border">
+          <OrganizationRow ready={ready && !everyApp} />
+          <ProjectSwitcher
+            activeProjectId={projectId}
+            ready={ready}
+            onCloseDrawer={() => setOpenMobile(false)}
+          />
+        </div>
       </SidebarHeader>
 
       <SidebarContent>
@@ -178,14 +186,16 @@ export function Sidebar({
           )
         ) : (
           <nav
-            aria-label="Main navigation"
+            aria-label="Navegação principal"
             aria-busy={navPlaceholder || undefined}
           >
             {navGroups.map((group) => (
-              <SidebarGroup key={group.label} className="py-1">
-                <SidebarGroupLabel className="h-7 uppercase tracking-wider text-sidebar-foreground/40">
-                  {group.label}
-                </SidebarGroupLabel>
+              <SidebarGroup key={group.label || "main"} className="py-1.5">
+                {group.label ? (
+                  <SidebarGroupLabel className="h-6 text-[10.5px] font-semibold uppercase tracking-[.08em] text-[#8a8698]">
+                    {group.label}
+                  </SidebarGroupLabel>
+                ) : null}
                 <SidebarGroupContent>
                   <SidebarMenu>
                     {group.items.map((item) => {
@@ -280,13 +290,13 @@ function AccountFooter({ ready }: { ready: boolean }) {
       <SidebarMenu>
         <SidebarNavLink
           icon={CircleHelp}
-          label="Help & Community"
+          label="Ajuda"
           linkProps={{ to: "/support" }}
         />
         {everyApp ? (
           <SidebarNavLink
             icon={Settings}
-            label="Settings"
+            label="Configurações"
             linkProps={{ to: "/settings" }}
           />
         ) : email ? (
@@ -296,7 +306,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
                 render={
                   <SidebarMenuButton
                     className={navButtonClass}
-                    aria-label="Open account menu"
+                    aria-label="Abrir menu da conta"
                   />
                 }
               >
@@ -311,7 +321,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
                     <DropdownMenuGroup>
                       <DropdownMenuLabel className="flex items-center gap-1.5">
                         <ArrowLeftRight className="size-3" />
-                        Organization
+                        Organização
                       </DropdownMenuLabel>
                       {organizations.map((organization) => (
                         <DropdownMenuItem
@@ -342,7 +352,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
                   }
                 >
                   <Settings className="size-4" />
-                  Settings
+                  Configurações
                 </DropdownMenuItem>
                 {isHostedClientAuthMode() ? (
                   <DropdownMenuItem
@@ -354,11 +364,11 @@ function AccountFooter({ ready }: { ready: boolean }) {
                     }
                   >
                     <CreditCard className="size-4" />
-                    Billing
+                    Cobrança
                   </DropdownMenuItem>
                 ) : null}
                 <DropdownMenuGroup>
-                  <DropdownMenuLabel>Theme</DropdownMenuLabel>
+                  <DropdownMenuLabel>Tema</DropdownMenuLabel>
                   <div className="px-1 pb-1">
                     <ThemePreferenceRadio />
                   </div>
@@ -369,7 +379,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
                   onClick={() => signOutAndRedirect()}
                 >
                   <LogOut className="size-4" />
-                  Sign out
+                  Sair
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -377,7 +387,7 @@ function AccountFooter({ ready }: { ready: boolean }) {
         ) : ready ? (
           <SidebarNavLink
             icon={Settings}
-            label="Settings"
+            label="Configurações"
             linkProps={{ to: "/settings" }}
           />
         ) : (

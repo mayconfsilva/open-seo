@@ -35,7 +35,7 @@ export function SearchTargetingField({
   return (
     <FieldSet className="gap-2" data-invalid={error ? true : undefined}>
       <FieldLegend variant="label" className="mb-0">
-        Search Targeting
+        Alcance da busca
       </FieldLegend>
       <RadioGroup
         value={mode}
@@ -51,7 +51,7 @@ export function SearchTargetingField({
         <Field orientation="horizontal" className="w-auto">
           <RadioGroupItem value="national" id={`${id}-national`} />
           <FieldLabel htmlFor={`${id}-national`} className="font-normal">
-            National
+            Nacional
           </FieldLabel>
         </Field>
         <Field orientation="horizontal" className="w-auto">
@@ -64,26 +64,27 @@ export function SearchTargetingField({
       <FieldDescription>
         {mode === "local" ? (
           <>
-            <span className="font-medium text-success">Best for:</span> "near
+            <span className="font-medium text-success">Ideal para:</span> "near
             me" queries, city/county keywords, service-area pages.
           </>
         ) : (
           <>
-            Local targeting can understate rankings for non-geo-modified terms.
+            O alcance local pode subestimar posições de buscas sem nome de
+            cidade.
           </>
         )}
       </FieldDescription>
       {mode === "local" && (
         <>
           <FieldLabel htmlFor={`${id}-city`} className="sr-only">
-            City or region
+            Cidade ou região
           </FieldLabel>
           <SerpLocationCombobox
             id={`${id}-city`}
             value={locationName}
             onChange={onLocationNameChange}
             countryCode={countryCode}
-            placeholder="Search cities..."
+            placeholder="Buscar cidades..."
             invalid={Boolean(error)}
           />
         </>

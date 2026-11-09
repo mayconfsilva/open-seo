@@ -25,10 +25,10 @@ import {
 type Schedule = RankTrackingConfig["scheduleInterval"];
 
 const SCHEDULE_ITEMS: { value: Schedule; label: string }[] = [
-  { value: "daily", label: "Daily" },
-  { value: "weekly", label: "Weekly" },
-  { value: "monthly", label: "Monthly (end of month)" },
-  { value: "manual", label: "Manual only" },
+  { value: "daily", label: "Diária" },
+  { value: "weekly", label: "Semanal" },
+  { value: "monthly", label: "Mensal (fim do mês)" },
+  { value: "manual", label: "Só manual" },
 ];
 
 const WEEKDAY_ITEMS = WEEKDAYS.map((day, index) => ({
@@ -60,7 +60,7 @@ export function ScheduleField({
 
   return (
     <Field>
-      <FieldLabel htmlFor={id}>Schedule</FieldLabel>
+      <FieldLabel htmlFor={id}>Frequência</FieldLabel>
       <Select
         items={items}
         value={schedule}
@@ -111,7 +111,7 @@ export function ScheduleField({
                   }
                 }}
               >
-                <SelectTrigger aria-label="Day of week">
+                <SelectTrigger aria-label="Dia da semana">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -126,7 +126,7 @@ export function ScheduleField({
             <Input
               type="time"
               className="w-auto"
-              aria-label="Time of day"
+              aria-label="Horário"
               value={`${String(scheduleTime.hour).padStart(2, "0")}:${String(scheduleTime.minute).padStart(2, "0")}`}
               onChange={(e) => {
                 const [hour, minute] = e.target.value.split(":").map(Number);
@@ -144,7 +144,7 @@ export function ScheduleField({
       {schedule === "daily" && (
         <p className="flex items-start gap-1.5 text-xs text-warning">
           <Info className="mt-0.5 size-3.5 shrink-0" />
-          Daily checks use 7x more credits than weekly
+          Coletas diárias consomem 7x mais créditos que as semanais
         </p>
       )}
     </Field>

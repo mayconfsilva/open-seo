@@ -165,16 +165,16 @@ export function RankTrackingDomainDetail({
     setShowAddKeywords(false);
     captureClientEvent("rank_tracking:keywords_add");
     toast.success(
-      `${result.added} keyword${result.added !== 1 ? "s" : ""} added`,
+      `${result.added} palavra${result.added !== 1 ? "s" : ""} adicionada${result.added !== 1 ? "s" : ""}`,
     );
     if (result.checkScheduledSoon) {
-      toast.info("The scheduled check within the hour covers these keywords");
+      toast.info("A coleta agendada para a próxima hora inclui estas palavras");
     } else if (
       !result.checkTriggered &&
       result.added > 0 &&
       planStatus === "paid"
     ) {
-      toast.info("Use 'Check rankings' to check these keywords");
+      toast.info("Use «Coletar posições» para coletar estas palavras");
     }
   };
 
@@ -297,7 +297,7 @@ export function RankTrackingDomainDetail({
             void navigator.clipboard.writeText(
               filtered.map((r) => r.keyword).join("\n"),
             );
-            toast.success("Keywords copied to clipboard");
+            toast.success("Palavras copiadas");
           }}
           onCheckNow={() => {
             if (trackedKeywordCount > 0) requestCheck(trackedKeywordCount);

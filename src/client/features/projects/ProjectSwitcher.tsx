@@ -3,7 +3,7 @@ import { projectsQueryOptions } from "@/client/features/projects/projectQueries"
 import { Link, useRouter } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { findLast } from "remeda";
-import { FolderCog, Plus, Settings } from "lucide-react";
+import { FolderCog, Plus } from "lucide-react";
 import { setLastProjectId } from "@/client/lib/active-project";
 import { CreateProjectModal } from "@/client/features/projects/CreateProjectModal";
 import {
@@ -68,18 +68,14 @@ export function ProjectSwitcher({
     // button's slot, so nothing moves when the projects arrive.
     return (
       <div
-        className="flex items-stretch rounded-lg border border-sidebar-border bg-card"
+        className="grid grid-cols-[32px_minmax(0,1fr)] items-center gap-2.5 border-t border-[#eeedf3] bg-[#fafafc] py-2.5 pl-3 pr-2.5"
         aria-busy
       >
-        <div className="flex min-w-0 flex-1 flex-col px-3 py-1.5">
-          <span className="flex h-5 items-center">
-            <Skeleton className="h-3.5 w-28" />
-          </span>
-          <span className="flex h-4 items-center">
-            <Skeleton className="h-3 w-20" />
-          </span>
+        <Skeleton className="size-8 rounded-full" />
+        <div className="flex min-w-0 flex-col gap-1">
+          <Skeleton className="h-3.5 w-28" />
+          <Skeleton className="h-3 w-20" />
         </div>
-        <div className="w-12 border-l border-sidebar-border" />
       </div>
     );
   }
@@ -122,55 +118,40 @@ export function ProjectSwitcher({
           if (project) handleSelect(project);
         }}
       >
-        <div className="flex items-stretch rounded-lg border border-sidebar-border bg-card">
-          <ComboboxTrigger
-            aria-label="Switch project"
-            className="flex min-w-0 flex-1 items-center justify-between gap-2 rounded-l-lg px-3 py-1.5 text-left hover:bg-accent"
-          >
-            <span className="flex min-w-0 flex-col">
-              <span className="truncate text-sm font-medium">
-                {activeProject?.name ?? "Select project"}
-              </span>
-              {activeProject?.domain ? (
-                <span className="truncate text-xs text-muted-foreground">
-                  {activeProject.domain}
-                </span>
-              ) : null}
+        <ComboboxTrigger
+          aria-label="Trocar projeto"
+          title="Trocar projeto"
+          className="relative grid w-full grid-cols-[32px_minmax(0,1fr)_16px] items-center gap-2.5 border-t border-[#eeedf3] bg-[#fafafc] py-2.5 pl-3 pr-2.5 text-left hover:bg-secondary"
+        >
+          <span
+            aria-hidden
+            className="absolute -top-px left-[27px] h-2.5 w-px bg-[#c9c6d3]"
+          />
+          <span className="grid size-8 place-items-center rounded-full border border-[#ddd8ec] bg-accent text-xs font-bold text-primary">
+            {(activeProject?.name ?? "?").charAt(0).toUpperCase()}
+          </span>
+          <span className="flex min-w-0 flex-col gap-px leading-tight">
+            <span className="truncate text-[13.5px] font-semibold">
+              {activeProject?.name ?? "Selecionar projeto"}
             </span>
-          </ComboboxTrigger>
-          {activeProject ? (
-            <Button
-              nativeButton={false}
-              render={
-                <Link
-                  to="/p/$projectId/settings"
-                  params={{ projectId: activeProject.id }}
-                  aria-label="Project settings"
-                  title="Project settings"
-                  onClick={() => {
-                    setOpen(false);
-                    onCloseDrawer?.();
-                  }}
-                />
-              }
-              variant="ghost"
-              className="h-auto self-stretch rounded-l-none border-0 border-l border-sidebar-border"
-            >
-              <Settings className="size-4" />
-            </Button>
-          ) : null}
-        </div>
+            {activeProject?.domain ? (
+              <span className="truncate font-mono text-[11.5px] text-muted-foreground">
+                {activeProject.domain}
+              </span>
+            ) : null}
+          </span>
+        </ComboboxTrigger>
         <ComboboxContent className="w-(--anchor-width)">
           {projects.length >= SEARCH_THRESHOLD ? (
             <ComboboxInput
               className="w-auto"
-              placeholder="Find project…"
-              aria-label="Filter projects"
+              placeholder="Buscar projeto…"
+              aria-label="Filtrar projetos"
               showTrigger={false}
             />
           ) : null}
           {projects.length > 0 ? (
-            <ComboboxEmpty>No projects match.</ComboboxEmpty>
+            <ComboboxEmpty>Nenhum projeto encontrado.</ComboboxEmpty>
           ) : null}
           <ComboboxList className="max-h-[min(60vh,21rem)]">
             {(project: ProjectSummary) => (
@@ -203,7 +184,7 @@ export function ProjectSwitcher({
               }}
             >
               <Plus className="size-4" />
-              New project
+              Novo projeto
             </Button>
             <Button
               nativeButton={false}
@@ -220,7 +201,7 @@ export function ProjectSwitcher({
               className="justify-start"
             >
               <FolderCog className="size-4" />
-              Manage projects
+              Gerenciar projetos
             </Button>
           </div>
         </ComboboxContent>

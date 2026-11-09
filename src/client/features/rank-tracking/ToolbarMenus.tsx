@@ -48,8 +48,8 @@ export function MoreMenu({
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label="More actions"
-              title="More actions"
+              aria-label="Mais ações"
+              title="Mais ações"
             />
           }
         >
@@ -59,8 +59,8 @@ export function MoreMenu({
           <DropdownMenuItem onClick={onCheckNow} disabled={checkBusy}>
             <Play />
             <ItemText
-              label={checkBusy ? "Running..." : "Check rankings"}
-              description="Fetch current Google positions"
+              label={checkBusy ? "Coletando..." : "Coletar posições"}
+              description="Buscar as posições atuais no Google"
             />
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -70,17 +70,19 @@ export function MoreMenu({
             <RefreshCw className={metricsRefreshing ? "animate-spin" : ""} />
             <ItemText
               label={
-                metricsRefreshing ? "Refreshing..." : "Update keyword stats"
+                metricsRefreshing
+                  ? "Atualizando..."
+                  : "Atualizar dados das palavras"
               }
-              description="Volume, difficulty & CPC — not rankings"
+              description="Volume, dificuldade e CPC, não posições"
             />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       {confirmingRefresh ? (
         <ConfirmDialog
-          title="Update keyword stats?"
-          confirmLabel="Update stats"
+          title="Atualizar dados das palavras?"
+          confirmLabel="Atualizar dados"
           onConfirm={() => {
             setConfirmingRefresh(false);
             onRefreshMetrics();

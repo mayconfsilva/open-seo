@@ -51,8 +51,8 @@ const DEVICE_STYLE: Record<
   "desktop" | "mobile",
   { label: string; color: string }
 > = {
-  desktop: { label: "Desktop", color: "#2563eb" },
-  mobile: { label: "Mobile", color: "#e69f00" },
+  desktop: { label: "Computador", color: "#2e2150" },
+  mobile: { label: "Celular", color: "#ff6446" },
 };
 
 export interface KeywordTrendTarget {
@@ -132,7 +132,7 @@ export function KeywordTrendModal({
   );
 
   // Keys ("<ts>:<device>") whose plotted point sits in the bottom band because
-  // the real position was null — so the tooltip can say "Not found"
+  // the real position was null — so the tooltip can say "Não encontrada"
   // unambiguously even when a genuine position equals serpDepth.
   const bottomBandKeys = useMemo(() => {
     const keys = new Set<string>();
@@ -150,7 +150,7 @@ export function KeywordTrendModal({
     void navigator.clipboard.writeText(
       buildCsv(HISTORY_HEADERS, historyRows.map(historyExportRow)),
     );
-    toast.success("Copied to clipboard");
+    toast.success("Copiado");
     captureClientEvent("rank_tracking:keyword_trend_copy");
   };
 
@@ -189,7 +189,7 @@ export function KeywordTrendModal({
               variant="outline"
               size="sm"
               nativeButton={false}
-              title="Search this keyword on Google with the tracked language, country, and city"
+              title="Buscar esta palavra no Google com o idioma, país e cidade acompanhados"
               render={
                 <a
                   href={googleSerpUrl(target.keyword, {
@@ -203,7 +203,7 @@ export function KeywordTrendModal({
               }
             >
               <ExternalLink data-icon="inline-start" />
-              Open on Google
+              Abrir no Google
             </Button>
             <TrendRangeToggle value={sinceDays} onChange={setSinceDays} />
           </div>
@@ -237,7 +237,7 @@ export function KeywordTrendModal({
                       typeof item.dataKey === "string" &&
                       bottomBandKeys.has(`${checkedAt}:${item.dataKey}`) ? (
                       <span className="font-normal text-muted-foreground">
-                        Not found
+                        Não encontrada
                       </span>
                     ) : (
                       String(value)
@@ -248,11 +248,11 @@ export function KeywordTrendModal({
                 <div className="flex items-center justify-end gap-2">
                   <Button variant="ghost" size="xs" onClick={handleCopy}>
                     <Copy data-icon="inline-start" />
-                    Copy
+                    Copiar
                   </Button>
                   <Button variant="ghost" size="xs" onClick={handleExport}>
                     <Download data-icon="inline-start" />
-                    Export CSV
+                    Exportar CSV
                   </Button>
                 </div>
 
@@ -260,9 +260,11 @@ export function KeywordTrendModal({
                   <Table containerClassName="max-h-64">
                     <TableHeader className="sticky top-0 z-10 bg-popover">
                       <TableRow>
-                        <TableHead>Date</TableHead>
-                        {devices.length > 1 && <TableHead>Device</TableHead>}
-                        <TableHead>Position</TableHead>
+                        <TableHead>Data</TableHead>
+                        {devices.length > 1 && (
+                          <TableHead>Dispositivo</TableHead>
+                        )}
+                        <TableHead>Posição</TableHead>
                         <TableHead>Δ vs previous check</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -295,10 +297,11 @@ export function KeywordTrendModal({
                                       <span className="cursor-help text-xs text-muted-foreground underline decoration-dotted underline-offset-2" />
                                     }
                                   >
-                                    Not found
+                                    Não encontrada
                                   </TooltipTrigger>
                                   <TooltipContent>
-                                    Not ranking, or incomplete results
+                                    Fora das posições coletadas ou resultado
+                                    incompleto
                                   </TooltipContent>
                                 </Tooltip>
                               ) : (
@@ -425,8 +428,8 @@ function slugify(value: string): string {
 
 const HISTORY_HEADERS = [
   "Date (UTC)",
-  "Device",
-  "Position",
+  "Dispositivo",
+  "Posição",
   "Change vs previous",
 ];
 
