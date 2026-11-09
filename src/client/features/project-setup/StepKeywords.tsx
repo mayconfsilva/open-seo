@@ -206,7 +206,7 @@ export function StepKeywords({
                 </div>
               </div>
               {duplicates.length > 0 ? (
-                <p className="rounded-md bg-[#fcf0d9] px-3 py-2 text-[12.5px] text-[#7a4800]">
+                <p className="rounded-md bg-notice-soft px-3 py-2 text-[12.5px] text-notice">
                   Já na lista: {duplicates.map((kw) => `«${kw}»`).join(", ")}.
                   Não vamos duplicar.
                 </p>

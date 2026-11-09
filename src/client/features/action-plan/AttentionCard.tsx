@@ -91,7 +91,7 @@ export function AttentionCard({
           {items.slice(0, SHOWN).map((item, index) => (
             <li
               key={item.key}
-              className="grid grid-cols-[22px_minmax(0,1fr)] gap-2.5 border-t border-[#eeedf3] px-4 py-3"
+              className="grid grid-cols-[22px_minmax(0,1fr)] gap-2.5 border-t border-hairline px-4 py-3"
             >
               <span className="grid size-[22px] place-items-center rounded-full bg-accent text-[12px] font-semibold text-primary">
                 {index + 1}
@@ -109,13 +109,13 @@ export function AttentionCard({
                   <span
                     className={
                       item.planned
-                        ? "rounded bg-[#e5f3ec] px-1.5 py-0.5 font-medium text-[#14613f]"
+                        ? "rounded bg-up-soft px-1.5 py-0.5 font-medium text-up"
                         : "rounded bg-accent px-1.5 py-0.5 font-medium text-primary"
                     }
                   >
                     {item.tag}
                   </span>
-                  <span className="rounded bg-[#f3f3f6] px-1.5 py-0.5 text-muted-foreground">
+                  <span className="rounded bg-background px-1.5 py-0.5 text-muted-foreground">
                     {item.source}
                   </span>
                 </span>
@@ -124,7 +124,7 @@ export function AttentionCard({
           ))}
         </ol>
       )}
-      <div className="border-t border-[#eeedf3] px-4 py-2.5">
+      <div className="border-t border-hairline px-4 py-2.5">
         <Link
           to="/p/$projectId/plan"
           params={{ projectId }}

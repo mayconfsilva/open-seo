@@ -51,7 +51,7 @@ const DEVICE_STYLE: Record<
   "desktop" | "mobile",
   { label: string; color: string }
 > = {
-  desktop: { label: "Computador", color: "#2e2150" },
+  desktop: { label: "Computador", color: "var(--rank-1)" },
   mobile: { label: "Celular", color: "#ff6446" },
 };
 

@@ -59,7 +59,7 @@ export function OrganizationRow({ ready }: { ready: boolean }) {
       </span>
       <span className="flex min-w-0 flex-col gap-px leading-tight">
         <span className="truncate text-[13.5px] font-semibold">{label}</span>
-        <span className="text-[11.5px] text-[#7c788c]">
+        <span className="text-[11.5px] text-faint">
           {role && isClientRole(role) ? "Acesso de cliente" : "Organização"}
         </span>
       </span>
