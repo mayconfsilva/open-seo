@@ -8,6 +8,7 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { projects } from "./app.schema";
+import { invitation, user } from "./better-auth-schema";
 
 // Timestamps are stored as *text* (same column shape as the SQLite schema); see
 // the note in pg/app.schema.ts. `isoNow` matches `new Date().toISOString()` so
@@ -134,4 +135,38 @@ export const projectResearchLog = pgTable(
       table.entryDate,
     ),
   ],
+);
+
+// dataSEO: which projects a member with the "client" role can read. Agency
+// staff (owner, admin, member) see every project of the organization and have
+// no rows here.
+export const projectAccess = pgTable(
+  "project_access",
+  {
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    createdAt: text("created_at").notNull().default(isoNow),
+  },
+  (table) => [
+    primaryKey({ columns: [table.projectId, table.userId] }),
+    index("project_access_user_idx").on(table.userId),
+  ],
+);
+
+// dataSEO: the projects a pending client invitation will grant on acceptance.
+export const invitationProjects = pgTable(
+  "invitation_projects",
+  {
+    invitationId: text("invitation_id")
+      .notNull()
+      .references(() => invitation.id, { onDelete: "cascade" }),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+  },
+  (table) => [primaryKey({ columns: [table.invitationId, table.projectId] })],
 );

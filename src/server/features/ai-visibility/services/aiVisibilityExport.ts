@@ -1,4 +1,5 @@
 import { env } from "cloudflare:workers";
+import { isClientRole } from "@/lib/org-permissions";
 import { z } from "zod";
 import { resolveUserContextFromHeaders } from "@/middleware/ensure-user/resolve";
 import { ProjectRepository } from "@/server/features/projects/repositories/ProjectRepository";
@@ -107,6 +108,9 @@ export async function handleAiVisibilityDownload(
   } catch {
     return new Response("Unauthorized", { status: 401 });
   }
+  // dataSEO: clients only read through the client portal.
+  if (isClientRole(auth.role))
+    return new Response("Not found", { status: 404 });
   const project = await ProjectRepository.getProjectForOrganization(
     projectId.data,
     auth.organizationId,

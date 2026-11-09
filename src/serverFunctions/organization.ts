@@ -5,7 +5,7 @@ import { getRequest } from "@tanstack/react-start/server";
 import { z } from "zod";
 import { getAuth, getHostedBaseUrl } from "@/lib/auth";
 import { isEveryAppAuthMode, isHostedAuthMode } from "@/lib/auth-mode";
-import { hasOrgPermission } from "@/lib/org-permissions";
+import { hasOrgPermission, isClientRole } from "@/lib/org-permissions";
 import { consumeInvitationSendBudget } from "@/server/auth/invitation-send-limit";
 import { requireOrgPermission } from "@/server/auth/org-gate";
 import { transferOrganizationOwnership } from "@/server/auth/ownership-transfer";
@@ -13,7 +13,12 @@ import { AuthRepository } from "@/server/auth/repositories/AuthRepository";
 import { sendHostedInvitationEmail } from "@/server/email/loops";
 import { ProjectService } from "@/server/features/projects/services/ProjectService";
 import { AppError } from "@/server/lib/errors";
-import { requireAuthenticatedContext } from "@/serverFunctions/middleware";
+import { ProjectAccessRepository } from "@/server/features/access/ProjectAccessRepository";
+import { ProjectAccessService } from "@/server/features/access/ProjectAccessService";
+import {
+  requireAuthenticatedContext,
+  requireMemberContext,
+} from "@/serverFunctions/middleware";
 
 /** Teams, invitations and ownership live on the Every App gateway. */
 function refuseBehindEveryAppGateway() {
@@ -31,7 +36,7 @@ function refuseBehindEveryAppGateway() {
 // role, member rows are never listed or trusted, and the team functions below
 // refuse (the UI that calls them is hosted-only).
 export const getOrganizationContext = createServerFn({ method: "GET" })
-  .middleware(requireAuthenticatedContext)
+  .middleware(requireMemberContext)
   .handler(async ({ context }) => {
     if (isEveryAppAuthMode(env.AUTH_MODE)) {
       const organizationName = "Organization";
@@ -91,9 +96,19 @@ export const getTeam = createServerFn({ method: "GET" })
         )
       : [];
 
+    // dataSEO: which projects each client (or client invitation) can read.
+    const [projectAccess, invitationProjects] = await Promise.all([
+      ProjectAccessRepository.listForOrganization(context.organizationId),
+      ProjectAccessRepository.listInvitationProjects(
+        pendingInvitations.map((invitation) => invitation.id),
+      ),
+    ]);
+
     return {
       members: fullOrganization.members ?? [],
       pendingInvitations,
+      projectAccess,
+      invitationProjects,
     };
   });
 
@@ -119,7 +134,7 @@ async function activateOrganization(userId: string, organizationId: string) {
 }
 
 export const switchOrganization = createServerFn({ method: "POST" })
-  .middleware(requireAuthenticatedContext)
+  .middleware(requireMemberContext)
   .validator(switchOrganizationSchema)
   .handler(async ({ data, context }) => {
     await activateOrganization(context.userId, data.organizationId);
@@ -141,7 +156,17 @@ export const switchToProjectOrganization = createServerFn({ method: "POST" })
     return { organizationId };
   });
 
-const sendInvitationSchema = z.object({ email: z.string().email() });
+const sendInvitationSchema = z
+  .object({
+    email: z.string().email(),
+    // dataSEO: a client reads only the projects listed here.
+    role: z.enum(["admin", "client"]).default("admin"),
+    projectIds: z.array(z.string().min(1)).max(200).default([]),
+  })
+  .refine((data) => data.role !== "client" || data.projectIds.length > 0, {
+    message: "Escolha ao menos um projeto para o cliente.",
+    path: ["projectIds"],
+  });
 
 // Invite (or re-invite) a teammate. better-auth creates the pending
 // invitation — its server-side checks (inviter must be a member with invite
@@ -160,6 +185,14 @@ export const sendTeamInvitation = createServerFn({ method: "POST" })
     // low-privilege callers.
     requireOrgPermission(context, { invitation: ["create"] });
 
+    const projectIds =
+      data.role === "client"
+        ? await ProjectAccessService.requireOrganizationProjects(
+            context.organizationId,
+            data.projectIds,
+          )
+        : [];
+
     await consumeInvitationSendBudget(context.organizationId, data.email);
 
     const invitation = await getAuth()
@@ -167,7 +200,7 @@ export const sendTeamInvitation = createServerFn({ method: "POST" })
         headers: getRequest().headers,
         body: {
           email: data.email,
-          role: "admin",
+          role: data.role,
           resend: true,
           // Bind the invitation to the request's resolved org, not the session's
           // active-organization hint, which can be stale after a switch.
@@ -184,6 +217,15 @@ export const sendTeamInvitation = createServerFn({ method: "POST" })
         }
         throw error;
       });
+
+    // A resend keeps the pending invitation (and its role) as it was, so
+    // only a client invite with projects touches the list.
+    if (data.role === "client") {
+      await ProjectAccessRepository.replaceInvitationProjects(
+        invitation.id,
+        projectIds,
+      );
+    }
 
     const [inviter, memberships] = await Promise.all([
       AuthRepository.getHostedUser(context.userId),
@@ -230,4 +272,36 @@ export const transferOwnership = createServerFn({ method: "POST" })
     refuseBehindEveryAppGateway();
     await transferOrganizationOwnership(context, data.memberId);
     return { memberId: data.memberId };
+  });
+
+const setClientProjectsSchema = z.object({
+  userId: z.string().min(1),
+  projectIds: z.array(z.string().min(1)).max(200),
+});
+
+// dataSEO: change which projects a client member can read. An empty list
+// leaves them in the organization with nothing to open.
+export const setClientProjects = createServerFn({ method: "POST" })
+  .middleware(requireAuthenticatedContext)
+  .validator(setClientProjectsSchema)
+  .handler(async ({ data, context }) => {
+    refuseBehindEveryAppGateway();
+    requireOrgPermission(context, { member: ["update"] });
+    const membership = await AuthRepository.getMembership(
+      data.userId,
+      context.organizationId,
+    );
+    if (!membership || !isClientRole(membership.role)) {
+      throw new AppError("NOT_FOUND");
+    }
+    const projectIds = await ProjectAccessService.requireOrganizationProjects(
+      context.organizationId,
+      data.projectIds,
+    );
+    await ProjectAccessRepository.replaceForUser(
+      data.userId,
+      context.organizationId,
+      projectIds,
+    );
+    return { projectIds };
   });

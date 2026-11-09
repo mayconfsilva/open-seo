@@ -15,6 +15,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthErrorRouteImport } from './routes/auth-error'
 import { Route as ConnectRouteImport } from './routes/connect'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as PortalRouteImport } from './routes/portal'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as Char91DotwellKnownChar93HttpMessageSignaturesDirectoryRouteImport } from './routes/[.well-known]/http-message-signatures-directory'
@@ -35,6 +36,8 @@ import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitati
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiPrivacyRegionRouteImport } from './routes/api/privacy-region'
 import { Route as ApiSignUpStatusRouteImport } from './routes/api/sign-up-status'
+import { Route as PortalIndexRouteImport } from './routes/portal/index'
+import { Route as PortalProjectIdRouteImport } from './routes/portal/$projectId'
 import { Route as RReportIdRouteImport } from './routes/r/$reportId'
 import { Route as AppBillingFixPaymentRouteImport } from './routes/_app/billing_.fix-payment'
 import { Route as AppHelpDataforseoApiKeyRouteImport } from './routes/_app/help/dataforseo-api-key'
@@ -110,6 +113,11 @@ const ConnectRoute = ConnectRouteImport.update({
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -214,6 +222,16 @@ const ApiSignUpStatusRoute = ApiSignUpStatusRouteImport.update({
   id: '/api/sign-up-status',
   path: '/api/sign-up-status',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalProjectIdRoute = PortalProjectIdRouteImport.update({
+  id: '/$projectId',
+  path: '/$projectId',
+  getParentRoute: () => PortalRoute,
 } as any)
 const RReportIdRoute = RReportIdRouteImport.update({
   id: '/r/$reportId',
@@ -488,6 +506,7 @@ export interface FileRoutesByFullPath {
   '/auth-error': typeof AuthErrorRoute
   '/connect': typeof ConnectRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/portal': typeof PortalRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
   '/.well-known/http-message-signatures-directory': typeof Char91DotwellKnownChar93HttpMessageSignaturesDirectoryRoute
@@ -507,7 +526,9 @@ export interface FileRoutesByFullPath {
   '/api/health': typeof ApiHealthRoute
   '/api/privacy-region': typeof ApiPrivacyRegionRoute
   '/api/sign-up-status': typeof ApiSignUpStatusRoute
+  '/portal/$projectId': typeof PortalProjectIdRoute
   '/r/$reportId': typeof RReportIdRoute
+  '/portal/': typeof PortalIndexRoute
   '/p/$projectId': typeof AppPProjectIdRouteRouteWithChildren
   '/billing/fix-payment': typeof AppBillingFixPaymentRoute
   '/help/dataforseo-api-key': typeof AppHelpDataforseoApiKeyRoute
@@ -580,7 +601,9 @@ export interface FileRoutesByTo {
   '/api/health': typeof ApiHealthRoute
   '/api/privacy-region': typeof ApiPrivacyRegionRoute
   '/api/sign-up-status': typeof ApiSignUpStatusRoute
+  '/portal/$projectId': typeof PortalProjectIdRoute
   '/r/$reportId': typeof RReportIdRoute
+  '/portal': typeof PortalIndexRoute
   '/billing/fix-payment': typeof AppBillingFixPaymentRoute
   '/help/dataforseo-api-key': typeof AppHelpDataforseoApiKeyRoute
   '/help/openrouter-api-key': typeof AppHelpOpenrouterApiKeyRoute
@@ -633,6 +656,7 @@ export interface FileRoutesById {
   '/auth-error': typeof AuthErrorRoute
   '/connect': typeof ConnectRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/portal': typeof PortalRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/verify-email': typeof VerifyEmailRoute
   '/.well-known/http-message-signatures-directory': typeof Char91DotwellKnownChar93HttpMessageSignaturesDirectoryRoute
@@ -652,8 +676,10 @@ export interface FileRoutesById {
   '/api/health': typeof ApiHealthRoute
   '/api/privacy-region': typeof ApiPrivacyRegionRoute
   '/api/sign-up-status': typeof ApiSignUpStatusRoute
+  '/portal/$projectId': typeof PortalProjectIdRoute
   '/r/$reportId': typeof RReportIdRoute
   '/_app/': typeof AppIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/_app/p/$projectId': typeof AppPProjectIdRouteRouteWithChildren
   '/_app/billing_/fix-payment': typeof AppBillingFixPaymentRoute
   '/_app/help/dataforseo-api-key': typeof AppHelpDataforseoApiKeyRoute
@@ -710,6 +736,7 @@ export interface FileRouteTypes {
     | '/auth-error'
     | '/connect'
     | '/forgot-password'
+    | '/portal'
     | '/reset-password'
     | '/verify-email'
     | '/.well-known/http-message-signatures-directory'
@@ -729,7 +756,9 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/api/privacy-region'
     | '/api/sign-up-status'
+    | '/portal/$projectId'
     | '/r/$reportId'
+    | '/portal/'
     | '/p/$projectId'
     | '/billing/fix-payment'
     | '/help/dataforseo-api-key'
@@ -802,7 +831,9 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/api/privacy-region'
     | '/api/sign-up-status'
+    | '/portal/$projectId'
     | '/r/$reportId'
+    | '/portal'
     | '/billing/fix-payment'
     | '/help/dataforseo-api-key'
     | '/help/openrouter-api-key'
@@ -854,6 +885,7 @@ export interface FileRouteTypes {
     | '/auth-error'
     | '/connect'
     | '/forgot-password'
+    | '/portal'
     | '/reset-password'
     | '/verify-email'
     | '/.well-known/http-message-signatures-directory'
@@ -873,8 +905,10 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/api/privacy-region'
     | '/api/sign-up-status'
+    | '/portal/$projectId'
     | '/r/$reportId'
     | '/_app/'
+    | '/portal/'
     | '/_app/p/$projectId'
     | '/_app/billing_/fix-payment'
     | '/_app/help/dataforseo-api-key'
@@ -932,6 +966,7 @@ export interface RootRouteChildren {
   AuthErrorRoute: typeof AuthErrorRoute
   ConnectRoute: typeof ConnectRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  PortalRoute: typeof PortalRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
   Char91DotwellKnownChar93HttpMessageSignaturesDirectoryRoute: typeof Char91DotwellKnownChar93HttpMessageSignaturesDirectoryRoute
@@ -995,6 +1030,13 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -1136,6 +1178,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/sign-up-status'
       preLoaderRoute: typeof ApiSignUpStatusRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/$projectId': {
+      id: '/portal/$projectId'
+      path: '/$projectId'
+      fullPath: '/portal/$projectId'
+      preLoaderRoute: typeof PortalProjectIdRouteImport
+      parentRoute: typeof PortalRoute
     }
     '/r/$reportId': {
       id: '/r/$reportId'
@@ -1680,6 +1736,19 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
   AuthenticatedRouteChildren,
 )
 
+interface PortalRouteChildren {
+  PortalProjectIdRoute: typeof PortalProjectIdRoute
+  PortalIndexRoute: typeof PortalIndexRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalProjectIdRoute: PortalProjectIdRoute,
+  PortalIndexRoute: PortalIndexRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
@@ -1687,6 +1756,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthErrorRoute: AuthErrorRoute,
   ConnectRoute: ConnectRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  PortalRoute: PortalRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
   VerifyEmailRoute: VerifyEmailRoute,
   Char91DotwellKnownChar93HttpMessageSignaturesDirectoryRoute:

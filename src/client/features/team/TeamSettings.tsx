@@ -31,6 +31,8 @@ import {
   type Member,
 } from "@/client/features/team/TeamTableRows";
 import { TransferOwnershipModal } from "@/client/features/team/TransferOwnershipModal";
+import { ClientProjectsDialog } from "@/client/features/team/ClientProjectsDialog";
+import { projectsQueryOptions } from "@/client/features/projects/projectQueries";
 import { captureClientEvent } from "@/client/lib/posthog";
 import { authClient, useSession } from "@/lib/auth-client";
 import { hasOrgPermission } from "@/lib/org-permissions";
@@ -49,12 +51,24 @@ function usePendingVariables(mutationKey: string[]) {
   });
 }
 
+function grantsFor(rows: Array<{ projectId: string }>) {
+  return rows.map((row) => row.projectId);
+}
+
 // The Organization tab of account settings: who has access to the active org.
 export function TeamSettings() {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
   const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [transferTarget, setTransferTarget] = useState<Member | null>(null);
+  const [projectsTarget, setProjectsTarget] = useState<Member | null>(null);
+  const projectsQuery = useQuery(projectsQueryOptions());
+  const projects = (projectsQuery.data ?? []).filter(
+    (project) => project.domain !== null && !project.draftSince,
+  );
+  const projectName = new Map(
+    (projectsQuery.data ?? []).map((project) => [project.id, project.name]),
+  );
 
   const orgContextQuery = useQuery(organizationContextQueryOptions());
 
@@ -73,10 +87,14 @@ export function TeamSettings() {
   // the same link with a refreshed expiry.
   const resendMutation = useMutation({
     mutationKey: RESEND_KEY,
-    mutationFn: (email: string) => sendTeamInvitation({ data: { email } }),
+    mutationFn: (invitation: {
+      email: string;
+      role: "admin" | "client";
+      projectIds: string[];
+    }) => sendTeamInvitation({ data: invitation }),
     onSuccess: (result) => {
       captureClientEvent("team:invitation_resend");
-      announceInvitation(result, "Invitation resent");
+      announceInvitation(result, "Convite reenviado");
       void refreshTeam();
     },
     onError: (error: Error) => {
@@ -91,12 +109,12 @@ export function TeamSettings() {
         memberIdOrEmail: memberId,
       });
       if (result.error) {
-        throw new Error(result.error.message || "Failed to remove the member");
+        throw new Error(result.error.message || "Não foi possível remover");
       }
     },
     onSuccess: () => {
       captureClientEvent("team:member_remove");
-      toast.success("Member removed");
+      toast.success("Acesso removido");
       void refreshTeam();
     },
   });
@@ -109,13 +127,13 @@ export function TeamSettings() {
       });
       if (result.error) {
         throw new Error(
-          result.error.message || "Failed to cancel the invitation",
+          result.error.message || "Não foi possível cancelar o convite",
         );
       }
     },
     onSuccess: () => {
       captureClientEvent("team:invitation_cancel");
-      toast.success("Invitation canceled");
+      toast.success("Convite cancelado");
       void refreshTeam();
     },
   });
@@ -132,6 +150,23 @@ export function TeamSettings() {
 
   const members = teamQuery.data?.members ?? [];
   const pendingInvitations = teamQuery.data?.pendingInvitations ?? [];
+  const memberProjects = (userId: string) =>
+    grantsFor(
+      (teamQuery.data?.projectAccess ?? []).filter(
+        (row) => row.userId === userId,
+      ),
+    );
+  const invitationProjectIds = (invitationId: string) =>
+    grantsFor(
+      (teamQuery.data?.invitationProjects ?? []).filter(
+        (row) => row.invitationId === invitationId,
+      ),
+    );
+  const names = (ids: string[]) =>
+    ids.flatMap((id) => {
+      const name = projectName.get(id);
+      return name ? [name] : [];
+    });
 
   // The team query waits on the org context, so a failed context would
   // otherwise leave the team spinner up for good. A failed refetch keeps the
@@ -142,7 +177,7 @@ export function TeamSettings() {
   const loadError = failedQuery ? (
     <QueryError
       error={failedQuery.error}
-      fallback="We couldn't load your team right now."
+      fallback="Não foi possível carregar a equipe agora."
       onRetry={() => void failedQuery.refetch()}
       isRetrying={failedQuery.isFetching}
     />
@@ -152,21 +187,22 @@ export function TeamSettings() {
   return (
     <section className="space-y-3">
       <SectionHeader
-        title="Members"
+        title="Pessoas com acesso"
         action={
           canManageTeam ? (
             <Button size="sm" onClick={() => setIsInviteOpen(true)}>
-              Invite teammate
+              Convidar pessoa
             </Button>
           ) : null
         }
       />
       <p className="text-sm text-muted-foreground">
-        Teammates join as Admins. Admins have full access to each project except
-        for billing.
+        A equipe da agência vê e edita todos os projetos (só o dono mexe na
+        cobrança). Clientes veem, só para leitura, os projetos liberados para
+        eles, pelo portal do cliente.
       </p>
       {orgContextQuery.isSuccess && !canManageTeam ? (
-        <PermissionHint action="invite or remove teammates" />
+        <PermissionHint action="convidar ou remover pessoas" />
       ) : null}
       {loadError}
 
@@ -177,9 +213,10 @@ export function TeamSettings() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Member</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>Pessoa</TableHead>
+                <TableHead>Papel</TableHead>
+                <TableHead>Projetos</TableHead>
+                <TableHead>Situação</TableHead>
                 <TableHead className="w-10" />
               </TableRow>
             </TableHeader>
@@ -192,8 +229,10 @@ export function TeamSettings() {
                   canManageTeam={canManageTeam}
                   isOwner={isOwner}
                   isRemoving={pendingRemovals.includes(member.id)}
+                  projectNames={names(memberProjects(member.userId))}
                   onRemove={() => removeMemberMutation.mutate(member.id)}
                   onTransferOwnership={() => setTransferTarget(member)}
+                  onEditProjects={() => setProjectsTarget(member)}
                 />
               ))}
               {pendingInvitations.map((invitation) => (
@@ -201,9 +240,22 @@ export function TeamSettings() {
                   key={invitation.id}
                   invitation={invitation}
                   canManageTeam={canManageTeam}
-                  isResending={pendingResends.includes(invitation.email)}
+                  isResending={pendingResends.some(
+                    (pending) =>
+                      typeof pending === "object" &&
+                      pending !== null &&
+                      "email" in pending &&
+                      pending.email === invitation.email,
+                  )}
                   isCanceling={pendingCancels.includes(invitation.id)}
-                  onResend={() => resendMutation.mutate(invitation.email)}
+                  projectNames={names(invitationProjectIds(invitation.id))}
+                  onResend={() =>
+                    resendMutation.mutate({
+                      email: invitation.email,
+                      role: invitation.role === "client" ? "client" : "admin",
+                      projectIds: invitationProjectIds(invitation.id),
+                    })
+                  }
                   onCancel={() =>
                     cancelInvitationMutation.mutate(invitation.id)
                   }
@@ -226,6 +278,17 @@ export function TeamSettings() {
               queryKey: organizationContextQueryOptions().queryKey,
             });
           }}
+        />
+      ) : null}
+
+      {projectsTarget ? (
+        <ClientProjectsDialog
+          userId={projectsTarget.userId}
+          email={projectsTarget.user.email}
+          projects={projects}
+          initial={memberProjects(projectsTarget.userId)}
+          onClose={() => setProjectsTarget(null)}
+          onSaved={() => void refreshTeam()}
         />
       ) : null}
 

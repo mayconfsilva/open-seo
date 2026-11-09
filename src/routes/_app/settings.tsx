@@ -5,7 +5,7 @@ import { usesBetterAuthClient } from "@/lib/auth-mode";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/settings")({
-  head: () => pageHead("Settings"),
+  head: () => pageHead("Configurações"),
   component: SettingsLayout,
 });
 
@@ -14,11 +14,16 @@ export const Route = createFileRoute("/_app/settings")({
 // (team). Billing keeps its own page — it's linked from paywalls all over.
 function SettingsLayout() {
   const tabs = [
-    { to: "/settings" as const, label: "Personal", exact: true },
+    { to: "/settings" as const, label: "Pessoal", exact: true },
     // Access / no-auth self-host has no memberships — the organization tab
     // would 404.
     ...(usesBetterAuthClient()
-      ? [{ to: "/settings/organization" as const, label: "Organization" }]
+      ? [
+          {
+            to: "/settings/organization" as const,
+            label: "Organização e acesso",
+          },
+        ]
       : []),
   ];
 
@@ -26,7 +31,7 @@ function SettingsLayout() {
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="space-y-4">
-          <PageHeader title="Settings" />
+          <PageHeader title="Configurações" />
           <NavTabs label="Settings sections">
             {tabs.map((tab) => (
               <NavTab

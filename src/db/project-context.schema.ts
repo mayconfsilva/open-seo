@@ -8,6 +8,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 import { projects } from "./app.schema";
+import { invitation, user } from "./better-auth-schema";
 
 // ============================================================================
 // Project memory: the shared AI context every surface (SAM, MCP, settings UI)
@@ -139,4 +140,40 @@ export const projectResearchLog = sqliteTable(
       table.entryDate,
     ),
   ],
+);
+
+// dataSEO: which projects a member with the "client" role can read. Agency
+// staff (owner, admin, member) see every project of the organization and have
+// no rows here.
+export const projectAccess = sqliteTable(
+  "project_access",
+  {
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    createdAt: text("created_at")
+      .notNull()
+      .default(sql`(current_timestamp)`),
+  },
+  (table) => [
+    primaryKey({ columns: [table.projectId, table.userId] }),
+    index("project_access_user_idx").on(table.userId),
+  ],
+);
+
+// dataSEO: the projects a pending client invitation will grant on acceptance.
+export const invitationProjects = sqliteTable(
+  "invitation_projects",
+  {
+    invitationId: text("invitation_id")
+      .notNull()
+      .references(() => invitation.id, { onDelete: "cascade" }),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+  },
+  (table) => [primaryKey({ columns: [table.invitationId, table.projectId] })],
 );

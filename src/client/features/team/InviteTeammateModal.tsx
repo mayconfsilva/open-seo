@@ -1,4 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { cn } from "cn";
 import { revalidateLogic } from "@tanstack/react-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -12,24 +14,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/client/components/ui/dialog";
+import { projectsQueryOptions } from "@/client/features/projects/projectQueries";
 import { getErrorCode } from "@/client/lib/error-messages";
 import { captureClientEvent } from "@/client/lib/posthog";
 import { isHostedClientAuthMode, usesBetterAuthClient } from "@/lib/auth-mode";
 import { sendTeamInvitation } from "@/serverFunctions/organization";
 
 const inviteSchema = z.object({
-  email: z.string().trim().email("Enter a valid email address."),
+  email: z.string().trim().email("Digite um e-mail válido."),
 });
 
 export function inviteErrorMessage(error: Error) {
   const code = getErrorCode(error);
   if (code === "RATE_LIMITED") {
-    return "Invitation limit reached for today. Try again tomorrow.";
+    return "Limite de convites de hoje atingido. Tente amanhã.";
   }
   if (code === "UPSTREAM_UNAVAILABLE") {
-    return "The invitation was saved but the email couldn't be sent. Use Resend in a moment to retry.";
+    return "O convite foi salvo, mas o e-mail não saiu. Use Reenviar daqui a pouco.";
   }
-  return "We couldn't send that invitation.";
+  return "Não foi possível enviar o convite.";
 }
 
 // Without an email transport (the standalone Docker edition) the server hands
@@ -46,9 +49,9 @@ export function announceInvitation(
   void (
     navigator.clipboard?.writeText(inviteUrl) ?? Promise.reject(new Error())
   ).then(
-    () => toast.success("Invitation link copied"),
+    () => toast.success("Link do convite copiado"),
     () =>
-      toast.success("Invitation link", {
+      toast.success("Link do convite", {
         description: inviteUrl,
         duration: 20000,
       }),
@@ -64,19 +67,34 @@ export function InviteTeammateModal({
 }) {
   // Server function (not authClient.inviteMember): it enforces the daily send
   // limits and fails visibly when the invite email doesn't send.
+  // dataSEO: agency staff (admin) or a read-only client of chosen projects.
+  const [role, setRole] = useState<"admin" | "client">("admin");
+  const [projectIds, setProjectIds] = useState<string[]>([]);
+  const projectsQuery = useQuery(projectsQueryOptions());
+  const projects = (projectsQuery.data ?? []).filter(
+    (project) => project.domain !== null && !project.draftSince,
+  );
   const inviteMutation = useMutation({
     mutationFn: (inviteeEmail: string) =>
-      sendTeamInvitation({ data: { email: inviteeEmail } }),
+      sendTeamInvitation({
+        data: {
+          email: inviteeEmail,
+          role,
+          projectIds: role === "client" ? projectIds : [],
+        },
+      }),
     onSuccess: (result) => {
       captureClientEvent("team:invitation_send");
-      announceInvitation(result, "Invitation sent");
+      announceInvitation(result, "Convite enviado");
       onInvited();
       onClose();
     },
     onError: (error: Error) => {
       if (getErrorCode(error) === "CONFLICT") {
         form.setErrorMap({
-          onSubmit: { fields: { email: "This person is already a member." } },
+          onSubmit: {
+            fields: { email: "Essa pessoa já faz parte da organização." },
+          },
         });
       } else {
         toast.error(inviteErrorMessage(error));
@@ -106,37 +124,122 @@ export function InviteTeammateModal({
         <form.AppForm>
           <form.Form className="flex flex-col gap-4">
             <DialogHeader>
-              <DialogTitle>Invite a teammate</DialogTitle>
+              <DialogTitle>Convidar pessoa</DialogTitle>
               <DialogDescription>
+                {role === "client"
+                  ? "O cliente só vê os projetos marcados, em modo leitura, pelo portal do cliente."
+                  : "Entra como administrador, com acesso a todos os projetos (exceto cobrança)."}{" "}
                 {sharesLink
-                  ? "They'll join as an Admin with full access to each project. Share the invitation link with them; they create their account from it. It expires in 7 days."
-                  : "They'll join as an Admin with full access to each project except for billing. The invitation link expires in 7 days."}
+                  ? "Você recebe um link para enviar à pessoa; ela cria a conta por ele. Vale por 7 dias."
+                  : "O link do convite vale por 7 dias."}
               </DialogDescription>
             </DialogHeader>
             <form.AppField name="email">
               {(field) => (
                 <field.TextField
-                  label="Email"
+                  label="E-mail"
                   type="email"
-                  placeholder="teammate@company.com"
+                  placeholder="pessoa@empresa.com.br"
                   required
                   autoFocus
                 />
               )}
             </form.AppField>
+            <div className="grid grid-cols-2 gap-2">
+              {(
+                [
+                  ["admin", "Equipe da agência", "Vê e edita tudo"],
+                  ["client", "Cliente", "Só leitura, projetos escolhidos"],
+                ] as const
+              ).map(([value, label, help]) => (
+                <button
+                  key={value}
+                  type="button"
+                  aria-pressed={role === value}
+                  onClick={() => setRole(value)}
+                  className={cn(
+                    "flex flex-col rounded-md border px-3 py-2 text-left",
+                    role === value
+                      ? "border-primary bg-accent"
+                      : "border-border",
+                  )}
+                >
+                  <span className="text-[13px] font-medium">{label}</span>
+                  <span className="text-[12px] text-muted-foreground">
+                    {help}
+                  </span>
+                </button>
+              ))}
+            </div>
+            {role === "client" ? (
+              <ProjectChecklist
+                projects={projects}
+                selected={projectIds}
+                onChange={setProjectIds}
+              />
+            ) : null}
             <DialogFooter>
               <Button
                 variant="ghost"
                 onClick={onClose}
                 disabled={inviteMutation.isPending}
               >
-                Cancel
+                Cancelar
               </Button>
-              <form.SubmitButton>Send invite</form.SubmitButton>
+              <form.SubmitButton
+                disabled={role === "client" && projectIds.length === 0}
+              >
+                Enviar convite
+              </form.SubmitButton>
             </DialogFooter>
           </form.Form>
         </form.AppForm>
       </DialogContent>
     </Dialog>
+  );
+}
+
+/** Checkboxes for the projects a client may read. */
+export function ProjectChecklist({
+  projects,
+  selected,
+  onChange,
+}: {
+  projects: Array<{ id: string; name: string; domain: string | null }>;
+  selected: string[];
+  onChange: (projectIds: string[]) => void;
+}) {
+  if (projects.length === 0) {
+    return (
+      <p className="text-[13px] text-muted-foreground">
+        Nenhum projeto ativo para liberar ainda.
+      </p>
+    );
+  }
+  return (
+    <fieldset className="flex max-h-56 flex-col gap-1.5 overflow-y-auto rounded-md border border-border p-3">
+      <legend className="px-1 text-[12.5px] font-medium">
+        Projetos que o cliente pode ver
+      </legend>
+      {projects.map((project) => (
+        <label key={project.id} className="flex items-center gap-2 text-[13px]">
+          <input
+            type="checkbox"
+            checked={selected.includes(project.id)}
+            onChange={(event) =>
+              onChange(
+                event.target.checked
+                  ? [...selected, project.id]
+                  : selected.filter((id) => id !== project.id),
+              )
+            }
+          />
+          <span className="truncate">{project.name}</span>
+          <span className="truncate font-mono text-[11.5px] text-muted-foreground">
+            {project.domain}
+          </span>
+        </label>
+      ))}
+    </fieldset>
   );
 }

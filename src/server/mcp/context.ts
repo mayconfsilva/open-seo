@@ -1,4 +1,5 @@
 import type { ServerContext } from "@modelcontextprotocol/server";
+import { isClientRole } from "@/lib/org-permissions";
 import { z } from "zod";
 import type { BillingCustomerContext } from "@/server/billing/subscription";
 import { resolveClientLabel } from "@/server/mcp/client-label";
@@ -150,6 +151,10 @@ export function createMcpToolContext(
     throw new Error("MCP auth context is missing a role for a hosted client");
   }
   const role = applicationAuth.role ?? "owner";
+  // dataSEO: clients read through the client portal only, never MCP.
+  if (isClientRole(role)) {
+    throw new Error("Clients have read-only portal access and cannot use MCP");
+  }
 
   return {
     auth: {

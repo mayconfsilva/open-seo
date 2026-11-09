@@ -41,6 +41,10 @@ export const orgRoles = {
   member: orgAccessControl.newRole({
     ...memberAc.statements,
   }),
+  // dataSEO: the agency's client. Reads only the projects granted to them in
+  // project_access, through the client portal; every other server function
+  // refuses this role (serverFunctions/middleware.ts).
+  client: orgAccessControl.newRole({}),
 };
 
 export type OrgPermissionRequest = Partial<{
@@ -62,4 +66,9 @@ export function hasOrgPermission(
     const candidate = roleByName.get(name.trim());
     return candidate ? candidate.authorize(permissions).success : false;
   });
+}
+
+/** dataSEO: true when every role the caller holds is "client". */
+export function isClientRole(role: string): boolean {
+  return role.split(",").every((name) => name.trim() === "client");
 }

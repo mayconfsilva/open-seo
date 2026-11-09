@@ -1,17 +1,41 @@
-import { Crown, Send, Trash2 } from "lucide-react";
+import { Crown, FolderLock, Send, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { ConfirmDialog } from "@/client/components/ConfirmDialog";
 import { RowActionsMenu } from "@/client/components/RowActionsMenu";
 import { Badge } from "@/client/components/ui/badge";
 import { DropdownMenuItem } from "@/client/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/client/components/ui/table";
-import { hasOrgPermission } from "@/lib/org-permissions";
+import { hasOrgPermission, isClientRole } from "@/lib/org-permissions";
 
 const ROLE_LABELS: Record<string, string> = {
-  owner: "Owner",
-  admin: "Admin",
-  member: "Member",
+  owner: "Dono",
+  admin: "Administrador",
+  member: "Membro",
+  client: "Cliente",
 };
+
+/** dataSEO: "Todos" for agency staff, the granted project names for a client. */
+function ProjectsCell({
+  role,
+  projectNames,
+}: {
+  role: string;
+  projectNames: string[];
+}) {
+  return (
+    <TableCell className="max-w-[240px] text-xs text-muted-foreground">
+      {isClientRole(role) ? (
+        projectNames.length > 0 ? (
+          <span className="line-clamp-2">{projectNames.join(", ")}</span>
+        ) : (
+          <span className="text-destructive">Nenhum projeto</span>
+        )
+      ) : (
+        "Todos"
+      )}
+    </TableCell>
+  );
+}
 
 function formatRole(role: string) {
   return role
@@ -40,16 +64,20 @@ export function MemberRow({
   canManageTeam,
   isOwner,
   isRemoving,
+  projectNames,
   onRemove,
   onTransferOwnership,
+  onEditProjects,
 }: {
   member: Member;
   isSelf: boolean;
   canManageTeam: boolean;
   isOwner: boolean;
   isRemoving: boolean;
+  projectNames: string[];
   onRemove: () => void;
   onTransferOwnership: () => void;
+  onEditProjects: () => void;
 }) {
   const memberIsOwner = hasOrgPermission(member.role, {
     billing: ["manage"],
@@ -67,7 +95,7 @@ export function MemberRow({
         <p className="truncate font-medium" data-ph-mask>
           {member.user.name || member.user.email}
           {isSelf ? (
-            <span className="font-normal text-muted-foreground"> (you)</span>
+            <span className="font-normal text-muted-foreground"> (você)</span>
           ) : null}
         </p>
         <p className="truncate text-xs text-muted-foreground" data-ph-mask>
@@ -77,14 +105,21 @@ export function MemberRow({
       <TableCell>
         <Badge variant="secondary">{formatRole(member.role)}</Badge>
       </TableCell>
-      <TableCell className="text-xs text-muted-foreground">Active</TableCell>
+      <ProjectsCell role={member.role} projectNames={projectNames} />
+      <TableCell className="text-xs text-muted-foreground">Ativo</TableCell>
       <TableCell>
         {canRemove ? (
-          <RowActionsMenu label={`Actions for ${member.user.email}`}>
+          <RowActionsMenu label={`Ações para ${member.user.email}`}>
+            {isClientRole(member.role) ? (
+              <DropdownMenuItem onClick={onEditProjects}>
+                <FolderLock />
+                Editar projetos liberados
+              </DropdownMenuItem>
+            ) : null}
             {canTransferOwnership ? (
               <DropdownMenuItem onClick={onTransferOwnership}>
                 <Crown />
-                Transfer ownership
+                Transferir propriedade
               </DropdownMenuItem>
             ) : null}
             <DropdownMenuItem
@@ -93,14 +128,14 @@ export function MemberRow({
               onClick={() => setIsConfirmingRemove(true)}
             >
               <Trash2 />
-              Remove member
+              Remover acesso
             </DropdownMenuItem>
           </RowActionsMenu>
         ) : null}
         {isConfirmingRemove ? (
           <ConfirmDialog
-            title={`Remove ${member.user.email} from this organization?`}
-            confirmLabel="Remove member"
+            title={`Remover o acesso de ${member.user.email}?`}
+            confirmLabel="Remover acesso"
             destructive
             onClose={() => setIsConfirmingRemove(false)}
             onConfirm={() => {
@@ -108,8 +143,9 @@ export function MemberRow({
               onRemove();
             }}
           >
-            They lose access immediately. Search Console and Google Analytics
-            connections made with their Google account are disconnected.
+            A pessoa perde o acesso na hora, a todos os projetos. Conexões do
+            Search Console e do Google Analytics feitas com a conta Google dela
+            são desconectadas.
           </ConfirmDialog>
         ) : null}
       </TableCell>
@@ -122,10 +158,12 @@ export function InvitationRow({
   canManageTeam,
   isResending,
   isCanceling,
+  projectNames,
   onResend,
   onCancel,
 }: {
   invitation: Invitation;
+  projectNames: string[];
   canManageTeam: boolean;
   isResending: boolean;
   isCanceling: boolean;
@@ -144,18 +182,20 @@ export function InvitationRow({
           {formatRole(invitation.role ?? "member")}
         </Badge>
       </TableCell>
+      <ProjectsCell
+        role={invitation.role ?? "member"}
+        projectNames={projectNames}
+      />
       <TableCell className="text-xs text-muted-foreground">
-        Invited &middot; expires{" "}
-        {new Date(invitation.expiresAt).toLocaleDateString()}
+        Convidado &middot; vence em{" "}
+        {new Date(invitation.expiresAt).toLocaleDateString("pt-BR")}
       </TableCell>
       <TableCell>
         {canManageTeam ? (
-          <RowActionsMenu
-            label={`Actions for the invitation to ${invitation.email}`}
-          >
+          <RowActionsMenu label={`Ações para o convite de ${invitation.email}`}>
             <DropdownMenuItem disabled={isResending} onClick={onResend}>
               <Send />
-              Resend invitation
+              Reenviar convite
             </DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
@@ -163,7 +203,7 @@ export function InvitationRow({
               onClick={onCancel}
             >
               <Trash2 />
-              Cancel invitation
+              Cancelar convite
             </DropdownMenuItem>
           </RowActionsMenu>
         ) : null}

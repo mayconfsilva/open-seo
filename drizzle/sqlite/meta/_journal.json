@@ -512,6 +512,13 @@
       "when": 1794247094869,
       "tag": "0072_married_mephisto",
       "breakpoints": true
+    },
+    {
+      "idx": 73,
+      "version": "6",
+      "when": 1794250795968,
+      "tag": "0073_pale_dragon_man",
+      "breakpoints": true
     }
   ]
 }

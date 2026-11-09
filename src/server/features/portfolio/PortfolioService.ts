@@ -10,9 +10,12 @@ const DROPPED_SAMPLE = 3;
  * The carteira (board 4a): one line per project in the organization with
  * its top 10 count, open tasks and last check. Reads stored results only.
  */
-async function list(organizationId: string) {
+async function list(organizationId: string, onlyIds?: string[]) {
   const projects = await ProjectService.listProjects(organizationId);
-  return Promise.all(projects.map((project) => summarize(project)));
+  const shown = onlyIds
+    ? projects.filter((project) => onlyIds.includes(project.id))
+    : projects;
+  return Promise.all(shown.map((project) => summarize(project)));
 }
 
 async function summarize(project: {
