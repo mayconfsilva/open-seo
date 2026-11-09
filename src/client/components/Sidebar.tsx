@@ -153,9 +153,13 @@ export function Sidebar({
         <Link
           to="/"
           onClick={() => setOpenMobile(false)}
-          className="px-1 pb-2 text-base font-semibold text-sidebar-foreground"
+          className="px-1 pb-3 pt-1"
         >
-          OpenSEO
+          <img
+            src="/logo-dataseo.png"
+            alt="dataSEO"
+            className="block h-auto w-[132px]"
+          />
         </Link>
         <ProjectSwitcher
           activeProjectId={projectId}
