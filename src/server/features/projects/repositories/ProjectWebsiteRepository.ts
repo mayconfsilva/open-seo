@@ -64,7 +64,7 @@ export async function saveWebsiteSetup(
           select * from (${sql.join(
             rows.map(
               ({ id, domain, name, notes }) =>
-                sql`select ${id}, ${input.projectId}, ${domain}, ${name}, ${notes}, ${updatedAt}, ${author}`,
+                sql`select ${id}, ${input.projectId}, ${domain}, ${name}, ${notes}, null, ${updatedAt}, ${author}`,
             ),
             sql` union all `,
           )}) as researched_competitors

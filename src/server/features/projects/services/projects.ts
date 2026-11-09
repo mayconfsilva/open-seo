@@ -20,6 +20,7 @@ function mapProject(project: {
   locationCode: number;
   languageCode: string;
   createdAt: string;
+  draftSince: string | null;
 }) {
   return {
     id: project.id,
@@ -31,6 +32,8 @@ function mapProject(project: {
     locationCode: project.locationCode,
     languageCode: project.languageCode,
     createdAt: project.createdAt,
+    // dataSEO: set while the new-project wizard has not been confirmed.
+    draftSince: project.draftSince,
   };
 }
 

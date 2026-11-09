@@ -13,4 +13,6 @@ export type ProjectSummary = {
   locationCode: number;
   languageCode: string;
   createdAt: string;
+  // dataSEO: set while the new-project wizard is unfinished.
+  draftSince: string | null;
 };

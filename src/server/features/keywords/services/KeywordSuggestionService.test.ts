@@ -59,6 +59,9 @@ const project: Parameters<typeof KeywordSuggestionService.generate>[0] = {
   archivedAt: null,
   aiResearchKeywords: null,
   indexnowKey: null,
+  draftSince: null,
+  segment: null,
+  audience: null,
 };
 const customer = {
   organizationId: "organization",

@@ -1,11 +1,10 @@
 import * as React from "react";
 import { projectsQueryOptions } from "@/client/features/projects/projectQueries";
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { findLast } from "remeda";
 import { FolderCog, Plus } from "lucide-react";
 import { setLastProjectId } from "@/client/lib/active-project";
-import { CreateProjectModal } from "@/client/features/projects/CreateProjectModal";
 import {
   Combobox,
   ComboboxContent,
@@ -21,7 +20,7 @@ import { Skeleton } from "@/client/components/ui/skeleton";
 import { LOCATIONS } from "@/shared/keyword-locations";
 import type { ProjectSummary } from "./types";
 
-const SEARCH_THRESHOLD = 8;
+const SEARCH_THRESHOLD = 5;
 
 function matchesProject(project: ProjectSummary, query: string) {
   const needle = query.trim().toLowerCase();
@@ -56,7 +55,7 @@ export function ProjectSwitcher({
   onCloseDrawer?: () => void;
 }) {
   const router = useRouter();
-  const [creating, setCreating] = React.useState(false);
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const projectsQuery = useQuery({ ...projectsQueryOptions(), enabled: ready });
   const projects = projectsQuery.data ?? [];
@@ -83,6 +82,13 @@ export function ProjectSwitcher({
   const handleSelect = (project: ProjectSummary) => {
     setOpen(false);
     onCloseDrawer?.();
+    if (project.draftSince) {
+      void navigate({
+        to: "/new-project",
+        search: { project: project.id, step: 2 },
+      });
+      return;
+    }
     if (project.id === activeProjectId) return;
     setLastProjectId(project.id);
     // Keep the current section when it exists in the new project. Detail
@@ -164,6 +170,11 @@ export function ProjectSwitcher({
                     </span>
                   ) : null}
                 </span>
+                {project.draftSince ? (
+                  <span className="ml-auto shrink-0 rounded bg-warning/15 px-1.5 py-0.5 text-[11px] text-warning-foreground">
+                    Rascunho
+                  </span>
+                ) : null}
                 {sharesDomainAcrossCountries(project, projects) &&
                 LOCATIONS[project.locationCode] ? (
                   <span className="ml-auto shrink-0 text-xs text-muted-foreground">
@@ -176,12 +187,18 @@ export function ProjectSwitcher({
           <Separator />
           <div className="grid gap-0.5 p-1">
             <Button
+              nativeButton={false}
+              render={
+                <Link
+                  to="/new-project"
+                  onClick={() => {
+                    setOpen(false);
+                    onCloseDrawer?.();
+                  }}
+                />
+              }
               variant="ghost"
               className="justify-start"
-              onClick={() => {
-                setOpen(false);
-                setCreating(true);
-              }}
             >
               <Plus className="size-4" />
               Novo projeto
@@ -201,19 +218,11 @@ export function ProjectSwitcher({
               className="justify-start"
             >
               <FolderCog className="size-4" />
-              Gerenciar projetos
+              Ver carteira
             </Button>
           </div>
         </ComboboxContent>
       </Combobox>
-      {creating ? (
-        <CreateProjectModal
-          onClose={() => {
-            setCreating(false);
-            onCloseDrawer?.();
-          }}
-        />
-      ) : null}
     </>
   );
 }

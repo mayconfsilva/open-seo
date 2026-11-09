@@ -1,5 +1,6 @@
 import {
   index,
+  integer,
   primaryKey,
   sqliteTable,
   text,
@@ -49,6 +50,9 @@ export const projectCompetitors = sqliteTable(
     domain: text("domain").notNull(),
     name: text("name"),
     notes: text("notes"),
+    // dataSEO: "commercial" (competes for the same customers) or "serp"
+    // (shows up in the searches without being a direct competitor).
+    kind: text("kind", { enum: ["commercial", "serp"] }),
     updatedAt: text("updated_at")
       .notNull()
       .default(sql`(current_timestamp)`),
@@ -58,6 +62,26 @@ export const projectCompetitors = sqliteTable(
     uniqueIndex("project_competitors_project_domain_idx").on(
       table.projectId,
       table.domain,
+    ),
+  ],
+);
+
+// dataSEO: the main services of the business ("Instalação", "Manutenção"),
+// entered in the new-project wizard and used to suggest keywords.
+export const projectServices = sqliteTable(
+  "project_services",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    position: integer("position").notNull(),
+  },
+  (table) => [
+    uniqueIndex("project_services_project_name_idx").on(
+      table.projectId,
+      table.name,
     ),
   ],
 );

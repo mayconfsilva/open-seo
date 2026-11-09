@@ -351,6 +351,13 @@
       "when": 1794236987422,
       "tag": "0049_massive_toad_men",
       "breakpoints": true
+    },
+    {
+      "idx": 50,
+      "version": "7",
+      "when": 1794247096209,
+      "tag": "0050_motionless_madame_web",
+      "breakpoints": true
     }
   ]
 }
