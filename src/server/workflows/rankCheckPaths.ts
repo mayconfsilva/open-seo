@@ -1,4 +1,5 @@
 import type { WorkflowStep } from "cloudflare:workers";
+import { RankCompetitorRepository } from "@/server/features/rank-tracking/repositories/RankCompetitorRepository";
 import { RankTrackingRepository } from "@/server/features/rank-tracking/repositories/RankTrackingRepository";
 import {
   fetchRankCheckTaskResult,
@@ -45,6 +46,8 @@ export interface CheckContext {
   devices: RankTrackingConfig["devices"];
   serpDepth: number;
   domain: string;
+  /** Project competitors to look up in the same results pages. */
+  competitorDomains: string[];
   locationCode: number;
   languageCode: string;
   locationName?: string;
@@ -127,6 +130,7 @@ async function fetchQueuedRound(
           keywordId: task.keywordId,
           keyword: task.keyword,
           targetDomain: ctx.domain,
+          competitorDomains: ctx.competitorDomains,
         }),
       ),
     );
@@ -214,6 +218,16 @@ export async function runQueuedTasks(
           if (onCollected && fetched.completed.length > 0) {
             await onCollected(fetched.completed);
           }
+          await RankCompetitorRepository.saveBestPositions(
+            fetched.completed.flatMap((result) =>
+              result.competitors.map((competitor) => ({
+                runId: ctx.runId,
+                trackingKeywordId: result.keywordId,
+                device: result.device,
+                ...competitor,
+              })),
+            ),
+          );
           return fetched;
         },
       );

@@ -337,6 +337,13 @@
       "when": 1794235029988,
       "tag": "0047_modern_shooting_star",
       "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "7",
+      "when": 1794236369104,
+      "tag": "0048_milky_shiva",
+      "breakpoints": true
     }
   ]
 }

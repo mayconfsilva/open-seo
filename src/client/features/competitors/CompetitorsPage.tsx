@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import { Link } from "@tanstack/react-router";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Search, Swords } from "lucide-react";
 import { sortBy } from "remeda";
 import { cn } from "cn";
@@ -12,15 +12,15 @@ import {
   getLatestRankResults,
   getRankTrackingConfigs,
 } from "@/serverFunctions/rank-tracking";
+import { getRankCompetitorPositions } from "@/serverFunctions/rank-competitors";
 import type { RankTrackingRow } from "@/types/schemas/rank-tracking";
 
 type Device = "desktop" | "mobile";
-type Config = Awaited<ReturnType<typeof getRankTrackingConfigs>>[number];
 
 /**
- * dataSEO "Concorrentes" (visual direction v2, board 2c): the project's own
- * tracked keywords against every other domain tracked in the project. A
- * competitor's position comes from its own tracker's row for the same keyword.
+ * dataSEO "Concorrentes" (visual direction v2, board 2c): the main tracker's
+ * keywords against the project's competitors. Competitor positions come from
+ * the same results pages each check already reads for the tracked domain.
  */
 export function CompetitorsPage({
   projectId,
@@ -36,18 +36,23 @@ export function CompetitorsPage({
   const configs = configsQuery.data ?? [];
   const main =
     configs.find((config) => domain && config.domain === domain) ?? configs[0];
-  const ordered = main
-    ? [main, ...configs.filter((config) => config.id !== main.id)]
-    : [];
-  const latestQueries = useQueries({
-    queries: ordered.map((config) => ({
-      queryKey: ["rankLatestResults", projectId, config.id, "90d"],
-      queryFn: () =>
-        getLatestRankResults({
-          data: { projectId, configId: config.id, comparePeriod: "90d" },
-        }),
-    })),
+  const latestQuery = useQuery({
+    queryKey: ["rankLatestResults", projectId, main?.id, "90d"],
+    queryFn: () =>
+      getLatestRankResults({
+        data: { projectId, configId: main!.id, comparePeriod: "90d" },
+      }),
+    enabled: main !== undefined,
   });
+  const competitorsQuery = useQuery({
+    queryKey: ["rankCompetitorPositions", projectId, main?.id],
+    queryFn: () =>
+      getRankCompetitorPositions({ data: { projectId, configId: main!.id } }),
+    enabled: main !== undefined,
+  });
+  const failed = [configsQuery, latestQuery, competitorsQuery].find(
+    (query) => query.isError,
+  );
 
   return (
     <div className="px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
@@ -57,25 +62,32 @@ export function CompetitorsPage({
             Comparação com concorrentes
           </h1>
           <p className="mt-1 text-[13px] text-muted-foreground">
-            As mesmas palavras, o mesmo mercado · posições da última coleta
+            {main
+              ? `As palavras de ${main.domain} · mesma coleta, mesmo mercado`
+              : "As mesmas palavras, o mesmo mercado"}
           </p>
         </div>
-        {configsQuery.isError ? (
+        {failed ? (
           <QueryError
-            error={configsQuery.error}
-            fallback="Não foi possível carregar os domínios acompanhados"
-            onRetry={() => void configsQuery.refetch()}
-            isRetrying={configsQuery.isFetching}
+            error={failed.error}
+            fallback="Não foi possível carregar a comparação"
+            onRetry={() => void failed.refetch()}
+            isRetrying={failed.isFetching}
           />
-        ) : configsQuery.isPending ||
-          latestQueries.some((query) => query.isPending) ? (
+        ) : configsQuery.isPending ? (
           <Skeleton className="h-96 w-full" />
-        ) : !main || ordered.length < 2 ? (
+        ) : !main ? (
+          <NoTracker projectId={projectId} />
+        ) : !latestQuery.data || !competitorsQuery.data ? (
+          <Skeleton className="h-96 w-full" />
+        ) : competitorsQuery.data.domains.length === 0 ? (
           <NoCompetitors projectId={projectId} />
         ) : (
           <Comparison
-            configs={ordered}
-            results={latestQueries.map((query) => query.data?.rows ?? [])}
+            ownDomain={main.domain}
+            device={main.devices === "desktop" ? "desktop" : "mobile"}
+            rows={latestQuery.data.rows}
+            competitors={competitorsQuery.data}
           />
         )}
       </div>
@@ -89,33 +101,52 @@ interface MatrixRow {
   positions: Array<number | null>;
 }
 
+type CompetitorPositions = Awaited<
+  ReturnType<typeof getRankCompetitorPositions>
+>;
+
 function Comparison({
-  configs,
-  results,
+  ownDomain,
+  device,
+  rows,
+  competitors,
 }: {
-  configs: Config[];
-  results: RankTrackingRow[][];
+  ownDomain: string;
+  device: Device;
+  rows: RankTrackingRow[];
+  competitors: CompetitorPositions;
 }) {
   const [query, setQuery] = useState("");
   const [sortIndex, setSortIndex] = useState<number | "volume">("volume");
-  const device: Device =
-    configs[0]!.devices === "desktop" ? "desktop" : "mobile";
-  const byKeyword = results.map(
-    (rows) =>
-      new Map(rows.map((row) => [row.keyword.toLowerCase(), row[device]])),
+  const domains = competitors.domains;
+  const competitorPosition = new Map(
+    competitors.positions
+      .filter((entry) => entry.device === device)
+      .map((entry) => [
+        `${entry.trackingKeywordId}:${entry.domain}`,
+        entry.position,
+      ]),
   );
-  const matrix: MatrixRow[] = (results[0] ?? []).map((row) => ({
+  const matrix: MatrixRow[] = rows.map((row) => ({
     keyword: row.keyword,
     volume: row.searchVolume,
-    positions: byKeyword.map(
-      (map) => map.get(row.keyword.toLowerCase())?.position ?? null,
-    ),
+    positions: [
+      row[device].position,
+      ...domains.map(
+        (domain) =>
+          competitorPosition.get(`${row.trackingKeywordId}:${domain}`) ?? null,
+      ),
+    ],
   }));
+  const columns = [
+    { key: "you", label: "Você" },
+    ...domains.map((domain) => ({ key: domain, label: domain })),
+  ];
 
-  const presence = configs.map((config, index) => {
+  const presence = columns.map((column, index) => {
     const positions = matrix.map((row) => row.positions[index] ?? null);
     return {
-      domain: config.domain,
+      domain: index === 0 ? `${ownDomain} (você)` : column.label,
       isYou: index === 0,
       top3: positions.filter((p) => p !== null && p <= 3).length,
       top10: positions.filter((p) => p !== null && p <= 10).length,
@@ -169,7 +200,6 @@ function Comparison({
                   )}
                 >
                   {entry.domain}
-                  {entry.isYou ? " (você)" : ""}
                 </td>
                 <td className="px-4 py-2 text-right tabular-nums">
                   {entry.top3}
@@ -217,10 +247,10 @@ function Comparison({
                   active={sortIndex === "volume"}
                   onClick={() => setSortIndex("volume")}
                 />
-                {configs.map((config, index) => (
+                {columns.map((column, index) => (
                   <SortHeader
-                    key={config.id}
-                    label={index === 0 ? "Você" : config.domain}
+                    key={column.key}
+                    label={column.label}
                     active={sortIndex === index}
                     onClick={() => setSortIndex(index)}
                   />
@@ -243,7 +273,7 @@ function Comparison({
                     </td>
                     {row.positions.map((position, index) => (
                       <td
-                        key={configs[index]!.id}
+                        key={columns[index]!.key}
                         className="px-4 py-2 text-right"
                       >
                         <PositionCell
@@ -320,28 +350,50 @@ function PositionCell({
   );
 }
 
+function NoTracker({ projectId }: { projectId: string }) {
+  return (
+    <EmptyState
+      title="Acompanhe as palavras do seu site primeiro"
+      description="A comparação usa as mesmas buscas que você acompanha. Cadastre o domínio do seu site e as palavras."
+      action="Acompanhar palavras"
+      link={<Link to="/p/$projectId/rank-tracking" params={{ projectId }} />}
+    />
+  );
+}
+
 function NoCompetitors({ projectId }: { projectId: string }) {
+  return (
+    <EmptyState
+      title="Adicione concorrentes para comparar"
+      description="Cadastre os sites concorrentes no contexto do projeto. Na próxima coleta, as posições deles saem das mesmas buscas, sem custo extra."
+      action="Cadastrar concorrentes"
+      link={<Link to="/p/$projectId/context" params={{ projectId }} />}
+    />
+  );
+}
+
+function EmptyState({
+  title,
+  description,
+  action,
+  link,
+}: {
+  title: string;
+  description: string;
+  action: string;
+  link: ReactElement;
+}) {
   return (
     <div className="flex flex-col items-start gap-3 rounded-lg border bg-card p-5">
       <span className="grid size-9 place-items-center rounded-md bg-accent text-primary">
         <Swords className="size-4" />
       </span>
       <div>
-        <h2 className="text-base font-semibold">
-          Adicione concorrentes para comparar
-        </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Acompanhe o domínio de cada concorrente com as mesmas palavras do seu
-          site. A comparação aparece aqui depois da primeira coleta.
-        </p>
+        <h2 className="text-base font-semibold">{title}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       </div>
-      <Button
-        nativeButton={false}
-        render={
-          <Link to="/p/$projectId/rank-tracking" params={{ projectId }} />
-        }
-      >
-        Adicionar domínio
+      <Button nativeButton={false} render={link}>
+        {action}
       </Button>
     </div>
   );

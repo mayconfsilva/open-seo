@@ -12,6 +12,7 @@ import {
 } from "@/server/billing/subscription";
 import { RankTrackingRepository } from "@/server/features/rank-tracking/repositories/RankTrackingRepository";
 import { failRunIfActive } from "@/server/features/rank-tracking/services/rankCheckRunGuards";
+import { RankCompetitorService } from "@/server/features/rank-tracking/services/RankCompetitorService";
 import { runQueuedCheck } from "@/server/workflows/rankCheckPaths";
 import {
   READ_WINDOW_MS,
@@ -380,6 +381,14 @@ export class RankCheckWorkflow extends WorkflowEntrypoint<
           }),
       );
 
+      // Competitors are read from the same results pages at no extra cost.
+      const competitorDomains = await pgStep(
+        step,
+        "load-competitors",
+        FREE_STEP_CONFIG,
+        () => RankCompetitorService.loadCompetitorDomains(projectId, domain),
+      );
+
       const keywords = prepareResult.keywords;
       const client = createDataforseoClient(billingCustomer);
 
@@ -394,6 +403,7 @@ export class RankCheckWorkflow extends WorkflowEntrypoint<
           devices,
           serpDepth,
           domain,
+          competitorDomains,
           locationCode,
           languageCode,
           locationName,

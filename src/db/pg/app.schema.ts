@@ -469,6 +469,35 @@ export const rankSnapshots = pgTable(
   ],
 );
 
+// dataSEO: where the project's competitors ranked in the same results pages a
+// rank check read for the tracked domain. Only found positions are stored; a
+// competitor missing from a checked keyword/device was not in the top results.
+// Keyed by domain (no FK to project_competitors) so history survives removing
+// a competitor, like rank_snapshots survives removing a keyword.
+export const rankCompetitorSnapshots = pgTable(
+  "rank_competitor_snapshots",
+  {
+    id: serial("id").primaryKey(),
+    runId: text("run_id")
+      .notNull()
+      .references(() => rankCheckRuns.id, { onDelete: "cascade" }),
+    trackingKeywordId: text("tracking_keyword_id").notNull(),
+    device: text("device", { enum: ["desktop", "mobile"] }).notNull(),
+    domain: text("domain").notNull(),
+    position: integer("position").notNull(),
+    url: text("url"),
+    checkedAt: timestampColumn("checked_at").notNull().default(isoNow),
+  },
+  (table) => [
+    uniqueIndex("rank_competitor_snapshots_run_key_idx").on(
+      table.runId,
+      table.trackingKeywordId,
+      table.device,
+      table.domain,
+    ),
+  ],
+);
+
 // Dashboard activation milestones. Organization-scoped: MCP OAuth grants are
 // user-level, so any member connecting an external MCP client satisfies the
 // milestone for the whole organization. Timestamps are first-occurrence only

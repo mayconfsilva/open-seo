@@ -10,11 +10,16 @@ const mocks = vi.hoisted(() => ({
   deleteNotFoundSnapshots: vi.fn(),
   fetchRankCheckTaskResult: vi.fn(),
   rankCheckTaskPost: vi.fn(),
+  saveBestPositions: vi.fn(),
 }));
 
 vi.mock(
   "@/server/features/rank-tracking/repositories/RankTrackingRepository",
   () => ({ RankTrackingRepository: mocks }),
+);
+vi.mock(
+  "@/server/features/rank-tracking/repositories/RankCompetitorRepository",
+  () => ({ RankCompetitorRepository: mocks }),
 );
 vi.mock("@/server/lib/dataforseo", () => ({
   fetchRankCheckTaskResult: mocks.fetchRankCheckTaskResult,
@@ -43,6 +48,7 @@ function checkContext(
     devices,
     serpDepth: 10,
     domain: "openseo.so",
+    competitorDomains: [],
     locationCode: 2840,
     languageCode: "en",
     runId: "run_1",
@@ -59,7 +65,13 @@ function queuedResults(...positions: Array<number | null>) {
     mocks.fetchRankCheckTaskResult.mockImplementationOnce(
       async (task: RankCheckTaskInput) => ({
         status: "completed",
-        result: { ...task, position, url: null, serpFeatures: [] },
+        result: {
+          ...task,
+          position,
+          url: null,
+          serpFeatures: [],
+          competitors: [],
+        },
       }),
     );
   }
@@ -77,7 +89,13 @@ beforeEach(() => {
   mocks.fetchRankCheckTaskResult.mockImplementation(
     async (task: RankCheckTaskInput) => ({
       status: "completed",
-      result: { ...task, position: null, url: null, serpFeatures: [] },
+      result: {
+        ...task,
+        position: null,
+        url: null,
+        serpFeatures: [],
+        competitors: [],
+      },
     }),
   );
   mocks.getBestPositionsForKeywords.mockResolvedValue([

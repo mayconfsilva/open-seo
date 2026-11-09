@@ -479,6 +479,37 @@ export const rankSnapshots = sqliteTable(
   ],
 );
 
+// dataSEO: where the project's competitors ranked in the same results pages a
+// rank check read for the tracked domain. Only found positions are stored; a
+// competitor missing from a checked keyword/device was not in the top results.
+// Keyed by domain (no FK to project_competitors) so history survives removing
+// a competitor, like rank_snapshots survives removing a keyword.
+export const rankCompetitorSnapshots = sqliteTable(
+  "rank_competitor_snapshots",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    runId: text("run_id")
+      .notNull()
+      .references(() => rankCheckRuns.id, { onDelete: "cascade" }),
+    trackingKeywordId: text("tracking_keyword_id").notNull(),
+    device: text("device", { enum: ["desktop", "mobile"] }).notNull(),
+    domain: text("domain").notNull(),
+    position: integer("position").notNull(),
+    url: text("url"),
+    checkedAt: text("checked_at")
+      .notNull()
+      .default(sql`(current_timestamp)`),
+  },
+  (table) => [
+    uniqueIndex("rank_competitor_snapshots_run_key_idx").on(
+      table.runId,
+      table.trackingKeywordId,
+      table.device,
+      table.domain,
+    ),
+  ],
+);
+
 // Dashboard activation milestones. Organization-scoped: MCP OAuth grants are
 // user-level, so any member connecting an external MCP client satisfies the
 // milestone for the whole organization. Timestamps are first-occurrence only

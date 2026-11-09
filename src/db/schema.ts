@@ -101,6 +101,7 @@ export const {
   rankTrackingKeywords,
   rankCheckRuns,
   rankSnapshots,
+  rankCompetitorSnapshots,
   organizationActivationState,
   projectActivationState,
   dashboardStepDismissals,
