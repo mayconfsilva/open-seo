@@ -41,17 +41,17 @@ const UTM_PARAMS = [
 
 const signUpSchema = z
   .object({
-    email: z.string().trim().email("Enter a valid email address."),
+    email: z.string().trim().email("Informe um e-mail válido."),
     password: passwordSchema,
     confirmPassword: z.string(),
   })
   .refine((value) => value.password === value.confirmPassword, {
-    message: "Passwords do not match.",
+    message: "As senhas não conferem.",
     path: ["confirmPassword"],
   });
 
 export const Route = createFileRoute("/_auth/sign-up")({
-  head: () => pageHead("Sign up"),
+  head: () => pageHead("Criar conta"),
   validateSearch: authRedirectSearchSchema.extend({
     // A site checked with the marketing site's free tool; onboarding
     // prefills it, and the website step validates it on save.
@@ -172,7 +172,7 @@ function SignUpPage() {
           if (isTurnstileEnabled) captcha.reset();
           formApi.setErrorMap({
             onSubmit: {
-              form: result.error.message || "Unable to create account.",
+              form: result.error.message || "Não foi possível criar a conta.",
               fields: {},
             },
           });
@@ -196,7 +196,7 @@ function SignUpPage() {
               onSubmit: {
                 form:
                   signedIn.error.message ||
-                  "Account created. Sign in to continue.",
+                  "Conta criada. Entre para continuar.",
                 fields: {},
               },
             });
@@ -212,7 +212,7 @@ function SignUpPage() {
         if (isTurnstileEnabled) captcha.reset();
         formApi.setErrorMap({
           onSubmit: {
-            form: "Unable to create account right now. Please try again.",
+            form: "Não foi possível criar a conta agora. Tente de novo.",
             fields: {},
           },
         });
@@ -224,8 +224,8 @@ function SignUpPage() {
     if (signUpStatus.isPending) return <PageLoading />;
     return (
       <AuthPageCard
-        title="Registration is closed"
-        helperText="Ask an administrator for an invitation."
+        title="Cadastro fechado"
+        helperText="Peça um convite ao administrador."
         footer={
           <p className="text-sm">
             <Link
@@ -233,7 +233,7 @@ function SignUpPage() {
               search={getSignInSearch(redirectTo)}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Back to sign in
+              Voltar para entrar
             </Link>
           </p>
         }
@@ -245,25 +245,27 @@ function SignUpPage() {
 
   return (
     <AuthPageCard
-      title={firstAccount ? "Create the admin account" : "Create your account"}
+      title={
+        firstAccount ? "Criar a conta de administrador" : "Criar sua conta"
+      }
       helperText={
         firstAccount
-          ? "This installation has no accounts yet. The first one becomes the administrator."
+          ? "Esta instalação ainda não tem contas. A primeira vira administradora."
           : invited
-            ? "Use the email address that received the invitation."
+            ? "Use o e-mail que recebeu o convite."
             : undefined
       }
       footer={
         standalone ? (
           firstAccount ? null : (
             <p className="text-sm text-foreground/50">
-              Already have an account?{" "}
+              Já tem conta?{" "}
               <Link
                 to="/sign-in"
                 search={getSignInSearch(redirectTo)}
                 className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
               >
-                Sign in
+                Entrar
               </Link>
             </p>
           )
@@ -277,18 +279,18 @@ function SignUpPage() {
                 google.clearError();
               }}
             >
-              Back to signup
+              Voltar
             </button>
           ) : (
             <div className="space-y-4">
               <p className="text-sm text-foreground/50">
-                Already have an account?{" "}
+                Já tem conta?{" "}
                 <Link
                   to="/sign-in"
                   search={getSignInSearch(redirectTo)}
                   className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
                 >
-                  Sign in
+                  Entrar
                 </Link>
               </p>
             </div>
@@ -299,7 +301,7 @@ function SignUpPage() {
       {!emailFormVisible ? (
         <>
           <AuthMethodChooser
-            googleLabel="Continue with Google"
+            googleLabel="Continuar com Google"
             disabled={!isHostedMode}
             isBusy={google.isStarting}
             onContinueWithGoogle={() => {
@@ -310,9 +312,7 @@ function SignUpPage() {
               google.clearError();
             }}
           />
-          {isHostedMode ? (
-            <TermsAgreementNotice action="By continuing" />
-          ) : null}
+          {isHostedMode ? <TermsAgreementNotice action="Ao continuar" /> : null}
           {google.error ? (
             <p className="text-sm text-destructive">{google.error}</p>
           ) : null}
@@ -323,11 +323,10 @@ function SignUpPage() {
             <form.AppField name="email">
               {(field) => (
                 <field.TextField
-                  label="Email address"
-                  hideLabel
+                  label="E-mail"
                   className={authInputClassName}
                   type="email"
-                  placeholder="Email address..."
+                  placeholder="voce@agencia.com.br"
                   autoComplete="email"
                   required
                 />
@@ -336,11 +335,10 @@ function SignUpPage() {
             <form.AppField name="password">
               {(field) => (
                 <field.TextField
-                  label="Password"
-                  hideLabel
+                  label="Senha"
                   className={authInputClassName}
                   type="password"
-                  placeholder="Password..."
+                  placeholder="Crie uma senha"
                   autoComplete="new-password"
                   required
                 />
@@ -349,11 +347,10 @@ function SignUpPage() {
             <form.AppField name="confirmPassword">
               {(field) => (
                 <field.TextField
-                  label="Confirm password"
-                  hideLabel
+                  label="Confirme a senha"
                   className={authInputClassName}
                   type="password"
-                  placeholder="Confirm password..."
+                  placeholder="Repita a senha"
                   autoComplete="new-password"
                   required
                 />
@@ -387,10 +384,10 @@ function SignUpPage() {
                       pending={isSubmitting}
                       disabled={isTurnstileEnabled && !captcha.hasToken}
                     >
-                      {isSubmitting ? "Creating account..." : "Create account"}
+                      {isSubmitting ? "Criando a conta..." : "Criar conta"}
                     </Button>
                     {isHostedMode ? (
-                      <TermsAgreementNotice action="By creating an account" />
+                      <TermsAgreementNotice action="Ao criar a conta" />
                     ) : null}
                   </>
                 );

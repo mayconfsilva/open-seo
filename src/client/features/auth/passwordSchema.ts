@@ -8,9 +8,9 @@ export const passwordSchema = z
   .string()
   .min(
     HOSTED_PASSWORD_MIN_LENGTH,
-    `Password must be at least ${HOSTED_PASSWORD_MIN_LENGTH} characters.`,
+    `A senha precisa ter pelo menos ${HOSTED_PASSWORD_MIN_LENGTH} caracteres.`,
   )
   .max(
     HOSTED_PASSWORD_MAX_LENGTH,
-    `Password must be at most ${HOSTED_PASSWORD_MAX_LENGTH} characters.`,
+    `A senha pode ter no máximo ${HOSTED_PASSWORD_MAX_LENGTH} caracteres.`,
   );

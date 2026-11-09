@@ -35,6 +35,6 @@ export async function assertStandaloneSignUpOpen(
   )
     return;
   throw new APIError("FORBIDDEN", {
-    message: "Registration is closed. Ask an administrator for an invitation.",
+    message: "Cadastro fechado. Peça um convite ao administrador.",
   });
 }

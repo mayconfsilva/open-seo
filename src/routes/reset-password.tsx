@@ -5,6 +5,7 @@ import { Button } from "@/client/components/ui/button";
 import {
   AuthPageCard,
   AuthPageShell,
+  authSubmitClassName,
   authRedirectSearchSchema,
 } from "@/client/features/auth/AuthPage";
 import { passwordSchema } from "@/client/features/auth/passwordSchema";
@@ -21,7 +22,7 @@ const resetPasswordSchema = z
     confirmPassword: z.string(),
   })
   .refine((value) => value.password === value.confirmPassword, {
-    message: "Passwords do not match.",
+    message: "As senhas não conferem.",
     path: ["confirmPassword"],
   });
 
@@ -31,7 +32,7 @@ const resetPasswordSearchSchema = authRedirectSearchSchema.extend({
 });
 
 export const Route = createFileRoute("/reset-password")({
-  head: () => pageHead("Reset password"),
+  head: () => pageHead("Redefinir senha"),
   validateSearch: resetPasswordSearchSchema,
   component: ResetPasswordPage,
 });
@@ -39,12 +40,12 @@ export const Route = createFileRoute("/reset-password")({
 function getResetPasswordErrorMessage(error: string | undefined) {
   switch ((error ?? "").toLowerCase()) {
     case "invalid_token":
-      return "This reset link is no longer valid. Request a new one to keep going.";
+      return "Este link de redefinição não vale mais. Peça um novo para continuar.";
     case "token_expired":
-      return "This reset link has expired. Request a new one to keep going.";
+      return "Este link de redefinição expirou. Peça um novo para continuar.";
     default:
       return error
-        ? "This reset link can't be used anymore. Request a new one and try again."
+        ? "Este link de redefinição não pode mais ser usado. Peça um novo e tente de novo."
         : null;
   }
 }
@@ -62,31 +63,30 @@ function getResetPasswordPageCopy({
 }) {
   if (!isHostedMode) {
     return {
-      title: "Reset password",
-      helperText: "Password reset isn't available right now.",
+      title: "Redefinir senha",
+      helperText: "A redefinição de senha não está disponível agora.",
     };
   }
 
   if (isComplete) {
     return {
-      title: "Password updated",
-      helperText:
-        "Your password has been updated. Sign in with your new password.",
+      title: "Senha atualizada",
+      helperText: "Sua senha foi atualizada. Entre com a nova senha.",
     };
   }
 
   if (routeError || !hasToken) {
     return {
-      title: "Reset link expired",
+      title: "Link expirado",
       helperText:
         routeError ||
-        "This reset link is no longer valid. Request a new one to keep going.",
+        "Este link de redefinição não vale mais. Peça um novo para continuar.",
     };
   }
 
   return {
-    title: "Reset password",
-    helperText: "Choose a new password for your account.",
+    title: "Redefinir senha",
+    helperText: "Escolha uma nova senha para sua conta.",
   };
 }
 
@@ -117,7 +117,7 @@ function ResetPasswordPage() {
             onSubmit: {
               form:
                 result.error.code === "INVALID_TOKEN" || !result.error.message
-                  ? "This reset link is no longer valid. Request a new one and try again."
+                  ? "Este link de redefinição não vale mais. Peça um novo e tente de novo."
                   : result.error.message,
               fields: {},
             },
@@ -127,7 +127,7 @@ function ResetPasswordPage() {
       } catch {
         formApi.setErrorMap({
           onSubmit: {
-            form: "We couldn't update your password right now. Please try again.",
+            form: "Não foi possível atualizar a senha agora. Tente de novo.",
             fields: {},
           },
         });
@@ -165,7 +165,7 @@ function ResetPasswordPage() {
                       search={getSignInSearch(redirectTo)}
                       className="text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      Sign in
+                      Entrar
                     </Link>
                   </p>
                 )
@@ -175,18 +175,18 @@ function ResetPasswordPage() {
                 <Button
                   nativeButton={false}
                   variant="secondary"
-                  className="w-full"
+                  className={authSubmitClassName}
                   render={
                     <Link to="/sign-in" search={getSignInSearch(redirectTo)} />
                   }
                 >
-                  Continue to sign in
+                  Continuar para entrar
                 </Button>
               ) : routeError || !token ? (
                 <Button
                   nativeButton={false}
                   variant="secondary"
-                  className="w-full"
+                  className={authSubmitClassName}
                   render={
                     <Link
                       to="/forgot-password"
@@ -194,7 +194,7 @@ function ResetPasswordPage() {
                     />
                   }
                 >
-                  Request a new reset link
+                  Pedir um novo link
                 </Button>
               ) : (
                 <form.AppForm>
@@ -202,9 +202,9 @@ function ResetPasswordPage() {
                     <form.AppField name="password">
                       {(field) => (
                         <field.TextField
-                          label="New password"
+                          label="Nova senha"
                           type="password"
-                          placeholder="New password..."
+                          placeholder="Nova senha"
                           autoComplete="new-password"
                           required
                         />
@@ -213,9 +213,9 @@ function ResetPasswordPage() {
                     <form.AppField name="confirmPassword">
                       {(field) => (
                         <field.TextField
-                          label="Confirm new password"
+                          label="Confirme a nova senha"
                           type="password"
-                          placeholder="Confirm new password..."
+                          placeholder="Repita a nova senha"
                           autoComplete="new-password"
                           required
                         />
@@ -230,12 +230,12 @@ function ResetPasswordPage() {
                     <Button
                       type="submit"
                       variant="secondary"
-                      className="w-full"
+                      className={authSubmitClassName}
                       pending={isSubmitting}
                     >
                       {isSubmitting
-                        ? "Updating password..."
-                        : "Update password"}
+                        ? "Atualizando a senha..."
+                        : "Atualizar senha"}
                     </Button>
                   </form.Form>
                 </form.AppForm>
