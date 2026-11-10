@@ -23,6 +23,10 @@ const ERROR_CODES = [
   "RATE_LIMITED",
   "UPSTREAM_UNAVAILABLE",
   "CONFLICT",
+  // dataSEO: the organization's monthly quota of queries is used up.
+  "QUOTA_EXCEEDED",
+  // dataSEO: the platform owner suspended the organization.
+  "ORGANIZATION_SUSPENDED",
   "INTERNAL_ERROR",
 ] as const;
 
@@ -42,6 +46,8 @@ const NON_REPORTABLE_ERROR_CODES = new Set<ErrorCode>([
   "PAYMENT_METHOD_REQUIRED",
   "PAYMENT_ACTION_REQUIRED",
   "INSUFFICIENT_CREDITS",
+  "QUOTA_EXCEEDED",
+  "ORGANIZATION_SUSPENDED",
   "VALIDATION_ERROR",
   "UNKNOWN_LOCATION",
   "AI_VISIBILITY_ERROR",

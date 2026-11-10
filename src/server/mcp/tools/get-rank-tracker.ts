@@ -92,6 +92,10 @@ const SKIP_REASON_TEXT = new Map<string, string>(
       "Rank checks are being refused because the account ran out of credits; whoami shows the balance.",
     no_keywords:
       "Scheduled checks are being skipped because the tracker has no keywords; add them with add_rank_tracking_keywords.",
+    quota_exceeded:
+      "Scheduled checks are being skipped because the organization used its monthly quota of queries; they resume when the plan renews.",
+    suspended:
+      "Scheduled checks are being skipped because the platform owner suspended this organization.",
   } satisfies Record<RankTrackingSkipReason, string>),
 );
 

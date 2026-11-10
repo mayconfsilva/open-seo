@@ -1,6 +1,9 @@
 import { sumBy } from "remeda";
 import { toRankTrackingTimestamp } from "@/server/features/rank-tracking/rankTrackingTimestamps";
-import { PILOT_PLAN, PLAN_USAGE_HISTORY_MONTHS } from "@/shared/plan-usage";
+import { getOrganizationPlan } from "@/server/features/platform/organizationPlan";
+import { PLAN_USAGE_HISTORY_MONTHS } from "@/shared/plan-usage";
+import { AppError } from "@/server/lib/errors";
+import { isHostedServerAuthMode } from "@/server/lib/runtime-env";
 import { PlanUsageRepository } from "./PlanUsageRepository";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -61,7 +64,8 @@ async function getOrganizationUsage(organizationId: string, now = new Date()) {
       end: monthStart(year, month - offset + 1),
     };
   });
-  const [projectList, trackers, ...monthCounts] = await Promise.all([
+  const [plan, projectList, trackers, ...monthCounts] = await Promise.all([
+    getOrganizationPlan(organizationId),
     PlanUsageRepository.listProjects(organizationId),
     PlanUsageRepository.listActiveTrackers(organizationId),
     ...months.map((range) =>
@@ -110,7 +114,7 @@ async function getOrganizationUsage(organizationId: string, now = new Date()) {
 
   const used = sumBy(rows, (row) => row.used);
   return {
-    plan: PILOT_PLAN,
+    plan,
     monthStart: start.toISOString(),
     renewsAt: end.toISOString(),
     used,
@@ -123,4 +127,37 @@ async function getOrganizationUsage(organizationId: string, now = new Date()) {
   };
 }
 
-export const PlanUsageService = { getOrganizationUsage };
+/** Whether a check of `queries` more still fits this month's quota. */
+async function fitsQuota(
+  organizationId: string,
+  queries: number,
+  now = new Date(),
+) {
+  const local = new Date(now.getTime() - BRASILIA_OFFSET_MS);
+  const year = local.getUTCFullYear();
+  const month = local.getUTCMonth();
+  const [plan, counts] = await Promise.all([
+    getOrganizationPlan(organizationId),
+    PlanUsageRepository.countQueriesByProject(
+      organizationId,
+      toRankTrackingTimestamp(monthStart(year, month)),
+      toRankTrackingTimestamp(monthStart(year, month + 1)),
+    ),
+  ]);
+  const used = sumBy(counts, (row) => row.queries);
+  return used + queries <= plan.monthlyQueries;
+}
+
+/** dataSEO: refuses a manual check the month's quota can't hold (self-host only). */
+async function assertFitsQuota(organizationId: string, queries: number) {
+  if (await isHostedServerAuthMode()) return;
+  if (!(await fitsQuota(organizationId, queries))) {
+    throw new AppError("QUOTA_EXCEEDED");
+  }
+}
+
+export const PlanUsageService = {
+  getOrganizationUsage,
+  fitsQuota,
+  assertFitsQuota,
+};

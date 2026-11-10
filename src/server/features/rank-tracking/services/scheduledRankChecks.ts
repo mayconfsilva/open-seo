@@ -1,6 +1,8 @@
 import { RankTrackingRepository } from "@/server/features/rank-tracking/repositories/RankTrackingRepository";
 import { beginRankCheckRun } from "@/server/features/rank-tracking/services/rankCheckRunGuards";
 import { customerHasPaidPlan } from "@/server/billing/subscription";
+import { PlanUsageService } from "@/server/features/plan-usage/PlanUsageService";
+import { PlatformService } from "@/server/features/platform/PlatformService";
 import { isHostedServerAuthMode } from "@/server/lib/runtime-env";
 import { FeatureFlag, isFeatureFlagOn } from "@/server/lib/featureFlags";
 import {
@@ -36,6 +38,17 @@ const TICK_DEADLINE_MS = 3 * 60_000;
 // Cap on the per-tick list of configs blocked by an active run. Blocked
 // configs leave no durable trace on their row, so the summary names them.
 const ALREADY_RUNNING_IDS_CAP = 20;
+
+// dataSEO: why the platform owner's limits hold back a check, if they do.
+async function platformSkipReason(organizationId: string, queries: number) {
+  if (await PlatformService.isOrganizationSuspended(organizationId)) {
+    return "suspended" as const;
+  }
+  if (!(await PlanUsageService.fitsQuota(organizationId, queries))) {
+    return "quota_exceeded" as const;
+  }
+  return null;
+}
 
 // Cron body for the `scheduled` Worker handler: start a rank-check run for every
 // config that's due. Wrapped in `withPgClient` at the entrypoint (server.ts).
@@ -78,6 +91,7 @@ export async function runScheduledRankChecks(env: Env) {
   let stoppedByDeadline = false;
   let skippedFree = 0;
   let skippedNoKeywords = 0;
+  let skippedQuota = 0;
   let concurrentChangeSkips = 0;
   let alreadyRunning = 0;
   const alreadyRunningConfigIds: string[] = [];
@@ -159,6 +173,24 @@ export async function runScheduledRankChecks(env: Env) {
           lastSkipReason: "plan_required",
         });
         if (claimed) skippedFree++;
+        else concurrentChangeSkips++;
+        continue;
+      }
+
+      // dataSEO: a suspended organization runs nothing, and a check that no
+      // longer fits the month's quota waits for the next slot.
+      const blockedReason = isHosted
+        ? null
+        : await platformSkipReason(config.organizationId, taskUnits);
+      if (blockedReason) {
+        const claimed = await RankTrackingRepository.claimDueConfig({
+          configId: config.id,
+          projectId: config.projectId,
+          observedNextCheckAt,
+          nextCheckAt,
+          lastSkipReason: blockedReason,
+        });
+        if (claimed) skippedQuota++;
         else concurrentChangeSkips++;
         continue;
       }
@@ -256,6 +288,7 @@ export async function runScheduledRankChecks(env: Env) {
     stoppedByDeadline,
     skippedFree,
     skippedNoKeywords,
+    skippedQuota,
     concurrentChangeSkips,
     alreadyRunning,
     alreadyRunningConfigIds,

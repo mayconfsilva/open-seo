@@ -55,6 +55,10 @@ const STANDARD_MESSAGES: Record<ErrorCode, string> = {
   UPSTREAM_UNAVAILABLE:
     "O provedor de dados está fora do ar no momento. Tente de novo daqui a pouco.",
   CONFLICT: "Esta ação conflita com dados existentes.",
+  QUOTA_EXCEEDED:
+    "A franquia de consultas deste mês não comporta esta coleta. Ela volta na renovação do plano.",
+  ORGANIZATION_SUSPENDED:
+    "O acesso desta organização está suspenso. Fale com o administrador da plataforma.",
   INTERNAL_ERROR: UNEXPECTED_ERROR_MESSAGE,
 };
 

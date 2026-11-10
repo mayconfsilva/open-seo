@@ -28,6 +28,14 @@ beforeAll(async () => {
     );
     CREATE TABLE rank_tracking_keywords (id TEXT PRIMARY KEY, config_id TEXT NOT NULL);
     CREATE TABLE rank_check_runs (id TEXT PRIMARY KEY, project_id TEXT NOT NULL);
+    CREATE TABLE platform_plans (
+      id TEXT PRIMARY KEY, name TEXT NOT NULL, monthly_queries INTEGER NOT NULL,
+      created_at TEXT
+    );
+    CREATE TABLE organization_platform_settings (
+      organization_id TEXT PRIMARY KEY, plan_id TEXT, suspended_at TEXT,
+      updated_at TEXT
+    );
     CREATE TABLE rank_snapshots (
       id INTEGER PRIMARY KEY AUTOINCREMENT, run_id TEXT NOT NULL, checked_at TEXT NOT NULL
     );
@@ -35,6 +43,8 @@ beforeAll(async () => {
     INSERT INTO projects VALUES
       ('site', 'org', 'Site', 'site.com', NULL, NULL),
       ('other', 'org_other', 'Other', 'other.com', NULL, NULL);
+    INSERT INTO platform_plans VALUES ('small', 'Pequeno', 3, NULL);
+    INSERT INTO organization_platform_settings VALUES ('org', 'small', NULL, NULL);
     INSERT INTO rank_tracking_configs VALUES
       ('cfg', 'site', 'both', 'weekly', 1, '2026-11-14T12:00:00.000Z');
     INSERT INTO rank_tracking_keywords VALUES ('k1', 'cfg'), ('k2', 'cfg'), ('k3', 'cfg');
@@ -66,5 +76,14 @@ describe("PlanUsageService.getOrganizationUsage", () => {
     expect(usage.upcoming).toBe(18);
     expect(usage.projects.map((project) => project.id)).toEqual(["site"]);
     expect(usage.history.slice(-2).map((month) => month.used)).toEqual([1, 2]);
+  });
+});
+
+describe("PlanUsageService.fitsQuota", () => {
+  it("measures a check against the organization's assigned plan", async () => {
+    const now = new Date("2026-11-10T15:00:00.000Z");
+    // Plan of 3 queries, 2 used this month.
+    expect(await PlanUsageService.fitsQuota("org", 1, now)).toBe(true);
+    expect(await PlanUsageService.fitsQuota("org", 2, now)).toBe(false);
   });
 });

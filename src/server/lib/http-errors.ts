@@ -5,6 +5,7 @@ function statusForAppError(code: string): number {
     case "UNAUTHENTICATED":
       return 401;
     case "FORBIDDEN":
+    case "ORGANIZATION_SUSPENDED":
       return 403;
     case "NOT_FOUND":
       return 404;
