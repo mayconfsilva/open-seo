@@ -53,7 +53,7 @@ export function GoogleLinkErrorAlert({
         <Button
           variant="ghost"
           size="icon-xs"
-          aria-label="Dismiss"
+          aria-label="Dispensar"
           onClick={() => {
             setDismissed(true);
             clearGoogleLinkError();

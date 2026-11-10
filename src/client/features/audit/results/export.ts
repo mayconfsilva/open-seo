@@ -29,17 +29,23 @@ async function fetchAllRows<T>(
 }
 
 async function withExportToast(run: () => Promise<void>) {
-  const toastId = toast.loading("Preparing export…");
+  const toastId = toast.loading("Preparando a exportação…");
   try {
     await run();
   } catch {
-    toast.error("Could not export the audit results");
+    toast.error("Não foi possível exportar os resultados da auditoria");
   } finally {
     toast.dismiss(toastId);
   }
 }
 
-const ISSUES_HEADERS = ["Severity", "Issue", "URL", "Details", "How To Fix"];
+const ISSUES_HEADERS = [
+  "Gravidade",
+  "Problema",
+  "URL",
+  "Detalhes",
+  "Como corrigir",
+];
 
 function issuesRows(issues: AuditIssueRow[]): CsvValue[][] {
   return issues.map((issue) => {
@@ -90,12 +96,12 @@ export function exportIssues(ref: AuditRef, format: AuditExportFormat) {
 const PAGES_HEADERS = [
   "URL",
   "Status",
-  "Title",
+  "Título",
   "H1",
-  "Words",
-  "Images",
-  "Missing Alt",
-  "Response Time (ms)",
+  "Palavras",
+  "Imagens",
+  "Sem alt",
+  "Tempo de resposta (ms)",
 ];
 
 function pagesRows(pages: AuditPageRow[]): CsvValue[][] {
@@ -141,9 +147,9 @@ export function exportPages(ref: AuditRef, format: AuditExportFormat) {
 
 const PERFORMANCE_HEADERS = [
   "URL",
-  "Device",
-  "Performance",
-  "Accessibility",
+  "Dispositivo",
+  "Desempenho",
+  "Acessibilidade",
   "SEO",
   "LCP (ms)",
   "CLS",

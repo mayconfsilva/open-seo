@@ -25,12 +25,12 @@ import type { ExportFormat } from "@/client/lib/exportRows";
 type ExportAction = ExportFormat | "copy-list";
 
 const ACTION_ITEMS: Record<ExportAction, { label: string; icon: ReactNode }> = {
-  sheets: { label: "Export to Sheets", icon: <Sheet /> },
-  csv: { label: "Export CSV", icon: <FileDown /> },
-  excel: { label: "Export Excel", icon: <FileSpreadsheet /> },
-  json: { label: "Download JSON", icon: <FileJson /> },
-  "copy-json": { label: "Copy JSON", icon: <Copy /> },
-  "copy-list": { label: "Copy list", icon: <List /> },
+  sheets: { label: "Exportar para Sheets", icon: <Sheet /> },
+  csv: { label: "Exportar CSV", icon: <FileDown /> },
+  excel: { label: "Exportar Excel", icon: <FileSpreadsheet /> },
+  json: { label: "Baixar JSON", icon: <FileJson /> },
+  "copy-json": { label: "Copiar JSON", icon: <Copy /> },
+  "copy-list": { label: "Copiar lista", icon: <List /> },
 };
 
 /**

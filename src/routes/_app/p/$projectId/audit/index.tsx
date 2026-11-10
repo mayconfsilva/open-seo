@@ -6,7 +6,7 @@ import { AuditDetail } from "@/client/features/audit/AuditDetail";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/audit/")({
-  head: () => pageHead("Site Audit"),
+  head: () => pageHead("Auditoria"),
   validateSearch: auditSearchSchema,
   component: SiteAuditPage,
 });

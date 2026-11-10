@@ -13,7 +13,7 @@ import { pageHead } from "@/client/lib/pageHead";
 import { queryClient } from "@/client/tanstack-db/queryClient";
 
 export const Route = createFileRoute("/_app/p/$projectId/search-performance")({
-  head: () => pageHead("GSC Insights"),
+  head: () => pageHead("Busca no Google"),
   validateSearch: searchPerformanceSearchSchema,
   loader: ({ params }) => {
     // Without Search Console, the report is replaced by the connect card,

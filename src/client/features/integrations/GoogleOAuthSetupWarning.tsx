@@ -51,15 +51,15 @@ export function GoogleOAuthSetupWarning({
   return (
     <Alert variant="warning">
       <AlertTriangle className="size-4" />
-      <AlertTitle>Google OAuth client not configured</AlertTitle>
+      <AlertTitle>Cliente OAuth do Google não configurado</AlertTitle>
       <AlertDescription>
         <p>
-          Add your Google client ID and secret to this OpenSEO deployment before
-          connecting {integrationName}.
+          Adicione o client ID e o secret do Google a esta instalação do dataSEO
+          antes de conectar o {integrationName}.
         </p>
         <SafeExternalLink
           url={docsUrl}
-          label="Open setup guide"
+          label="Abrir guia de configuração"
           className="inline-flex items-center gap-1 font-medium underline underline-offset-2"
         />
       </AlertDescription>

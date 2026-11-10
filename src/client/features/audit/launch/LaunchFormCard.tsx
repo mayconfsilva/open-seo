@@ -50,7 +50,7 @@ export function LaunchFormCard({
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2>Start New Audit</h2>
+          <h2>Nova auditoria</h2>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -68,7 +68,7 @@ export function LaunchFormCard({
               return (
                 <Input
                   className="lg:col-span-9"
-                  aria-label="Site URL"
+                  aria-label="URL do site"
                   aria-invalid={urlError ? true : undefined}
                   placeholder="https://example.com"
                   value={field.state.value}
@@ -91,7 +91,7 @@ export function LaunchFormCard({
                 className="w-full lg:col-span-3"
                 pending={isSubmitting}
               >
-                {isSubmitting ? "Starting..." : "Start Audit"}
+                {isSubmitting ? "Iniciando..." : "Iniciar auditoria"}
               </Button>
             )}
           </launchForm.Subscribe>
@@ -126,7 +126,7 @@ function LaunchOptions({
 }: Props) {
   return (
     <Field className="rounded-lg border border-border p-3">
-      <FieldLabel htmlFor="audit-max-pages">Max pages</FieldLabel>
+      <FieldLabel htmlFor="audit-max-pages">Máximo de páginas</FieldLabel>
       <launchForm.Field name="maxPagesInput">
         {(field) => (
           <Input
@@ -149,14 +149,16 @@ function LaunchOptions({
         )}
       </launchForm.Field>
       <FieldDescription>
-        Enter any value from {MIN_PAGES} to {maxPagesLimit.toLocaleString()}.
+        Informe um valor de {MIN_PAGES} a{" "}
+        {maxPagesLimit.toLocaleString("pt-BR")}.
         {maxPagesLimit < PAID_MAX_AUDIT_PAGES ? (
           <>
             {" "}
             <Link to={SUBSCRIBE_ROUTE} search={{ upgrade: true }}>
-              Upgrade
+              Faça upgrade
             </Link>{" "}
-            to crawl up to {PAID_MAX_AUDIT_PAGES.toLocaleString()} pages.
+            para rastrear até {PAID_MAX_AUDIT_PAGES.toLocaleString("pt-BR")}{" "}
+            páginas.
           </>
         ) : null}
       </FieldDescription>
@@ -179,9 +181,9 @@ function LighthouseOptions({ launchForm }: Pick<Props, "launchForm">) {
         </launchForm.Field>
         <FieldLabel
           htmlFor="audit-run-lighthouse"
-          title="Lighthouse measures the performance of your pages and identifies issues."
+          title="O Lighthouse mede o desempenho das páginas e aponta problemas."
         >
-          Include Lighthouse
+          Incluir Lighthouse
         </FieldLabel>
       </div>
 
@@ -191,8 +193,8 @@ function LighthouseOptions({ launchForm }: Pick<Props, "launchForm">) {
         {(runLighthouse) =>
           runLighthouse ? (
             <FieldDescription>
-              We choose a sample of 20 pages to audit, removing pages from
-              duplicate templates.
+              Escolhemos uma amostra de 20 páginas para auditar, sem repetir
+              páginas do mesmo modelo.
             </FieldDescription>
           ) : null
         }
@@ -221,9 +223,9 @@ function RenderingOptions({
         </launchForm.Field>
         <FieldLabel
           htmlFor="audit-render-javascript"
-          title="Loads each page in a browser before auditing it. Slower."
+          title="Carrega cada página num navegador antes de auditar. Mais lento."
         >
-          Render JavaScript
+          Renderizar JavaScript
         </FieldLabel>
       </div>
 
@@ -254,15 +256,15 @@ function RenderingOptions({
       )}
       {canRenderJavaScript === false && !isEveryAppClientAuthMode() && (
         <FieldDescription>
-          This deployment has no browser, so rendering needs a Context.dev API
-          key. Set <code>CONTEXT_API_KEY</code>, restart OpenSEO, then reload
-          this page.{" "}
+          Esta instalação não tem navegador, então a renderização precisa de uma
+          chave da API Context.dev. Defina <code>CONTEXT_API_KEY</code>,
+          reinicie o dataSEO e recarregue esta página.{" "}
           <a
             href="https://github.com/every-app/open-seo/blob/main/docs/SELF_HOSTING_CLOUDFLARE_OPERATIONS.md#render-javascript-in-site-audits"
             target="_blank"
             rel="noreferrer"
           >
-            Setup guide
+            Guia de configuração
           </a>
         </FieldDescription>
       )}

@@ -38,7 +38,7 @@ function getLaunchValidationErrors(
 
   return createFormValidationErrors({
     fields: {
-      url: "Please enter a URL.",
+      url: "Informe uma URL.",
     },
   });
 }
@@ -101,7 +101,7 @@ export function useLaunchController({
           lighthouseStrategy: value.runLighthouse ? "auto" : "none",
           renderJavaScript: value.renderJavaScript,
         });
-        toast.success("Audit started!");
+        toast.success("Auditoria iniciada!");
         onAuditStarted(result.auditId);
       } catch (error) {
         // Starting an audit refuses for credits only when the rendering hold
@@ -112,7 +112,10 @@ export function useLaunchController({
         setOutOfCredits(creditsShort);
         const message = creditsShort
           ? renderingCreditsNeededText(effectiveMaxPages)
-          : getStandardErrorMessage(error, "Failed to start audit");
+          : getStandardErrorMessage(
+              error,
+              "Não foi possível iniciar a auditoria",
+            );
         formApi.setErrorMap({
           onSubmit: createFormValidationErrors({ form: message }),
         });
@@ -171,7 +174,7 @@ function useLaunchMutations({ projectId }: { projectId: string }) {
       deleteAudit({ data: { projectId, auditId } }),
     onSuccess: () => {
       void invalidateHistory();
-      toast.success("Audit deleted");
+      toast.success("Auditoria excluída");
     },
   });
 

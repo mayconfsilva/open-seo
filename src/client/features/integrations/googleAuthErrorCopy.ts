@@ -14,43 +14,45 @@ export function googleAuthErrorCopy(
   code: string,
   providerLabel?: string,
 ): { title: string; description: string } {
-  const what = providerLabel ? `${providerLabel} connection` : "Google sign-in";
+  const what = providerLabel
+    ? `a conexão com o ${providerLabel}`
+    : "o login com o Google";
 
   switch (code) {
     case ACCOUNT_DELETION_SCHEDULED_ERROR:
       return {
-        title: "This account is being deleted",
+        title: "Esta conta está sendo excluída",
         description:
-          "You asked us to delete this account, so it can't be signed in to. To keep it, email support@openseo.so before the deletion date.",
+          "Você pediu a exclusão desta conta, então não é possível entrar nela. Para mantê-la, fale com o suporte antes da data de exclusão.",
       };
     case "state_mismatch":
       return {
-        title: `${what} didn't finish`,
+        title: `Não foi possível concluir ${what}`,
         description:
-          "The attempt expired or was interrupted. Try again in a single browser tab and finish the Google steps within 10 minutes. If it keeps happening, make sure your browser allows cookies for this site.",
+          "A tentativa expirou ou foi interrompida. Tente de novo numa única aba e conclua as etapas do Google em até 10 minutos. Se continuar, confira se o navegador permite cookies deste site.",
       };
     case "access_denied":
       return {
-        title: `${what} was canceled`,
+        title: `Permissão negada para ${what}`,
         description:
-          "Google's permission screen was closed or declined. Try again whenever you're ready.",
+          "A tela de permissão do Google foi fechada ou recusada. Tente de novo quando quiser.",
       };
     case "scope_not_granted":
       return {
-        title: `${what} is missing a permission`,
-        description: `OpenSEO didn't get access to your ${providerLabel ?? "Google"} data because a box on Google's permission screen wasn't checked. Try again and check every box before you continue.`,
+        title: `Falta uma permissão para ${what}`,
+        description: `O dataSEO não recebeu acesso aos dados do ${providerLabel ?? "Google"} porque uma opção da tela de permissão do Google ficou desmarcada. Tente de novo e marque todas as opções antes de continuar.`,
       };
     case "connection_save_failed":
       return {
-        title: `${what} didn't finish`,
+        title: `Não foi possível concluir ${what}`,
         description:
-          "We couldn't save the connection. Please try again — if it keeps failing, contact support.",
+          "Não foi possível salvar a conexão. Tente de novo e, se continuar falhando, fale com o suporte.",
       };
     default:
       return {
-        title: `${what} didn't finish`,
+        title: `Não foi possível concluir ${what}`,
         description:
-          "Something went wrong while talking to Google. Please try again — if it keeps failing, contact support.",
+          "Algo deu errado na comunicação com o Google. Tente de novo e, se continuar falhando, fale com o suporte.",
       };
   }
 }

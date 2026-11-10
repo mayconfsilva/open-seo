@@ -34,7 +34,7 @@ export function LaunchView({
   return (
     <div className="px-4 py-4 md:px-6 md:py-6 pb-24 md:pb-8 overflow-auto">
       <div className="mx-auto max-w-7xl space-y-4">
-        <PageHeader title="Site Audit" />
+        <PageHeader title="Auditoria do site" />
 
         <LaunchFormCard
           launchForm={controller.launchForm}
@@ -80,9 +80,11 @@ function LargeCrawlDialog({
   return (
     <ConfirmDialog
       title={
-        priced ? `Render up to ${pageCount} pages?` : "Start a large audit?"
+        priced
+          ? `Render up to ${pageCount} pages?`
+          : "Iniciar uma auditoria grande?"
       }
-      confirmLabel={priced ? "Start audit" : "Continue"}
+      confirmLabel={priced ? "Iniciar auditoria" : "Continuar"}
       onConfirm={onConfirm}
       onClose={onClose}
     >
@@ -95,7 +97,7 @@ function LargeCrawlDialog({
           </span>
         </>
       ) : (
-        `You are about to crawl ${pageCount} pages. This is okay, but it may take a while. Continue?`
+        `Você vai rastrear ${pageCount} páginas. Tudo bem, mas pode demorar. Continuar?`
       )}
     </ConfirmDialog>
   );

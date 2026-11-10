@@ -66,10 +66,12 @@ export function TrackRankingsMenu({
       });
       const skipped = queries.length - result.added;
       toast.success(
-        `Tracking ${result.added} new keyword${result.added === 1 ? "" : "s"}${skipped > 0 ? ` (${skipped} already tracked, too long, or over the limit)` : ""}`,
+        `${result.added} palavra${result.added === 1 ? "" : "s"} nova${result.added === 1 ? "" : "s"} no monitoramento${skipped > 0 ? ` (${skipped} já monitorada${skipped === 1 ? "" : "s"}, longa${skipped === 1 ? "" : "s"} demais ou acima do limite)` : ""}`,
       );
       if (result.checkScheduledSoon) {
-        toast.info("The scheduled check within the hour covers these keywords");
+        toast.info(
+          "A coleta agendada para a próxima hora já inclui estas palavras",
+        );
       }
       onAdded();
     },
@@ -81,7 +83,7 @@ export function TrackRankingsMenu({
         render={<Button variant="ghost" size="sm" pending={add.isPending} />}
       >
         {add.isPending ? null : <LineChart data-icon="inline-start" />}
-        Track rankings
+        Monitorar posições
       </DropdownMenuTrigger>
       <DropdownMenuContent side="top" align="end" className="w-72">
         {configs.length === 0 ? (
@@ -92,12 +94,12 @@ export function TrackRankingsMenu({
             }
           >
             {configsQuery.isLoading
-              ? "Loading rank trackers…"
-              : "Set up rank tracking first"}
+              ? "Carregando monitoramentos…"
+              : "Configure o monitoramento de posições antes"}
           </DropdownMenuItem>
         ) : (
           <>
-            <DropdownMenuLabel>Add to rank tracker</DropdownMenuLabel>
+            <DropdownMenuLabel>Adicionar ao monitoramento</DropdownMenuLabel>
             {configs.map((config) => (
               <DropdownMenuItem
                 key={config.id}

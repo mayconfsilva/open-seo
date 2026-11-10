@@ -103,8 +103,8 @@ export function ResultsView({
         <Alert variant="warning">
           <ShieldAlert />
           <AlertTitle>
-            Bot protection blocked our crawler on {blockedCount}{" "}
-            {blockedCount === 1 ? "page" : "pages"}.
+            A proteção contra bots bloqueou nosso crawler em {blockedCount}{" "}
+            {blockedCount === 1 ? "página" : "páginas"}.
           </AlertTitle>
           <AlertDescription>
             <BotProtectionAdvice
@@ -120,22 +120,22 @@ export function ResultsView({
           <ShieldAlert />
           <AlertTitle>
             {crawlStopped
-              ? "The crawl stopped early because of the site’s rate limit."
-              : `The site rate limited us on ${rateLimitedCount} ${rateLimitedCount === 1 ? "page" : "pages"}.`}
+              ? "O rastreamento parou antes por causa do limite de requisições do site."
+              : `O site limitou nossas requisições em ${rateLimitedCount} ${rateLimitedCount === 1 ? "página" : "páginas"}.`}
           </AlertTitle>
           <AlertDescription>
             {crawlStopped
-              ? "The site kept refusing pages, so some URLs were left unvisited. This report is incomplete. "
-              : "Pages that returned 429 Too Many Requests could not be audited. "}
-            Re-run the audit after the rate limit resets, or ask the site owner
-            to allow the{" "}
+              ? "O site continuou recusando páginas, então algumas URLs ficaram sem visita. Este relatório está incompleto. "
+              : "Páginas que retornaram 429 Too Many Requests não puderam ser auditadas. "}
+            Rode a auditoria de novo depois que o limite zerar, ou peça ao dono
+            do site para liberar o{" "}
             <a
               className="underline underline-offset-4"
               href="https://openseo.so/docs/crawler"
               target="_blank"
               rel="noreferrer"
             >
-              OpenSEO-Audit crawler
+              crawler OpenSEO-Audit
             </a>
             .
           </AlertDescription>
@@ -218,13 +218,13 @@ function ResultsHeader({
   onExport: (format: "csv" | "json" | "sheets") => void;
 }) {
   const tabs: Array<{ tab: ResultsTab; label: string }> = [
-    { tab: "issues", label: `Issues (${issueCount})` },
-    { tab: "pages", label: `Pages (${pageCount})` },
+    { tab: "issues", label: `Problemas (${issueCount})` },
+    { tab: "pages", label: `Páginas (${pageCount})` },
     ...(hasPerformanceTab
       ? [
           {
             tab: "performance" as const,
-            label: `Performance (${lighthouseCount})`,
+            label: `Desempenho (${lighthouseCount})`,
           },
         ]
       : []),
@@ -286,9 +286,9 @@ function StatsStrip({
   }, [issueGroups]);
 
   const items: StatItem[] = [
-    { label: "Pages crawled", value: String(pagesCrawled) },
+    { label: "Páginas rastreadas", value: String(pagesCrawled) },
     {
-      label: "Issues found",
+      label: "Problemas encontrados",
       value: String(issueCount),
       valueClass: issueCount === 0 ? "text-success" : "",
       sub: issueCount > 0 && (
@@ -301,9 +301,9 @@ function StatsStrip({
                 title={severity}
               >
                 {severity === "critical"
-                  ? "Critical"
+                  ? "Crítico"
                   : severity === "warning"
-                    ? "Warning"
+                    ? "Aviso"
                     : "Info"}{" "}
                 {severityCounts[severity]}
               </SeverityBadge>
@@ -312,14 +312,14 @@ function StatsStrip({
         </span>
       ),
     },
-    { label: "Average response time", value: `${averageResponseMs}ms` },
+    { label: "Tempo médio de resposta", value: `${averageResponseMs}ms` },
   ];
 
   if (totalLighthouse > 0) {
     items.push(
-      { label: "Lighthouse tests", value: String(totalLighthouse) },
+      { label: "Testes Lighthouse", value: String(totalLighthouse) },
       {
-        label: "Lighthouse performance",
+        label: "Desempenho Lighthouse",
         value:
           lighthouseSummary.avgPerformance == null
             ? "-"
@@ -335,7 +335,7 @@ function StatsStrip({
         valueClass: scoreClass(lighthouseSummary.avgSeo),
       },
       {
-        label: "Lighthouse accessibility",
+        label: "Acessibilidade Lighthouse",
         value:
           lighthouseSummary.avgAccessibility == null
             ? "-"
@@ -343,7 +343,7 @@ function StatsStrip({
         valueClass: scoreClass(lighthouseSummary.avgAccessibility),
       },
       {
-        label: "Lighthouse failures",
+        label: "Falhas Lighthouse",
         value: String(lighthouseSummary.failed),
         valueClass:
           lighthouseSummary.failed > 0 ? "text-destructive" : "text-success",

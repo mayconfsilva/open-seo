@@ -111,7 +111,10 @@ export const googleProviders: Record<GoogleProvider, ProviderConfig> = {
   gsc: {
     title: "Google Search Console",
     name: "Search Console",
-    pitch: { icon: Search, title: "See how people find you on Google" },
+    pitch: {
+      icon: Search,
+      title: "Veja como as pessoas encontram você no Google",
+    },
     Logo: GoogleSearchConsoleLogo,
     docsUrl: GSC_SELF_HOSTED_SETUP_DOCS_URL,
     getConnection: async (projectId) => {
@@ -153,7 +156,7 @@ export const googleProviders: Record<GoogleProvider, ProviderConfig> = {
     name: "Google Analytics",
     pitch: {
       icon: ChartLine,
-      title: "See your organic traffic and conversions",
+      title: "Veja o tráfego orgânico e as conversões",
     },
     Logo: GoogleAnalyticsLogo,
     docsUrl: GA4_SELF_HOSTED_SETUP_DOCS_URL,

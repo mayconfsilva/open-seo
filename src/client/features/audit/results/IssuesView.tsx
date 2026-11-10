@@ -26,8 +26,8 @@ const SEVERITY_RULE: Record<IssueSeverity, string> = {
 };
 
 const SEVERITY_LABEL: Record<IssueSeverity, string> = {
-  critical: "Critical",
-  warning: "Warning",
+  critical: "Crítico",
+  warning: "Aviso",
   info: "Info",
 };
 
@@ -100,8 +100,8 @@ export function IssuesView({
       {groups.length === 0 ? (
         <EmptyState
           variant="plain"
-          title="No issues found."
-          description="Every crawled page passed the issue checks."
+          title="Nenhum problema encontrado."
+          description="Todas as páginas rastreadas passaram nas verificações."
         />
       ) : (
         <div>
@@ -174,7 +174,7 @@ function IssueRow({
           {group.title}
         </span>
         <span className="text-xs tabular-nums text-muted-foreground shrink-0">
-          {group.count} {group.count === 1 ? "page" : "pages"}
+          {group.count} {group.count === 1 ? "página" : "páginas"}
         </span>
         <ChevronRight
           className={`size-4 shrink-0 text-muted-foreground transition-transform ${
@@ -192,7 +192,7 @@ function IssueRow({
           )}
           {group.howToFix && (
             <p className="text-sm max-w-prose">
-              <span className="font-medium">How to fix: </span>
+              <span className="font-medium">Como corrigir: </span>
               <span className="text-foreground/80">{group.howToFix}</span>
             </p>
           )}
@@ -235,7 +235,7 @@ function AffectedUrlList({
             <Skeleton className="h-4 w-1/2" />
           </div>
         }
-        errorFallback="Could not load the affected URLs"
+        errorFallback="Não foi possível carregar as URLs afetadas"
       >
         {(issues) => (
           <>
@@ -258,7 +258,8 @@ function AffectedUrlList({
             ))}
             {remaining > 0 && (
               <div className="px-3 py-2 text-xs text-muted-foreground">
-                …and {remaining} more — export the issues CSV for the full list.
+                …e mais {remaining}. Exporte o CSV de problemas para ver a lista
+                completa.
               </div>
             )}
           </>

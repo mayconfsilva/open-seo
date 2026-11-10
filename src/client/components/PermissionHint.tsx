@@ -10,7 +10,7 @@ export function PermissionHint({
 }) {
   return (
     <p className={cn("text-sm text-muted-foreground", className)}>
-      Ask an organization owner or admin to {action}.
+      Peça a um dono ou administrador da organização para {action}.
     </p>
   );
 }

@@ -76,7 +76,7 @@ export function DataTableFilterToggle({
   return (
     <Button variant="outline" size="sm" aria-expanded={open} onClick={onToggle}>
       <SlidersHorizontal data-icon="inline-start" />
-      Filters
+      Filtros
       {activeCount > 0 ? (
         <Badge size="sm" aria-label={`${activeCount} active`}>
           {activeCount}
@@ -99,9 +99,11 @@ export function DataTableFilterPanel({
     <div className="space-y-3 border-b border-border bg-foreground/[0.02] px-4 py-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-semibold">Refine results</p>
+          <p className="text-sm font-semibold">Refinar resultados</p>
           {activeCount > 0 ? (
-            <Badge size="sm">{activeCount} active</Badge>
+            <Badge size="sm">
+              {activeCount} ativo{activeCount === 1 ? "" : "s"}
+            </Badge>
           ) : null}
         </div>
         <Button
@@ -111,7 +113,7 @@ export function DataTableFilterPanel({
           disabled={activeCount === 0}
         >
           <RotateCcw data-icon="inline-start" />
-          Clear all
+          Limpar tudo
         </Button>
       </div>
       {children}
@@ -157,14 +159,14 @@ export function DataTableRangeFilter({
       <div className="grid grid-cols-2 gap-2">
         <Input
           type="number"
-          placeholder="Min"
+          placeholder="Mín."
           aria-label={`${label} min`}
           className="h-7"
           {...min}
         />
         <Input
           type="number"
-          placeholder="Max"
+          placeholder="Máx."
           aria-label={`${label} max`}
           className="h-7"
           {...max}

@@ -48,7 +48,7 @@ function strikingExportTable(report: Report): ExportTable {
   const stamp = `${report.range.startDate}-to-${report.range.endDate}`;
   return {
     filename: `search-performance-striking-distance-${stamp}`,
-    headers: ["Query", "Page", "Impressions", "Clicks", "Position"],
+    headers: ["Consulta", "Página", "Impressões", "Cliques", "Posição"],
     rows: report.strikingDistance.map((row) => [
       row.query,
       row.page,
@@ -69,11 +69,11 @@ function dimensionExportTable(
   return {
     filename: `search-performance-${isPage ? "pages" : "queries"}-${stamp}`,
     headers: [
-      isPage ? "Page" : "Query",
-      "Clicks",
-      "Impressions",
+      isPage ? "Página" : "Consulta",
+      "Cliques",
+      "Impressões",
       "CTR (%)",
-      ...(showPosition ? ["Position"] : []),
+      ...(showPosition ? ["Posição"] : []),
     ],
     rows: rows.map((row) => [
       row.key,
@@ -146,27 +146,27 @@ export function TotalsTable({
   showPosition: boolean;
 }) {
   const { totals, prevTotals, range } = report;
-  const deltaTitle = `Compared with ${range.prevStartDate} to ${range.prevEndDate}`;
+  const deltaTitle = `Comparado com ${range.prevStartDate} a ${range.prevEndDate}`;
   const metrics = [
     {
-      label: "Clicks",
+      label: "Cliques",
       value: formatCount(totals.clicks),
       delta: percentDelta(totals.clicks, prevTotals.clicks),
     },
     {
-      label: "Impressions",
+      label: "Impressões",
       value: formatCount(totals.impressions),
       delta: percentDelta(totals.impressions, prevTotals.impressions),
     },
     {
-      label: "Click-through rate",
+      label: "Taxa de cliques (CTR)",
       value: formatCtr(totals.ctr),
       delta: percentDelta(totals.ctr, prevTotals.ctr),
     },
     ...(showPosition
       ? [
           {
-            label: "Average position",
+            label: "Posição média",
             value: formatPosition(totals.position),
             delta: positionDelta(totals.position, prevTotals.position),
           },
@@ -178,10 +178,10 @@ export function TotalsTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-full">Metric</TableHead>
-            <TableHead className="min-w-32 text-right">Value</TableHead>
+            <TableHead className="w-full">Métrica</TableHead>
+            <TableHead className="min-w-32 text-right">Valor</TableHead>
             <TableHead className="min-w-32 text-right" title={deltaTitle}>
-              Change
+              Variação
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -239,17 +239,18 @@ export function DimensionTable({
       empty={
         isPastEnd
           ? {
-              title: "No rows on this page",
-              description: "This page is past the end of the results.",
+              title: "Nenhuma linha nesta página",
+              description: "Esta página fica depois do fim dos resultados.",
               action: (
                 <Button variant="outline" size="sm" onClick={onFirstPage}>
-                  Go to first page
+                  Ir para a primeira página
                 </Button>
               ),
             }
           : {
-              title: "No Search Console data yet",
-              description: "Search Console data can take a few days to appear.",
+              title: "Ainda não há dados do Search Console",
+              description:
+                "Os dados do Search Console podem levar alguns dias para aparecer.",
             }
       }
     />
@@ -308,10 +309,10 @@ export function StrikingDistanceTable({
         .join("\n");
       await navigator.clipboard.writeText(text);
       toast.success(
-        `Copied ${selectedQueries.length} ${selectedQueries.length === 1 ? "keyword" : "keywords"}`,
+        `${selectedQueries.length} ${selectedQueries.length === 1 ? "palavra copiada" : "palavras copiadas"}`,
       );
     } catch {
-      toast.error("Couldn't copy to clipboard");
+      toast.error("Não foi possível copiar");
     }
   };
 
@@ -327,7 +328,7 @@ export function StrikingDistanceTable({
         queryKey: ["savedKeywords", projectId],
       });
       toast.success(
-        `Saved ${keywords.length} ${keywords.length === 1 ? "keyword" : "keywords"}`,
+        `${keywords.length} ${keywords.length === 1 ? "palavra salva" : "palavras salvas"}`,
       );
       setRowSelection({});
     },
@@ -337,8 +338,8 @@ export function StrikingDistanceTable({
     <>
       <div className="p-4">
         <p className="mb-3 text-sm text-muted-foreground">
-          Queries ranking at positions 5 to 20, sorted by impressions. Improve
-          the listed page to move them into the top results.
+          Consultas entre as posições 5 e 20, ordenadas por impressões. Melhore
+          a página indicada para levá-las aos primeiros resultados.
         </p>
         <DataTable
           table={table}
@@ -347,22 +348,22 @@ export function StrikingDistanceTable({
           empty={
             isPastEnd
               ? {
-                  title: "No rows on this page",
-                  description: "This page is past the end of the results.",
+                  title: "Nenhuma linha nesta página",
+                  description: "Esta página fica depois do fim dos resultados.",
                   action: (
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => onPageChange(1)}
                     >
-                      Go to first page
+                      Ir para a primeira página
                     </Button>
                   ),
                 }
               : {
-                  title: "No striking-distance queries",
+                  title: "Nenhuma consulta quase no topo",
                   description:
-                    "Queries ranking at positions 5 to 20 will appear here.",
+                    "As consultas entre as posições 5 e 20 aparecem aqui.",
                 }
           }
         />
@@ -389,7 +390,7 @@ export function StrikingDistanceTable({
               icon={<Copy className="size-3.5" />}
               onClick={() => void copyKeywords()}
             >
-              Copy keywords
+              Copiar palavras
             </TableBulkActionButton>
             <TableBulkActionButton
               icon={
@@ -402,7 +403,7 @@ export function StrikingDistanceTable({
               onClick={() => save.mutate(selectedQueries)}
               disabled={save.isPending}
             >
-              Save as keywords
+              Salvar como palavras-chave
             </TableBulkActionButton>
             <TrackRankingsMenu
               projectId={projectId}

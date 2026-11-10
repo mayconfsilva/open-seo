@@ -16,9 +16,9 @@ import {
 } from "@/client/components/ui/select";
 
 const RANGE_LABELS: Record<SearchPerformanceDateRange, string> = {
-  last_7_days: "Last 7 days",
-  last_28_days: "Last 28 days",
-  last_3_months: "Last 3 months",
+  last_7_days: "Últimos 7 dias",
+  last_28_days: "Últimos 28 dias",
+  last_3_months: "Últimos 3 meses",
 };
 const RANGE_OPTIONS = SEARCH_PERFORMANCE_RANGES.map((value) => ({
   value,
@@ -26,7 +26,7 @@ const RANGE_OPTIONS = SEARCH_PERFORMANCE_RANGES.map((value) => ({
 }));
 
 const TYPE_LABELS: Record<SearchPerformanceType, string> = {
-  web: "Web search",
+  web: "Pesquisa na web",
   discover: "Discover",
   googleNews: "Google News",
 };
@@ -40,8 +40,8 @@ function isSearchType(value: string): value is SearchPerformanceType {
 }
 
 const DEVICE_LABELS: Record<SearchPerformanceDevice, string> = {
-  DESKTOP: "Desktop",
-  MOBILE: "Mobile",
+  DESKTOP: "Computador",
+  MOBILE: "Celular",
   TABLET: "Tablet",
 };
 const DEVICE_OPTIONS = GSC_DEVICES.map((value) => ({
@@ -51,7 +51,10 @@ const DEVICE_OPTIONS = GSC_DEVICES.map((value) => ({
 
 // Sentinel for "no filter" in the selects; never written to the URL.
 const ALL = "ALL";
-const DEVICE_ITEMS = [{ value: ALL, label: "All devices" }, ...DEVICE_OPTIONS];
+const DEVICE_ITEMS = [
+  { value: ALL, label: "Todos os dispositivos" },
+  ...DEVICE_OPTIONS,
+];
 
 function isDateRange(value: string): value is SearchPerformanceDateRange {
   return SEARCH_PERFORMANCE_RANGES.some((option) => option === value);
@@ -75,7 +78,7 @@ export function SearchPerformanceSelects({
   const country = search.country ?? ALL;
   const range = search.range ?? "last_28_days";
   const countryItems = [
-    { value: ALL, label: "All countries" },
+    { value: ALL, label: "Todos os países" },
     ...(country !== ALL && !countries.some((row) => row.key === country)
       ? [{ value: country, label: country.toUpperCase() }]
       : []),
@@ -102,7 +105,7 @@ export function SearchPerformanceSelects({
           });
         }}
       >
-        <SelectTrigger size="sm" className="w-36" aria-label="Search type">
+        <SelectTrigger size="sm" className="w-36" aria-label="Tipo de pesquisa">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -124,7 +127,11 @@ export function SearchPerformanceSelects({
           });
         }}
       >
-        <SelectTrigger size="sm" className="w-36" aria-label="Device filter">
+        <SelectTrigger
+          size="sm"
+          className="w-36"
+          aria-label="Filtro de dispositivo"
+        >
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -146,7 +153,7 @@ export function SearchPerformanceSelects({
           });
         }}
       >
-        <SelectTrigger size="sm" className="w-36" aria-label="Country filter">
+        <SelectTrigger size="sm" className="w-36" aria-label="Filtro de país">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -186,7 +193,7 @@ export function DateRangeSelect({
       <SelectTrigger
         size="sm"
         className={triggerClassName}
-        aria-label="Date range"
+        aria-label="Período"
       >
         <SelectValue />
       </SelectTrigger>
