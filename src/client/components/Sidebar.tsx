@@ -23,6 +23,7 @@ import {
 } from "@/client/navigation/items";
 import { ProjectSwitcher } from "@/client/features/projects/ProjectSwitcher";
 import { OrganizationRow } from "@/client/features/team/OrganizationRow";
+import { SidebarPlanUsage } from "@/client/features/plan-usage/SidebarPlanUsage";
 import {
   SamChatListSkeleton,
   SamSidebarPanel,
@@ -217,6 +218,10 @@ export function Sidebar({
           </nav>
         )}
       </SidebarContent>
+      {/* Hosted and Every App installs bill through their own plans. */}
+      {everyApp || isHostedClientAuthMode() ? null : (
+        <SidebarPlanUsage ready={ready} />
+      )}
       <AccountFooter ready={ready} />
     </UiSidebar>
   );
