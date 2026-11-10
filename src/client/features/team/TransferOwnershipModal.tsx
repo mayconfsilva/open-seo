@@ -69,10 +69,12 @@ export function TransferOwnershipModal({
             <span className="font-medium text-foreground" data-ph-mask>
               {displayName}
             </span>{" "}
-            passa a ser dono desta organização e cuida da cobrança. Você vira administrador e mantém acesso total a cada projeto.
+            passa a ser dono desta organização e cuida da cobrança. Você vira
+            administrador e mantém acesso total a cada projeto.
           </DialogDescription>
           <DialogDescription>
-            Projetos, dados e assinatura ficam com a organização. Só o novo dono pode transferir a posse de novo.
+            Projetos, dados e assinatura ficam com a organização. Só o novo dono
+            pode transferir a posse de novo.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

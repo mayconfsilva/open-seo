@@ -77,7 +77,10 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
       {isAdding ? (
         <CardContent className="space-y-4">
           <p className="text-muted-foreground">
-            Libere o rastreador da auditoria na Shopify. Cole a assinatura criada no admin da Shopify em Loja virtual &rarr; Preferências &rarr; Acesso de rastreadores. Toda auditoria desse domínio na sua organização envia a assinatura em cada requisição.
+            Libere o rastreador da auditoria na Shopify. Cole a assinatura
+            criada no admin da Shopify em Loja virtual &rarr; Preferências
+            &rarr; Acesso de rastreadores. Toda auditoria desse domínio na sua
+            organização envia a assinatura em cada requisição.
           </p>
           <CrawlerAccessForm
             projectId={projectId}
@@ -121,7 +124,9 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
                           ? formatDate(credential.expiresAt)
                           : "Desconhecido"}
                         {isCrawlerAccessExpired(credential.expiresAt) && (
-                          <span className="ml-2 text-destructive">Expirado</span>
+                          <span className="ml-2 text-destructive">
+                            Expirado
+                          </span>
                         )}
                       </TableCell>
                       <TableCell>

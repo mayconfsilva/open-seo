@@ -152,7 +152,9 @@ function buildBaseColumns(
     {
       id: "source",
       enableSorting: false,
-      header: () => <HelpLabel label="Origem" helpText="Página que aponta para você" />,
+      header: () => (
+        <HelpLabel label="Origem" helpText="Página que aponta para você" />
+      ),
       meta: { headerClassName: "min-w-[200px]" },
       cell: ({ row }) => (
         <SourceCell displayRow={row.original} onToggleDomain={onToggleDomain} />

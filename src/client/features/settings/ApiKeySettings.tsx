@@ -70,7 +70,9 @@ export function ApiKeySettings() {
     queryFn: async () => {
       const result = await authClient.apiKey.list();
       if (result.error) {
-        throw new Error(result.error.message ?? "Não foi possível carregar as chaves de API");
+        throw new Error(
+          result.error.message ?? "Não foi possível carregar as chaves de API",
+        );
       }
       return result.data.apiKeys.map((key) => ({
         id: key.id,
@@ -89,7 +91,9 @@ export function ApiKeySettings() {
     mutationFn: async (keyName: string) => {
       const result = await authClient.apiKey.create({ name: keyName });
       if (result.error || !result.data?.key) {
-        throw new Error(result.error?.message ?? "Não foi possível criar a chave");
+        throw new Error(
+          result.error?.message ?? "Não foi possível criar a chave",
+        );
       }
       return result.data.key;
     },
@@ -104,7 +108,9 @@ export function ApiKeySettings() {
     mutationFn: async (keyId: string) => {
       const result = await authClient.apiKey.delete({ keyId });
       if (result.error) {
-        throw new Error(result.error.message ?? "Não foi possível revogar a chave");
+        throw new Error(
+          result.error.message ?? "Não foi possível revogar a chave",
+        );
       }
     },
     onSuccess: () => {
@@ -139,7 +145,8 @@ export function ApiKeySettings() {
             Autentique clientes MCP quando o OAuth não funcionar
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Use para agentes remotos, como o Hermes, em que o login normal não funciona.
+            Use para agentes remotos, como o Hermes, em que o login normal não
+            funciona.
           </p>
           <p className="mt-1 text-sm">
             <a
@@ -163,7 +170,9 @@ export function ApiKeySettings() {
       >
         {(apiKeys) =>
           apiKeys.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Nenhuma chave de API ainda.</p>
+            <p className="text-sm text-muted-foreground">
+              Nenhuma chave de API ainda.
+            </p>
           ) : (
             <TableCard>
               <Table>

@@ -10,7 +10,8 @@ export function RankTrackingChangesAlert() {
           <span className="font-medium">
             O acompanhamento agora lê cada palavra várias vezes.
           </span>{" "}
-          Desde setembro, o Google vem entregando resultados incompletos a todas as ferramentas de posição.{" "}
+          Desde setembro, o Google vem entregando resultados incompletos a todas
+          as ferramentas de posição.{" "}
           <a
             href="https://openseo.so/blogs/state-of-rank-tracking-november-2026"
             target="_blank"

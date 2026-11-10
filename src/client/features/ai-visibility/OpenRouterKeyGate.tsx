@@ -41,11 +41,15 @@ export function OpenRouterKeyGate({
         description={
           <>
             <p>
-              A visibilidade em IA usa o OpenRouter para pesquisar sua marca e sugerir os prompts que valem acompanhar, sem você precisar escrever. Os resultados, o que o ChatGPT e outras IAs respondem, vêm da sua conta da DataForSEO.
+              A visibilidade em IA usa o OpenRouter para pesquisar sua marca e
+              sugerir os prompts que valem acompanhar, sem você precisar
+              escrever. Os resultados, o que o ChatGPT e outras IAs respondem,
+              vêm da sua conta da DataForSEO.
             </p>
             <p>
               Crie uma chave no OpenRouter, defina como{" "}
-              <code>OPENROUTER_API_KEY</code>, reinicie o dataSEO e confirme aqui. O{" "}
+              <code>OPENROUTER_API_KEY</code>, reinicie o dataSEO e confirme
+              aqui. O{" "}
               <Link
                 className="underline underline-offset-2 hover:text-foreground"
                 to="/help/openrouter-api-key"

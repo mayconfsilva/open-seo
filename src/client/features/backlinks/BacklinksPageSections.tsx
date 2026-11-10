@@ -171,7 +171,9 @@ export function BacklinksResultsCard({
             <>
               <ExportMenu
                 actions={["sheets", "csv"]}
-                scopes={[{ id: "page", label: "Página atual · visão selecionada" }]}
+                scopes={[
+                  { id: "page", label: "Página atual · visão selecionada" },
+                ]}
                 disabled={exportTable.rows.length === 0}
                 onExport={(format) =>
                   void exportRows({

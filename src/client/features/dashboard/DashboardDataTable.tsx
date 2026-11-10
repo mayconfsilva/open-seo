@@ -131,7 +131,7 @@ export function DashboardDataTable<T>({
                         <Select
                           items={[
                             { value: "all", label: "Todos os links" },
-                            { value: "Seguir", label: "Seguir" },
+                            { value: "Dofollow", label: "Dofollow" },
                             { value: "Nofollow", label: "Nofollow" },
                           ]}
                           value={typeof value === "string" ? value : "all"}
@@ -144,7 +144,7 @@ export function DashboardDataTable<T>({
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="all">Todos os links</SelectItem>
-                            <SelectItem value="Follow">Seguir</SelectItem>
+                            <SelectItem value="Dofollow">Dofollow</SelectItem>
                             <SelectItem value="Nofollow">Nofollow</SelectItem>
                           </SelectContent>
                         </Select>

@@ -136,7 +136,11 @@ export function SavedKeywordsBulkTagsModal({
           }}
           className="rounded-lg bg-muted p-0.5 ring-1 ring-border ring-inset"
         >
-          <SegmentItem value="add" label="Adicionar etiquetas" count={addNames.length} />
+          <SegmentItem
+            value="add"
+            label="Adicionar etiquetas"
+            count={addNames.length}
+          />
           <SegmentItem
             value="remove"
             label="Remover etiquetas"
@@ -259,7 +263,8 @@ export function SavedKeywordsBulkTagsModal({
             </div>
             {removeIds.length > 0 ? (
               <p className="text-xs text-muted-foreground">
-                {removeIds.length} tag{removeIds.length !== 1 ? "s" : ""} será tirada das palavras selecionadas.
+                {removeIds.length} tag{removeIds.length !== 1 ? "s" : ""} será
+                tirada das palavras selecionadas.
               </p>
             ) : null}
           </div>

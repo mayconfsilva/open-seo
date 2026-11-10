@@ -47,7 +47,9 @@ function OpenrouterApiKeyHelpPage() {
       title="Configure sua chave de API do OpenRouter"
       intro={
         <>
-          OpenSEO needs the <code>OPENROUTER_API_KEY</code> antes de usar recursos de IA como o SAM, o agente de SEO do app. É opcional: todo o resto funciona sem ela.
+          OpenSEO needs the <code>OPENROUTER_API_KEY</code> antes de usar
+          recursos de IA como o SAM, o agente de SEO do app. É opcional: todo o
+          resto funciona sem ela.
         </>
       }
       everyAppIntro="SAM, prompt suggestions and website research run on OpenRouter. On Every App the gateway holds the key once, for every app."
@@ -57,7 +59,8 @@ function OpenrouterApiKeyHelpPage() {
           {accountStep}
           {keyStep}
           <li>
-            Salve a chave como a variável <code>OPENROUTER_API_KEY</code> no seu ambiente:
+            Salve a chave como a variável <code>OPENROUTER_API_KEY</code> no seu
+            ambiente:
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
                 Docker: <code>.env</code>

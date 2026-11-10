@@ -17,7 +17,8 @@ export function PrivacySettings() {
     // The session is served from a signed cookie cache, so bypass it to pick
     // up the saved choice.
     onSuccess: () => refetch({ query: { disableCookieCache: true } }),
-    onError: () => toast.error("Não foi possível salvar sua escolha de e-mails."),
+    onError: () =>
+      toast.error("Não foi possível salvar sua escolha de e-mails."),
   });
   if (!choices || !session) return null;
 
@@ -28,7 +29,8 @@ export function PrivacySettings() {
         <div>
           <p className="text-sm">Dados de uso</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Compartilhar dados de uso e gravações de sessão para ajudar a melhorar o produto.
+            Compartilhar dados de uso e gravações de sessão para ajudar a
+            melhorar o produto.
           </p>
         </div>
         <Switch

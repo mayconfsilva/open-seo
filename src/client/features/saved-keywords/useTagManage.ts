@@ -42,7 +42,9 @@ export function useTagManage(projectId: string) {
       await invalidate();
       toast.success("Etiqueta atualizada");
     } catch (error) {
-      toast.error(getStandardErrorMessage(error, "Não foi possível atualizar a etiqueta"));
+      toast.error(
+        getStandardErrorMessage(error, "Não foi possível atualizar a etiqueta"),
+      );
     } finally {
       markBusy(input.tagId, false);
     }

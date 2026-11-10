@@ -28,12 +28,12 @@ const FEATURE_SHORT_LABELS: Record<string, string> = {
 };
 
 const FEATURE_TOOLTIPS: Record<string, string> = {
-  featured_snippet:
-    "Featured Snippet: caixa de resposta em destaque no topo",
+  featured_snippet: "Featured Snippet: caixa de resposta em destaque no topo",
   people_also_ask: "As pessoas também perguntam: perguntas relacionadas",
   ai_overview: "Visão geral de IA: resumo gerado por IA no topo",
   local_pack: "Pacote local: mapa com empresas locais",
-  knowledge_panel: "Painel de conhecimento: caixa de informações sobre uma entidade",
+  knowledge_panel:
+    "Painel de conhecimento: caixa de informações sobre uma entidade",
   video: "Vídeo: resultados em vídeo na SERP",
   images: "Imagens: resultados de imagem na SERP",
   shopping: "Shopping: produtos com preço",

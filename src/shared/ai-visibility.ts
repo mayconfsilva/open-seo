@@ -41,7 +41,7 @@ export const AI_LIVE_RECORD_COST_USD = 0.004;
 export type AiScheduleInterval = "daily" | "weekly" | "monthly";
 export type AiObservationStatus = "pending" | "completed" | "failed";
 /** Prompts without a chosen topic are grouped here. */
-export const AI_DEFAULT_TOPIC = "Geral";
+export const AI_DEFAULT_TOPIC = "General";
 export interface AiPrompt {
   id: string;
   text: string;

@@ -84,7 +84,8 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
       )}
       {answer.truncated && (
         <p className="border-b px-5 py-3 text-xs text-warning border-border">
-          Esta resposta foi cortada. As evidências guardadas podem estar incompletas.
+          Esta resposta foi cortada. As evidências guardadas podem estar
+          incompletas.
         </p>
       )}
       <div
@@ -182,7 +183,8 @@ function AnswerEvidence({ answer }: { answer: AiAnswer }) {
             </TabsContent>
             <TabsContent value="brands" className="space-y-3">
               <p className="text-xs text-muted-foreground">
-                Menções aparecem no texto da resposta. Citações apontam para o domínio da marca.
+                Menções aparecem no texto da resposta. Citações apontam para o
+                domínio da marca.
               </p>
               {!answer.observation.brands.length && (
                 <p className="text-sm text-muted-foreground">

@@ -176,7 +176,9 @@ function useLighthouseIssuesActions({
       toast.success("Download iniciado");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Não foi possível exportar os dados";
+        error instanceof Error
+          ? error.message
+          : "Não foi possível exportar os dados";
       toast.error(message);
     }
   };
@@ -201,7 +203,9 @@ function useLighthouseIssuesActions({
       toast.success(toastMessage);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Não foi possível copiar os dados";
+        error instanceof Error
+          ? error.message
+          : "Não foi possível copiar os dados";
       toast.error(message);
     }
   };

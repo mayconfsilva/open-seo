@@ -180,7 +180,8 @@ export function AiResearchSetupGate({
                 Configurar a visibilidade em IA
               </h1>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                Vamos pesquisar sua marca e encontrar os temas mais relevantes para acompanhar.
+                Vamos pesquisar sua marca e encontrar os temas mais relevantes
+                para acompanhar.
               </p>
             </div>
             {getErrorCode(start.error) === "INSUFFICIENT_CREDITS" ? (

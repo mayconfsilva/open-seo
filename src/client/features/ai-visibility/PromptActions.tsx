@@ -36,7 +36,9 @@ export function PromptActionsMenu({
         onClick={onTogglePause}
       >
         {paused ? <Play /> : <Pause />}
-        {paused ? `Retomar ${kind === "topic" ? "tema" : "prompt"}` : `Pausar ${kind === "topic" ? "tema" : "prompt"}`}
+        {paused
+          ? `Retomar ${kind === "topic" ? "tema" : "prompt"}`
+          : `Pausar ${kind === "topic" ? "tema" : "prompt"}`}
       </DropdownMenuItem>
       <DropdownMenuItem
         variant="destructive"

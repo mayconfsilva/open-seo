@@ -51,7 +51,9 @@ export function Ga4ConnectCard({
           description="Traga seu tráfego orgânico e conversões para o painel."
           action={
             <div className="flex flex-wrap justify-center gap-2">
-              <Button onClick={() => setUsesGa4(true)}>Sim, conectar o GA4</Button>
+              <Button onClick={() => setUsesGa4(true)}>
+                Sim, conectar o GA4
+              </Button>
               <Button
                 variant="outline"
                 disabled={dismissMutation.isPending}

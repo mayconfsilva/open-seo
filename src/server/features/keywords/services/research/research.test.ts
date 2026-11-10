@@ -310,7 +310,7 @@ it("rejects a wildcard seed in a Google Ads country before any paid call", async
     ),
   ).rejects.toMatchObject({
     code: "VALIDATION_ERROR",
-    message: "Wildcard search isn't available for this country.",
+    message: "A busca com * não está disponível para este país.",
   });
   expect(mocks.fetchAdsRows).not.toHaveBeenCalled();
 });

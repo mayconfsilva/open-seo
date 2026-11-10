@@ -66,7 +66,9 @@ export function VisibilityTrend({
     <div className="px-4 pt-2 pb-6">
       <section className="space-y-3 rounded-lg border border-border p-3">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="text-sm font-medium">Visibilidade ao longo do tempo</h2>
+          <h2 className="text-sm font-medium">
+            Visibilidade ao longo do tempo
+          </h2>
           <SegmentedToggle
             showLabels
             items={periods}

@@ -45,7 +45,9 @@ export function SavedKeywordsHeader({
                 data-icon="inline-start"
                 className={metricsRefreshing ? "animate-spin" : ""}
               />
-              {metricsRefreshing ? "Updating..." : "Atualizar dados das palavras"}
+              {metricsRefreshing
+                ? "Updating..."
+                : "Atualizar dados das palavras"}
             </Button>
 
             <ExportMenu
@@ -70,7 +72,8 @@ export function SavedKeywordsHeader({
           }}
           onClose={() => setConfirmingRefresh(false)}
         >
-          Isto busca volume, dificuldade e CPC atualizados para todas as palavras salvas do projeto. Cada palavra usa créditos.
+          Isto busca volume, dificuldade e CPC atualizados para todas as
+          palavras salvas do projeto. Cada palavra usa créditos.
         </ConfirmDialog>
       ) : null}
     </>

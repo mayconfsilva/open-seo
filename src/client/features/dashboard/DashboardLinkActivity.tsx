@@ -30,7 +30,10 @@ export function DashboardLinkActivity({
     retry: false,
   });
   return (
-    <QueryState query={query} errorFallback="Não foi possível carregar os links novos">
+    <QueryState
+      query={query}
+      errorFallback="Não foi possível carregar os links novos"
+    >
       {(data) => (
         <CardShell
           title="Backlinks novos"
@@ -38,7 +41,8 @@ export function DashboardLinkActivity({
           titleInfo={
             <DashboardInfo label="Sobre os links novos">
               <p>
-                Links para seu site encontrados na última semana. Os sites novos aparecem primeiro.
+                Links para seu site encontrados na última semana. Os sites novos
+                aparecem primeiro.
               </p>
               <p className="mt-2">
                 Um link pode ser mais antigo que a data em que foi encontrado.

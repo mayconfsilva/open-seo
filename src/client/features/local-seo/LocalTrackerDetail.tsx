@@ -50,7 +50,10 @@ export function LocalTrackerDetail({
         : false,
   });
   return (
-    <QueryState query={query} errorFallback="Não foi possível carregar o monitoramento local">
+    <QueryState
+      query={query}
+      errorFallback="Não foi possível carregar o monitoramento local"
+    >
       {(data) => (
         <TrackerContent
           projectId={projectId}
@@ -257,7 +260,8 @@ function TrackerContent({
           onClose={() => setConfirm(null)}
         >
           {estimate.keywords} keyword{estimate.keywords === 1 ? "" : "s"}{" "}
-          &times; {estimate.points} pontos da grade = {estimate.searches} buscas no Google Maps pelo celular, levando{" "}
+          &times; {estimate.points} pontos da grade = {estimate.searches} buscas
+          no Google Maps pelo celular, levando{" "}
           {checkDurationLabel(estimate.keywords, estimate.points)}. Costs up to{" "}
           <span className="font-mono font-semibold text-foreground">
             {/* Credits are $0.001, so three decimals show the exact maximum. */}

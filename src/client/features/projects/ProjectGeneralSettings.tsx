@@ -168,7 +168,8 @@ function GeneralSection({ project }: { project: ProjectSummary }) {
               )}
             </form.Field>
             <span className="text-xs text-muted-foreground">
-              Os dados de palavras, SERP e domínio usam este país e idioma, a menos que uma consulta peça outro.
+              Os dados de palavras, SERP e domínio usam este país e idioma, a
+              menos que uma consulta peça outro.
             </span>
           </div>
 

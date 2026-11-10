@@ -71,7 +71,9 @@ export function WebsiteCompetitorRow({
             variant="ghost"
             size="icon-sm"
             aria-label={
-              editing ? "Concluir edição do concorrente" : `Editar ${competitor.name}`
+              editing
+                ? "Concluir edição do concorrente"
+                : `Editar ${competitor.name}`
             }
             disabled={
               editing && (!competitor.name.trim() || !competitor.domain.trim())

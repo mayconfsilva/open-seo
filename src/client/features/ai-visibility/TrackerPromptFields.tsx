@@ -82,12 +82,15 @@ export function TrackerPromptFields({
       {topicPrompts.length > 0 &&
         topicPrompts.every((prompt) => prompt.paused) && (
           <p className="text-xs text-muted-foreground">
-            Todos os prompts deste tema estão pausados. Os que você adicionar aqui vão rodar.
+            Todos os prompts deste tema estão pausados. Os que você adicionar
+            aqui vão rodar.
           </p>
         )}
       <Field aria-label="Prompts para acompanhar">
         <div className="flex items-center justify-between gap-3">
-          <FieldLabel htmlFor={`${promptsId}-0`}>Prompts para acompanhar</FieldLabel>
+          <FieldLabel htmlFor={`${promptsId}-0`}>
+            Prompts para acompanhar
+          </FieldLabel>
           <Button
             type="button"
             variant="outline"

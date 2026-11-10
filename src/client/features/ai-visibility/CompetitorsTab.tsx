@@ -134,7 +134,8 @@ export function CompetitorsTab({
                   colSpan={4}
                   className="py-8 text-center text-muted-foreground"
                 >
-                  Nenhum concorrente salvo. Use Gerenciar concorrentes para adicionar.
+                  Nenhum concorrente salvo. Use Gerenciar concorrentes para
+                  adicionar.
                 </TableCell>
               </TableRow>
             )}
@@ -151,7 +152,8 @@ export function CompetitorsTab({
           >
             prompt tracking
           </Link>{" "}
-          para ver com que frequência as respostas de IA mencionam e citam seus concorrentes.
+          para ver com que frequência as respostas de IA mencionam e citam seus
+          concorrentes.
         </p>
       )}
       {runId && (

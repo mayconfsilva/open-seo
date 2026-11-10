@@ -164,7 +164,8 @@ export function CitationTabsCard({
                   <strong className="text-foreground">
                     {result.resolvedTarget}
                   </strong>
-                  {isUrlScoped ? "." : "nas respostas de IA."} Os exemplos de prompts vêm da amostra.
+                  {isUrlScoped ? "." : "nas respostas de IA."} Os exemplos de
+                  prompts vêm da amostra.
                 </>
               ) : (
                 <>

@@ -617,7 +617,8 @@ export function DomainOverviewPage({
               <Alert variant="info">
                 <Info />
                 <AlertDescription className="text-foreground">
-                  Ainda não há dados para este escopo. Tente outro domínio ou um escopo mais amplo.
+                  Ainda não há dados para este escopo. Tente outro domínio ou um
+                  escopo mais amplo.
                 </AlertDescription>
               </Alert>
             ) : null}

@@ -35,7 +35,7 @@ export function KeywordResearchNoResults({
             </span>
             in
             <span className="font-medium text-foreground">
-              {`${LOCATIONS[lastSearchLocationCode] || "este local"}`}
+              {LOCATIONS[lastSearchLocationCode] || "este local"}
             </span>
             .
           </>

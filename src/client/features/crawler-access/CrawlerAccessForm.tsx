@@ -85,7 +85,9 @@ export function CrawlerAccessForm({
       await queryClient.invalidateQueries({
         queryKey: crawlerCredentialsQueryKey,
       });
-      toast.success(`Acesso do rastreador salvo para ${result.credential.host}`);
+      toast.success(
+        `Acesso do rastreador salvo para ${result.credential.host}`,
+      );
       onSaved?.();
     },
   });
@@ -117,7 +119,8 @@ export function CrawlerAccessForm({
   if (useCrawlerAccessNeedsSetup(projectId)) {
     return (
       <p className="text-sm text-muted-foreground">
-        O acesso do rastreador ainda não está configurado. <CrawlerAccessSetupHint />
+        O acesso do rastreador ainda não está configurado.{" "}
+        <CrawlerAccessSetupHint />
       </p>
     );
   }

@@ -119,7 +119,7 @@ function DashboardBacklinkTable({
     },
     {
       id: "follow",
-      accessorFn: (row) => (row.isDofollow ? "Seguir" : "Nofollow"),
+      accessorFn: (row) => (row.isDofollow ? "Dofollow" : "Nofollow"),
       header: "Tipo de link",
       filterFn: "equalsString",
     },
@@ -170,7 +170,11 @@ function DashboardBacklinkTable({
         { id: "anchor", label: "Texto âncora", kind: "text" },
         { id: "urlTo", label: "Página de destino", kind: "text" },
         { id: "follow", label: "Tipo de link", kind: "follow" },
-        { id: "domainFromRank", label: "Autoridade do domínio", kind: "number" },
+        {
+          id: "domainFromRank",
+          label: "Autoridade do domínio",
+          kind: "number",
+        },
         { id: "spamScore", label: "Nota de spam", kind: "number" },
       ]}
     />

@@ -163,7 +163,8 @@ function TagManagerDialog({
         <div className="-mx-4 -mb-4 max-h-96 overflow-y-auto border-t border-border py-1">
           {tags.length === 0 ? (
             <p className="px-4 py-6 text-center text-sm text-muted-foreground">
-              Nenhuma etiqueta ainda. Adicione a partir de uma seleção de palavras.
+              Nenhuma etiqueta ainda. Adicione a partir de uma seleção de
+              palavras.
             </p>
           ) : null}
           {tags.map((tag) => {

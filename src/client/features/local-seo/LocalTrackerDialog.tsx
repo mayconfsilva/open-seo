@@ -148,7 +148,9 @@ function ListingLookup({
                 const error = field.state.meta.errors[0]?.message;
                 return (
                   <Field data-invalid={Boolean(error) || undefined}>
-                    <FieldLabel htmlFor="local-business-city">Cidade</FieldLabel>
+                    <FieldLabel htmlFor="local-business-city">
+                      Cidade
+                    </FieldLabel>
                     <SerpLocationCombobox
                       id="local-business-city"
                       value={field.state.value || undefined}
@@ -178,7 +180,8 @@ function ListingLookup({
       )}
       {lookup.isSuccess && lookup.data.length === 0 && (
         <p className="text-sm text-muted-foreground">
-          Nenhuma ficha encontrada no Google Maps. Confira se o nome bate com a ficha e se a cidade está certa.
+          Nenhuma ficha encontrada no Google Maps. Confira se o nome bate com a
+          ficha e se a cidade está certa.
         </p>
       )}
     </FormDialog>
@@ -193,7 +196,11 @@ const AREAS = {
     gridSize: 3,
     spacingKm: 1,
   },
-  town: { label: "Cidade pequena · 4 km · 9 pontos", gridSize: 3, spacingKm: 2 },
+  town: {
+    label: "Cidade pequena · 4 km · 9 pontos",
+    gridSize: 3,
+    spacingKm: 2,
+  },
   city: { label: "Cidade · 8 km · 25 pontos", gridSize: 5, spacingKm: 2 },
   metro: {
     label: "Região metropolitana · 20 km · 25 pontos",

@@ -243,7 +243,9 @@ function SavedKeywordsPage() {
       );
     },
     onError: (error) => {
-      setRemoveError(getStandardErrorMessage(error, "Não foi possível remover."));
+      setRemoveError(
+        getStandardErrorMessage(error, "Não foi possível remover."),
+      );
     },
   });
 

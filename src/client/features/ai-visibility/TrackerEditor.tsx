@@ -182,7 +182,8 @@ export function TrackerEditor({
         {!adding && !review && schedule}
         {!state.providerConfigured && (
           <p className="rounded-lg bg-muted px-4 py-3 text-sm">
-            Um administrador precisa configurar a chave da DataForSEO antes de coletarmos dados.
+            Um administrador precisa configurar a chave da DataForSEO antes de
+            coletarmos dados.
           </p>
         )}
         {review ? (

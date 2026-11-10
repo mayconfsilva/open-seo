@@ -73,7 +73,8 @@ export function Ga4Card({
     >
       {reportQuery.isError ? (
         <p className="text-sm text-muted-foreground">
-          Não foi possível carregar os dados do Google Analytics. Tente de novo daqui a pouco.
+          Não foi possível carregar os dados do Google Analytics. Tente de novo
+          daqui a pouco.
         </p>
       ) : !report ? (
         <MetricsSkeleton />

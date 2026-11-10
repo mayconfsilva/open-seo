@@ -193,7 +193,11 @@ export function AiMatchBadge({
 }) {
   return (
     <Badge variant={value ? "success" : "secondary"}>
-      {value ? positive : positive === "Citada" ? "Não citada" : "Não mencionada"}
+      {value
+        ? positive
+        : positive === "Citada"
+          ? "Não citada"
+          : "Não mencionada"}
     </Badge>
   );
 }

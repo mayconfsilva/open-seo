@@ -41,7 +41,7 @@ const createProjectSchema = z.object({
 const SERVER_FIELD_ERRORS: Record<string, Record<string, string>> = {
   VALIDATION_ERROR: { domain: "Enter a valid domain, like acme.com." },
   CONFLICT: {
-    name: "Já existe um projeto chamado \"Default\" sem domínio. Escolha outro nome ou informe um domínio.",
+    name: 'Já existe um projeto chamado "Default" sem domínio. Escolha outro nome ou informe um domínio.',
   },
 };
 
@@ -169,7 +169,9 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
                 )}
               </form.Field>
               <FieldDescription>
-                Os dados de palavras, SERP e domínio usam este país e idioma, a menos que uma consulta peça outro. Dá para mudar depois nas configurações do projeto.
+                Os dados de palavras, SERP e domínio usam este país e idioma, a
+                menos que uma consulta peça outro. Dá para mudar depois nas
+                configurações do projeto.
               </FieldDescription>
             </div>
 

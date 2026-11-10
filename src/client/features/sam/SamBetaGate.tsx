@@ -17,7 +17,10 @@ export function SamBetaGate({ onContinue }: { onContinue: () => void }) {
       description={
         <>
           <p>
-            O SAM é o MCP e as skills do dataSEO numa janela de conversa. O agente que você já usa, como Claude Code, ChatGPT, Grok Bot ou Hermes, roda as mesmas ferramentas com muito mais capacidade. Recomendamos usar o dataSEO por lá.
+            O SAM é o MCP e as skills do dataSEO numa janela de conversa. O
+            agente que você já usa, como Claude Code, ChatGPT, Grok Bot ou
+            Hermes, roda as mesmas ferramentas com muito mais capacidade.
+            Recomendamos usar o dataSEO por lá.
           </p>
           <p>Você ainda pode usar o SAM, mas ele é recente e tem limitações.</p>
         </>

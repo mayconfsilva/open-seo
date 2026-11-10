@@ -54,7 +54,9 @@ export function ImportKeywordsButton({ projectId }: { projectId: string }) {
     },
     onSuccess: (count) => {
       setOpen(false);
-      toast.success(`${count} palavra${count === 1 ? "" : "s"} importada${count === 1 ? "" : "s"}`);
+      toast.success(
+        `${count} palavra${count === 1 ? "" : "s"} importada${count === 1 ? "" : "s"}`,
+      );
     },
     // Saved chunks stay saved when a later step fails, so refresh either way.
     onSettled: () =>
@@ -137,7 +139,8 @@ function ImportKeywordsDialog({
         <DialogHeader>
           <DialogTitle>Importar palavras</DialogTitle>
           <DialogDescription>
-            Cole uma palavra por linha, ou um CSV com as palavras na primeira coluna. Elas são salvas com o país e o idioma do projeto.
+            Cole uma palavra por linha, ou um CSV com as palavras na primeira
+            coluna. Elas são salvas com o país e o idioma do projeto.
           </DialogDescription>
         </DialogHeader>
 

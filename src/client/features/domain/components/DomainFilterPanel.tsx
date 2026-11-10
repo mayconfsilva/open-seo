@@ -163,7 +163,8 @@ export function DomainFilterPanel<TValues extends FilterValues>({
             <AlertTriangle />
             <AlertDescription className="text-foreground">
               Condições de filtro demais ({meta.conditionCount} of{" "}
-              {maxConditions} no máximo). Remova alguns termos ou faixas antes de aplicar.
+              {maxConditions} no máximo). Remova alguns termos ou faixas antes
+              de aplicar.
             </AlertDescription>
           </Alert>
         ) : null}

@@ -116,7 +116,8 @@ export function GscCard({
     >
       {reportQuery.isError ? (
         <p className="text-sm text-muted-foreground">
-          Não foi possível carregar os dados do Search Console. Tente de novo daqui a pouco.
+          Não foi possível carregar os dados do Search Console. Tente de novo
+          daqui a pouco.
         </p>
       ) : !report ? (
         <MetricsSkeleton />
@@ -209,7 +210,9 @@ export function AuditHealthCard({
             <>
               {domain ? (
                 <Button disabled={scan.isPending} onClick={() => scan.mutate()}>
-                  {scan.isPending ? "Iniciando a análise…" : "Analisar meu site"}
+                  {scan.isPending
+                    ? "Iniciando a análise…"
+                    : "Analisar meu site"}
                 </Button>
               ) : (
                 <Button
@@ -273,7 +276,9 @@ export function AuditHealthCard({
               className="w-full max-w-xs"
               value={checked}
               max={total || 1}
-              aria-label={isLighthouse ? "Testes Lighthouse" : "Páginas rastreadas"}
+              aria-label={
+                isLighthouse ? "Testes Lighthouse" : "Páginas rastreadas"
+              }
             />
           )}
           <p className="text-sm text-muted-foreground tabular-nums">
@@ -295,7 +300,8 @@ export function AuditHealthCard({
       titleInfo={
         audit.status === "completed" ? (
           <span className={cardMetaClass}>
-            {audit.pagesCrawled} páginas analisadas · {formatDay(audit.startedAt)}
+            {audit.pagesCrawled} páginas analisadas ·{" "}
+            {formatDay(audit.startedAt)}
           </span>
         ) : null
       }

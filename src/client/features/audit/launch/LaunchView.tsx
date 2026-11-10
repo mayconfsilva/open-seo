@@ -90,7 +90,8 @@ function LargeCrawlDialog({
     >
       {priced ? (
         <>
-          {RENDERING_COST_NOTE} Auditorias com renderização podem demorar mais que as normais.
+          {RENDERING_COST_NOTE} Auditorias com renderização podem demorar mais
+          que as normais.
           <span className="mt-3 block font-semibold text-foreground">
             {renderingCostText(pages)}
           </span>

@@ -54,16 +54,31 @@ const SKILLS = [
     "ai-prompt-research",
     "Descobre o que as pessoas perguntam ao ChatGPT sobre seu mercado e quem é citado.",
   ],
-  ["keyword-research", "Encontra oportunidades de palavras a partir de alguns temas iniciais."],
-  ["keyword-clustering", "Agrupa palavras por intenção e liga cada grupo a uma página."],
+  [
+    "keyword-research",
+    "Encontra oportunidades de palavras a partir de alguns temas iniciais.",
+  ],
+  [
+    "keyword-clustering",
+    "Agrupa palavras por intenção e liga cada grupo a uma página.",
+  ],
   ["competitive-landscape", "Mapeia quem ganha no seu mercado e por quê."],
   [
     "competitor-analysis",
     "Estuda as palavras, o conteúdo e os backlinks de um concorrente.",
   ],
-  ["link-prospecting", "Encontra oportunidades de links e escreve os contatos."],
-  ["local-seo", "Audita um Perfil da Empresa no Google e a visibilidade no Maps."],
-  ["seo-report", "Salva qualquer um dos itens acima como relatório na página Relatórios."],
+  [
+    "link-prospecting",
+    "Encontra oportunidades de links e escreve os contatos.",
+  ],
+  [
+    "local-seo",
+    "Audita um Perfil da Empresa no Google e a visibilidade no Maps.",
+  ],
+  [
+    "seo-report",
+    "Salva qualquer um dos itens acima como relatório na página Relatórios.",
+  ],
 ];
 
 const aiSearchSchema = z.object({
@@ -120,7 +135,9 @@ function AiPage() {
                         <h2>Configure seu agente</h2>
                       </CardTitle>
                       <CardDescription>
-                        Cole o prompt de configuração no seu agente para conectar o dataSEO e instalar as skills de SEO. Ele guia você nos passos manuais.
+                        Cole o prompt de configuração no seu agente para
+                        conectar o dataSEO e instalar as skills de SEO. Ele guia
+                        você nos passos manuais.
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -169,7 +186,9 @@ function AiPage() {
                         <h2>Atualize suas skills</h2>
                       </CardTitle>
                       <CardDescription>
-                        Já conectou? Cole o prompt de atualização no seu agente para receber as skills mais recentes, mantendo a conexão e suas edições.
+                        Já conectou? Cole o prompt de atualização no seu agente
+                        para receber as skills mais recentes, mantendo a conexão
+                        e suas edições.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-wrap items-center gap-x-5 gap-y-3">
@@ -238,7 +257,8 @@ function AiPage() {
                 {everyApp
                   ? "Instale com npx skills add every-app/open-seo."
                   : "O prompt de configuração instala estas."}{" "}
-                Rode uma pelo nome quando quiser um relatório completo em vez de uma resposta rápida.
+                Rode uma pelo nome quando quiser um relatório completo em vez de
+                uma resposta rápida.
               </p>
               <ul className="mt-5 space-y-3 text-sm sm:space-y-2">
                 {SKILLS.map(([name, blurb]) => (

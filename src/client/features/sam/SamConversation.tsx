@@ -184,7 +184,10 @@ export function SamConversation({
           {messages.length === 0 ? (
             <div className="space-y-2 text-sm text-foreground/80">
               <p>
-                Oi, eu sou o SAM, seu agente de SEO dentro do app. Posso pesquisar palavras, avaliar concorrentes, ler suas SERPs, backlinks, posições e Search Console, e transformar isso em próximos passos para este projeto.
+                Oi, eu sou o SAM, seu agente de SEO dentro do app. Posso
+                pesquisar palavras, avaliar concorrentes, ler suas SERPs,
+                backlinks, posições e Search Console, e transformar isso em
+                próximos passos para este projeto.
               </p>
               <p>Pergunte o que quiser, ou comece por uma destas:</p>
             </div>

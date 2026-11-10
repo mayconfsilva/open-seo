@@ -61,7 +61,8 @@ export function DomainTableToolbar({
           <Alert variant="warning">
             <AlertTriangle />
             <AlertDescription className="text-foreground">
-              Os filtros salvos passam do limite de {overBudgetLimit}condições deste escopo e não foram aplicados. Abra os filtros para reduzir.
+              Os filtros salvos passam do limite de {overBudgetLimit}condições
+              deste escopo e não foram aplicados. Abra os filtros para reduzir.
             </AlertDescription>
           </Alert>
         </div>

@@ -84,7 +84,8 @@ export function BrandLookupSearchCard({
               }
             />
             <FieldDescription>
-              Adicione até 5 marcas ou domínios concorrentes para ver seu share of voice.
+              Adicione até 5 marcas ou domínios concorrentes para ver seu share
+              of voice.
             </FieldDescription>
           </Field>
           <p className="text-xs text-muted-foreground tabular-nums">
@@ -96,7 +97,8 @@ export function BrandLookupSearchCard({
               <span>
                 {" "}
                 mais ~US$
-                {BRAND_LOOKUP_COMPETITOR_DISPLAYED_COST_USD.toFixed(2)} para comparar concorrentes
+                {BRAND_LOOKUP_COMPETITOR_DISPLAYED_COST_USD.toFixed(2)} para
+                comparar concorrentes
               </span>
             ) : null}
           </p>

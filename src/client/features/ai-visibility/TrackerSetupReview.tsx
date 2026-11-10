@@ -104,7 +104,8 @@ export function TrackerSetupReview({
           <strong>{aiMoney(review.estimate.costUsd)}</strong>
         </p>
         <p>
-          <strong>{aiMoney(review.estimate.monthlyCostUsd)}</strong> estimados por mês se rodar {review.estimate.scheduleInterval}.
+          <strong>{aiMoney(review.estimate.monthlyCostUsd)}</strong> estimados
+          por mês se rodar {review.estimate.scheduleInterval}.
         </p>
       </div>
       {!!error && <AiQueryError error={error} />}

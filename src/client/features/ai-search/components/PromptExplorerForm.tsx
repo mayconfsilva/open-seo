@@ -273,7 +273,9 @@ export function PromptExplorerForm({
                   <Info className="size-4" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  O país orienta a busca na web quando o modelo permite. Os modelos podem responder sem buscar. Deixe vazio para rodar todos os modelos escolhidos.
+                  O país orienta a busca na web quando o modelo permite. Os
+                  modelos podem responder sem buscar. Deixe vazio para rodar
+                  todos os modelos escolhidos.
                 </TooltipContent>
               </Tooltip>
             </div>

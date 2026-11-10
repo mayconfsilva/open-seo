@@ -46,7 +46,8 @@ export function RankRunAlerts({
             <span className="font-medium">
               Esta coleta leva cerca de uma hora
             </span>{" "}
-            porque os resultados do Google andam instáveis. Você pode sair desta página enquanto roda. <ReadWhatChangedLink />
+            porque os resultados do Google andam instáveis. Você pode sair desta
+            página enquanto roda. <ReadWhatChangedLink />
           </p>
         </AlertDescription>
       </Alert>
@@ -68,7 +69,8 @@ export function RankRunAlerts({
             <span className="font-medium">
               Não conseguimos concluir a última coleta.
             </span>{" "}
-            Os resultados do Google andam instáveis para todas as ferramentas de posição. Tente de novo mais tarde. <ReadWhatChangedLink />
+            Os resultados do Google andam instáveis para todas as ferramentas de
+            posição. Tente de novo mais tarde. <ReadWhatChangedLink />
           </p>
         </AlertDescription>
       </Alert>
@@ -85,7 +87,9 @@ export function RankRunAlerts({
             <span className="font-medium">
               Algumas palavras não puderam ser coletadas.
             </span>{" "}
-            Os resultados do Google andam instáveis para todas as ferramentas de posição, então estas mostram a última posição conhecida. <ReadWhatChangedLink />
+            Os resultados do Google andam instáveis para todas as ferramentas de
+            posição, então estas mostram a última posição conhecida.{" "}
+            <ReadWhatChangedLink />
           </p>
         </AlertDescription>
       </Alert>

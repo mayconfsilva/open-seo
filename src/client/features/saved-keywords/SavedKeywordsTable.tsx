@@ -145,7 +145,8 @@ export function SavedKeywordsTable({
       onClearFilters={onClearFilters}
       empty={{
         title: "Nenhuma palavra salva ainda",
-        description: "Use a Pesquisa de palavras para encontrar e salvar palavras.",
+        description:
+          "Use a Pesquisa de palavras para encontrar e salvar palavras.",
       }}
       toolbar={toolbar}
       footer={footer}

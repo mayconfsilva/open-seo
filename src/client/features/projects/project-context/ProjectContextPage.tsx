@@ -65,7 +65,9 @@ export function ProjectContextPage({ projectId }: { projectId: string }) {
         // draft, open form, or edit state can carry over to another project.
         <div key={projectId} className="space-y-8">
           <p className="text-sm text-muted-foreground">
-            O que o Claude Code e outros clientes MCP conectados sabem sobre este projeto. Eles leem isto antes de trabalhar e anotam o que aprendem, então corrija o que parecer errado.
+            O que o Claude Code e outros clientes MCP conectados sabem sobre
+            este projeto. Eles leem isto antes de trabalhar e anotam o que
+            aprendem, então corrija o que parecer errado.
           </p>
 
           <BrandNameSection

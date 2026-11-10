@@ -31,8 +31,10 @@ export function SamSetupGate({
             </p>
           ) : (
             <p>
-              O SAM, agente de IA do dataSEO, precisa de uma chave de API do OpenRouter. Crie uma chave no OpenRouter, defina como a variável{" "}
-              <code>OPENROUTER_API_KEY</code> , reinicie o dataSEO e confirme aqui.
+              O SAM, agente de IA do dataSEO, precisa de uma chave de API do
+              OpenRouter. Crie uma chave no OpenRouter, defina como a variável{" "}
+              <code>OPENROUTER_API_KEY</code> , reinicie o dataSEO e confirme
+              aqui.
             </p>
           )}
           <p className="text-xs">

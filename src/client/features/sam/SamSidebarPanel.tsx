@@ -48,7 +48,8 @@ function BetaNotice() {
         </Button>
       </div>
       <p className="mt-1.5 text-xs text-muted-foreground">
-        Para fluxos de IA mais poderosos, use o MCP do dataSEO com seu próprio agente, como o Claude Code ou o Hermes.
+        Para fluxos de IA mais poderosos, use o MCP do dataSEO com seu próprio
+        agente, como o Claude Code ou o Hermes.
       </p>
       <Link
         to="/ai"

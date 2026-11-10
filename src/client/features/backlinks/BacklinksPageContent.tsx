@@ -142,9 +142,7 @@ export function BacklinksBody({
         <QueryError
           title="Não foi possível carregar os backlinks"
           cause={data.overviewQuery.error}
-          fallback={
-            data.overviewErrorMessage ?? "Tente de novo daqui a pouco."
-          }
+          fallback={data.overviewErrorMessage ?? "Tente de novo daqui a pouco."}
           onRetry={() => void data.overviewQuery.refetch()}
           isRetrying={data.overviewQuery.isFetching}
         />

@@ -28,7 +28,8 @@ export function RunStatusLine({
     <p className="text-xs text-muted-foreground">
       {[
         run && `Atualizado em ${aiDate(run.completedAt ?? run.createdAt)}`,
-        tracker?.enabled && `Próxima execução em ${aiDate(tracker.nextCheckAt)}`,
+        tracker?.enabled &&
+          `Próxima execução em ${aiDate(tracker.nextCheckAt)}`,
       ]
         .filter(Boolean)
         .join(" · ")}

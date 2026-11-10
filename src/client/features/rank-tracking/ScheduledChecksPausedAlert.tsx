@@ -30,7 +30,8 @@ export function ScheduledChecksPausedAlert({
           <span className="font-medium">
             As coletas agendadas estão pausadas
           </span>{" "}
-          enquanto o provedor de dados de posição se recupera de uma falha. Elas voltam sozinhas quando ele normalizar.
+          enquanto o provedor de dados de posição se recupera de uma falha. Elas
+          voltam sozinhas quando ele normalizar.
         </p>
       </AlertDescription>
     </Alert>

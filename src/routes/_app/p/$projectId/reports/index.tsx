@@ -60,7 +60,10 @@ function ReportsPage() {
           }
         />
 
-        <QueryState query={reportsQuery} errorFallback="Não foi possível carregar os relatórios">
+        <QueryState
+          query={reportsQuery}
+          errorFallback="Não foi possível carregar os relatórios"
+        >
           {(data) => (
             <ReportsList
               projectId={projectId}

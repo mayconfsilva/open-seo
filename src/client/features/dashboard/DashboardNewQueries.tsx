@@ -36,7 +36,10 @@ export function DashboardNewQueries({
   });
   if (!connected) return null;
   return (
-    <QueryState query={query} errorFallback="Não foi possível carregar as palavras novas">
+    <QueryState
+      query={query}
+      errorFallback="Não foi possível carregar as palavras novas"
+    >
       {(data) =>
         !data.value.connected ? (
           <GoogleConnectionCard
@@ -52,7 +55,8 @@ export function DashboardNewQueries({
               <DashboardInfo label="Sobre as palavras novas">
                 <p>Buscas em que seu site apareceu no Google recentemente.</p>
                 <p className="mt-2">
-                  Apareceram na última semana do Search Console, mas não nas quatro anteriores.
+                  Apareceram na última semana do Search Console, mas não nas
+                  quatro anteriores.
                 </p>
               </DashboardInfo>
             }

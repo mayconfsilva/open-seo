@@ -71,7 +71,7 @@ export function DashboardAgentPromptCard({
     <AgentCard
       projectId={projectId}
       icons={chats.length > 0 ? chats.map(({ Icon }) => Icon) : [Bot]}
-      title={`Ask ${chats.length === 1 ? chats[0].name : "your agent"} about your site`}
+      title={`Pergunte ${chats.length === 1 ? `ao ${chats[0].name}` : "ao seu agente"} sobre o seu site`}
       description={`Experimente: “${prompt}”`}
     >
       {chats.map(({ agent, name, newChatUrl, Icon }) => (

@@ -195,7 +195,9 @@ export function ReferringDomainsTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "Nenhum domínio de referência encontrado para este alvo." }}
+      empty={{
+        title: "Nenhum domínio de referência encontrado para este alvo.",
+      }}
       {...frame}
     />
   );

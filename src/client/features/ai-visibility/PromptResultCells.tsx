@@ -182,7 +182,7 @@ export function CompetitorStack({
     <Tooltip>
       <TooltipTrigger
         delay={100}
-        aria-label={`Concorrentes citados: ${named .map((brand) => brand.name) .join(", ")}`}
+        aria-label={`Concorrentes citados: ${named.map((brand) => brand.name).join(", ")}`}
         className="flex items-center"
       >
         {shown.map((brand) => (

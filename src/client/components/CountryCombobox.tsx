@@ -48,11 +48,7 @@ export function CountryCombobox({
         if (option) onChange(option.code);
       }}
     >
-      <ComboboxInput
-        id={id}
-        className="w-full"
-        placeholder="Buscar países"
-      />
+      <ComboboxInput id={id} className="w-full" placeholder="Buscar países" />
       <ComboboxContent>
         <ComboboxEmpty>Nenhum país encontrado.</ComboboxEmpty>
         <ComboboxList>

@@ -149,7 +149,8 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
               <Alert variant="info" role="status">
                 <Info />
                 <AlertDescription>
-                  Os dados deste país vêm do Google Ads: há volume, CPC e tendência, mas não dificuldade nem intenção.
+                  Os dados deste país vêm do Google Ads: há volume, CPC e
+                  tendência, mas não dificuldade nem intenção.
                 </AlertDescription>
               </Alert>
             )

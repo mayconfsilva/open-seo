@@ -234,7 +234,10 @@ export function useBacklinksPageData({
   const activeTabFilterError = tab === "backlinks" ? rowsFilterError : null;
   const activeTabErrorMessage =
     activeTabFilterError ??
-    getBacklinksErrorMessage(activeTabQuery.error, "Não foi possível carregar esta aba.");
+    getBacklinksErrorMessage(
+      activeTabQuery.error,
+      "Não foi possível carregar esta aba.",
+    );
 
   return {
     activeTabErrorMessage,

@@ -101,7 +101,8 @@ export function ProjectWebsiteSetup({ projectId }: { projectId: string }) {
               Configurar a visibilidade em IA
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Vamos pesquisar sua marca e encontrar os temas mais relevantes para acompanhar.
+              Vamos pesquisar sua marca e encontrar os temas mais relevantes
+              para acompanhar.
             </p>
           </div>
           <Field>
@@ -122,7 +123,8 @@ export function ProjectWebsiteSetup({ projectId }: { projectId: string }) {
             researchMutation.isError && (
               <Alert variant="destructive">
                 <AlertDescription>
-                  Não foi possível pesquisar este site. Confira a URL e as configurações dos provedores e tente de novo.
+                  Não foi possível pesquisar este site. Confira a URL e as
+                  configurações dos provedores e tente de novo.
                 </AlertDescription>
               </Alert>
             )

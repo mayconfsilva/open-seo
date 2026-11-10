@@ -60,7 +60,8 @@ export function BrandLookupResults({ result, projectId }: Props) {
         <Alert variant="info">
           <Info aria-hidden />
           <AlertTitle className="font-normal">
-            Nenhuma menção em IA encontrada para <strong>{result.resolvedTarget}</strong>.
+            Nenhuma menção em IA encontrada para{" "}
+            <strong>{result.resolvedTarget}</strong>.
           </AlertTitle>
         </Alert>
         {erroredPlatforms.length > 0 ? (
@@ -69,7 +70,8 @@ export function BrandLookupResults({ result, projectId }: Props) {
             {erroredPlatforms
               .map((p) => formatPlatformLabel(p.platform))
               .join(" and ")}{" "}
-            {erroredPlatforms.length === 1 ? "was" : "were"} indisponível; algumas menções podem faltar.
+            {erroredPlatforms.length === 1 ? "was" : "were"} indisponível;
+            algumas menções podem faltar.
           </p>
         ) : null}
       </div>
@@ -203,7 +205,9 @@ function MentionTrendCard({ result }: { result: BrandLookupResult }) {
   return (
     <div className="rounded-lg border border-border">
       <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-3">
-        <h3 className="text-sm font-medium">Evolução das menções (últimos 12 meses)</h3>
+        <h3 className="text-sm font-medium">
+          Evolução das menções (últimos 12 meses)
+        </h3>
         {result.aggregatesAreDomainLevel ? (
           <DomainLevelBadge tooltip={DOMAIN_LEVEL_TIP} />
         ) : null}

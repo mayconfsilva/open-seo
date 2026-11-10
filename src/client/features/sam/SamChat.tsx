@@ -177,7 +177,9 @@ export function SamChat({
     }
     return (
       <StatusScreen description="Esta conversa foi arquivada ou não existe.">
-        <Button onClick={() => goToSession()}>Ir para a conversa mais recente</Button>
+        <Button onClick={() => goToSession()}>
+          Ir para a conversa mais recente
+        </Button>
       </StatusScreen>
     );
   }

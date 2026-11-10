@@ -113,7 +113,8 @@ export function PromptAnalysis({
       )}
       {history.truncated && (
         <p className="text-xs text-muted-foreground">
-          O histórico cobre as 50 últimas execuções do projeto. Execuções mais antigas não entram nas métricas deste período.
+          O histórico cobre as 50 últimas execuções do projeto. Execuções mais
+          antigas não entram nas métricas deste período.
         </p>
       )}
     </div>

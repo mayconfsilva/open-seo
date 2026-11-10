@@ -47,7 +47,10 @@ const backlinksSearchHistoryItemSchema = z
         : LEGACY_SCOPES[item.scope],
     );
     if (!scope.success) {
-      ctx.addIssue({ code: "custom", message: "Escopo de backlinks desconhecido" });
+      ctx.addIssue({
+        code: "custom",
+        message: "Escopo de backlinks desconhecido",
+      });
       return z.NEVER;
     }
 

@@ -25,7 +25,10 @@ import {
 const urlsSchema = z.object({
   urls: z
     .string()
-    .refine((value) => splitUrls(value).length > 0, "Informe pelo menos uma URL."),
+    .refine(
+      (value) => splitUrls(value).length > 0,
+      "Informe pelo menos uma URL.",
+    ),
 });
 
 function splitUrls(value: string) {
@@ -259,7 +262,9 @@ function KeyFileStep({
     <Step
       number={1}
       title={
-        verified ? "O arquivo da chave está configurado" : "Adicione este arquivo de chave ao site"
+        verified
+          ? "O arquivo da chave está configurado"
+          : "Adicione este arquivo de chave ao site"
       }
     >
       {verified ? null : (

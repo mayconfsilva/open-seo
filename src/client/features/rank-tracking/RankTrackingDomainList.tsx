@@ -246,7 +246,8 @@ export function RankTrackingDomainList({
             onConfirm={() => archiveMutation.mutate(archiveTarget.id)}
             onClose={() => setArchiveTarget(null)}
           >
-            As coletas agendadas param e este domínio some da lista. O histórico de posições é mantido.
+            As coletas agendadas param e este domínio some da lista. O histórico
+            de posições é mantido.
           </ConfirmDialog>
         )}
       </Card>

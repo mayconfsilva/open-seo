@@ -76,7 +76,9 @@ export function RankTrackingDetailHeader({
                 {devicesLabel(config.devices)}
               </TooltipTrigger>
               <TooltipContent>
-                Os resultados no celular costumam diferir do computador. O Search Console faz a média dos dois, então as posições podem não bater.
+                Os resultados no celular costumam diferir do computador. O
+                Search Console faz a média dos dois, então as posições podem não
+                bater.
               </TooltipContent>
             </Tooltip>
           )}{" "}

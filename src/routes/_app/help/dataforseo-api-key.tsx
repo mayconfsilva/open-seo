@@ -39,7 +39,8 @@ function DataforseoApiKeyHelpPage() {
       title="Configure sua chave de API da DataForSEO"
       intro={
         <>
-          OpenSEO needs the <code>DATAFORSEO_API_KEY</code> antes de rodar pesquisas de palavras, domínio e outros dados de SEO.
+          OpenSEO needs the <code>DATAFORSEO_API_KEY</code> antes de rodar
+          pesquisas de palavras, domínio e outros dados de SEO.
         </>
       }
       everyAppIntro="OpenSEO's keyword, domain, backlink and rank data comes from DataForSEO. On Every App the gateway holds the key once, for every app."
@@ -49,7 +50,8 @@ function DataforseoApiKeyHelpPage() {
           {requestStep}
           {encodeStep}
           <li>
-            Salve o resultado como a variável <code>DATAFORSEO_API_KEY</code> no seu ambiente.
+            Salve o resultado como a variável <code>DATAFORSEO_API_KEY</code> no
+            seu ambiente.
           </li>
         </>
       }

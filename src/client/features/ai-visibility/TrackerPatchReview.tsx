@@ -67,7 +67,9 @@ export function TrackerPatchReview({
     >
       <DialogContent className="sm:max-w-lg" showCloseButton={false}>
         <DialogHeader className="flex-row items-center justify-between gap-3">
-          <DialogTitle className="text-lg">Revisar mudança no acompanhamento</DialogTitle>
+          <DialogTitle className="text-lg">
+            Revisar mudança no acompanhamento
+          </DialogTitle>
           <Button
             variant="ghost"
             size="icon-sm"

@@ -127,7 +127,9 @@ function PromptTrackingContent({
     setEditingPrompt(null);
     setChange(null);
     if (run) setSelectedRun(run);
-    toast.success(run ? "Execução iniciada" : "Acompanhamento de prompts salvo");
+    toast.success(
+      run ? "Execução iniciada" : "Acompanhamento de prompts salvo",
+    );
   };
   const pauseSchedule = useMutation({
     mutationFn: () =>

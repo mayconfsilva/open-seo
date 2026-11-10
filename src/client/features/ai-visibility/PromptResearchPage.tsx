@@ -110,7 +110,8 @@ function KeywordList({ projectId }: { projectId: string }) {
       <div className="border-b p-4 border-border">
         <h2 className="font-medium">Palavras relevantes</h2>
         <p className="text-sm text-muted-foreground">
-          Escolha uma palavra para ver os prompts que as pessoas fazem à IA sobre ela.
+          Escolha uma palavra para ver os prompts que as pessoas fazem à IA
+          sobre ela.
         </p>
       </div>
       {query.isPending ? (

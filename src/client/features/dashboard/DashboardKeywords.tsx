@@ -104,7 +104,9 @@ export function DashboardKeywords({
                   : "Nenhuma palavra nova esta semana",
             }
           : source === "striking"
-            ? { title: "Nenhuma palavra entre as posições 5 e 20 neste período" }
+            ? {
+                title: "Nenhuma palavra entre as posições 5 e 20 neste período",
+              }
             : { title: "Nenhuma palavra ainda" }
       }
       tabs={

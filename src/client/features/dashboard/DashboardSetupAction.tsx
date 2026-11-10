@@ -25,10 +25,10 @@ import { hasOrgPermission } from "@/lib/org-permissions";
 import type { DashboardSetupStep } from "@/types/schemas/dashboard";
 import { parseResearchTarget } from "@/shared/researchScope";
 
-const projectPrompt = `Use OpenSEO to set up a separate project for each website below. List my existing projects first and reuse matches so you don’t create duplicates. Set the country and language for each site, and ask me about anything missing.
+const projectPrompt = `Use o OpenSEO para criar um projeto separado para cada site abaixo. Liste primeiro meus projetos existentes e reaproveite os que já existem, para não criar duplicados. Defina o país e o idioma de cada site e me pergunte o que estiver faltando.
 
-Replace this list with my websites:
-- Project name — website — country — language`;
+Substitua esta lista pelos meus sites:
+- Nome do projeto — site — país — idioma`;
 
 export function DashboardSetupAction({
   step,
@@ -147,11 +147,11 @@ export function DashboardSetupAction({
     return (
       <div className="space-y-4">
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Mantenha a pesquisa, as posições e as conexões de cada site no próprio projeto. Use o seletor de projetos na barra lateral → Novo projeto quando quiser.
+          Mantenha a pesquisa, as posições e as conexões de cada site no próprio
+          projeto. Use o seletor de projetos na barra lateral → Novo projeto
+          quando quiser.
         </p>
-        <Button onClick={() => setShowModal(true)}>
-          Criar outro projeto
-        </Button>
+        <Button onClick={() => setShowModal(true)}>Criar outro projeto</Button>
         <Collapsible className="rounded-lg border border-border p-4">
           <CollapsibleTrigger className="cursor-pointer text-sm font-medium">
             Tem uma lista de sites? Deixe seu agente cadastrar.
@@ -184,9 +184,12 @@ export function DashboardSetupAction({
   return (
     <div className="space-y-4">
       <p className="text-sm leading-relaxed text-muted-foreground">
-        Traga alguém da equipe para a organização e compartilhe projetos, pesquisas e resultados.
+        Traga alguém da equipe para a organização e compartilhe projetos,
+        pesquisas e resultados.
       </p>
-      <Button onClick={() => setShowModal(true)}>Convidar alguém da equipe</Button>
+      <Button onClick={() => setShowModal(true)}>
+        Convidar alguém da equipe
+      </Button>
       {showModal && (
         <InviteTeammateModal
           onClose={() => setShowModal(false)}

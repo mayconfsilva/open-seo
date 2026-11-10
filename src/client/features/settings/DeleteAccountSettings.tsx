@@ -79,8 +79,8 @@ export function DeleteAccountSettings() {
       <p className="text-sm text-muted-foreground">
         Exclui de vez sua conta e todas as organizações em que você é o único
         membro, com todos os projetos e dados. Você sai na hora e a exclusão
-        acontece{" "}
-        {status ? `${status.deletionDelayDays} dias` : "duas semanas"} depois.
+        acontece {status ? `${status.deletionDelayDays} dias` : "duas semanas"}{" "}
+        depois.
       </p>
       <Button
         variant="ghost"
@@ -116,7 +116,9 @@ function BlockedDialog({
     <AlertDialog open onOpenChange={(next) => !next && onClose()}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Você ainda não pode excluir sua conta</AlertDialogTitle>
+          <AlertDialogTitle>
+            Você ainda não pode excluir sua conta
+          </AlertDialogTitle>
           <AlertDialogDescription render={<div />}>
             <ul className="list-disc space-y-1 pl-5 text-left">
               {status.blockers.map((blocker) => (

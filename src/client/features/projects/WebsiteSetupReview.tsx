@@ -177,7 +177,8 @@ export function WebsiteSetupReview({
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>
-                  Não foi possível salvar o projeto. Confira os nomes e sites dos concorrentes e tente de novo.
+                  Não foi possível salvar o projeto. Confira os nomes e sites
+                  dos concorrentes e tente de novo.
                 </AlertDescription>
               </Alert>
             )}

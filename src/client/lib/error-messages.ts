@@ -30,7 +30,7 @@ const STANDARD_MESSAGES: Record<ErrorCode, string> = {
   AUDIT_RENDERING_UNAVAILABLE: isEveryAppClientAuthMode()
     ? GATEWAY_RENDERING_NOT_SET_UP_MESSAGE
     : "A renderização de JavaScript não está configurada nesta instalação. Peça ao administrador para ativar.",
-  FORBIDDEN: "You do not have access to this resource.",
+  FORBIDDEN: "Você não tem acesso a este recurso.",
   NOT_FOUND: "O item solicitado não foi encontrado.",
   AUDIT_CAPACITY_REACHED:
     "Você atingiu o limite de auditorias. Exclua auditorias antigas para começar outra.",
@@ -40,7 +40,8 @@ const STANDARD_MESSAGES: Record<ErrorCode, string> = {
   VALIDATION_ERROR: "Confira os dados e tente de novo.",
   UNKNOWN_LOCATION:
     "Não encontramos essa cidade ou região. Escolha um local da lista ou limpe o campo para buscar no país inteiro.",
-  CRAWL_TARGET_BLOCKED: "Este endereço está bloqueado pela política de segurança.",
+  CRAWL_TARGET_BLOCKED:
+    "Este endereço está bloqueado pela política de segurança.",
   BACKLINKS_BILLING_ISSUE:
     "A conta da DataForSEO conectada tem um problema de cobrança ou saldo.",
   AI_SEARCH_BILLING_ISSUE:
@@ -49,7 +50,7 @@ const STANDARD_MESSAGES: Record<ErrorCode, string> = {
     "Não foi possível concluir a consulta de visibilidade em IA. Revise as configurações e tente de novo.",
   DATAFORSEO_AUTH_FAILED: isEveryAppClientAuthMode()
     ? "DataForSEO isn't set up on your Every App gateway yet, or rejected the key it holds. An owner or admin sets it with pnpm everyapp secret set DATAFORSEO_API_KEY."
-    : "DataForSEO rejected the credentials. Check that DATAFORSEO_API_KEY is the base64 of your DataForSEO login:password, and that the DataForSEO account is verified and has API access.",
+    : "A DataForSEO recusou as credenciais. Confira se DATAFORSEO_API_KEY é o base64 de login:senha da sua conta DataForSEO e se a conta está verificada e com acesso à API.",
   RATE_LIMITED: "Requisições demais. Aguarde e tente de novo.",
   UPSTREAM_UNAVAILABLE:
     "O provedor de dados está fora do ar no momento. Tente de novo daqui a pouco.",

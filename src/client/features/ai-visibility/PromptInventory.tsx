@@ -335,7 +335,8 @@ export function PromptInventory({
           {archiving.kind === "topic"
             ? `Isto para de acompanhar todos os prompts de "${archiving.name}".`
             : `Isto para de acompanhar "${archiving.name}".`}{" "}
-          Ainda não dá para ver prompts arquivados. O histórico de respostas é mantido e volta se você adicionar o mesmo prompt de novo.
+          Ainda não dá para ver prompts arquivados. O histórico de respostas é
+          mantido e volta se você adicionar o mesmo prompt de novo.
         </ConfirmDialog>
       )}
     </>
