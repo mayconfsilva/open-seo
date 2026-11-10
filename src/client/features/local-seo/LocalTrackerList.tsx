@@ -29,19 +29,19 @@ export function LocalTrackerList({
     <Card className="gap-0 py-0">
       <CardHeader className="px-5 pt-4 pb-3">
         <CardTitle>
-          <h2 className="text-sm font-semibold">Tracked Businesses</h2>
+          <h2 className="text-sm font-semibold">Empresas acompanhadas</h2>
         </CardTitle>
         <CardAction className="self-center">
           <Button size="sm" onClick={onAdd}>
             <Plus data-icon="inline-start" />
-            Add Business
+            Adicionar empresa
           </Button>
         </CardAction>
       </CardHeader>
       <div className="divide-y divide-border border-t border-border">
         <QueryState
           query={query}
-          errorFallback="Failed to load tracked businesses"
+          errorFallback="Não foi possível carregar as empresas acompanhadas"
           loading={
             <div className="space-y-3 p-5">
               <Skeleton className="h-4 w-48" />
@@ -54,8 +54,8 @@ export function LocalTrackerList({
               <EmptyState
                 variant="plain"
                 icon={MapPin}
-                title="No tracked businesses yet"
-                description="Add a Google Maps listing to check keyword rankings across the surrounding area."
+                title="Nenhuma empresa acompanhada ainda"
+                description="Adicione uma ficha do Google Maps para conferir as posições na região ao redor."
               />
             ) : (
               trackers.map((tracker) => (
@@ -72,7 +72,7 @@ export function LocalTrackerList({
                       {tracker.address}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {localAreaLabel(tracker)} · Mobile
+                      {localAreaLabel(tracker)} · Celular
                     </p>
                   </div>
                   <ChevronRight className="size-4 shrink-0 text-muted-foreground" />

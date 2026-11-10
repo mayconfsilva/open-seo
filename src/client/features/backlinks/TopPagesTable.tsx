@@ -23,8 +23,8 @@ const columns = [
     meta: { cellClassName: "min-w-80" },
     header: () => (
       <HelpLabel
-        label="Page"
-        helpText="Page on the target site receiving backlinks."
+        label="Página"
+        helpText="Página do site alvo que recebe backlinks."
       />
     ),
     cell: ({ getValue }) => {
@@ -46,7 +46,7 @@ const columns = [
       <SortableHeader
         column={column}
         label="Backlinks"
-        helpText="Total backlinks pointing to this page."
+        helpText="Total de backlinks apontando para esta página."
       />
     ),
     cell: ({ getValue }) => formatNumber(getValue()),
@@ -57,8 +57,8 @@ const columns = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Referring Domains"
-        helpText="Unique domains linking to this page."
+        label="Domínios de referência"
+        helpText="Domínios únicos que apontam para esta página."
       />
     ),
     cell: ({ getValue }) => formatNumber(getValue()),
@@ -69,8 +69,8 @@ const columns = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Rank"
-        helpText="Authority score for this target page."
+        label="Posição"
+        helpText="Nota de autoridade desta página."
       />
     ),
     cell: ({ getValue }) => formatNumber(getValue()),
@@ -81,8 +81,8 @@ const columns = [
     header: ({ column }) => (
       <SortableHeader
         column={column}
-        label="Broken Backlinks"
-        helpText="Backlinks pointing here that are currently broken."
+        label="Backlinks quebrados"
+        helpText="Backlinks que apontam para cá e estão quebrados."
       />
     ),
     cell: ({ getValue }) => formatNumber(getValue()),
@@ -111,7 +111,7 @@ export function TopPagesTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "No top pages found for this target." }}
+      empty={{ title: "Nenhuma página principal encontrada para este alvo." }}
       {...frame}
     />
   );

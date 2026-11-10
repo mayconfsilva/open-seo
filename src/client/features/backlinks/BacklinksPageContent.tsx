@@ -99,7 +99,7 @@ export function BacklinksBody({
         loaded={historyLoaded}
         onRemove={onRemoveHistoryItem}
         emptyIcon={Link2}
-        emptyTitle="Enter a domain or URL to get started"
+        emptyTitle="Informe um domínio ou URL para começar"
         getTitle={(item) => item.target}
         getSubtitle={(item) => RESEARCH_SCOPE_LABELS[item.scope]}
         renderLink={(item, props) => (
@@ -140,10 +140,10 @@ export function BacklinksBody({
       <>
         {tabControls}
         <QueryError
-          title="Could not load backlinks"
+          title="Não foi possível carregar os backlinks"
           cause={data.overviewQuery.error}
           fallback={
-            data.overviewErrorMessage ?? "Please try again in a moment."
+            data.overviewErrorMessage ?? "Tente de novo daqui a pouco."
           }
           onRetry={() => void data.overviewQuery.refetch()}
           isRetrying={data.overviewQuery.isFetching}

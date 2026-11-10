@@ -30,7 +30,7 @@ export function LocalListingChoices({
       </p>
       <RadioGroup
         ref={list}
-        aria-label="Google Maps listings"
+        aria-label="Fichas do Google Maps"
         value={selected}
         onValueChange={(value) => onSelectedChange(Number(value))}
         className="max-h-80 overflow-y-auto"
@@ -48,7 +48,7 @@ export function LocalListingChoices({
                 {listing.business.title}
               </p>
               <p className="text-sm text-muted-foreground">
-                {listing.business.address ?? "No public address"}
+                {listing.business.address ?? "Sem endereço público"}
               </p>
               <p className="flex items-center gap-1 text-xs text-muted-foreground">
                 {listing.rating != null && (

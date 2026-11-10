@@ -29,7 +29,7 @@ export function LocalRankGrid({
     <Card className="h-full min-h-0 min-w-0 gap-0 overflow-hidden py-0 shadow-none">
       <CardHeader className="shrink-0 items-center gap-2 px-4 py-3">
         <CardTitle className="text-sm">
-          {preview ? "Grid preview" : "Maps rankings"}
+          {preview ? "Prévia da grade" : "Posições no Maps"}
         </CardTitle>
       </CardHeader>
       <div className="min-h-0 flex-1 overflow-hidden border-t border-border">
@@ -59,8 +59,8 @@ export function LocalRankGrid({
           <span className="mr-1 inline-block size-2 rounded-full bg-red-600" />
           11–20
         </span>
-        <span>– Not found</span>
-        <span>! Failed</span>
+        <span>– Não encontrado</span>
+        <span>! Falhou</span>
       </div>
     </Card>
   );

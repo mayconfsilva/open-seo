@@ -21,12 +21,12 @@ import {
 
 const trendChartConfig = {
   backlinks: { label: "Backlinks", color: "#2563eb" },
-  referringDomains: { label: "Referring domains", color: "#e69f00" },
+  referringDomains: { label: "Domínios de referência", color: "#e69f00" },
 } satisfies ChartConfig;
 
 const newLostChartConfig = {
-  lostBacklinks: { label: "Lost backlinks", color: "#d55e00" },
-  newBacklinks: { label: "New backlinks", color: "#2563eb" },
+  lostBacklinks: { label: "Backlinks perdidos", color: "#d55e00" },
+  newBacklinks: { label: "Backlinks novos", color: "#2563eb" },
 } satisfies ChartConfig;
 
 const tooltip = (
@@ -55,7 +55,7 @@ export function BacklinksTrendChart({
     <ChartContainer
       config={trendChartConfig}
       className="h-56"
-      aria-label="Backlink trend chart"
+      aria-label="Gráfico da evolução de backlinks"
     >
       <LineChart data={data} margin={{ left: 8, right: 8, top: 8, bottom: 0 }}>
         <ChartGrid />
@@ -107,7 +107,7 @@ export function BacklinksNewLostChart({
     <ChartContainer
       config={newLostChartConfig}
       className="h-56"
-      aria-label="New and lost backlinks chart"
+      aria-label="Gráfico de backlinks novos e perdidos"
     >
       <LineChart data={data} margin={{ left: 8, right: 8, top: 8, bottom: 0 }}>
         <ChartGrid />
@@ -141,7 +141,7 @@ export function BacklinksNewLostChart({
 function EmptyChartState() {
   return (
     <div className="flex h-56 items-center justify-center text-sm text-muted-foreground">
-      Not enough historical data yet.
+      Ainda não há histórico suficiente.
     </div>
   );
 }

@@ -74,8 +74,8 @@ function ListingLookup({
     validationLogic: revalidateLogic(),
     validators: {
       onDynamic: z.object({
-        query: z.string().trim().min(2, "Enter the business name.").max(200),
-        locationName: z.string().min(1, "Pick the city the business is in."),
+        query: z.string().trim().min(2, "Informe o nome da empresa.").max(200),
+        locationName: z.string().min(1, "Escolha a cidade da empresa."),
       }),
     },
     onSubmit: async ({ value }) => {
@@ -85,30 +85,30 @@ function ListingLookup({
   const listings = lookup.data && lookup.data.length > 1 ? lookup.data : null;
   return (
     <FormDialog
-      title="Add business"
+      title="Adicionar empresa"
       onClose={onClose}
       wide={Boolean(listings)}
       actions={
         listings ? (
           <>
             <Button variant="outline" onClick={() => lookup.reset()}>
-              Search again
+              Buscar de novo
             </Button>
             <Button onClick={() => onSelect(listings[selected])}>
-              Use this listing
+              Usar esta ficha
             </Button>
           </>
         ) : (
           <>
             <Button variant="outline" onClick={onClose}>
-              Cancel
+              Cancelar
             </Button>
             <Button
               type="submit"
               form="local-business-lookup"
               pending={lookup.isPending}
             >
-              Find listing
+              Encontrar ficha
             </Button>
           </>
         )
@@ -138,7 +138,7 @@ function ListingLookup({
             <form.AppField name="query">
               {(field) => (
                 <field.TextField
-                  label="Business name"
+                  label="Nome da empresa"
                   placeholder="e.g. Joe's Pizza"
                 />
               )}
@@ -148,7 +148,7 @@ function ListingLookup({
                 const error = field.state.meta.errors[0]?.message;
                 return (
                   <Field data-invalid={Boolean(error) || undefined}>
-                    <FieldLabel htmlFor="local-business-city">City</FieldLabel>
+                    <FieldLabel htmlFor="local-business-city">Cidade</FieldLabel>
                     <SerpLocationCombobox
                       id="local-business-city"
                       value={field.state.value || undefined}
@@ -166,20 +166,19 @@ function ListingLookup({
       )}
       {lookup.isPending && (
         <p className="text-sm text-muted-foreground">
-          Searching Google Maps. This usually takes a few seconds.
+          Buscando no Google Maps. Costuma levar alguns segundos.
         </p>
       )}
       {lookup.isError && (
         <QueryError
-          title="Could not look up this business"
+          title="Não foi possível buscar esta empresa"
           cause={lookup.error}
-          fallback="Please try again in a moment."
+          fallback="Tente de novo daqui a pouco."
         />
       )}
       {lookup.isSuccess && lookup.data.length === 0 && (
         <p className="text-sm text-muted-foreground">
-          No Google Maps listing found. Check the name matches the listing and
-          the city is right.
+          Nenhuma ficha encontrada no Google Maps. Confira se o nome bate com a ficha e se a cidade está certa.
         </p>
       )}
     </FormDialog>
@@ -190,14 +189,14 @@ function ListingLookup({
 // (gridSize - 1) × spacing, and each point is one paid search per keyword.
 const AREAS = {
   neighborhood: {
-    label: "Neighborhood · 2 km wide · 9 points",
+    label: "Bairro · 2 km · 9 pontos",
     gridSize: 3,
     spacingKm: 1,
   },
-  town: { label: "Town · 4 km wide · 9 points", gridSize: 3, spacingKm: 2 },
-  city: { label: "City · 8 km wide · 25 points", gridSize: 5, spacingKm: 2 },
+  town: { label: "Cidade pequena · 4 km · 9 pontos", gridSize: 3, spacingKm: 2 },
+  city: { label: "Cidade · 8 km · 25 pontos", gridSize: 5, spacingKm: 2 },
   metro: {
-    label: "Metro area · 20 km wide · 25 points",
+    label: "Região metropolitana · 20 km · 25 pontos",
     gridSize: 5,
     spacingKm: 5,
   },
@@ -243,7 +242,7 @@ function TrackerSettings({
   });
   return (
     <FormDialog
-      title="Set up local tracking"
+      title="Configurar monitoramento local"
       onClose={onClose}
       actions={
         <>
@@ -252,14 +251,14 @@ function TrackerSettings({
             disabled={create.isPending}
             onClick={onClose}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             type="submit"
             form="local-tracker-settings"
             pending={create.isPending}
           >
-            Save business
+            Salvar empresa
           </Button>
         </>
       }
@@ -281,8 +280,8 @@ function TrackerSettings({
           <form.AppField name="area">
             {(field) => (
               <field.SelectField
-                label="Area to check"
-                description="We search Google Maps from points spread across this area, centered on your listing."
+                label="Área a verificar"
+                description="Buscamos no Google Maps a partir de pontos espalhados por esta área, com centro na sua ficha."
                 items={Object.entries(AREAS).map(([value, { label }]) => ({
                   value,
                   label,
@@ -295,7 +294,7 @@ function TrackerSettings({
       {create.isError && (
         <QueryError
           error={create.error}
-          fallback="Could not save this business."
+          fallback="Não foi possível salvar esta empresa."
         />
       )}
     </FormDialog>

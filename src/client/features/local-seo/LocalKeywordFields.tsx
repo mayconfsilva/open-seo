@@ -33,14 +33,14 @@ export function LocalKeywordFields({
   const setRows = (rows: string[]) => onChange(rows.length ? rows : [""]);
   return (
     <Field>
-      <FieldLabel htmlFor={`${id}-0`}>Keywords to track</FieldLabel>
+      <FieldLabel htmlFor={`${id}-0`}>Palavras para acompanhar</FieldLabel>
       {description && <FieldDescription>{description}</FieldDescription>}
       <div className="space-y-2">
         {value.map((keyword, index) => (
           <div key={index} className="flex items-center gap-1">
             <Input
               id={`${id}-${index}`}
-              aria-label={`Keyword ${index + 1}`}
+              aria-label={`Palavra ${index + 1}`}
               placeholder="e.g. pizza delivery"
               maxLength={MAX_LOCAL_KEYWORD_LENGTH}
               autoFocus={index === addedRow}
@@ -73,7 +73,7 @@ export function LocalKeywordFields({
               type="button"
               variant="ghost"
               size="icon-sm"
-              aria-label={`Remove keyword ${index + 1}`}
+              aria-label={`Remover palavra ${index + 1}`}
               onClick={() =>
                 setRows(value.filter((_, position) => position !== index))
               }
@@ -94,7 +94,7 @@ export function LocalKeywordFields({
           onChange([...value, ""]);
         }}
       >
-        <Plus /> Add keyword
+        <Plus /> Adicionar palavra
       </Button>
     </Field>
   );
