@@ -130,15 +130,22 @@ function Partners({ overview }: { overview: Overview }) {
                   </TableCell>
                   <TableCell className="tabular-nums">{row.projects}</TableCell>
                   <TableCell>
-                    <PlanSelect
-                      overview={overview}
-                      value={row.planId}
-                      label={`Plano de ${row.name}`}
-                      disabled={planMutation.isPending}
-                      onChange={(planId) =>
-                        planMutation.mutate({ organizationId: row.id, planId })
-                      }
-                    />
+                    {row.unlimited ? (
+                      <span className="text-sm">Ilimitado (plataforma)</span>
+                    ) : (
+                      <PlanSelect
+                        overview={overview}
+                        value={row.planId}
+                        label={`Plano de ${row.name}`}
+                        disabled={planMutation.isPending}
+                        onChange={(planId) =>
+                          planMutation.mutate({
+                            organizationId: row.id,
+                            planId,
+                          })
+                        }
+                      />
+                    )}
                   </TableCell>
                   <TableCell>
                     {row.suspendedAt ? (

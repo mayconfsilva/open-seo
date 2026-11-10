@@ -60,8 +60,10 @@ export function formatPlanDate(
     .replace(".", "");
 }
 
+/** Share of the quota used; null when the plan has no limit. */
 export function usedPercent(usage: Pick<PlanUsage, "used" | "plan">) {
-  return Math.round((usage.used / usage.plan.monthlyQueries) * 100);
+  const quota = usage.plan.monthlyQueries;
+  return quota === null ? null : Math.round((usage.used / quota) * 100);
 }
 
 /**
@@ -78,6 +80,7 @@ export function PlanMeter({
   className?: string;
 }) {
   const quota = usage.plan.monthlyQueries;
+  if (quota === null) return null;
   const used = Math.min(segments, Math.round((usage.used / quota) * segments));
   const upcoming = Math.min(
     segments - used,
