@@ -7,6 +7,7 @@ import { everyAppAccountQueryOptions } from "@/client/features/every-app/everyAp
 import { DeleteAccountSettings } from "@/client/features/settings/DeleteAccountSettings";
 import { McpConnectionsSettings } from "@/client/features/settings/McpConnectionsSettings";
 import { PrivacySettings } from "@/client/features/settings/PrivacySettings";
+import { ProfileSettings } from "@/client/features/settings/ProfileSettings";
 import {
   isEveryAppClientAuthMode,
   isHostedClientAuthMode,
@@ -25,6 +26,8 @@ function PersonalSettings() {
   const hasAccounts = usesBetterAuthClient();
   return (
     <div className="space-y-10">
+      {hasAccounts && !isEveryAppClientAuthMode() ? <ProfileSettings /> : null}
+
       <section className="space-y-3">
         <SectionHeader title="Aparência" />
         <div className="flex items-center justify-between gap-6">
