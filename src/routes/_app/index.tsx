@@ -2,14 +2,12 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { projectsQueryOptions } from "@/client/features/projects/projectQueries";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getLastProjectId } from "@/client/lib/active-project";
 import {
   getErrorCode,
   UNEXPECTED_ERROR_MESSAGE,
 } from "@/client/lib/error-messages";
 import { AuthErrorCard } from "@/client/components/AuthErrorCard";
 import { QueryError } from "@/client/components/QueryState";
-import { DashboardSkeleton } from "@/client/features/dashboard/DashboardPage";
 import { StatusScreen } from "@/client/components/StatusScreen";
 import { SUBSCRIBE_ROUTE } from "@/shared/billing";
 
@@ -20,26 +18,18 @@ export const Route = createFileRoute("/_app/")({
 function IndexRedirect() {
   const navigate = useNavigate();
 
-  // Open the remembered project at once instead of waiting on the project
-  // list. localStorage is untrusted, but the project layout checks access and,
-  // if the id isn't one of the org's projects, clears it and sends the user
-  // back here to fall back to the list.
-  const lastProjectId = getLastProjectId();
+  // dataSEO: the agency starts on the portfolio (Carteira), which lists every
+  // project. Wait for the project list so a hosted account without a
+  // subscription still lands on billing below.
   const { data, error, isError, isFetching, refetch } = useQuery({
     ...projectsQueryOptions(),
     retry: false,
   });
 
   useEffect(() => {
-    // getProjects always returns at least one project.
-    const projectId = lastProjectId ?? data?.[0]?.id;
-    if (!projectId) return;
-    void navigate({
-      to: "/p/$projectId",
-      params: { projectId },
-      replace: true,
-    });
-  }, [lastProjectId, data, navigate]);
+    if (!data) return;
+    void navigate({ to: "/projects", replace: true });
+  }, [data, navigate]);
 
   useEffect(() => {
     if (getErrorCode(error) !== "PAYMENT_REQUIRED") {
@@ -56,7 +46,7 @@ function IndexRedirect() {
       return (
         <StatusScreen
           pending
-          description="Redirecting you to billing so you can start a hosted subscription."
+          description="Levando você para a cobrança para iniciar a assinatura."
         />
       );
     }
@@ -79,6 +69,5 @@ function IndexRedirect() {
     );
   }
 
-  // The dashboard's own skeleton, so opening it changes nothing on screen.
-  return <DashboardSkeleton />;
+  return <StatusScreen pending description="Abrindo a carteira…" />;
 }
