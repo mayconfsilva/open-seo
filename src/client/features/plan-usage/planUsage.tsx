@@ -1,6 +1,9 @@
 import { queryOptions } from "@tanstack/react-query";
 import { cn } from "cn";
-import { getPlanUsage } from "@/serverFunctions/plan-usage";
+import {
+  getDataforseoBalance,
+  getPlanUsage,
+} from "@/serverFunctions/plan-usage";
 
 export type PlanUsage = Awaited<ReturnType<typeof getPlanUsage>>;
 
@@ -10,6 +13,23 @@ export const planUsageQueryOptions = () =>
     queryFn: () => getPlanUsage(),
     staleTime: 60 * 1000,
   });
+
+export const dataforseoBalanceQueryOptions = () =>
+  queryOptions({
+    queryKey: ["dataforseo-balance"],
+    queryFn: () => getDataforseoBalance(),
+    staleTime: 5 * 60 * 1000,
+    retry: 1,
+  });
+
+const usdFormat = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "USD",
+});
+
+export function formatUsd(value: number) {
+  return usdFormat.format(value);
+}
 
 const SEGMENTS = 20;
 const numberFormat = new Intl.NumberFormat("pt-BR");
