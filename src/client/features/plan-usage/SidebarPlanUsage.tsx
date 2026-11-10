@@ -16,7 +16,8 @@ export function SidebarPlanUsage({ ready }: { ready: boolean }) {
     ...planUsageQueryOptions(),
     enabled: ready,
   });
-  if (!usage) return null;
+  // An unlimited plan has nothing to watch; its Consumo link lives on Plataforma.
+  if (!usage || usage.plan.monthlyQueries === null) return null;
   return (
     <div className="px-3 pb-3">
       <div className="flex flex-col gap-2 rounded-lg border border-hairline bg-subtle p-3">

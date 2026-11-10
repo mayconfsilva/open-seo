@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { revalidateLogic } from "@tanstack/react-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -45,13 +46,23 @@ export function PlatformPage() {
   });
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-[24px] font-semibold tracking-[-.01em]">
-          Plataforma
-        </h1>
-        <p className="text-[13.5px] text-muted-foreground">
-          Agências parceiras, convites e planos. Só você vê esta tela.
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-[24px] font-semibold tracking-[-.01em]">
+            Plataforma
+          </h1>
+          <p className="text-[13.5px] text-muted-foreground">
+            Agências parceiras, convites e planos. Só você vê esta tela.
+          </p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          nativeButton={false}
+          render={<Link to="/consumo" />}
+        >
+          Consumo e saldo da DataForSEO
+        </Button>
       </div>
       <QueryState
         query={overview}
