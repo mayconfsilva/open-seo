@@ -32,6 +32,7 @@ import {
 } from "@/client/features/team/TeamTableRows";
 import { TransferOwnershipModal } from "@/client/features/team/TransferOwnershipModal";
 import { ClientProjectsDialog } from "@/client/features/team/ClientProjectsDialog";
+import { OrganizationNameSettings } from "@/client/features/team/OrganizationNameSettings";
 import { projectsQueryOptions } from "@/client/features/projects/projectQueries";
 import { captureClientEvent } from "@/client/lib/posthog";
 import { authClient, useSession } from "@/lib/auth-client";
@@ -147,6 +148,7 @@ export function TeamSettings() {
   // billing:manage is the owner-only statement (organization:delete is
   // disabled app-wide, so it would read as a dead capability).
   const isOwner = hasOrgPermission(role, { billing: ["manage"] });
+  const canRename = hasOrgPermission(role, { organization: ["update"] });
 
   const members = teamQuery.data?.members ?? [];
   const pendingInvitations = teamQuery.data?.pendingInvitations ?? [];
@@ -184,120 +186,130 @@ export function TeamSettings() {
   ) : null;
   if (failedQuery && failedQuery.data === undefined) return loadError;
 
+  const orgContext = orgContextQuery.data;
   return (
-    <section className="space-y-3">
-      <SectionHeader
-        title="Pessoas com acesso"
-        action={
-          canManageTeam ? (
-            <Button size="sm" onClick={() => setIsInviteOpen(true)}>
-              Convidar pessoa
-            </Button>
-          ) : null
-        }
-      />
-      <p className="text-sm text-muted-foreground">
-        A equipe da agência vê e edita todos os projetos (só o dono mexe na
-        cobrança). Clientes veem, só para leitura, os projetos liberados para
-        eles, pelo portal do cliente.
-      </p>
-      {orgContextQuery.isSuccess && !canManageTeam ? (
-        <PermissionHint action="convidar ou remover pessoas" />
-      ) : null}
-      {loadError}
-
-      {teamQuery.isPending ? (
-        <SkeletonCard />
-      ) : (
-        <TableCard>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Pessoa</TableHead>
-                <TableHead>Papel</TableHead>
-                <TableHead>Projetos</TableHead>
-                <TableHead>Situação</TableHead>
-                <TableHead className="w-10" />
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {members.map((member) => (
-                <MemberRow
-                  key={member.id}
-                  member={member}
-                  isSelf={member.userId === session?.user?.id}
-                  canManageTeam={canManageTeam}
-                  isOwner={isOwner}
-                  isRemoving={pendingRemovals.includes(member.id)}
-                  projectNames={names(memberProjects(member.userId))}
-                  onRemove={() => removeMemberMutation.mutate(member.id)}
-                  onTransferOwnership={() => setTransferTarget(member)}
-                  onEditProjects={() => setProjectsTarget(member)}
-                />
-              ))}
-              {pendingInvitations.map((invitation) => (
-                <InvitationRow
-                  key={invitation.id}
-                  invitation={invitation}
-                  canManageTeam={canManageTeam}
-                  isResending={pendingResends.some(
-                    (pending) =>
-                      typeof pending === "object" &&
-                      pending !== null &&
-                      "email" in pending &&
-                      pending.email === invitation.email,
-                  )}
-                  isCanceling={pendingCancels.includes(invitation.id)}
-                  projectNames={names(invitationProjectIds(invitation.id))}
-                  onResend={() =>
-                    resendMutation.mutate({
-                      email: invitation.email,
-                      role: invitation.role === "client" ? "client" : "admin",
-                      projectIds: invitationProjectIds(invitation.id),
-                    })
-                  }
-                  onCancel={() =>
-                    cancelInvitationMutation.mutate(invitation.id)
-                  }
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableCard>
-      )}
-
-      {transferTarget ? (
-        <TransferOwnershipModal
-          member={transferTarget}
-          onClose={() => setTransferTarget(null)}
-          onTransferred={() => {
-            // The caller's own role changed too: refresh the org context that
-            // gates the team and billing UI, not only the member list.
-            void refreshTeam();
-            void queryClient.invalidateQueries({
-              queryKey: organizationContextQueryOptions().queryKey,
-            });
-          }}
+    <div className="space-y-8">
+      {orgContext && canRename ? (
+        <OrganizationNameSettings
+          key={orgContext.organizationName}
+          organizationId={orgContext.organizationId}
+          name={orgContext.organizationName}
         />
       ) : null}
-
-      {projectsTarget ? (
-        <ClientProjectsDialog
-          userId={projectsTarget.userId}
-          email={projectsTarget.user.email}
-          projects={projects}
-          initial={memberProjects(projectsTarget.userId)}
-          onClose={() => setProjectsTarget(null)}
-          onSaved={() => void refreshTeam()}
+      <section className="space-y-3">
+        <SectionHeader
+          title="Pessoas com acesso"
+          action={
+            canManageTeam ? (
+              <Button size="sm" onClick={() => setIsInviteOpen(true)}>
+                Convidar pessoa
+              </Button>
+            ) : null
+          }
         />
-      ) : null}
+        <p className="text-sm text-muted-foreground">
+          A equipe da agência vê e edita todos os projetos (só o dono mexe na
+          cobrança). Clientes veem, só para leitura, os projetos liberados para
+          eles, pelo portal do cliente.
+        </p>
+        {orgContextQuery.isSuccess && !canManageTeam ? (
+          <PermissionHint action="convidar ou remover pessoas" />
+        ) : null}
+        {loadError}
 
-      {isInviteOpen ? (
-        <InviteTeammateModal
-          onClose={() => setIsInviteOpen(false)}
-          onInvited={() => void refreshTeam()}
-        />
-      ) : null}
-    </section>
+        {teamQuery.isPending ? (
+          <SkeletonCard />
+        ) : (
+          <TableCard>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Pessoa</TableHead>
+                  <TableHead>Papel</TableHead>
+                  <TableHead>Projetos</TableHead>
+                  <TableHead>Situação</TableHead>
+                  <TableHead className="w-10" />
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {members.map((member) => (
+                  <MemberRow
+                    key={member.id}
+                    member={member}
+                    isSelf={member.userId === session?.user?.id}
+                    canManageTeam={canManageTeam}
+                    isOwner={isOwner}
+                    isRemoving={pendingRemovals.includes(member.id)}
+                    projectNames={names(memberProjects(member.userId))}
+                    onRemove={() => removeMemberMutation.mutate(member.id)}
+                    onTransferOwnership={() => setTransferTarget(member)}
+                    onEditProjects={() => setProjectsTarget(member)}
+                  />
+                ))}
+                {pendingInvitations.map((invitation) => (
+                  <InvitationRow
+                    key={invitation.id}
+                    invitation={invitation}
+                    canManageTeam={canManageTeam}
+                    isResending={pendingResends.some(
+                      (pending) =>
+                        typeof pending === "object" &&
+                        pending !== null &&
+                        "email" in pending &&
+                        pending.email === invitation.email,
+                    )}
+                    isCanceling={pendingCancels.includes(invitation.id)}
+                    projectNames={names(invitationProjectIds(invitation.id))}
+                    onResend={() =>
+                      resendMutation.mutate({
+                        email: invitation.email,
+                        role: invitation.role === "client" ? "client" : "admin",
+                        projectIds: invitationProjectIds(invitation.id),
+                      })
+                    }
+                    onCancel={() =>
+                      cancelInvitationMutation.mutate(invitation.id)
+                    }
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableCard>
+        )}
+
+        {transferTarget ? (
+          <TransferOwnershipModal
+            member={transferTarget}
+            onClose={() => setTransferTarget(null)}
+            onTransferred={() => {
+              // The caller's own role changed too: refresh the org context that
+              // gates the team and billing UI, not only the member list.
+              void refreshTeam();
+              void queryClient.invalidateQueries({
+                queryKey: organizationContextQueryOptions().queryKey,
+              });
+            }}
+          />
+        ) : null}
+
+        {projectsTarget ? (
+          <ClientProjectsDialog
+            userId={projectsTarget.userId}
+            email={projectsTarget.user.email}
+            projects={projects}
+            initial={memberProjects(projectsTarget.userId)}
+            onClose={() => setProjectsTarget(null)}
+            onSaved={() => void refreshTeam()}
+          />
+        ) : null}
+
+        {isInviteOpen ? (
+          <InviteTeammateModal
+            onClose={() => setIsInviteOpen(false)}
+            onInvited={() => void refreshTeam()}
+          />
+        ) : null}
+      </section>
+    </div>
   );
 }
