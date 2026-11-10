@@ -119,9 +119,9 @@ export function SavedKeywordsBulkTagsModal({
     >
       <DialogContent showCloseButton={false} className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Update tags</DialogTitle>
+          <DialogTitle>Atualizar etiquetas</DialogTitle>
           <DialogDescription>
-            Apply or remove tags across {selectedCount} selected keyword
+            Aplicar ou remover etiquetas em {selectedCount} selected keyword
             {selectedCount !== 1 ? "s" : ""}.
           </DialogDescription>
         </DialogHeader>
@@ -136,10 +136,14 @@ export function SavedKeywordsBulkTagsModal({
           }}
           className="rounded-lg bg-muted p-0.5 ring-1 ring-border ring-inset"
         >
-          <SegmentItem value="add" label="Add tags" count={addNames.length} />
+          <SegmentItem
+            value="add"
+            label="Adicionar etiquetas"
+            count={addNames.length}
+          />
           <SegmentItem
             value="remove"
-            label="Remove tags"
+            label="Remover etiquetas"
             count={removeIds.length}
             disabled={selectedRowTags.length === 0}
           />
@@ -172,7 +176,7 @@ export function SavedKeywordsBulkTagsModal({
                         )
                       }
                       trailing={<X className="size-3 opacity-70" />}
-                      title="Remove from selection"
+                      title="Tirar da seleção"
                     />
                   );
                 })}
@@ -185,7 +189,7 @@ export function SavedKeywordsBulkTagsModal({
               </InputGroupAddon>
               <InputGroupInput
                 ref={inputRef}
-                aria-label="Search or create a tag"
+                aria-label="Buscar ou criar etiqueta"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyDown={(event) => {
@@ -194,7 +198,7 @@ export function SavedKeywordsBulkTagsModal({
                     handleCreate();
                   }
                 }}
-                placeholder="Search or create…"
+                placeholder="Buscar ou criar…"
               />
             </InputGroup>
 
@@ -206,7 +210,7 @@ export function SavedKeywordsBulkTagsModal({
                   onClick={handleCreate}
                 >
                   <Plus data-icon="inline-start" className="text-primary" />
-                  <span className="text-muted-foreground">Create</span>
+                  <span className="text-muted-foreground">Criar</span>
                   <span className="font-medium">
                     &ldquo;{trimmedQuery}&rdquo;
                   </span>
@@ -216,8 +220,8 @@ export function SavedKeywordsBulkTagsModal({
               {filteredAvailable.length === 0 && !showCreate ? (
                 <p className="px-3 py-6 text-center text-xs text-muted-foreground">
                   {availableTags.length === 0
-                    ? "No tags yet. Type a name above to create one."
-                    : "No tags match that search."}
+                    ? "Nenhuma etiqueta ainda. Digite um nome acima para criar."
+                    : "Nenhuma etiqueta com essa busca."}
                 </p>
               ) : null}
 
@@ -252,15 +256,15 @@ export function SavedKeywordsBulkTagsModal({
                     onClick={() => handleToggleRemove(tag)}
                     selected={checked}
                     trailing={checked ? <Check className="size-3" /> : null}
-                    title={checked ? "Will be removed" : "Click to remove"}
+                    title={checked ? "Será removida" : "Clique para remover"}
                   />
                 );
               })}
             </div>
             {removeIds.length > 0 ? (
               <p className="text-xs text-muted-foreground">
-                {removeIds.length} tag{removeIds.length !== 1 ? "s" : ""} will
-                be detached from the selected keywords.
+                {removeIds.length} tag{removeIds.length !== 1 ? "s" : ""} será
+                tirada das palavras selecionadas.
               </p>
             ) : null}
           </div>
@@ -268,7 +272,7 @@ export function SavedKeywordsBulkTagsModal({
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             pending={isPending}
@@ -280,7 +284,7 @@ export function SavedKeywordsBulkTagsModal({
               })
             }
           >
-            Apply
+            Aplicar
           </Button>
         </DialogFooter>
       </DialogContent>

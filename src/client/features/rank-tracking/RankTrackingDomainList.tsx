@@ -239,15 +239,15 @@ export function RankTrackingDomainList({
 
         {archiveTarget && (
           <ConfirmDialog
-            title={`Archive ${archiveTarget.domain}?`}
+            title={`Arquivar ${archiveTarget.domain}?`}
             confirmLabel="Arquivar"
             destructive
             pending={archiveMutation.isPending}
             onConfirm={() => archiveMutation.mutate(archiveTarget.id)}
             onClose={() => setArchiveTarget(null)}
           >
-            Scheduled checks will stop and this domain will be hidden from the
-            list. Ranking history is preserved.
+            As coletas agendadas param e este domínio some da lista. O histórico
+            de posições é mantido.
           </ConfirmDialog>
         )}
       </Card>
@@ -265,7 +265,7 @@ function CreditsSkipNotice() {
   return (
     <div className="mt-1 flex items-center gap-2 text-xs text-destructive">
       <CircleAlert className="size-3" />
-      Scheduled check skipped: {reason}
+      Coleta agendada pulada: {reason}
       {/* Above the row link, like the archive button. */}
       <span className="pointer-events-auto relative z-10">
         <GetCreditsButton />
@@ -291,7 +291,7 @@ function DomainRow({
         to="/p/$projectId/rank-tracking/$configId"
         params={{ projectId, configId: summary.id }}
         className="absolute inset-0 z-0"
-        aria-label={`Open ${summary.domain}`}
+        aria-label={`Abrir ${summary.domain}`}
       />
       <div className="min-w-0 flex-1 pointer-events-none">
         <p className="font-medium truncate">{summary.domain}</p>
@@ -365,7 +365,7 @@ function DomainRow({
         size="icon-xs"
         className="relative z-10 text-muted-foreground hover:text-destructive"
         title="Arquivar domínio"
-        aria-label={`Archive ${summary.domain}`}
+        aria-label={`Arquivar ${summary.domain}`}
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();

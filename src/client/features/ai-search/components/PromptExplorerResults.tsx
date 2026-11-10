@@ -91,8 +91,8 @@ function ModelResultCard({
 
       <p className="px-5 pt-3 text-xs text-muted-foreground">
         {modelResult.webSearchCountryCode
-          ? `Country hint sent: ${formatCountryLabel(modelResult.webSearchCountryCode)}. This is not a verified search location.`
-          : "No country hint sent. Any search uses the provider’s default location."}
+          ? `País sugerido: ${formatCountryLabel(modelResult.webSearchCountryCode)}. Não é um local de busca confirmado.`
+          : "Nenhum país sugerido. A busca usa o local padrão do provedor."}
       </p>
       <div className="px-5 py-5">
         <MarkdownAnswer text={modelResult.text} />
@@ -108,7 +108,7 @@ function ModelResultCard({
       {modelResult.fanOutQueries.length > 0 ? (
         <div className="border-t border-border px-5 py-3">
           <p className="mb-2 text-xs font-medium tracking-wider text-muted-foreground uppercase">
-            Related queries the model considered
+            Consultas relacionadas que o modelo considerou
           </p>
           <div className="flex flex-wrap gap-1.5">
             {modelResult.fanOutQueries.map((query, index) => (
@@ -137,7 +137,7 @@ function CitationsList({
   return (
     <div className="border-t border-border bg-muted/30 px-5 py-3">
       <p className="mb-2 text-xs font-medium tracking-wider text-muted-foreground uppercase">
-        Cited sources ({citations.length})
+        Fontes citadas ({citations.length})
       </p>
       <ExpandableList
         items={citations}
@@ -198,9 +198,9 @@ function ModelHeader({
         {modelName ? (
           <code className="text-xs text-muted-foreground">{modelName}</code>
         ) : null}
-        {status === "error" ? <Badge variant="destructive">Error</Badge> : null}
+        {status === "error" ? <Badge variant="destructive">Erro</Badge> : null}
         {status === "skipped" ? (
-          <Badge variant="secondary">Skipped</Badge>
+          <Badge variant="secondary">Pulado</Badge>
         ) : null}
         <BrandMentionBadge
           mentioned={brandMentioned}

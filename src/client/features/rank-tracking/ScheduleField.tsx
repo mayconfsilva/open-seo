@@ -137,7 +137,7 @@ export function ScheduleField({
             />
           </div>
           <FieldDescription>
-            In your local timezone: {browserTimeZoneLabel()}
+            No seu fuso horário: {browserTimeZoneLabel()}
           </FieldDescription>
         </>
       )}

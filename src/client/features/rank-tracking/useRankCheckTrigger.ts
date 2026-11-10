@@ -31,12 +31,12 @@ export function useRankCheckTrigger({
         queryKey: ["rankTrackingLatestRun", projectId, configId],
       });
       if (!result.ok) {
-        toast.info("A rank check is already running");
+        toast.info("Já há uma coleta de posição em andamento");
         return;
       }
 
       captureClientEvent("rank_tracking:check_trigger");
-      toast.success("Rank check started");
+      toast.success("Coleta de posição iniciada");
     },
   });
 

@@ -35,7 +35,7 @@ export function ManageTagRow({
   return (
     <div className="space-y-3 border-y border-border bg-muted/40 px-4 py-3">
       <div className="space-y-1.5">
-        <Label htmlFor={nameId}>Name</Label>
+        <Label htmlFor={nameId}>Nome</Label>
         <Input
           id={nameId}
           value={name}
@@ -44,7 +44,7 @@ export function ManageTagRow({
       </div>
 
       <div className="space-y-1.5">
-        <p className="text-sm leading-none font-medium">Color</p>
+        <p className="text-sm leading-none font-medium">Cor</p>
         <div className="flex flex-wrap items-center gap-1.5">
           {TAG_COLOR_KEYS.map((key) => (
             <button
@@ -72,11 +72,11 @@ export function ManageTagRow({
           disabled={isBusy}
         >
           <Trash2 data-icon="inline-start" />
-          Delete
+          Excluir
         </Button>
         <div className="flex items-center gap-1.5">
           <Button variant="ghost" size="xs" onClick={onCancel}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             size="xs"
@@ -88,7 +88,7 @@ export function ManageTagRow({
               })
             }
           >
-            Save
+            Salvar
           </Button>
         </div>
       </div>

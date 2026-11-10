@@ -61,11 +61,11 @@ export function LocalKeywordsTable({
       accessorKey: "keyword",
       header: ({ column }) =>
         history ? (
-          "Keyword"
+          "Palavra"
         ) : (
           <SortableHeader
             column={column}
-            label="Keyword"
+            label="Palavra"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -75,7 +75,7 @@ export function LocalKeywordsTable({
           type="button"
           className="text-left font-medium decoration-dotted underline-offset-2 hover:underline"
           aria-pressed={row.id === selectedKeywordId}
-          title="View ranking map"
+          title="Ver mapa de posições"
           onClick={(event) => {
             event.stopPropagation();
             onSelect(row.id);
@@ -121,14 +121,14 @@ export function LocalKeywordsTable({
                   type="button"
                   className="font-mono text-xs decoration-dotted underline-offset-2 hover:underline aria-pressed:text-primary"
                   aria-pressed={scan.id === selectedScanId}
-                  title={`View map for ${row.original.keyword}, ${new Date(check.createdAt).toLocaleString()}`}
+                  title={`Ver mapa de ${row.original.keyword}, ${new Date(check.createdAt).toLocaleString("pt-BR")}`}
                   onClick={(event) => {
                     event.stopPropagation();
                     onSelect(row.id, scan.id);
                   }}
                 >
                   {scan.status === LocalScanStatus.Failed
-                    ? "Failed"
+                    ? "Falhou"
                     : (scan.summary?.averageRank ?? "—")}
                 </button>
               );
@@ -144,7 +144,7 @@ export function LocalKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Avg. rank"
+            label="Posição média"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -158,7 +158,7 @@ export function LocalKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Top-3 coverage"
+            label="Cobertura no top 3"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -175,7 +175,7 @@ export function LocalKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Points found"
+            label="Pontos encontrados"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -192,7 +192,7 @@ export function LocalKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Last checked"
+            label="Última coleta"
             className={RANK_TRACKING_HEADER_CLASS}
           />
         ),
@@ -217,12 +217,12 @@ export function LocalKeywordsTable({
       activeRowId={selectedKeywordId}
       onRowClick={(row) => onSelect(row.id)}
       empty={{
-        title: "Add keywords to start tracking",
+        title: "Adicione palavras para começar a acompanhar",
         description:
-          "Enter the searches customers use to find this business. Then check its rankings across the map.",
+          "Informe as buscas que os clientes usam para achar esta empresa. Depois confira as posições no mapa.",
         action: (
           <Button size="sm" onClick={onManage}>
-            Add keywords
+            Adicionar palavras
           </Button>
         ),
       }}
@@ -231,7 +231,7 @@ export function LocalKeywordsTable({
 }
 
 function LastChecked({ scan }: { scan: KeywordRow["latest"] }) {
-  if (!scan) return "Not checked";
+  if (!scan) return "Não coletado";
   return (
     <span className="flex flex-wrap items-center gap-2">
       {new Date(scan.createdAt).toLocaleString()}
@@ -241,7 +241,7 @@ function LastChecked({ scan }: { scan: KeywordRow["latest"] }) {
             scan.status === LocalScanStatus.Failed ? "destructive" : "secondary"
           }
         >
-          {scan.status === LocalScanStatus.Running ? "Checking" : scan.status}
+          {scan.status === LocalScanStatus.Running ? "Coletando" : scan.status}
         </Badge>
       )}
     </span>

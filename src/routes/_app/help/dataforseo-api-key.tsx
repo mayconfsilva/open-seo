@@ -9,7 +9,7 @@ import { pageHead } from "@/client/lib/pageHead";
 const DATAFORSEO_API_ACCESS_URL = "https://app.dataforseo.com/api-access";
 
 export const Route = createFileRoute("/_app/help/dataforseo-api-key")({
-  head: () => pageHead("DataForSEO API key"),
+  head: () => pageHead("Chave de API da DataForSEO"),
   component: DataforseoApiKeyHelpPage,
 });
 
@@ -25,22 +25,22 @@ function DataforseoApiKeyHelpPage() {
       >
         DataForSEO API Access
       </a>{" "}
-      and request API credentials by email.
+      e peça as credenciais de API por e-mail.
     </li>
   );
   const encodeStep = (
     <li>
-      Base64 encode your DataForSEO login and API password in this format:
+      Converta em Base64 seu login e senha de API da DataForSEO neste formato:
       <CommandBlock command="printf '%s' 'YOUR_LOGIN:YOUR_PASSWORD' | base64" />
     </li>
   );
   return (
     <SecretHelpPage
-      title="Set up your DataForSEO API key"
+      title="Configure sua chave de API da DataForSEO"
       intro={
         <>
-          OpenSEO needs the <code>DATAFORSEO_API_KEY</code> secret before
-          keyword, domain, and SEO data workflows can run.
+          OpenSEO needs the <code>DATAFORSEO_API_KEY</code> antes de rodar
+          pesquisas de palavras, domínio e outros dados de SEO.
         </>
       }
       everyAppIntro="OpenSEO's keyword, domain, backlink and rank data comes from DataForSEO. On Every App the gateway holds the key once, for every app."
@@ -50,8 +50,8 @@ function DataforseoApiKeyHelpPage() {
           {requestStep}
           {encodeStep}
           <li>
-            Save the output as the <code>DATAFORSEO_API_KEY</code> secret in
-            your environment.
+            Salve o resultado como a variável <code>DATAFORSEO_API_KEY</code> no
+            seu ambiente.
           </li>
         </>
       }
@@ -64,13 +64,13 @@ function DataforseoApiKeyHelpPage() {
             the value:
             <CommandBlock command="pnpm everyapp secret set DATAFORSEO_API_KEY" />
           </li>
-          <li>Reload OpenSEO: it uses the key on its next request.</li>
+          <li>Recarregue o dataSEO: ele usa a chave na próxima requisição.</li>
         </>
       }
-      dashboardPasteStep="Paste the base64 value from the terminal command above and save."
+      dashboardPasteStep="Cole o valor em Base64 gerado pelo comando acima e salve."
       terminalPromptHint={
         <>
-          Use the base64 value of <code>login:password</code> when prompted.
+          Use o valor em Base64 de <code>login:password</code> when prompted.
         </>
       }
     />

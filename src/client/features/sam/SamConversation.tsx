@@ -17,10 +17,10 @@ import {
 import { useStickToBottom } from "@/client/components/chat/useStickToBottom";
 
 const SUGGESTIONS = [
-  "What keywords should I focus on next?",
-  "Who are my top SERP competitors?",
-  "How is my Search Console traffic trending?",
-  "Find quick-win keywords I already rank for",
+  "Em quais palavras devo focar agora?",
+  "Quem são meus principais concorrentes na SERP?",
+  "Como está a evolução do meu tráfego no Search Console?",
+  "Encontre palavras de ganho rápido em que já apareço",
 ];
 
 export function SamConversation({
@@ -107,7 +107,7 @@ export function SamConversation({
       body: JSON.stringify({ messageId }),
     }).catch(() => null);
     if (!response?.ok) {
-      toast.error("Couldn't change the conversation. Try again.");
+      toast.error("Não foi possível alterar a conversa. Tente de novo.");
       return false;
     }
     const fresh = await fetch(
@@ -172,7 +172,7 @@ export function SamConversation({
           className="absolute top-2 right-3 z-10 text-muted-foreground"
           onClick={() => clearHistory()}
         >
-          Clear history (dev)
+          Limpar histórico (dev)
         </Button>
       ) : null}
       <div
@@ -184,12 +184,12 @@ export function SamConversation({
           {messages.length === 0 ? (
             <div className="space-y-2 text-sm text-foreground/80">
               <p>
-                Hey, I’m SAM — your in-app SEO agent. I can research keywords,
-                size up competitors, read your SERPs, backlinks, rank tracking
-                and Search Console, and turn it into next steps for this
-                project.
+                Oi, eu sou o SAM, seu agente de SEO dentro do app. Posso
+                pesquisar palavras, avaliar concorrentes, ler suas SERPs,
+                backlinks, posições e Search Console, e transformar isso em
+                próximos passos para este projeto.
               </p>
-              <p>Ask me anything, or start with one of these:</p>
+              <p>Pergunte o que quiser, ou comece por uma destas:</p>
             </div>
           ) : null}
 
@@ -227,14 +227,14 @@ export function SamConversation({
 
           {isRecovering ? (
             <p className="text-xs text-muted-foreground">
-              Saving the reply that got cut off…
+              Salvando a resposta que foi interrompida…
             </p>
           ) : null}
 
           {status === "error" ? (
             <ErrorState
               variant="inline"
-              message="SAM stopped before finishing this reply."
+              message="O SAM parou antes de terminar esta resposta."
               onRetry={lastUserMessage ? retryLast : undefined}
               isRetrying={isBusy}
             />
@@ -264,14 +264,14 @@ export function SamConversation({
             <div className="mb-2">
               <ErrorState
                 variant="inline"
-                message="Lost the connection to SAM."
+                message="A conexão com o SAM caiu."
                 action={
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => agent.reconnect()}
                   >
-                    Reconnect
+                    Reconectar
                   </Button>
                 }
               />

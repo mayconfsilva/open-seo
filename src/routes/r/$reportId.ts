@@ -37,7 +37,7 @@ async function handleReportRequest(
     // have no sign-in page to complete.
     if (asAppError(error)?.code !== "UNAUTHENTICATED") throw error;
     if (!usesBetterAuth(env.AUTH_MODE)) {
-      return textResponse("Sign in to read this report.", 401);
+      return textResponse("Entre para ler este relatório.", 401);
     }
     // The most likely real entry: someone opening a report link in a browser
     // whose session expired.
@@ -80,7 +80,7 @@ async function handleReportRequest(
     );
     if (!archived) return reportNotFound();
     return textResponse(
-      `This project is archived, so its reports are hidden. Restore ${archived.name} to read them.`,
+      `Este projeto está arquivado, então os relatórios estão ocultos. Restaure ${archived.name} para lê-los.`,
       404,
     );
   }

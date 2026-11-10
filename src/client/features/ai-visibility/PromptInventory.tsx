@@ -82,7 +82,7 @@ export function PromptInventory({
   if (!prompts.some(matches))
     return (
       <p className="p-8 text-center text-sm text-muted-foreground">
-        No matching prompts. Add prompts or adjust your search and filter.
+        Nenhum prompt encontrado. Adicione prompts ou ajuste a busca e o filtro.
       </p>
     );
   return (
@@ -90,13 +90,13 @@ export function PromptInventory({
       <Table className="min-w-[900px]">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-full">Prompts by topic</TableHead>
-            <TableHead>Engines</TableHead>
-            <TableHead>Competitors named</TableHead>
-            <TableHead>Brand mentions</TableHead>
-            <TableHead>Owned citations</TableHead>
+            <TableHead className="w-full">Prompts por tema</TableHead>
+            <TableHead>IAs</TableHead>
+            <TableHead>Concorrentes citados</TableHead>
+            <TableHead>Menções à marca</TableHead>
+            <TableHead>Citações do seu site</TableHead>
             <TableHead>
-              <span className="sr-only">Manage tracking</span>
+              <span className="sr-only">Gerenciar acompanhamento</span>
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -134,7 +134,7 @@ export function PromptInventory({
                       <span className="text-xs font-normal text-muted-foreground">
                         {shownPrompts.length}{" "}
                         {shownPrompts.length === 1 ? "prompt" : "prompts"}
-                        {paused ? " · Paused" : ""}
+                        {paused ? "· Pausado" : ""}
                       </span>
                     </span>
                   </Button>
@@ -155,7 +155,7 @@ export function PromptInventory({
                 <TableCell>
                   <div className="flex justify-end">
                     <PromptActionsMenu
-                      label={`Actions for topic ${topic}`}
+                      label={`Ações do tema ${topic}`}
                       kind="topic"
                       paused={paused}
                       scheduled={scheduled}
@@ -235,11 +235,11 @@ export function PromptInventory({
                         <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
                           {running && <Spinner className="size-3" />}
                           {running
-                            ? "Collecting answers"
+                            ? "Coletando respostas"
                             : prompt.paused
-                              ? "Paused"
-                              : "Active"}{" "}
-                          · {prompt.branded ? "Branded" : "Non-branded"}
+                              ? "Pausado"
+                              : "Ativo"}{" "}
+                          · {prompt.branded ? "Com marca" : "Non-branded"}
                         </p>
                       </TableCell>
                       <TableCell className={dim}>
@@ -266,7 +266,7 @@ export function PromptInventory({
                       <TableCell onClick={(event) => event.stopPropagation()}>
                         <div className="flex justify-end">
                           <PromptActionsMenu
-                            label={`Actions for ${prompt.text}`}
+                            label={`Ações de ${prompt.text}`}
                             kind="prompt"
                             paused={prompt.paused}
                             scheduled={scheduled}
@@ -323,8 +323,8 @@ export function PromptInventory({
       )}
       {archiving && (
         <ConfirmDialog
-          title={`Archive ${archiving.kind}?`}
-          confirmLabel="Archive"
+          title={`Arquivar ${archiving.kind === "topic" ? "tema" : "prompt"}?`}
+          confirmLabel="Arquivar"
           destructive
           onConfirm={() => {
             onReduce({ archivePromptIds: archiving.promptIds });
@@ -333,10 +333,10 @@ export function PromptInventory({
           onClose={() => setArchiving(null)}
         >
           {archiving.kind === "topic"
-            ? `This stops tracking every prompt in "${archiving.name}".`
-            : `This stops tracking "${archiving.name}".`}{" "}
-          You can't view archived prompts yet. Their answer history is kept and
-          returns if you add the same prompt again.
+            ? `Isto para de acompanhar todos os prompts de "${archiving.name}".`
+            : `Isto para de acompanhar "${archiving.name}".`}{" "}
+          Ainda não dá para ver prompts arquivados. O histórico de respostas é
+          mantido e volta se você adicionar o mesmo prompt de novo.
         </ConfirmDialog>
       )}
     </>

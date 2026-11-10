@@ -64,8 +64,8 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
                       compact ? "py-[7px]" : "py-[11px] md:text-base",
                     )}
                     rows={rows}
-                    placeholder="Enter a keyword, or a pattern like best * for dogs"
-                    aria-label="Keywords"
+                    placeholder="Digite uma palavra ou um padrão como melhor * para cachorro"
+                    aria-label="Palavras"
                     aria-invalid={keywordError ? true : undefined}
                     value={field.state.value}
                     onChange={(event) => field.handleChange(event.target.value)}
@@ -91,7 +91,7 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
             // layouts, so the button swells and briefly drops to its own row.
             className={cn("transition", compact && "xl:order-last")}
           >
-            Search
+            Buscar
           </Button>
 
           <div
@@ -149,9 +149,8 @@ export function KeywordResearchSearchBar({ controller, children }: Props) {
               <Alert variant="info" role="status">
                 <Info />
                 <AlertDescription>
-                  Keyword data for this country comes from Google Ads — search
-                  volume, CPC, and trends are available, but difficulty and
-                  intent are not.
+                  Os dados deste país vêm do Google Ads: há volume, CPC e
+                  tendência, mas não dificuldade nem intenção.
                 </AlertDescription>
               </Alert>
             )

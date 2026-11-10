@@ -170,7 +170,7 @@ export function AiQueryError({
   return (
     <QueryError
       error={error}
-      fallback="Could not load AI visibility. Please try again."
+      fallback="Não foi possível carregar a visibilidade em IA. Tente de novo."
       onRetry={retry}
     />
   );
@@ -179,21 +179,25 @@ export function AiQueryError({
 export function AiLoading() {
   return (
     <div className="flex justify-center py-12">
-      <Spinner size="sm" label="Loading AI visibility…" />
+      <Spinner size="sm" label="Carregando a visibilidade em IA…" />
     </div>
   );
 }
 
 export function AiMatchBadge({
   value,
-  positive = "Mentioned",
+  positive = "Mencionada",
 }: {
   value: boolean;
-  positive?: "Mentioned" | "Cited";
+  positive?: "Mencionada" | "Citada";
 }) {
   return (
     <Badge variant={value ? "success" : "secondary"}>
-      {value ? positive : positive === "Cited" ? "Not cited" : "Not mentioned"}
+      {value
+        ? positive
+        : positive === "Citada"
+          ? "Não citada"
+          : "Não mencionada"}
     </Badge>
   );
 }
@@ -201,7 +205,7 @@ export function AiMatchBadge({
 export function aiDate(value: string | null) {
   if (!value) return "—";
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? "Unavailable" : date.toLocaleString();
+  return Number.isNaN(date.getTime()) ? "Indisponível" : date.toLocaleString();
 }
 
 export function aiRate(count: number, eligible: number) {
@@ -228,10 +232,10 @@ export function AiRunStatus({ run }: { run: AiRun }) {
         <span className="flex items-center gap-2 font-medium">
           {pending && <Loader2 className="size-4 animate-spin" />}
           {run.trigger === "manual"
-            ? "One-off run"
+            ? "Execução avulsa"
             : run.trigger === "baseline"
-              ? "First scheduled run"
-              : "Scheduled run"}
+              ? "Primeira execução agendada"
+              : "Execução agendada"}
           <Badge variant="secondary">{run.status}</Badge>
         </span>
         <span className="text-xs text-muted-foreground">
@@ -267,7 +271,7 @@ export function PromptTrackingWithoutUpgradeButton({
       nativeButton={false}
       render={<Link to="/p/$projectId/ai-visibility" params={{ projectId }} />}
     >
-      Use Prompt Tracking without upgrading
+      Use o acompanhamento de prompts sem mudar de plano
     </Button>
   );
 }

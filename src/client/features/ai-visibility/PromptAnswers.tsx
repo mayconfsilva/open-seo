@@ -23,10 +23,10 @@ export function PromptAnswers({
   return (
     <section
       className="overflow-hidden rounded-lg border bg-card border-border"
-      aria-label="Selected execution answer"
+      aria-label="Resposta da execução selecionada"
     >
       <div className="flex flex-wrap items-center gap-3 border-b px-5 py-3 border-border">
-        <h2 className="mr-auto text-sm font-semibold">Answer</h2>
+        <h2 className="mr-auto text-sm font-semibold">Resposta</h2>
         {controls}
       </div>
       {prompt && observation.prompt !== prompt.text && (
@@ -34,7 +34,7 @@ export function PromptAnswers({
           className="border-b px-5 py-3 text-xs text-muted-foreground border-border"
           data-ph-mask
         >
-          Collected prompt: {observation.prompt}
+          Prompt coletado: {observation.prompt}
         </p>
       )}
       {observation.status === "completed" ? (
@@ -52,10 +52,10 @@ export function PromptAnswers({
           <p className="text-sm text-muted-foreground">
             {observation.error
               ? getStandardErrorMessage(new Error(observation.error))
-              : "An answer is not available for this collection yet."}
+              : "Ainda não há resposta para esta coleta."}
           </p>
           <p className="text-xs text-muted-foreground">
-            This collection is excluded from visibility rates.
+            Esta coleta fica fora das taxas de visibilidade.
           </p>
         </div>
       )}

@@ -37,7 +37,7 @@ export function LocalPointResults({
   return (
     <Card className="h-full min-h-0 min-w-0 gap-0 overflow-hidden py-0 shadow-none">
       <CardHeader className="shrink-0 items-center gap-2 px-4 py-3">
-        <CardTitle className="text-sm">Results</CardTitle>
+        <CardTitle className="text-sm">Resultados</CardTitle>
         <CardAction className="row-span-1 self-center text-xs text-muted-foreground">
           {searchedFrom(point, gridSize, spacingKm)}
         </CardAction>
@@ -48,28 +48,28 @@ export function LocalPointResults({
             variant="plain"
             title={
               point.status === LocalPointStatus.Pending
-                ? "Search pending"
-                : "Search failed"
+                ? "Busca pendente"
+                : "A busca falhou"
             }
             description={
               point.status === LocalPointStatus.Pending
-                ? "The saved scan will update when results arrive."
-                : "This point has no ranking result. Other points remain available."
+                ? "A coleta salva atualiza quando os resultados chegarem."
+                : "Este ponto não tem resultado. Os outros pontos continuam disponíveis."
             }
           />
         ) : results.length === 0 ? (
           <EmptyState
             variant="plain"
-            title="No listings returned"
-            description="Google Maps returned no businesses at this coordinate."
+            title="Nenhuma ficha retornada"
+            description="O Google Maps não retornou empresas nesta coordenada."
           />
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Rank</TableHead>
-                <TableHead>Business</TableHead>
-                <TableHead>Reviews</TableHead>
+                <TableHead>Posição</TableHead>
+                <TableHead>Empresa</TableHead>
+                <TableHead>Avaliações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -116,10 +116,10 @@ function searchedFrom(
   const north = (center - point.row) * spacingKm;
   const east = (point.col - center) * spacingKm;
   const parts = [
-    north && `${Math.abs(north)} km ${north > 0 ? "north" : "south"}`,
-    east && `${Math.abs(east)} km ${east > 0 ? "east" : "west"}`,
+    north && `${Math.abs(north)} km ao ${north > 0 ? "norte" : "sul"}`,
+    east && `${Math.abs(east)} km a ${east > 0 ? "leste" : "oeste"}`,
   ].filter(Boolean);
   return parts.length
-    ? `Searched ${parts.join(", ")} of your listing`
-    : "Searched from your listing";
+    ? `Busca feita a ${parts.join(", ")} da sua ficha`
+    : "Busca feita a partir da sua ficha";
 }

@@ -15,9 +15,9 @@ type SummaryStat = { label: string; value: string; description: string };
 
 const SCOPE_NOTES: Partial<Record<BacklinksOverviewData["scope"], string>> = {
   exact_url:
-    "Showing backlinks for this exact page. Switch the scope to Domain or Subdomains for site-wide results — trend charts need one of those.",
+    "Mostrando backlinks desta página exata. Mude o escopo para Domínio ou Subdomínios para ver o site inteiro; os gráficos de evolução precisam de um desses.",
   subfolder:
-    "Showing backlinks pointing into this subfolder. Counts come from filtered backlink totals; rank, trends, and the referring-domains breakdown need Domain or Subdomains scope.",
+    "Mostrando backlinks que apontam para esta subpasta. As contagens vêm dos totais filtrados; posição, evolução e a divisão por domínios de referência precisam do escopo Domínio ou Subdomínios.",
 };
 
 export function BacklinksScopeAlert({
@@ -53,7 +53,7 @@ export function BacklinksOverviewPanels({
           <Badge variant="outline">{RESEARCH_SCOPE_LABELS[data.scope]}</Badge>
         </div>
         <p className="ml-auto text-xs text-muted-foreground">
-          Updated {formatRelativeTimestamp(data.fetchedAt)}
+          Atualizado {formatRelativeTimestamp(data.fetchedAt)}
         </p>
       </div>
       <div className="px-4 pb-4">
@@ -90,18 +90,18 @@ function OverviewGrid({
       {domainScope ? (
         <>
           <TrendPanel
-            title="Backlink growth"
+            title="Crescimento de backlinks"
             description={
               data.scope === "domain"
-                ? "Last year · Includes subdomains"
-                : "Backlinks and referring domains over the last year"
+                ? "Último ano · Inclui subdomínios"
+                : "Backlinks e domínios de referência no último ano"
             }
           >
             <BacklinksTrendChart data={data.trends} />
           </TrendPanel>
           <TrendPanel
-            title="New vs lost"
-            description="Backlink acquisition and attrition"
+            title="Novos vs perdidos"
+            description="Backlinks ganhos e perdidos"
           >
             <BacklinksNewLostChart data={data.newLostTrends} />
           </TrendPanel>

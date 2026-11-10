@@ -43,18 +43,18 @@ type Props = {
 const PROMPT_EXPLORER_BULLETS = [
   {
     icon: Columns3,
-    title: "Four models side-by-side",
-    body: "Run one prompt across ChatGPT, Claude, Gemini, and Perplexity and compare answers in a single view.",
+    title: "Quatro modelos lado a lado",
+    body: "Rode um prompt no ChatGPT, Claude, Gemini e Perplexity e compare as respostas numa só tela.",
   },
   {
     icon: SearchCheck,
-    title: "See what the models cite",
-    body: "Every answer lists the sources it drew from, so you can audit where each model gets its information.",
+    title: "Veja o que os modelos citam",
+    body: "Cada resposta lista as fontes usadas, para você conferir de onde cada modelo tira a informação.",
   },
   {
     icon: Sparkles,
-    title: "Check brand mentions",
-    body: "Highlight a brand to instantly see whether it shows up in the answer text or the cited sources.",
+    title: "Confira menções à marca",
+    body: "Destaque uma marca para ver na hora se ela aparece no texto da resposta ou nas fontes citadas.",
   },
 ];
 
@@ -62,7 +62,7 @@ const PROMPT_EXPLORER_BULLETS = [
 function promptTabLabel(input: SearchTabInput) {
   if (input.type !== "prompt") return "";
   return input.models.length > 1
-    ? `${input.prompt} · ${input.models.length} models`
+    ? `${input.prompt} · ${input.models.length} modelos`
     : input.prompt;
 }
 
@@ -132,23 +132,23 @@ export function PromptExplorerPage({
     event.preventDefault();
     const trimmed = form.prompt.trim();
     if (trimmed.length === 0) {
-      setValidationError("Enter a prompt");
+      setValidationError("Digite um prompt");
       return;
     }
     if (trimmed.length > PROMPT_EXPLORER_MAX_PROMPT_LENGTH) {
       setValidationError(
-        `Keep prompts under ${PROMPT_EXPLORER_MAX_PROMPT_LENGTH} characters`,
+        `Use prompts com menos de ${PROMPT_EXPLORER_MAX_PROMPT_LENGTH} caracteres`,
       );
       return;
     }
     if (form.highlightBrand.trim().length > BRAND_LOOKUP_MAX_INPUT_LENGTH) {
       setValidationError(
-        `Keep the brand under ${BRAND_LOOKUP_MAX_INPUT_LENGTH} characters`,
+        `Use uma marca com menos de ${BRAND_LOOKUP_MAX_INPUT_LENGTH} caracteres`,
       );
       return;
     }
     if (form.models.length === 0) {
-      setValidationError("Select at least one model");
+      setValidationError("Escolha pelo menos um modelo");
       return;
     }
     setValidationError(null);
@@ -181,12 +181,12 @@ export function PromptExplorerPage({
   return (
     <ResearchPageShell
       contained
-      title="Prompt Explorer"
-      description="Ask any prompt across ChatGPT, Claude, Gemini, and Perplexity side-by-side."
+      title="Explorador de prompts"
+      description="Faça qualquer pergunta ao ChatGPT, Claude, Gemini e Perplexity lado a lado."
       gate={{
-        feature: "Prompt Explorer",
+        feature: "Explorador de prompts",
         description:
-          "Ask one prompt across ChatGPT, Claude, Gemini, and Perplexity at the same time and compare their answers: including which sources each model cites.",
+          "Faça a mesma pergunta ao ChatGPT, Claude, Gemini e Perplexity ao mesmo tempo e compare as respostas, inclusive as fontes que cada modelo cita.",
         features: PROMPT_EXPLORER_BULLETS,
         alternative: (
           <PromptTrackingWithoutUpgradeButton projectId={projectId} />
@@ -221,7 +221,7 @@ export function PromptExplorerPage({
       loadingState={<PromptExplorerLoadingState models={urlState.models} />}
       query={exploreQuery}
       hasActiveQuery={hasActivePrompt}
-      errorFallback="Failed to load prompt results"
+      errorFallback="Não foi possível carregar os resultados do prompt"
       // Covers browser back/forward and history links. The route builds a
       // fresh `urlState` object on every render, so compare by value.
       urlKey={`${projectId}:${JSON.stringify(urlState)}`}
@@ -247,7 +247,7 @@ export function PromptExplorerPage({
           search={{}}
           replace
         >
-          Recent searches
+          Buscas recentes
         </BackLink>
       }
       renderResults={(result) => <PromptExplorerResults result={result} />}
@@ -257,7 +257,7 @@ export function PromptExplorerPage({
           loaded={historyLoaded}
           onRemove={removeHistoryItem}
           emptyIcon={MessageSquare}
-          emptyTitle="Enter a prompt to compare model answers"
+          emptyTitle="Digite um prompt para comparar as respostas dos modelos"
           getTitle={(item) => item.prompt}
           getSubtitle={(item) => item.models.map(formatModelLabel).join(", ")}
           renderLink={(item, props) => (

@@ -6,7 +6,7 @@ import localRankMapCss from "@/client/features/local-seo/local-rank-map.css?url"
 
 export const Route = createFileRoute("/_app/p/$projectId/local-seo")({
   head: () => ({
-    ...pageHead("Local SEO"),
+    ...pageHead("SEO local"),
     links: [
       { rel: "stylesheet", href: leafletCss },
       { rel: "stylesheet", href: localRankMapCss },
@@ -20,12 +20,12 @@ function LocalSeoLayout() {
     <div className="px-4 py-4 pb-24 overflow-auto md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl space-y-4">
         <PageHeader
-          title="Local SEO"
-          description="Track Google Maps rankings across your local area"
+          title="SEO local"
+          description="Acompanhe as posições no Google Maps na sua região"
           backLink={
             projectId && trackerId ? (
               <BackLink to="/p/$projectId/local-seo" params={{ projectId }}>
-                Tracked businesses
+                Empresas acompanhadas
               </BackLink>
             ) : undefined
           }

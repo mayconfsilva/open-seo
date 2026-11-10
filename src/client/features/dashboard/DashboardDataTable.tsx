@@ -37,7 +37,7 @@ export function DashboardDataTable<T>({
   resetKey,
   isLoading,
   error,
-  empty = { title: "No results yet" },
+  empty = { title: "Nenhum resultado ainda" },
 }: {
   rows: T[];
   columns: ColumnDef<T>[];
@@ -130,8 +130,8 @@ export function DashboardDataTable<T>({
                       {filter.kind === "follow" ? (
                         <Select
                           items={[
-                            { value: "all", label: "All links" },
-                            { value: "Follow", label: "Follow" },
+                            { value: "all", label: "Todos os links" },
+                            { value: "Dofollow", label: "Dofollow" },
                             { value: "Nofollow", label: "Nofollow" },
                           ]}
                           value={typeof value === "string" ? value : "all"}
@@ -143,8 +143,8 @@ export function DashboardDataTable<T>({
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="all">All links</SelectItem>
-                            <SelectItem value="Follow">Follow</SelectItem>
+                            <SelectItem value="all">Todos os links</SelectItem>
+                            <SelectItem value="Dofollow">Dofollow</SelectItem>
                             <SelectItem value="Nofollow">Nofollow</SelectItem>
                           </SelectContent>
                         </Select>

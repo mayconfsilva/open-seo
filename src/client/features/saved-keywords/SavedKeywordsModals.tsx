@@ -25,14 +25,14 @@ export function DeleteSavedKeywordsModal({
   const plural = selectedCount !== 1 ? "s" : "";
   return (
     <ConfirmDialog
-      title="Delete keywords?"
-      confirmLabel={`Delete ${selectedCount} keyword${plural}`}
+      title="Excluir palavras?"
+      confirmLabel={`Excluir ${selectedCount} palavra${plural}`}
       destructive
       pending={isPending}
       onClose={onClose}
       onConfirm={onConfirm}
     >
-      This will permanently delete {selectedCount} saved keyword{plural}.
+      Isto vai excluir de vez {selectedCount} saved keyword{plural}.
     </ConfirmDialog>
   );
 }

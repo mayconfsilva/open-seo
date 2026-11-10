@@ -46,28 +46,28 @@ export function BacklinksFilterPanel({
         textFields={[
           {
             key: "include",
-            label: "Source URL Contains",
+            label: "URL de origem contém",
             placeholder: "example.com, blog",
           },
           {
             key: "exclude",
-            label: "Source URL Excludes",
-            placeholder: "spam, forum",
+            label: "URL de origem não contém",
+            placeholder: "spam, fórum",
           },
         ]}
         rangeFields={[
           {
-            title: "Domain Authority",
+            title: "Autoridade do domínio",
             minKey: "minDomainRank",
             maxKey: "maxDomainRank",
           },
           {
-            title: "Link Authority",
+            title: "Autoridade do link",
             minKey: "minLinkAuthority",
             maxKey: "maxLinkAuthority",
           },
           {
-            title: "Spam Score",
+            title: "Nota de spam",
             minKey: "minSpamScore",
             maxKey: "maxSpamScore",
             step: "0.1",
@@ -101,13 +101,13 @@ export function BacklinksFilterPanel({
         textFields={[
           {
             key: "include",
-            label: "Domain Contains",
+            label: "Domínio contém",
             placeholder: "example.com, blog",
           },
           {
             key: "exclude",
-            label: "Domain Excludes",
-            placeholder: "spam, forum",
+            label: "Domínio não contém",
+            placeholder: "spam, fórum",
           },
         ]}
         rangeFields={[
@@ -116,9 +116,9 @@ export function BacklinksFilterPanel({
             minKey: "minBacklinks",
             maxKey: "maxBacklinks",
           },
-          { title: "Rank", minKey: "minRank", maxKey: "maxRank" },
+          { title: "Posição", minKey: "minRank", maxKey: "maxRank" },
           {
-            title: "Spam Score",
+            title: "Nota de spam",
             minKey: "minSpamScore",
             maxKey: "maxSpamScore",
             step: "0.1",
@@ -148,23 +148,23 @@ export function BacklinksFilterPanel({
       textFields={[
         {
           key: "include",
-          label: "Page URL Contains",
+          label: "URL da página contém",
           placeholder: "/blog, /products",
         },
         {
           key: "exclude",
-          label: "Page URL Excludes",
+          label: "URL da página não contém",
           placeholder: "/tag, /author",
         },
       ]}
       rangeFields={[
         { title: "Backlinks", minKey: "minBacklinks", maxKey: "maxBacklinks" },
         {
-          title: "Referring Domains",
+          title: "Domínios de referência",
           minKey: "minReferringDomains",
           maxKey: "maxReferringDomains",
         },
-        { title: "Rank", minKey: "minRank", maxKey: "maxRank" },
+        { title: "Posição", minKey: "minRank", maxKey: "maxRank" },
       ]}
       onApply={(values) => {
         state.apply(values);
@@ -179,7 +179,7 @@ export function BacklinksFilterPanel({
 }
 
 const LINK_TYPE_ITEMS = [
-  { value: "all", icon: <Link2 />, label: "All" },
+  { value: "all", icon: <Link2 />, label: "Todos" },
   { value: "dofollow", icon: <Link />, label: "Dofollow" },
   { value: "nofollow", icon: <Unlink />, label: "Nofollow" },
 ];
@@ -193,7 +193,7 @@ function BacklinksToggleControls({
 }) {
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-      <DataTableFilterGroup label="Link Type">
+      <DataTableFilterGroup label="Tipo de link">
         <SegmentedToggle
           showLabels
           items={LINK_TYPE_ITEMS}
@@ -204,17 +204,17 @@ function BacklinksToggleControls({
         />
       </DataTableFilterGroup>
 
-      <DataTableFilterGroup label="Visibility">
+      <DataTableFilterGroup label="Visibilidade">
         <div className="flex h-7 items-center gap-4">
           <VisibilityCheckbox
-            label="Hide lost"
+            label="Ocultar perdidos"
             checked={draft.hideLost === "true"}
             onCheckedChange={(checked) =>
               setValue("hideLost", checked ? "true" : "")
             }
           />
           <VisibilityCheckbox
-            label="Hide broken"
+            label="Ocultar quebrados"
             checked={draft.hideBroken === "true"}
             onCheckedChange={(checked) =>
               setValue("hideBroken", checked ? "true" : "")

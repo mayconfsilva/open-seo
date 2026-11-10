@@ -17,7 +17,7 @@ export function RunStatusLine({
       <div className="space-y-1.5">
         <p className="flex items-center gap-2 text-xs text-muted-foreground">
           <Spinner className="size-3.5" />
-          Collecting {run.completed + run.failed} of {run.expected} answers…
+          Coletando {run.completed + run.failed} of {run.expected} answers…
         </p>
         <Progress value={run.completed + run.failed} max={run.expected || 1} />
       </div>
@@ -27,8 +27,9 @@ export function RunStatusLine({
   return (
     <p className="text-xs text-muted-foreground">
       {[
-        run && `Updated ${aiDate(run.completedAt ?? run.createdAt)}`,
-        tracker?.enabled && `Next run ${aiDate(tracker.nextCheckAt)}`,
+        run && `Atualizado em ${aiDate(run.completedAt ?? run.createdAt)}`,
+        tracker?.enabled &&
+          `Próxima execução em ${aiDate(tracker.nextCheckAt)}`,
       ]
         .filter(Boolean)
         .join(" · ")}

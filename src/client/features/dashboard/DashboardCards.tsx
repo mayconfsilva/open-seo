@@ -57,8 +57,8 @@ const issueTitles: Record<string, string | undefined> = Object.fromEntries(
 );
 
 const gscChartConfig = {
-  clicks: { label: "Clicks", color: "var(--chart-1)" },
-  impressions: { label: "Impressions", color: "var(--chart-2)" },
+  clicks: { label: "Cliques", color: "var(--chart-1)" },
+  impressions: { label: "Impressões", color: "var(--chart-2)" },
 } satisfies ChartConfig;
 
 export function GscCard({
@@ -110,13 +110,14 @@ export function GscCard({
           search={{ range: dateRange }}
           className={moreDetailsClass}
         >
-          View GSC insights
+          Ver análise do GSC
         </Link>
       }
     >
       {reportQuery.isError ? (
         <p className="text-sm text-muted-foreground">
-          Couldn&rsquo;t load Search Console data. Try again shortly.
+          Não foi possível carregar os dados do Search Console. Tente de novo
+          daqui a pouco.
         </p>
       ) : !report ? (
         <MetricsSkeleton />
@@ -127,7 +128,7 @@ export function GscCard({
           <MetricRow
             metrics={[
               {
-                label: "Clicks",
+                label: "Cliques",
                 value: formatCount(report.totals.clicks),
                 change: percentChange(
                   report.totals.clicks,
@@ -136,7 +137,7 @@ export function GscCard({
                 dotClass: "bg-chart-1",
               },
               {
-                label: "Impressions",
+                label: "Impressões",
                 value: formatCount(report.totals.impressions),
                 change: percentChange(
                   report.totals.impressions,
@@ -145,12 +146,12 @@ export function GscCard({
                 dotClass: "bg-chart-2",
               },
               {
-                label: "Click-through rate",
+                label: "Taxa de cliques",
                 value: formatCtr(report.totals.ctr),
                 change: null,
               },
               {
-                label: "Average position",
+                label: "Posição média",
                 value: formatPosition(report.totals.position),
                 change: null,
               },
@@ -160,7 +161,7 @@ export function GscCard({
             <TrendChart config={gscChartConfig} data={report.trend} />
           ) : (
             <p className="text-sm text-muted-foreground">
-              No search data for this period yet.
+              Ainda não há dados de busca neste período.
             </p>
           )}
         </div>
@@ -199,17 +200,19 @@ export function AuditHealthCard({
   });
   if (!audit)
     return (
-      <CardShell title="Site health" icon={siteHealthIcon}>
+      <CardShell title="Saúde do site" icon={siteHealthIcon}>
         <EmptyState
           variant="plain"
           icon={ScanSearch}
-          title="Find what's holding your website back"
-          description="Scan up to 50 pages for broken links, missing titles and pages Google can't index."
+          title="Descubra o que está atrapalhando seu site"
+          description="Analise até 50 páginas em busca de links quebrados, títulos ausentes e páginas que o Google não indexa."
           action={
             <>
               {domain ? (
                 <Button disabled={scan.isPending} onClick={() => scan.mutate()}>
-                  {scan.isPending ? "Starting scan…" : "Scan my website"}
+                  {scan.isPending
+                    ? "Iniciando a análise…"
+                    : "Analisar meu site"}
                 </Button>
               ) : (
                 <Button
@@ -218,13 +221,13 @@ export function AuditHealthCard({
                     <Link to="/p/$projectId/settings" params={{ projectId }} />
                   }
                 >
-                  Add your website
+                  Cadastre seu site
                 </Button>
               )}
               {scan.isError && (
                 <QueryError
                   error={scan.error}
-                  fallback="Could not start your scan"
+                  fallback="Não foi possível iniciar a análise"
                 />
               )}
             </>
@@ -244,7 +247,7 @@ export function AuditHealthCard({
     // not the same as a healthy site, so show progress instead.
     return (
       <CardShell
-        title="Site health"
+        title="Saúde do site"
         icon={siteHealthIcon}
         action={
           <Link
@@ -253,7 +256,7 @@ export function AuditHealthCard({
             search={{ auditId: audit.id }}
             className={moreDetailsClass}
           >
-            View progress
+            Ver andamento
           </Link>
         }
       >
@@ -261,27 +264,29 @@ export function AuditHealthCard({
           <LoaderCircle className="size-7 animate-spin text-muted-foreground" />
           <h3 className="font-medium">
             {isLighthouse
-              ? "Running Lighthouse checks"
+              ? "Rodando testes Lighthouse"
               : isFinalizing
-                ? "Preparing your results"
+                ? "Preparando os resultados"
                 : audit.currentPhase === "discovery"
-                  ? "Finding pages to scan"
-                  : "Scanning your website"}
+                  ? "Encontrando páginas para analisar"
+                  : "Analisando seu site"}
           </h3>
           {!isFinalizing && (
             <Progress
               className="w-full max-w-xs"
               value={checked}
               max={total || 1}
-              aria-label={isLighthouse ? "Lighthouse checks" : "Pages crawled"}
+              aria-label={
+                isLighthouse ? "Testes Lighthouse" : "Páginas rastreadas"
+              }
             />
           )}
           <p className="text-sm text-muted-foreground tabular-nums">
             {isLighthouse
-              ? `${checked} of ${total} checks${audit.lighthouseFailed > 0 ? ` (${audit.lighthouseFailed} failed)` : ""}`
+              ? `${checked} de ${total} testes${audit.lighthouseFailed > 0 ? ` (${audit.lighthouseFailed} falharam)` : ""}`
               : isFinalizing
-                ? `${audit.pagesCrawled} pages crawled. Finishing your report.`
-                : `${checked} of up to ${total} pages crawled`}
+                ? `${audit.pagesCrawled} páginas rastreadas. Finalizando o relatório.`
+                : `${checked} de até ${total} páginas rastreadas`}
           </p>
         </div>
       </CardShell>
@@ -290,12 +295,13 @@ export function AuditHealthCard({
 
   return (
     <CardShell
-      title="Site health"
+      title="Saúde do site"
       icon={siteHealthIcon}
       titleInfo={
         audit.status === "completed" ? (
           <span className={cardMetaClass}>
-            {audit.pagesCrawled} pages checked · {formatDay(audit.startedAt)}
+            {audit.pagesCrawled} páginas analisadas ·{" "}
+            {formatDay(audit.startedAt)}
           </span>
         ) : null
       }
@@ -306,33 +312,33 @@ export function AuditHealthCard({
           search={{ auditId: audit.id, tab: "issues" }}
           className={moreDetailsClass}
         >
-          Review issues
+          Ver problemas
         </Link>
       }
     >
       {audit.status === "failed" && (
         <p className="mb-4 text-sm text-destructive">
-          The latest scan didn’t finish. Review the results or try again.
+          A última análise não terminou. Veja os resultados ou tente de novo.
         </p>
       )}
       {audit.topIssues.length === 0 ? (
         audit.status === "completed" ? (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Check className="size-4 text-success" />
-            No issues found — your site looks healthy.
+            Nenhum problema encontrado: seu site parece saudável.
           </div>
         ) : (
           <p className="text-sm text-muted-foreground">
-            Run the audit again to see issues.
+            Rode a auditoria de novo para ver os problemas.
           </p>
         )
       ) : (
         <Table className={cardTableClass}>
           <TableHeader>
             <TableRow>
-              <TableHead>Issue</TableHead>
-              <TableHead>Severity</TableHead>
-              <TableHead className="text-right">Pages affected</TableHead>
+              <TableHead>Problema</TableHead>
+              <TableHead>Gravidade</TableHead>
+              <TableHead className="text-right">Páginas afetadas</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -344,9 +350,9 @@ export function AuditHealthCard({
                 <TableCell>
                   <SeverityBadge severity={issue.severity}>
                     {issue.severity === "critical"
-                      ? "Critical"
+                      ? "Crítico"
                       : issue.severity === "warning"
-                        ? "Warning"
+                        ? "Aviso"
                         : "Info"}
                   </SeverityBadge>
                 </TableCell>

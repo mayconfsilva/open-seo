@@ -55,7 +55,7 @@ export function RankTrendChart({
       <div className="flex items-center justify-between text-[11px] text-muted-foreground">
         <span>Posição no Google (1 = melhor)</span>
         <span className="inline-flex items-center gap-1">
-          Better <span aria-hidden>↑</span>
+          Melhor <span aria-hidden>↑</span>
         </span>
       </div>
       <ChartContainer config={config} className="h-56">

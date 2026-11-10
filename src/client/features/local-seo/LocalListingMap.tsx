@@ -26,7 +26,7 @@ export default function LocalListingMap({
       scrollWheelZoom={false}
       attributionControl={false}
       className="z-0 h-full w-full"
-      aria-label="Matching listings on a Google Maps basemap"
+      aria-label="Fichas encontradas sobre o mapa do Google Maps"
     >
       <GoogleMapsTiles projectId={projectId} />
       {listings.map(({ business }, index) => (

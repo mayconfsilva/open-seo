@@ -50,7 +50,7 @@ export default function LocalRankMap({
       keyboard={false}
       attributionControl={false}
       className="z-0 h-full w-full"
-      aria-label="Local search ranking grid on a Google Maps basemap"
+      aria-label="Grade de posições locais sobre o mapa do Google Maps"
     >
       <FitGridOnResize bounds={bounds} />
       <GoogleMapsTiles projectId={projectId} />

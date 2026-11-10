@@ -28,7 +28,7 @@ export function PromptActionsMenu({
       {onEdit && (
         <DropdownMenuItem onClick={onEdit}>
           <Pencil />
-          {kind === "topic" ? "Rename topic" : "Edit prompt"}
+          {kind === "topic" ? "Renomear tema" : "Editar prompt"}
         </DropdownMenuItem>
       )}
       <DropdownMenuItem
@@ -36,7 +36,9 @@ export function PromptActionsMenu({
         onClick={onTogglePause}
       >
         {paused ? <Play /> : <Pause />}
-        {paused ? `Resume ${kind}` : `Pause ${kind}`}
+        {paused
+          ? `Retomar ${kind === "topic" ? "tema" : "prompt"}`
+          : `Pausar ${kind === "topic" ? "tema" : "prompt"}`}
       </DropdownMenuItem>
       <DropdownMenuItem
         variant="destructive"
@@ -44,7 +46,7 @@ export function PromptActionsMenu({
         onClick={onArchive}
       >
         <Archive />
-        Archive {kind}
+        Arquivar {kind}
       </DropdownMenuItem>
     </RowActionsMenu>
   );

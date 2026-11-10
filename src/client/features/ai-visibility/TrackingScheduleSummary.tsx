@@ -20,14 +20,14 @@ export function TrackingScheduleSummary({
 }) {
   return (
     <section className="space-y-3">
-      <h3 className="text-sm font-semibold">Schedule</h3>
+      <h3 className="text-sm font-semibold">Frequência</h3>
       {tracker.enabled ? (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border p-3">
           <p className="text-sm">
             {scheduleLabel(tracker.scheduleInterval)}
             <span className="text-muted-foreground">
               {" "}
-              · Next run {aiDate(tracker.nextCheckAt)}
+              · Próxima execução {aiDate(tracker.nextCheckAt)}
             </span>
           </p>
           <div className="flex flex-wrap gap-2">
@@ -39,7 +39,7 @@ export function TrackingScheduleSummary({
               onClick={onPause}
             >
               <Pause />
-              Pause
+              Pausar
             </Button>
             <Button
               type="button"
@@ -49,7 +49,7 @@ export function TrackingScheduleSummary({
               onClick={onSchedule}
             >
               <CalendarClock />
-              Change schedule
+              Mudar frequência
             </Button>
           </div>
         </div>
@@ -61,7 +61,7 @@ export function TrackingScheduleSummary({
           onClick={onSchedule}
         >
           <CalendarClock />
-          Schedule tracking
+          Agendar acompanhamento
         </Button>
       )}
     </section>

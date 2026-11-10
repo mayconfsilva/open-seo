@@ -15,13 +15,13 @@ export function Freshness({
   if (!stale && !refreshError) return null;
   return (
     <p role="status" className="text-xs text-muted-foreground">
-      Showing saved results
+      Mostrando resultados salvos
       {refreshError
-        ? ` · ${getStandardErrorMessage(new Error(refreshError), "Could not update. Showing saved results.")}`
+        ? `· ${getStandardErrorMessage(new Error(refreshError), "Não foi possível atualizar. Mostrando resultados salvos.")}`
         : ""}
       {refreshError === "INSUFFICIENT_CREDITS" ? (
         <Link to="/billing" className="ml-2 text-primary underline">
-          Add credits
+          Adicionar créditos
         </Link>
       ) : null}
     </p>

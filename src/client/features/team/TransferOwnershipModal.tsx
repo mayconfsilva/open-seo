@@ -35,7 +35,7 @@ export function TransferOwnershipModal({
     mutationFn: () => transferOwnership({ data: { memberId: member.id } }),
     onSuccess: () => {
       captureClientEvent("team:ownership_transfer");
-      toast.success(`${displayName} is now the owner`);
+      toast.success(`${displayName} agora é o dono`);
       onTransferred();
       onClose();
     },
@@ -43,8 +43,8 @@ export function TransferOwnershipModal({
       const teamChanged = isTeamChangedError(error);
       toast.error(
         teamChanged
-          ? "Your team changed while this was open. Ownership didn't change."
-          : "We couldn't transfer ownership. Ownership didn't change.",
+          ? "A equipe mudou enquanto isto estava aberto. A posse não mudou."
+          : "Não foi possível transferir a posse. Nada mudou.",
       );
       // Refresh either way so the list and the caller's role are current.
       onTransferred();
@@ -64,17 +64,17 @@ export function TransferOwnershipModal({
     >
       <DialogContent showCloseButton={false} className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Transfer ownership?</DialogTitle>
+          <DialogTitle>Transferir a posse?</DialogTitle>
           <DialogDescription>
             <span className="font-medium text-foreground" data-ph-mask>
               {displayName}
             </span>{" "}
-            becomes the owner of this organization and manages its billing. You
-            become an Admin and keep full access to each project.
+            passa a ser dono desta organização e cuida da cobrança. Você vira
+            administrador e mantém acesso total a cada projeto.
           </DialogDescription>
           <DialogDescription>
-            Projects, data, and the subscription stay with the organization.
-            Only the new owner can transfer ownership again.
+            Projetos, dados e assinatura ficam com a organização. Só o novo dono
+            pode transferir a posse de novo.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -83,13 +83,13 @@ export function TransferOwnershipModal({
             onClick={onClose}
             disabled={transferMutation.isPending}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             onClick={() => transferMutation.mutate()}
             pending={transferMutation.isPending}
           >
-            Transfer ownership
+            Transferir a posse
           </Button>
         </DialogFooter>
       </DialogContent>

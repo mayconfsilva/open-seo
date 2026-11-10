@@ -41,7 +41,7 @@ export function McpConnectionsSettings() {
     mutationFn: (grantId: string) => revokeMcpConnection({ data: { grantId } }),
     onSuccess: () => {
       captureClientEvent("mcp:connection_revoked");
-      toast.success("Agent disconnected");
+      toast.success("Agente desconectado");
       setDisconnecting(null);
       void queryClient.invalidateQueries({ queryKey: ["mcpConnections"] });
     },
@@ -49,28 +49,28 @@ export function McpConnectionsSettings() {
 
   return (
     <section className="space-y-3">
-      <SectionHeader title="Connected agents" />
-      <p className="text-sm">AI clients signed in to OpenSEO with OAuth.</p>
+      <SectionHeader title="Agentes conectados" />
+      <p className="text-sm">Clientes de IA conectados ao dataSEO por OAuth.</p>
 
       <QueryState
         query={connectionsQuery}
-        errorFallback="We couldn't load your connected agents."
+        errorFallback="Não foi possível carregar os agentes conectados."
       >
         {(connections) =>
           connections.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              No agents connected yet.
+              Nenhum agente conectado ainda.
             </p>
           ) : (
             <TableCard>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Client</TableHead>
+                    <TableHead>Cliente</TableHead>
                     {showOrganization ? (
-                      <TableHead>Organization</TableHead>
+                      <TableHead>Organização</TableHead>
                     ) : null}
-                    <TableHead>Connected</TableHead>
+                    <TableHead>Conectado</TableHead>
                     <TableHead className="w-10" />
                   </TableRow>
                 </TableHeader>
@@ -90,7 +90,7 @@ export function McpConnectionsSettings() {
                       </TableCell>
                       <TableCell>
                         <RowActionsMenu
-                          label={`Actions for ${connection.clientName}`}
+                          label={`Ações de ${connection.clientName}`}
                         >
                           <DropdownMenuItem
                             variant="destructive"
@@ -102,7 +102,7 @@ export function McpConnectionsSettings() {
                             }
                           >
                             <Unplug />
-                            Disconnect
+                            Desconectar
                           </DropdownMenuItem>
                         </RowActionsMenu>
                       </TableCell>
@@ -117,14 +117,14 @@ export function McpConnectionsSettings() {
 
       {disconnecting ? (
         <ConfirmDialog
-          title={`Disconnect “${disconnecting.clientName}”?`}
-          confirmLabel="Disconnect"
+          title={`Desconectar “${disconnecting.clientName}”?`}
+          confirmLabel="Desconectar"
           destructive
           pending={disconnectMutation.isPending}
           onClose={() => setDisconnecting(null)}
           onConfirm={() => disconnectMutation.mutate(disconnecting.id)}
         >
-          It will have to sign in to OpenSEO again.
+          Ele terá que entrar no dataSEO de novo.
         </ConfirmDialog>
       ) : null}
     </section>

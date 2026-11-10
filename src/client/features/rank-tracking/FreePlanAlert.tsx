@@ -11,7 +11,7 @@ export function FreePlanAlert({ visible }: { visible: boolean }) {
       <AlertTriangle />
       <AlertDescription className="text-foreground">
         <p>
-          We only start to track keyword positions once you{" "}
+          Só começamos a acompanhar as posições depois que você{" "}
           <Link
             to={SUBSCRIBE_ROUTE}
             search={{ upgrade: true }}

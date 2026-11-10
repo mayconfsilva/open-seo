@@ -9,7 +9,7 @@ import { pageHead } from "@/client/lib/pageHead";
 export const Route = createFileRoute(
   "/_app/p/$projectId/ai-visibility/research",
 )({
-  head: () => pageHead("Prompt Research"),
+  head: () => pageHead("Pesquisa de prompts"),
   validateSearch: z.object({ q: z.string().trim().max(100).optional() }),
   component: AiResearchRoute,
 });
@@ -17,18 +17,18 @@ export const Route = createFileRoute(
 const PROMPT_RESEARCH_FEATURES = [
   {
     icon: MessagesSquare,
-    title: "Questions about your market",
-    body: "See the questions people ask about a keyword, most common first, with ChatGPT's answer to each.",
+    title: "Perguntas sobre seu mercado",
+    body: "Veja as perguntas que as pessoas fazem sobre uma palavra, das mais comuns para as menos, com a resposta do ChatGPT para cada uma.",
   },
   {
     icon: Link2,
-    title: "Who gets cited",
-    body: "See which sites ChatGPT cited when it answered, and whether yours is one of them.",
+    title: "Quem é citado",
+    body: "Veja quais sites o ChatGPT citou ao responder e se o seu está entre eles.",
   },
   {
     icon: ListPlus,
-    title: "Track the ones that matter",
-    body: "Pick the questions worth watching and add them to Prompt Tracking in one step.",
+    title: "Acompanhe as que importam",
+    body: "Escolha as perguntas que valem acompanhar e adicione ao acompanhamento de prompts num passo só.",
   },
 ];
 
@@ -37,8 +37,8 @@ function AiResearchRoute() {
   const { q } = Route.useSearch();
   return (
     <PaidPlanGate
-      feature="Prompt Research"
-      description="Find questions people ask about your market, see how ChatGPT answers them, and check which sites the answers cite."
+      feature="Pesquisa de prompts"
+      description="Encontre as perguntas sobre seu mercado, veja como o ChatGPT responde e quais sites as respostas citam."
       features={PROMPT_RESEARCH_FEATURES}
       alternative={<PromptTrackingWithoutUpgradeButton projectId={projectId} />}
     >

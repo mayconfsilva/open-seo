@@ -109,7 +109,7 @@ export function SamChat({
       <StatusScreen>
         <QueryError
           error={access.error}
-          fallback="Could not load AI agent setup status."
+          fallback="Não foi possível carregar a configuração do agente de IA."
           onRetry={access.onRetry}
           isRetrying={access.isRetrying}
         />
@@ -140,14 +140,14 @@ export function SamChat({
         {loadFailed ? (
           <QueryError
             error={sessionsQuery.error}
-            fallback="Failed to load your chats."
+            fallback="Não foi possível carregar suas conversas."
             onRetry={() => void sessionsQuery.refetch()}
             isRetrying={sessionsQuery.isFetching}
           />
         ) : createError ? (
           <QueryError
             error={createError}
-            fallback="Failed to start a new chat."
+            fallback="Não foi possível iniciar uma nova conversa."
             onRetry={startChat}
           />
         ) : null}
@@ -169,15 +169,17 @@ export function SamChat({
         <StatusScreen>
           <QueryError
             error={sessionsQuery.error}
-            fallback="Failed to load your chats."
+            fallback="Não foi possível carregar suas conversas."
             onRetry={() => void refetchSessions()}
           />
         </StatusScreen>
       );
     }
     return (
-      <StatusScreen description="This chat was archived or does not exist.">
-        <Button onClick={() => goToSession()}>Go to your latest chat</Button>
+      <StatusScreen description="Esta conversa foi arquivada ou não existe.">
+        <Button onClick={() => goToSession()}>
+          Ir para a conversa mais recente
+        </Button>
       </StatusScreen>
     );
   }
@@ -196,7 +198,7 @@ export function SamChat({
           className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
         >
           <Brain className="size-3.5" />
-          Project memory
+          Memória do projeto
         </Link>
       </div>
       <div className="flex min-h-0 flex-1">

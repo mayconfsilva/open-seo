@@ -45,7 +45,7 @@ export function AuthErrorCard({
 
   const message = getStandardErrorMessage(
     error,
-    "Something went wrong. Please try again.",
+    "Algo deu errado. Tente de novo.",
   );
   return (
     <div className="flex h-full min-w-0 flex-1 items-center justify-center p-4">
@@ -103,7 +103,7 @@ function AuthConfigErrorCard({ message, onRetry }: CardProps) {
       </CardContent>
       <CardFooter className="justify-end gap-2">
         <Button variant="ghost" onClick={onRetry}>
-          Try Again
+          Tentar de novo
         </Button>
         <Button
           nativeButton={false}
@@ -145,7 +145,7 @@ function UnauthenticatedErrorCard({ message, onRetry }: CardProps) {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Authentication required</CardTitle>
+        <CardTitle>Autenticação necessária</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 text-muted-foreground">
         <p>{message}</p>
@@ -155,7 +155,7 @@ function UnauthenticatedErrorCard({ message, onRetry }: CardProps) {
         </p>
       </CardContent>
       <CardFooter className="justify-end">
-        <Button onClick={onRetry}>Try Again</Button>
+        <Button onClick={onRetry}>Tentar de novo</Button>
       </CardFooter>
     </Card>
   );

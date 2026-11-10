@@ -40,7 +40,7 @@ function HeaderWithHelp({
 }
 
 const PLATFORM_HELP =
-  "Which AI surface produced the answer — ChatGPT or Google AI Overview.";
+  "Qual IA gerou a resposta: ChatGPT ou Visão geral de IA do Google.";
 
 /**
  * Platform indicator used only when a table actually spans >1 platform. A dot +
@@ -108,7 +108,7 @@ function PageUrlCell({
         <span className="font-medium text-foreground group-hover:underline">
           {row.domain ?? formatUrlForDisplay(row.url)}
         </span>
-        {isOwn ? <Badge size="sm">You</Badge> : null}
+        {isOwn ? <Badge size="sm">Você</Badge> : null}
         <ExternalLink className="size-3 shrink-0 text-muted-foreground" />
       </span>
       {path ? (
@@ -149,14 +149,14 @@ function KeywordsCell({
             params={{ projectId }}
             search={{ q: keyword.question, hb: brand || undefined }}
             className="group/kw inline-flex items-baseline gap-2 text-xs"
-            title="Run this prompt in Prompt Explorer"
+            title="Rodar este prompt no Explorador de prompts"
           >
             <span className="text-foreground/80 group-hover/kw:underline">
               {keyword.question}
             </span>
             <span
               className="shrink-0 text-muted-foreground tabular-nums"
-              title="Prompt volume in the fetched sample"
+              title="Volume de prompts na amostra"
             >
               {formatCount(keyword.aiSearchVolume)} vol.
             </span>
@@ -190,8 +190,8 @@ export function buildTopPagesColumns({
       meta: { cellClassName: TEXT_CELL },
       header: () => (
         <HeaderWithHelp
-          label="Source"
-          helpText="A page cited as a source in AI answers where the searched brand or domain appears."
+          label="Origem"
+          helpText="Página citada como fonte em respostas de IA em que a marca ou domínio buscado aparece."
         />
       ),
       enableSorting: false,
@@ -205,7 +205,7 @@ export function buildTopPagesColumns({
             id: "platform",
             meta: { cellClassName: "whitespace-nowrap align-top" },
             header: () => (
-              <HeaderWithHelp label="Platform" helpText={PLATFORM_HELP} />
+              <HeaderWithHelp label="Plataforma" helpText={PLATFORM_HELP} />
             ),
             enableSorting: false,
             cell: ({ getValue }) => <PlatformCell platform={getValue()} />,
@@ -217,8 +217,8 @@ export function buildTopPagesColumns({
       meta: { cellClassName: "max-w-lg align-top" },
       header: () => (
         <HeaderWithHelp
-          label="Cited for"
-          helpText="Example prompts from the fetched sample where this page was cited."
+          label="Citada para"
+          helpText="Exemplos de prompts da amostra em que esta página foi citada."
         />
       ),
       cell: ({ row }) => (
@@ -235,8 +235,8 @@ export function buildTopPagesColumns({
       header: ({ column }) => (
         <SortableHeader
           column={column}
-          label="Source vol."
-          helpText="Estimated monthly prompt demand DataForSEO reports for this cited source, across prompts where the searched brand or domain appears."
+          label="Vol. da fonte"
+          helpText="Demanda mensal de prompts estimada pela DataForSEO para esta fonte, nos prompts em que a marca ou domínio buscado aparece."
           align="right"
         />
       ),
@@ -264,8 +264,8 @@ export function buildTopQueriesColumns({
       meta: { cellClassName: TEXT_CELL },
       header: () => (
         <HeaderWithHelp
-          label="Query"
-          helpText="A sampled user prompt whose AI answer cited the searched brand or domain in its text or sources. The prompt itself may not name the brand."
+          label="Consulta"
+          helpText="Um prompt da amostra cuja resposta de IA citou a marca ou domínio buscado no texto ou nas fontes. O prompt em si pode não citar a marca."
         />
       ),
       enableSorting: false,
@@ -286,7 +286,7 @@ export function buildTopQueriesColumns({
             id: "platform",
             meta: { cellClassName: "whitespace-nowrap align-top" },
             header: () => (
-              <HeaderWithHelp label="Platform" helpText={PLATFORM_HELP} />
+              <HeaderWithHelp label="Plataforma" helpText={PLATFORM_HELP} />
             ),
             enableSorting: false,
             cell: ({ getValue }) => <PlatformCell platform={getValue()} />,
@@ -299,8 +299,8 @@ export function buildTopQueriesColumns({
       header: ({ column }) => (
         <SortableHeader
           column={column}
-          label="AI search vol."
-          helpText="Estimated monthly search demand for this prompt's topic. This is prompt demand, not the number of brand mentions."
+          label="Vol. de busca em IA"
+          helpText="Demanda mensal estimada para o tema deste prompt. É a demanda do prompt, não o número de menções à marca."
           align="right"
         />
       ),
@@ -312,7 +312,7 @@ export function buildTopQueriesColumns({
     }),
     queriesHelper.display({
       id: "action",
-      header: () => <span className="sr-only">Actions</span>,
+      header: () => <span className="sr-only">Ações</span>,
       meta: { cellClassName: "w-px whitespace-nowrap text-right align-top" },
       cell: ({ row }) => (
         <Tooltip>
@@ -328,14 +328,14 @@ export function buildTopQueriesColumns({
                   size: "icon-xs",
                   className: "text-muted-foreground",
                 })}
-                aria-label="Run this prompt in Prompt Explorer"
+                aria-label="Rodar este prompt no Explorador de prompts"
               />
             }
           >
             <Sparkles />
           </TooltipTrigger>
           <TooltipContent side="left">
-            Run this prompt in Prompt Explorer
+            Rodar este prompt no Explorador de prompts
           </TooltipContent>
         </Tooltip>
       ),

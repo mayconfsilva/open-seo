@@ -36,23 +36,23 @@ type Props = {
   ) => void;
 };
 
-const KEYWORD_SCOPE_REASON = "Scopes apply to domain lookups";
+const KEYWORD_SCOPE_REASON = "Os escopos valem para consultas de domínio";
 
 const BRAND_LOOKUP_BULLETS = [
   {
     icon: TrendingUp,
-    title: "Track AI visibility",
-    body: "See estimated counts for ChatGPT and Google AI Overview answers that cite your brand, and watch the trend month over month.",
+    title: "Acompanhe a visibilidade em IA",
+    body: "Veja quantas respostas do ChatGPT e da Visão geral de IA do Google citam sua marca e acompanhe a evolução mês a mês.",
   },
   {
     icon: Quote,
-    title: "See the prompts",
-    body: "View sample user questions where LLMs reference your brand or domain.",
+    title: "Veja os prompts",
+    body: "Veja exemplos de perguntas em que os modelos de IA citam sua marca ou domínio.",
   },
   {
     icon: BarChart3,
-    title: "Map the competition",
-    body: "Spot the pages LLMs cite alongside you so you know who's competing for attention in AI answers.",
+    title: "Mapeie a concorrência",
+    body: "Veja as páginas que os modelos citam junto com você e saiba quem disputa atenção nas respostas de IA.",
   },
 ];
 
@@ -139,14 +139,14 @@ export function BrandLookupPage({
     if (trimmed.length === 0) {
       setValidationError({
         field: "query",
-        message: "Enter a brand name or domain",
+        message: "Informe uma marca ou domínio",
       });
       return;
     }
     if (trimmed.length > BRAND_LOOKUP_MAX_INPUT_LENGTH) {
       setValidationError({
         field: "query",
-        message: `Keep it under ${BRAND_LOOKUP_MAX_INPUT_LENGTH} characters`,
+        message: `Use menos de ${BRAND_LOOKUP_MAX_INPUT_LENGTH} caracteres`,
       });
       return;
     }
@@ -161,7 +161,7 @@ export function BrandLookupPage({
     if (tooLong) {
       setValidationError({
         field: "competitors",
-        message: `Keep each competitor under ${BRAND_LOOKUP_MAX_INPUT_LENGTH} characters`,
+        message: `Use menos de ${BRAND_LOOKUP_MAX_INPUT_LENGTH} caracteres por concorrente`,
       });
       return;
     }
@@ -173,7 +173,7 @@ export function BrandLookupPage({
     if (matchesTarget) {
       setValidationError({
         field: "competitors",
-        message: `"${matchesTarget}" matches the brand you're looking up — remove it from competitors`,
+        message: `"${matchesTarget}" é a própria marca buscada; tire dos concorrentes`,
       });
       return;
     }
@@ -203,12 +203,12 @@ export function BrandLookupPage({
 
   return (
     <ResearchPageShell
-      title="Brand Lookup"
-      description="See how AI search cites any brand name or domain."
+      title="Consulta de marca"
+      description="Veja como a busca com IA cita qualquer marca ou domínio."
       gate={{
-        feature: "Brand Lookup",
+        feature: "Consulta de marca",
         description:
-          "See how ChatGPT and Google AI Overview cite any brand or domain — total mentions, sample prompts where it appears, and the pages cited alongside it.",
+          "Veja como o ChatGPT e a Visão geral de IA do Google citam qualquer marca ou domínio: total de menções, exemplos de prompts e páginas citadas junto.",
         features: BRAND_LOOKUP_BULLETS,
         alternative: (
           <PromptTrackingWithoutUpgradeButton projectId={projectId} />
@@ -236,7 +236,7 @@ export function BrandLookupPage({
       }
       query={lookupQuery}
       hasActiveQuery={hasActiveQuery}
-      errorFallback="Failed to load brand lookup"
+      errorFallback="Não foi possível carregar a consulta de marca"
       // The form resets whenever the URL `q`/`c`/`scope` changes, including
       // browser back and history links. `competitorKey` is a stable string,
       // unlike the fresh-each-render `initialCompetitors` array.
@@ -263,7 +263,7 @@ export function BrandLookupPage({
           search={{ q: undefined, c: undefined, scope: undefined }}
           replace
         >
-          Recent searches
+          Buscas recentes
         </BackLink>
       }
       renderResults={(result) => (
@@ -275,7 +275,7 @@ export function BrandLookupPage({
           loaded={historyLoaded}
           onRemove={removeHistoryItem}
           emptyIcon={Sparkles}
-          emptyTitle="Search a brand name or domain to see how AI cites it"
+          emptyTitle="Busque uma marca ou domínio para ver como a IA cita"
           getTitle={(item) => (
             <>
               {item.query}

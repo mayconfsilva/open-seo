@@ -107,7 +107,7 @@ export function BacklinksPage({
       <div className="mx-auto max-w-7xl space-y-4">
         <PageHeader
           title="Backlinks"
-          description="Understand who links to a site, what changed recently, and which pages attract links."
+          description="Entenda quem aponta para um site, o que mudou recentemente e quais páginas atraem links."
           backLink={
             searchState.target ? (
               <BackLink
@@ -124,7 +124,7 @@ export function BacklinksPage({
                 }}
                 replace
               >
-                Recent searches
+                Buscas recentes
               </BackLink>
             ) : undefined
           }

@@ -10,7 +10,7 @@ import { autumn } from "@/server/billing/autumn";
 // route asks them to reload. Delete this once those tabs are gone.
 async function handleAutumnRequest(request: Request) {
   if (!isHostedAuthMode(env.AUTH_MODE)) {
-    return new Response("Not found", {
+    return new Response("Não encontrado", {
       status: 404,
     });
   }
@@ -20,7 +20,7 @@ async function handleAutumnRequest(request: Request) {
   ) {
     return Response.json(
       {
-        message: "Billing has changed. Reload the page and try again.",
+        message: "A cobrança mudou. Recarregue a página e tente de novo.",
         code: "reload_required",
       },
       { status: 410 },
@@ -32,7 +32,7 @@ async function handleAutumnRequest(request: Request) {
     context = await resolveHostedContext(request.headers);
   } catch {
     return Response.json(
-      { message: "Authentication required.", code: "unauthenticated" },
+      { message: "Autenticação necessária.", code: "unauthenticated" },
       { status: 401 },
     );
   }

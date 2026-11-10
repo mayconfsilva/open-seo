@@ -67,13 +67,15 @@ export function TrackerPatchReview({
     >
       <DialogContent className="sm:max-w-lg" showCloseButton={false}>
         <DialogHeader className="flex-row items-center justify-between gap-3">
-          <DialogTitle className="text-lg">Review tracking change</DialogTitle>
+          <DialogTitle className="text-lg">
+            Revisar mudança no acompanhamento
+          </DialogTitle>
           <Button
             variant="ghost"
             size="icon-sm"
             disabled={save.isPending}
             onClick={onClose}
-            aria-label="Close review"
+            aria-label="Fechar revisão"
           >
             <X />
           </Button>
@@ -106,7 +108,7 @@ export function TrackerPatchReview({
                 disabled={save.isPending}
                 onClick={onClose}
               >
-                Cancel
+                Cancelar
               </Button>
               <Button
                 disabled={
@@ -115,7 +117,7 @@ export function TrackerPatchReview({
                 onClick={() => save.mutate()}
               >
                 {save.isPending && <Loader2 className="size-4 animate-spin" />}
-                Save change
+                Salvar mudança
               </Button>
             </DialogFooter>
           </>
@@ -157,18 +159,18 @@ export function PromptEditor({
     >
       <DialogContent className="sm:max-w-xl" showCloseButton={false}>
         <DialogHeader className="flex-row items-center justify-between gap-3">
-          <DialogTitle className="text-lg">Edit prompt</DialogTitle>
+          <DialogTitle className="text-lg">Editar prompt</DialogTitle>
           <Button
             variant="ghost"
             size="icon-sm"
             onClick={onClose}
-            aria-label="Close prompt editor"
+            aria-label="Fechar editor de prompt"
           >
             <X />
           </Button>
         </DialogHeader>
         <Field>
-          <FieldLabel htmlFor={textId}>Exact prompt</FieldLabel>
+          <FieldLabel htmlFor={textId}>Prompt exato</FieldLabel>
           <Textarea
             id={textId}
             className="min-h-28"
@@ -181,7 +183,7 @@ export function PromptEditor({
         <TopicField topics={state.topics} value={topic} onChange={setTopic} />
         <DialogFooter>
           <Button variant="ghost" onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             disabled={
@@ -197,7 +199,7 @@ export function PromptEditor({
             }}
           >
             {pending && <Loader2 className="size-4 animate-spin" />}
-            {reworded ? "Review change" : "Save"}
+            {reworded ? "Revisar mudança" : "Salvar"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -29,10 +29,10 @@ import { Input } from "@/client/components/ui/input";
 import { Textarea } from "@/client/components/ui/textarea";
 
 const SECTION_HINTS: Record<ProjectContextSectionKey, string> = {
-  business_overview: "What you sell, who buys it, and where.",
-  current_goal: "What you're pushing for right now, and by when.",
-  positioning: "Why someone picks you over the alternatives.",
-  writing_preferences: "Voice, words to avoid, topics that are off-limits.",
+  business_overview: "O que você vende, quem compra e onde.",
+  current_goal: "O que você busca agora e até quando.",
+  positioning: "Por que alguém escolhe você e não as alternativas.",
+  writing_preferences: "Tom de voz, palavras a evitar e temas proibidos.",
 };
 
 const SECTION_PLACEHOLDERS: Record<ProjectContextSectionKey, string> = {
@@ -58,16 +58,16 @@ export function ProjectContextPage({ projectId }: { projectId: string }) {
   return (
     <QueryState
       query={contextQuery}
-      errorFallback="Failed to load project context"
+      errorFallback="Não foi possível carregar o contexto do projeto"
     >
       {(context) => (
         // key remounts the whole page when the project switches under it, so no
         // draft, open form, or edit state can carry over to another project.
         <div key={projectId} className="space-y-8">
           <p className="text-sm text-muted-foreground">
-            What Claude Code and any other connected MCP client know about this
-            project. They read it before they work and write back what they
-            learn, so correct anything that looks wrong.
+            O que o Claude Code e outros clientes MCP conectados sabem sobre
+            este projeto. Eles leem isto antes de trabalhar e anotam o que
+            aprendem, então corrija o que parecer errado.
           </p>
 
           <BrandNameSection
@@ -160,8 +160,8 @@ function ProseSections({
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing written down yet"
-          description="Fill in what you can — or ask your agent to draft it from your site and confirm what it got right."
+          title="Nada anotado ainda"
+          description="Preencha o que puder, ou peça ao seu agente um rascunho a partir do site e confirme o que estiver certo."
         />
       ) : null}
 
@@ -179,7 +179,7 @@ function ProseSections({
               {section ? (
                 <Provenance by={section.updatedBy} at={section.updatedAt} />
               ) : (
-                <span className="text-xs text-muted-foreground">Empty</span>
+                <span className="text-xs text-muted-foreground">Vazio</span>
               )}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -215,7 +215,7 @@ function ProseSections({
           size="sm"
           disabled={update.isPending || changed.length === 0}
         >
-          Save changes
+          Salvar alterações
         </Button>
       </div>
     </form>
@@ -235,16 +235,16 @@ function CustomSections({
   return (
     <section className="space-y-3">
       <SectionHeader
-        title="Custom sections"
-        hint="Anything an agent wrote down that didn't fit the sections above."
+        title="Seções personalizadas"
+        hint="O que um agente anotou e não coube nas seções acima."
       />
 
       {customSections.length === 0 ? (
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing here yet"
-          description="Agents add a section when they learn something important that has nowhere else to live."
+          title="Nada aqui ainda"
+          description="Os agentes criam uma seção quando aprendem algo importante que não cabe em outro lugar."
         />
       ) : (
         <div className="space-y-3">
@@ -278,13 +278,13 @@ function CustomSections({
                     <Button
                       variant="ghost"
                       size="icon-xs"
-                      aria-label={`Edit ${custom.title ?? custom.slug}`}
+                      aria-label={`Editar ${custom.title ?? custom.slug}`}
                       onClick={() => setEditingSlug(custom.slug)}
                     >
                       <Pencil className="size-3.5" />
                     </Button>
                     <InlineConfirm
-                      label={`Delete ${custom.title ?? custom.slug}`}
+                      label={`Excluir ${custom.title ?? custom.slug}`}
                       pending={update.isPending}
                       onConfirm={() =>
                         update.mutate([{ deleteCustomSection: custom.slug }])
@@ -332,14 +332,14 @@ function CustomSectionForm({
         onChange={(event) => setTitle(event.target.value)}
         placeholder={custom.slug}
         maxLength={120}
-        aria-label="Section title"
+        aria-label="Título da seção"
       />
       <Textarea
         value={content}
         onChange={(event) => setContent(event.target.value)}
         rows={5}
         maxLength={PROSE_MAX_CHARS}
-        aria-label="Section content"
+        aria-label="Conteúdo da seção"
       />
       <FormActions
         pending={pending}
@@ -363,16 +363,16 @@ function ResearchLog({
   return (
     <section className="space-y-3">
       <SectionHeader
-        title="Research log"
-        hint="What's already been looked up, so nobody buys the same data twice."
+        title="Registro de pesquisas"
+        hint="O que já foi consultado, para ninguém comprar os mesmos dados duas vezes."
       />
 
       {researchLog.length === 0 ? (
         <EmptyState
           size="sm"
           icon={null}
-          title="Nothing logged yet"
-          description="Agents record paid research here as they run it."
+          title="Nada registrado ainda"
+          description="Os agentes registram aqui as pesquisas pagas que fazem."
         />
       ) : (
         <ul className={listClass}>
@@ -390,7 +390,7 @@ function ResearchLog({
               </div>
               <RowActions>
                 <InlineConfirm
-                  label={`Delete log entry from ${entry.entryDate}`}
+                  label={`Excluir registro de ${entry.entryDate}`}
                   pending={update.isPending}
                   onConfirm={() =>
                     update.mutate([{ removeResearchLog: [entry.id] }])

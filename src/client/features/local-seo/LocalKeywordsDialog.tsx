@@ -38,15 +38,15 @@ export function LocalKeywordsDialog({
   });
   return (
     <FormDialog
-      title="Manage keywords"
+      title="Gerenciar palavras"
       onClose={onClose}
       actions={
         <>
           <Button variant="outline" disabled={save.isPending} onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <Button type="submit" form="local-keywords" pending={save.isPending}>
-            Save keywords
+            Salvar palavras
           </Button>
         </>
       }
@@ -58,7 +58,7 @@ export function LocalKeywordsDialog({
               <LocalKeywordFields
                 value={field.state.value}
                 onChange={field.handleChange}
-                description="Each check searches every keyword at every point. Results for removed keywords are kept."
+                description="Cada coleta busca todas as palavras em todos os pontos. Os resultados de palavras removidas são mantidos."
               />
             )}
           </form.Field>
@@ -67,7 +67,7 @@ export function LocalKeywordsDialog({
       {save.isError && (
         <QueryError
           error={save.error}
-          fallback="Could not save these keywords."
+          fallback="Não foi possível salvar estas palavras."
         />
       )}
     </FormDialog>

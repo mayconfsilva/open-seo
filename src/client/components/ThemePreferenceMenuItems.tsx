@@ -14,9 +14,9 @@ const THEME_OPTIONS: {
   label: string;
   icon: ReactNode;
 }[] = [
-  { value: "system", label: "System", icon: <Monitor /> },
-  { value: "light", label: "Light", icon: <Sun /> },
-  { value: "dark", label: "Dark", icon: <Moon /> },
+  { value: "system", label: "Sistema", icon: <Monitor /> },
+  { value: "light", label: "Claro", icon: <Sun /> },
+  { value: "dark", label: "Escuro", icon: <Moon /> },
 ];
 
 /** System / Light / Dark segmented radio, shared by Settings and account menus. */
@@ -37,7 +37,7 @@ export function ThemePreferenceDropdownItems() {
 
   return (
     <DropdownMenuGroup>
-      <DropdownMenuLabel>Theme</DropdownMenuLabel>
+      <DropdownMenuLabel>Tema</DropdownMenuLabel>
       <DropdownMenuRadioGroup
         value={themePreference}
         onValueChange={(value) => {

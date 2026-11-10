@@ -21,7 +21,7 @@ export function MetricsTable({
         <TableRow>
           <TableHead>Métrica</TableHead>
           <TableHead className="text-right">Valor</TableHead>
-          {showChange && <TableHead className="text-right">Change</TableHead>}
+          {showChange && <TableHead className="text-right">Variação</TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody>

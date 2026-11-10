@@ -6,8 +6,8 @@ import type { GetSavedKeywordsInput } from "@/types/schemas/keywords";
 export const SAVED_KEYWORD_PAGE_SIZES = [50, 100, 250] as const;
 export const SAVED_KEYWORD_EXPORT_HEADERS = [
   ...KEYWORD_RESEARCH_HEADERS,
-  "Tags",
-  "Fetched At",
+  "Etiquetas",
+  "Buscado em",
 ];
 
 export function savedKeywordExportRow(row: SavedKeywordRow): CsvValue[] {

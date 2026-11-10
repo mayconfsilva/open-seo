@@ -4,7 +4,7 @@ import { brandLookupSearchSchema } from "@/types/schemas/ai-search";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/brand-lookup")({
-  head: () => pageHead("Brand Lookup"),
+  head: () => pageHead("Consulta de marca"),
   validateSearch: brandLookupSearchSchema,
   // The project switcher keeps this page; filter drafts must not follow.
   remountDeps: ({ params }) => params.projectId,

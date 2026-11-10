@@ -23,13 +23,13 @@ export function KeywordAreaField({ locationCode, value, onChange }: Props) {
     <div
       className="min-w-0"
       onFocus={() => setFocused(true)}
-      title="Get search volume for one city, county, or region. Leave empty for the whole country."
+      title="Veja o volume de uma cidade ou região. Deixe vazio para o país inteiro."
     >
       <SerpLocationChip
         value={value}
         onChange={onChange}
         countryCode={countryCode}
-        label="City"
+        label="Cidade"
       />
     </div>
   );

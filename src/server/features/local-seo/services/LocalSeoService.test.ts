@@ -297,10 +297,10 @@ describe("saved local SEO scans", () => {
       summary: { completed: 7, found: 1, averageRank: 2, top3Percent: 14 },
     });
     expect(saved.points.slice(0, 4).map(localPointLabel)).toEqual([
-      "Search failed",
+      "A busca falhou",
       "#2",
-      "Search failed",
-      "Not found · 0 listings returned",
+      "A busca falhou",
+      "Não encontrado · 0 fichas retornadas",
     ]);
   });
 

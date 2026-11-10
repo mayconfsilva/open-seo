@@ -21,9 +21,9 @@ import {
 import { AiQueryError, aiRunResultsQueryOptions } from "./shared";
 
 const BRANDED_FILTERS = [
-  { value: BrandedFilter.All, icon: null, label: "All" },
+  { value: BrandedFilter.All, icon: null, label: "Todos" },
   { value: BrandedFilter.NonBranded, icon: null, label: "Non-branded" },
-  { value: BrandedFilter.Branded, icon: null, label: "Branded" },
+  { value: BrandedFilter.Branded, icon: null, label: "Com marca" },
 ];
 
 export function PromptList({
@@ -65,7 +65,7 @@ export function PromptList({
     onSuccess: (result) => {
       const url = safeHttpUrl(result.url);
       if (!url) {
-        toast.error("The export link was invalid.");
+        toast.error("O link de exportação era inválido.");
         return;
       }
       const link = document.createElement("a");
@@ -93,15 +93,15 @@ export function PromptList({
             )}
             <Button size="sm" onClick={onSetup}>
               <Plus />
-              Add prompts
+              Adicionar prompts
             </Button>
           </>
         }
       >
         <Input
-          aria-label="Search tracked prompts"
+          aria-label="Buscar prompts acompanhados"
           className="h-7 w-64"
-          placeholder="Search prompts"
+          placeholder="Buscar prompts"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
@@ -126,7 +126,7 @@ export function PromptList({
           <Alert variant="info" banner>
             <Info />
             <AlertDescription>
-              Run prompts before interacting with results.
+              Rode os prompts antes de usar os resultados.
             </AlertDescription>
           </Alert>
         )}

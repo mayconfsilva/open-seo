@@ -12,9 +12,9 @@ const KINDS = ["new", "lost", "all"] as const;
 type Kind = (typeof KINDS)[number];
 
 const DESCRIPTIONS: Record<Kind, string> = {
-  new: "Links to your website found in the past week. A link may be older than the date it was found.",
-  lost: "Links that were found before but are no longer there. Last checked is when we last checked the link, not when it disappeared.",
-  all: "Recently found links that still point to your website.",
+  new: "Links para seu site encontrados na última semana. Um link pode ser mais antigo que a data em que foi encontrado.",
+  lost: "Links que existiam e não estão mais lá. A última verificação é quando conferimos o link, não quando ele sumiu.",
+  all: "Links encontrados recentemente que ainda apontam para seu site.",
 };
 
 export function DashboardBacklinks({
@@ -40,7 +40,7 @@ export function DashboardBacklinks({
         query.isError ? (
           <QueryError
             error={query.error}
-            fallback="Could not load backlinks"
+            fallback="Não foi possível carregar os backlinks"
             onRetry={() => void query.refetch()}
             isRetrying={query.isFetching}
           />
@@ -60,9 +60,9 @@ export function DashboardBacklinks({
             </>
           }
         >
-          <TabsTrigger value="new">New this week</TabsTrigger>
-          <TabsTrigger value="lost">Lost links</TabsTrigger>
-          <TabsTrigger value="all">Active links</TabsTrigger>
+          <TabsTrigger value="new">Novos esta semana</TabsTrigger>
+          <TabsTrigger value="lost">Links perdidos</TabsTrigger>
+          <TabsTrigger value="all">Links ativos</TabsTrigger>
         </DataTableTabs>
       }
     />
@@ -88,7 +88,7 @@ function DashboardBacklinkTable({
       id: "urlFrom",
       accessorFn: (row) => `${row.domainFrom ?? ""} ${row.urlFrom ?? ""}`,
       header: ({ column }) => (
-        <SortableHeader column={column} label="Referring page" />
+        <SortableHeader column={column} label="Página de origem" />
       ),
       cell: ({ row }) => (
         <ExternalPage
@@ -100,7 +100,7 @@ function DashboardBacklinkTable({
     },
     {
       accessorKey: "anchor",
-      header: "Anchor",
+      header: "Âncora",
       cell: ({ row }) => (
         <span
           className="block max-w-48 truncate"
@@ -113,20 +113,20 @@ function DashboardBacklinkTable({
     },
     {
       accessorKey: "urlTo",
-      header: "Target page",
+      header: "Página de destino",
       cell: ({ row }) => <ExternalPage url={row.original.urlTo} />,
       filterFn: "includesString",
     },
     {
       id: "follow",
-      accessorFn: (row) => (row.isDofollow ? "Follow" : "Nofollow"),
-      header: "Link type",
+      accessorFn: (row) => (row.isDofollow ? "Dofollow" : "Nofollow"),
+      header: "Tipo de link",
       filterFn: "equalsString",
     },
     {
       accessorKey: "domainFromRank",
       header: ({ column }) => (
-        <SortableHeader column={column} label="Domain rank" />
+        <SortableHeader column={column} label="Autoridade do domínio" />
       ),
       filterFn: "inNumberRange",
       cell: ({ getValue }) => getValue() ?? "—",
@@ -134,7 +134,7 @@ function DashboardBacklinkTable({
     {
       accessorKey: "spamScore",
       header: ({ column }) => (
-        <SortableHeader column={column} label="Spam score" />
+        <SortableHeader column={column} label="Nota de spam" />
       ),
       filterFn: "inNumberRange",
       cell: ({ getValue }) => getValue() ?? "—",
@@ -146,7 +146,7 @@ function DashboardBacklinkTable({
       header: ({ column }) => (
         <SortableHeader
           column={column}
-          label={kind === "lost" ? "Last checked" : "First discovered"}
+          label={kind === "lost" ? "Última coleta" : "Encontrado em"}
         />
       ),
     },
@@ -159,19 +159,23 @@ function DashboardBacklinkTable({
       empty={{
         title:
           kind === "new"
-            ? "No new backlinks this week"
+            ? "Nenhum backlink novo esta semana"
             : kind === "lost"
-              ? "No lost backlinks found"
-              : "No active backlinks found yet",
+              ? "Nenhum backlink perdido"
+              : "Nenhum backlink ativo ainda",
       }}
       columns={columns}
       filters={[
-        { id: "urlFrom", label: "Referring page", kind: "text" },
-        { id: "anchor", label: "Anchor text", kind: "text" },
-        { id: "urlTo", label: "Target page", kind: "text" },
-        { id: "follow", label: "Link type", kind: "follow" },
-        { id: "domainFromRank", label: "Domain rank", kind: "number" },
-        { id: "spamScore", label: "Spam score", kind: "number" },
+        { id: "urlFrom", label: "Página de origem", kind: "text" },
+        { id: "anchor", label: "Texto âncora", kind: "text" },
+        { id: "urlTo", label: "Página de destino", kind: "text" },
+        { id: "follow", label: "Tipo de link", kind: "follow" },
+        {
+          id: "domainFromRank",
+          label: "Autoridade do domínio",
+          kind: "number",
+        },
+        { id: "spamScore", label: "Nota de spam", kind: "number" },
       ]}
     />
   );

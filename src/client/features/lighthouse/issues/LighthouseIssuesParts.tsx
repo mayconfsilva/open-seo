@@ -43,12 +43,12 @@ export function LighthouseIssuesHeader({
   return (
     <>
       <div className="flex items-center justify-between gap-3">
-        <BackButton onClick={onBack}>Site Audit</BackButton>
+        <BackButton onClick={onBack}>Auditoria do site</BackButton>
         <span className="text-xs text-muted-foreground">
           {scannedAt
-            ? `Scanned ${new Date(scannedAt).toLocaleString()}`
+            ? `Analisado em ${new Date(scannedAt).toLocaleString("pt-BR")}`
             : isLoading
-              ? "Reading latest issues..."
+              ? "Lendo os problemas mais recentes..."
               : null}
         </span>
       </div>
@@ -56,18 +56,18 @@ export function LighthouseIssuesHeader({
       <Card>
         <CardContent className="space-y-4">
           <div className="space-y-1">
-            <h1 className="text-2xl font-semibold">Lighthouse Issues</h1>
+            <h1 className="text-2xl font-semibold">Problemas do Lighthouse</h1>
             <p className="text-sm text-muted-foreground break-all">
-              {finalUrl ?? (isLoading ? "Loading URL..." : null)}
+              {finalUrl ?? (isLoading ? "Carregando URL..." : null)}
             </p>
           </div>
           <LighthouseIssuesSummary scores={scores} metrics={metrics} />
           <div className="flex flex-wrap gap-2">
             <SeverityBadge severity="critical">
-              Critical {severityCounts.critical}
+              Crítico {severityCounts.critical}
             </SeverityBadge>
             <SeverityBadge severity="warning">
-              Warning {severityCounts.warning}
+              Aviso {severityCounts.warning}
             </SeverityBadge>
             <SeverityBadge severity="info">
               Info {severityCounts.info}
@@ -123,25 +123,25 @@ export function LighthouseIssuesToolbar({
   }> = [
     {
       id: "current",
-      label: `${selectedCategoryLabel} issues`,
+      label: `Problemas de ${selectedCategoryLabel}`,
       issues: visibleIssues,
       payload: exportCurrentCategory,
-      copied: `Copied ${categoryLabelLower} issues`,
+      copied: `Problemas de ${categoryLabelLower} copiados`,
     },
     {
       id: "all",
-      label: "All actionable issues",
+      label: "Todos os problemas corrigíveis",
       issues: allIssues,
       payload: { mode: "issues" },
-      copied: "Copied all actionable issues",
+      copied: "Todos os problemas corrigíveis copiados",
     },
     {
       id: "full",
-      label: "Saved Lighthouse payload",
+      label: "Dados salvos do Lighthouse",
       actions: ["copy-json", "json"],
       issues: [],
       payload: { mode: "full" },
-      copied: "Copied saved Lighthouse payload",
+      copied: "Dados salvos do Lighthouse copiados",
     },
   ];
 
@@ -218,7 +218,7 @@ export function LighthouseIssueList({
   if (!issues.length) {
     return (
       <p className="p-4 text-sm text-muted-foreground">
-        {emptyMessage ?? "No actionable issues for this category."}
+        {emptyMessage ?? "Nenhum problema corrigível nesta categoria."}
       </p>
     );
   }
@@ -227,13 +227,13 @@ export function LighthouseIssueList({
       <TableHeader>
         <TableRow>
           <TableHead className="w-8" />
-          <TableHead className="w-24">Severity</TableHead>
-          <TableHead>Issue</TableHead>
-          <TableHead className="hidden w-28 sm:table-cell">Category</TableHead>
+          <TableHead className="w-24">Gravidade</TableHead>
+          <TableHead>Problema</TableHead>
+          <TableHead className="hidden w-28 sm:table-cell">Categoria</TableHead>
           <TableHead className="hidden w-28 md:table-cell text-right">
-            Impact
+            Impacto
           </TableHead>
-          <TableHead className="w-14 text-right">Score</TableHead>
+          <TableHead className="w-14 text-right">Nota</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

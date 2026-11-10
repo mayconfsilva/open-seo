@@ -27,7 +27,7 @@ function checkDurationLabel(keywords: number, points: number) {
   const seconds = keywords * Math.ceil(points / 6) * 5;
   return seconds < 60
     ? "under a minute"
-    : `about ${Math.ceil(seconds / 60)} minute${seconds > 60 ? "s" : ""}`;
+    : `cerca de ${Math.ceil(seconds / 60)} minuto${seconds > 60 ? "s" : ""}`;
 }
 
 export function LocalTrackerDetail({
@@ -50,7 +50,10 @@ export function LocalTrackerDetail({
         : false,
   });
   return (
-    <QueryState query={query} errorFallback="Failed to load local tracking">
+    <QueryState
+      query={query}
+      errorFallback="Não foi possível carregar o monitoramento local"
+    >
       {(data) => (
         <TrackerContent
           projectId={projectId}
@@ -124,7 +127,7 @@ function TrackerContent({
             <h2 className="text-lg font-semibold">{tracker.title}</h2>
             <p className="text-xs text-muted-foreground">{tracker.address}</p>
             <p className="text-xs text-muted-foreground">
-              {localAreaLabel(tracker)} · Mobile
+              {localAreaLabel(tracker)} · Celular
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -135,7 +138,7 @@ function TrackerContent({
               onClick={() => setManagingKeywords(true)}
             >
               <Pencil data-icon="inline-start" />
-              Manage keywords
+              Gerenciar palavras
             </Button>
             <Button
               size="sm"
@@ -144,7 +147,7 @@ function TrackerContent({
               onClick={() => setConfirm(crypto.randomUUID())}
             >
               <Play data-icon="inline-start" />
-              {active ? "Checking rankings…" : "Check rankings"}
+              {active ? "Coletando posições…" : "Coletar posições"}
             </Button>
           </div>
         </div>
@@ -152,18 +155,18 @@ function TrackerContent({
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-border px-4 py-2 text-sm text-muted-foreground">
             <Spinner className="size-3.5 text-primary" />
             <span>
-              Checking {estimate.keywords} keyword
+              Coletando {estimate.keywords} keyword
               {estimate.keywords === 1 ? "" : "s"} across {estimate.points}{" "}
-              points · {searchesDone}/{estimate.searches} searches
+              pontos · {searchesDone}/{estimate.searches} searches
             </span>
             <Progress
               className="w-24"
-              aria-label="Ranking check progress"
+              aria-label="Progresso da coleta"
               value={searchesDone}
               max={estimate.searches}
             />
             <span>
-              Usually takes{" "}
+              Costuma levar{" "}
               {checkDurationLabel(estimate.keywords, estimate.points)}
             </span>
           </div>
@@ -173,7 +176,7 @@ function TrackerContent({
             <QueryError
               fallback={
                 failed.error ??
-                "The last check returned no rankings. Earlier results are shown below."
+                "A última coleta não trouxe posições. Os resultados anteriores aparecem abaixo."
               }
             />
           </div>
@@ -197,12 +200,12 @@ function TrackerContent({
                 {
                   value: "latest",
                   icon: <List className="size-3.5" />,
-                  label: "Latest",
+                  label: "Mais recente",
                 },
                 {
                   value: "history",
                   icon: <CalendarDays className="size-3.5" />,
-                  label: "History",
+                  label: "Histórico",
                 },
               ]}
               value={history ? "history" : "latest"}
@@ -219,7 +222,7 @@ function TrackerContent({
           </span>
           {history && (
             <span className="ml-auto text-xs text-muted-foreground">
-              Average rank where found
+              Posição média onde foi encontrada
             </span>
           )}
         </div>
@@ -250,15 +253,15 @@ function TrackerContent({
       )}
       {confirm && (
         <ConfirmDialog
-          title={`Check ${estimate.keywords} keyword${estimate.keywords === 1 ? "" : "s"}?`}
-          confirmLabel="Run now"
+          title={`Coletar ${estimate.keywords} palavra${estimate.keywords === 1 ? "" : "s"}?`}
+          confirmLabel="Rodar agora"
           pending={start.isPending}
           onConfirm={() => start.mutate(confirm)}
           onClose={() => setConfirm(null)}
         >
           {estimate.keywords} keyword{estimate.keywords === 1 ? "" : "s"}{" "}
-          &times; {estimate.points} grid points = {estimate.searches} Google
-          Maps searches on mobile, taking{" "}
+          &times; {estimate.points} pontos da grade = {estimate.searches} buscas
+          no Google Maps pelo celular, levando{" "}
           {checkDurationLabel(estimate.keywords, estimate.points)}. Costs up to{" "}
           <span className="font-mono font-semibold text-foreground">
             {/* Credits are $0.001, so three decimals show the exact maximum. */}

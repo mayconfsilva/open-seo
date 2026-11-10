@@ -27,18 +27,18 @@ type Props = {
 
 const RESULT_ITEMS = RESULT_LIMITS.map((limit) => ({
   value: limit,
-  label: `${limit} results`,
+  label: `${limit} resultados`,
 }));
 
 const MODE_ITEMS: { value: KeywordMode; label: string }[] = [
-  { value: "auto", label: "Auto" },
-  { value: "suggestions", label: "Phrase match" },
-  { value: "ideas", label: "Category ideas" },
-  { value: "related", label: "People also search for" },
+  { value: "auto", label: "Automático" },
+  { value: "suggestions", label: "Correspondência de frase" },
+  { value: "ideas", label: "Ideias por categoria" },
+  { value: "related", label: "As pessoas também buscam" },
 ];
 
 const GOOGLE_ADS_ONLY_NOTE =
-  "Not available for countries served from Google Ads data.";
+  "Indisponível para países com dados do Google Ads.";
 
 /** The search settings most people leave at their defaults. */
 export function KeywordSearchOptions({ controller }: Props) {
@@ -69,7 +69,7 @@ export function KeywordSearchOptions({ controller }: Props) {
               render={<Button variant="outline" className="font-normal" />}
             >
               <SlidersHorizontal data-icon="inline-start" />
-              Options
+              Opções
               {changedCount > 0 ? (
                 <Badge variant="secondary" size="sm">
                   {changedCount}
@@ -79,14 +79,14 @@ export function KeywordSearchOptions({ controller }: Props) {
             <PopoverContent align="start" className="w-80 gap-4 p-4">
               <controlsForm.AppField name="resultLimit">
                 {(field) => (
-                  <field.SelectField label="Results" items={RESULT_ITEMS} />
+                  <field.SelectField label="Resultados" items={RESULT_ITEMS} />
                 )}
               </controlsForm.AppField>
 
               <controlsForm.AppField name="mode">
                 {(field) => (
                   <field.SelectField
-                    label="Keyword source"
+                    label="Origem das palavras"
                     description={labs ? undefined : GOOGLE_ADS_ONLY_NOTE}
                     items={MODE_ITEMS}
                     disabled={!labs}
@@ -97,13 +97,13 @@ export function KeywordSearchOptions({ controller }: Props) {
               <controlsForm.Field name="clickstream">
                 {(field) => (
                   <ToggleRow
-                    label="Clickstream-refined volumes"
+                    label="Volumes refinados por clickstream"
                     help={
                       !labs
                         ? GOOGLE_ADS_ONLY_NOTE
                         : local
-                          ? "Not available for local results. Clickstream data covers whole countries only."
-                          : "Google reports one combined volume for similar keywords. This estimates each keyword's own volume. Costs 2x the credits."
+                          ? "Indisponível para resultados locais. Os dados de clickstream cobrem só países inteiros."
+                          : "O Google informa um volume único para palavras parecidas. Isto estima o volume de cada uma. Custa o dobro de créditos."
                     }
                     // The saved choice returns when the option applies again.
                     checked={labs && !local && field.state.value}
@@ -114,7 +114,7 @@ export function KeywordSearchOptions({ controller }: Props) {
               </controlsForm.Field>
 
               <ToggleRow
-                label="Group keywords"
+                label="Agrupar palavras"
                 help={labs ? undefined : GOOGLE_ADS_ONLY_NOTE}
                 checked={labs && groupKeywords}
                 disabled={!labs}

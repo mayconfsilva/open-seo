@@ -2,7 +2,7 @@ import type { PromptExplorerModel } from "@/types/schemas/ai-search";
 
 const MENTION_PLATFORM_LABELS: Record<"chat_gpt" | "google", string> = {
   chat_gpt: "ChatGPT",
-  google: "Google AI Overview",
+  google: "Visão geral de IA do Google",
 };
 
 /**

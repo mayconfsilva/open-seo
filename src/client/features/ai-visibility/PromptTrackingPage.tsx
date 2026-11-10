@@ -127,7 +127,9 @@ function PromptTrackingContent({
     setEditingPrompt(null);
     setChange(null);
     if (run) setSelectedRun(run);
-    toast.success(run ? "Run started" : "Prompt tracking saved");
+    toast.success(
+      run ? "Execução iniciada" : "Acompanhamento de prompts salvo",
+    );
   };
   const pauseSchedule = useMutation({
     mutationFn: () =>
@@ -137,7 +139,7 @@ function PromptTrackingContent({
     onSuccess: (result) => {
       saved(result.state);
       setManagingTracking(false);
-      toast.success("Tracking paused");
+      toast.success("Acompanhamento pausado");
     },
     onError: (error) => toast.error(getStandardErrorMessage(error)),
   });
@@ -176,19 +178,19 @@ function PromptTrackingContent({
   return (
     <div className="space-y-4">
       <PageHeader
-        title="Prompt Tracking"
-        description="Track the prompts your customers use with AI. Inspect where your business is mentioned or cited."
+        title="Acompanhamento de prompts"
+        description="Acompanhe os prompts que seus clientes usam com IA. Veja onde seu negócio é mencionado ou citado."
       />
       {!state.configured ? (
         <EmptyState
           variant="card"
           icon={MessageSquare}
-          title="Start with the prompts that matter to your business"
-          description="Add a topic and its prompts using your saved project settings."
+          title="Comece pelos prompts que importam para o seu negócio"
+          description="Adicione um tema e seus prompts usando as configurações salvas do projeto."
           action={
             <Button onClick={() => setEditorMode(TrackerEditorMode.Prompts)}>
               <Plus />
-              Add prompts
+              Adicionar prompts
             </Button>
           }
         />
@@ -206,8 +208,8 @@ function PromptTrackingContent({
                     </h2>
                     <Badge variant={tracker?.enabled ? "success" : "secondary"}>
                       {tracker?.enabled
-                        ? `${scheduleLabel(tracker.scheduleInterval)} tracking`
-                        : "Paused"}
+                        ? `Acompanhamento ${scheduleLabel(tracker.scheduleInterval)}`
+                        : "Pausado"}
                     </Badge>
                   </div>
                 </div>
@@ -219,7 +221,7 @@ function PromptTrackingContent({
                     onClick={() => setEditorMode(TrackerEditorMode.Settings)}
                   >
                     <Settings2 />
-                    Tracking settings
+                    Configurações do acompanhamento
                   </Button>
                   <Button
                     size="sm"
@@ -232,7 +234,7 @@ function PromptTrackingContent({
                     onClick={() => setCostMode("check")}
                   >
                     <Play />
-                    Run now
+                    Rodar agora
                   </Button>
                 </div>
               </div>
@@ -242,7 +244,7 @@ function PromptTrackingContent({
               ) : (
                 tracker?.lastSkipReason && (
                   <p className="text-xs text-warning">
-                    Most recent scheduling notice: {tracker.lastSkipReason}
+                    Aviso de agendamento mais recente: {tracker.lastSkipReason}
                   </p>
                 )
               )}
@@ -324,10 +326,10 @@ function PromptTrackingContent({
             });
             toast.success(
               run
-                ? "Run started"
+                ? "Execução iniciada"
                 : tracker.enabled
-                  ? "Tracking schedule saved"
-                  : "Tracking scheduled",
+                  ? "Frequência salva"
+                  : "Acompanhamento agendado",
             );
           }}
         />

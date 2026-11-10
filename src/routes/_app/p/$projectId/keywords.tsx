@@ -11,7 +11,7 @@ import { keywordsSearchSchema } from "@/types/schemas/keywords";
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/keywords")({
-  head: () => pageHead("Keyword Research"),
+  head: () => pageHead("Pesquisa de palavras"),
   validateSearch: keywordsSearchSchema,
   // The project switcher keeps this page; filter drafts must not follow.
   remountDeps: ({ params }) => params.projectId,

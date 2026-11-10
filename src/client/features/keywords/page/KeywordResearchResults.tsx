@@ -59,9 +59,9 @@ function MobileTabs({ controller }: Props) {
     >
       <TabsList variant="line" className="w-full">
         <TabsTrigger value="keywords">
-          Keywords ({controller.filteredRows.length})
+          Palavras ({controller.filteredRows.length})
         </TabsTrigger>
-        <TabsTrigger value="serp">SERP Analysis</TabsTrigger>
+        <TabsTrigger value="serp">Análise da SERP</TabsTrigger>
       </TabsList>
     </Tabs>
   );
@@ -77,7 +77,7 @@ function KeywordPanel({ controller }: Props) {
       {showApproximateMatchNotice ? (
         <Alert variant="warning" role="status">
           <AlertDescription className="text-foreground">
-            No exact match for{" "}
+            Nenhuma correspondência exata para{" "}
             <span className="font-medium">"{searchedKeyword}"</span>. Showing
             closest related keywords instead.
           </AlertDescription>
@@ -102,10 +102,10 @@ function TableCard({ controller }: Props) {
 
   const keywordCountLabel =
     selectedKeywordRows.length > 0
-      ? `${selectedKeywordRows.length} selected`
+      ? `${selectedKeywordRows.length} selecionada(s)`
       : activeFilterCount > 0
-        ? `Showing ${keywordCount} of ${rows.length} keywords`
-        : `Showing ${keywordCount} keywords`;
+        ? `Mostrando ${keywordCount} de ${rows.length} palavras`
+        : `Mostrando ${keywordCount} palavras`;
 
   return (
     <>
@@ -118,17 +118,17 @@ function TableCard({ controller }: Props) {
               icon={<Save className="size-3.5" />}
               onClick={controller.handleSaveKeywords}
             >
-              Save<span className="hidden md:inline"> Keywords</span>
+              Salvar<span className="hidden md:inline"> Palavras</span>
             </TableBulkActionButton>
             <TableBulkExportMenu
               actions={[
                 {
-                  label: "Export to Sheets",
+                  label: "Exportar para o Planilhas",
                   icon: <Sheet className="size-4" />,
                   onClick: () => controller.exportSelection("sheets"),
                 },
                 {
-                  label: "Export CSV",
+                  label: "Exportar CSV",
                   icon: <FileDown className="size-4" />,
                   onClick: () => controller.exportSelection("csv"),
                 },
@@ -208,34 +208,34 @@ function TableFilters({ controller }: Props) {
         <FilterTextInput
           form={filtersForm}
           name="include"
-          label="Include Terms"
-          placeholder="audit, checker, template"
+          label="Incluir termos"
+          placeholder="auditoria, verificador, modelo"
         />
         <FilterTextInput
           form={filtersForm}
           name="exclude"
-          label="Exclude Terms"
-          placeholder="jobs, salary, course"
+          label="Excluir termos"
+          placeholder="vagas, salário, curso"
         />
       </div>
 
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-3">
         <FilterRangeInputs
           form={filtersForm}
-          title="Search Volume"
+          title="Volume de busca"
           minName="minVol"
           maxName="maxVol"
         />
         <FilterRangeInputs
           form={filtersForm}
-          title="CPC (USD)"
+          title="CPC (US$)"
           minName="minCpc"
           maxName="maxCpc"
           step="0.01"
         />
         <FilterRangeInputs
           form={filtersForm}
-          title="Difficulty"
+          title="Dificuldade"
           minName="minKd"
           maxName="maxKd"
         />

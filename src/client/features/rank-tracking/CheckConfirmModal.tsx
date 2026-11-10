@@ -38,7 +38,7 @@ export function CheckConfirmModal({
         </span>
         {costUsd != null ? (
           <span>
-            Costs up to{" "}
+            Custa até{" "}
             <span className="font-mono font-semibold text-foreground">
               ${costUsd.toFixed(2)}
             </span>
@@ -46,7 +46,7 @@ export function CheckConfirmModal({
         ) : null}
         <span>
           {RANK_CHECK_DURATION_COPY}
-          {isScheduled ? " Your scheduled tracking won't change." : null}
+          {isScheduled ? "As coletas agendadas não mudam." : null}
         </span>
       </span>
     </ConfirmDialog>

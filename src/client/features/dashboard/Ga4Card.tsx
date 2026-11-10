@@ -21,7 +21,7 @@ import { getGa4DashboardReport } from "@/serverFunctions/ga4";
 import type { ChartConfig } from "@/client/components/ui/chart";
 
 const sessionsChartConfig = {
-  sessions: { label: "Sessions", color: "var(--chart-1)" },
+  sessions: { label: "Sessões", color: "var(--chart-1)" },
 } satisfies ChartConfig;
 
 function statValue(
@@ -58,7 +58,7 @@ export function Ga4Card({
       title="Google Analytics"
       icon={<GoogleAnalyticsLogo className="size-5" />}
       titleInfo={
-        <span className={cardMetaClass}>Organic search · Last 28 days</span>
+        <span className={cardMetaClass}>Busca orgânica · Últimos 28 dias</span>
       }
       action={
         <Link
@@ -67,26 +67,27 @@ export function Ga4Card({
           hash="google-analytics"
           className={moreDetailsClass}
         >
-          Manage
+          Gerenciar
         </Link>
       }
     >
       {reportQuery.isError ? (
         <p className="text-sm text-muted-foreground">
-          Couldn&rsquo;t load Google Analytics data. Try again shortly.
+          Não foi possível carregar os dados do Google Analytics. Tente de novo
+          daqui a pouco.
         </p>
       ) : !report ? (
         <MetricsSkeleton />
       ) : !report.totals.sessions ? (
         <p className="text-sm text-muted-foreground">
-          No organic search traffic recorded in the last 28 days yet.
+          Nenhum tráfego orgânico registrado nos últimos 28 dias.
         </p>
       ) : (
         <div className="flex flex-1 flex-col gap-4">
           <MetricRow
             metrics={[
               {
-                label: "Sessions",
+                label: "Sessões",
                 value: statValue(report.totals.sessions, formatCount),
                 change: percentChange(
                   report.totals.sessions,
@@ -95,7 +96,7 @@ export function Ga4Card({
                 dotClass: "bg-chart-1",
               },
               {
-                label: "Active users",
+                label: "Usuários ativos",
                 value: statValue(report.totals.activeUsers, formatCount),
                 change: percentChange(
                   report.totals.activeUsers,
@@ -103,12 +104,12 @@ export function Ga4Card({
                 ),
               },
               {
-                label: "Engagement rate",
+                label: "Taxa de engajamento",
                 value: statValue(report.totals.engagementRate, formatCtr),
                 change: null,
               },
               {
-                label: "Key events",
+                label: "Eventos principais",
                 value: statValue(report.totals.keyEvents, formatCount),
                 change: percentChange(
                   report.totals.keyEvents,

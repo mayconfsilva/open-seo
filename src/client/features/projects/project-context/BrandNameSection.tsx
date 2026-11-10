@@ -46,12 +46,12 @@ export function BrandNameSection({
         htmlFor="context-brand-name"
         className="text-sm font-medium text-foreground"
       >
-        Brand name
+        Nome da marca
       </label>
       <p className="text-xs text-muted-foreground">
-        We look for this name in AI answers.
+        Procuramos este nome nas respostas de IA.
         {!value.trim() &&
-          ` Leave blank to use ${usesDomain ? "your domain" : "the project name"}.`}
+          `Deixe em branco para usar ${usesDomain ? "seu domínio" : "o nome do projeto"}.`}
       </p>
       <Input
         id="context-brand-name"
@@ -62,7 +62,7 @@ export function BrandNameSection({
       />
       <div className="flex justify-end pt-2">
         <Button type="submit" size="sm" disabled={update.isPending || !changed}>
-          Save changes
+          Salvar alterações
         </Button>
       </div>
     </form>

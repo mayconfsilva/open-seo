@@ -22,7 +22,7 @@ export function BacklinksBestLinksMenu({
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="ghost" size="sm" />}>
         <Link2 data-icon="inline-start" />
-        Best links: {hideSpam ? "On" : "Off"}
+        Melhores links: {hideSpam ? "Ligado" : "Desligado"}
         <ChevronDown data-icon="inline-end" className="opacity-60" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-72">
@@ -32,17 +32,17 @@ export function BacklinksBestLinksMenu({
         >
           <DropdownMenuRadioItem value="best">
             <span>
-              <span className="block">Best links only</span>
+              <span className="block">Só os melhores links</span>
               <span className="block text-xs text-muted-foreground">
-                Scores below {DEFAULT_BACKLINKS_SPAM_THRESHOLD} or unknown
+                Notas abaixo de {DEFAULT_BACKLINKS_SPAM_THRESHOLD} or unknown
               </span>
             </span>
           </DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="all">
             <span>
-              <span className="block">All links (spammy included)</span>
+              <span className="block">Todos os links (inclusive spam)</span>
               <span className="block text-xs text-muted-foreground">
-                Includes scores {DEFAULT_BACKLINKS_SPAM_THRESHOLD} or higher
+                Inclui notas {DEFAULT_BACKLINKS_SPAM_THRESHOLD} or higher
               </span>
             </span>
           </DropdownMenuRadioItem>
@@ -68,8 +68,8 @@ export function BacklinksActionsMenu({
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label="Backlinks table actions"
-            title="Backlinks table actions"
+            aria-label="Ações da tabela de backlinks"
+            title="Ações da tabela de backlinks"
           />
         }
       >
@@ -79,7 +79,7 @@ export function BacklinksActionsMenu({
         <DropdownMenuItem
           onClick={() => void loadRatings(ratableDomains)}
           disabled={isLoadingRatings}
-          title="Look up Ahrefs Domain Rating for each domain in the table"
+          title="Consultar o Domain Rating do Ahrefs de cada domínio da tabela"
         >
           {isLoadingRatings ? <Spinner /> : <Gauge />}
           Ahrefs DR

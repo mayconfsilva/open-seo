@@ -37,10 +37,10 @@ const LINK_CLASS =
 const MUTED_LINK_CLASS =
   "inline-flex items-center gap-1 text-sm text-muted-foreground underline decoration-foreground/25 underline-offset-4 hover:text-foreground";
 const SKILLS = [
-  ["seo-coach", "Explains where you stand and picks your next step."],
+  ["seo-coach", "Explica onde você está e escolhe o próximo passo."],
   [
     "seo-project-setup",
-    "Saves your goals, competitors, and key pages as shared context.",
+    "Salva metas, concorrentes e páginas principais como contexto compartilhado.",
   ],
   [
     "seo-audit",
@@ -48,22 +48,37 @@ const SKILLS = [
   ],
   [
     "ai-visibility-audit",
-    "Finds the few changes most likely to get you cited in AI answers.",
+    "Encontra as poucas mudanças com mais chance de fazer você ser citado nas respostas de IA.",
   ],
   [
     "ai-prompt-research",
-    "Finds what people ask ChatGPT about your market and who gets cited.",
+    "Descobre o que as pessoas perguntam ao ChatGPT sobre seu mercado e quem é citado.",
   ],
-  ["keyword-research", "Finds keyword opportunities from a few seed topics."],
-  ["keyword-clustering", "Groups keywords by intent and maps them to pages."],
-  ["competitive-landscape", "Maps who wins in your market and why."],
+  [
+    "keyword-research",
+    "Encontra oportunidades de palavras a partir de alguns temas iniciais.",
+  ],
+  [
+    "keyword-clustering",
+    "Agrupa palavras por intenção e liga cada grupo a uma página.",
+  ],
+  ["competitive-landscape", "Mapeia quem ganha no seu mercado e por quê."],
   [
     "competitor-analysis",
-    "Studies one competitor's keywords, content, and backlinks.",
+    "Estuda as palavras, o conteúdo e os backlinks de um concorrente.",
   ],
-  ["link-prospecting", "Finds link prospects and drafts outreach."],
-  ["local-seo", "Audits a Google Business Profile and Maps visibility."],
-  ["seo-report", "Saves any of the above as a report on your Reports page."],
+  [
+    "link-prospecting",
+    "Encontra oportunidades de links e escreve os contatos.",
+  ],
+  [
+    "local-seo",
+    "Audita um Perfil da Empresa no Google e a visibilidade no Maps.",
+  ],
+  [
+    "seo-report",
+    "Salva qualquer um dos itens acima como relatório na página Relatórios.",
+  ],
 ];
 
 const aiSearchSchema = z.object({
@@ -72,7 +87,7 @@ const aiSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/_app/ai")({
-  head: () => pageHead("Agent setup"),
+  head: () => pageHead("Configuração do agente"),
   validateSearch: aiSearchSchema,
   component: AiPage,
 });
@@ -90,8 +105,8 @@ function AiPage() {
     <div className="h-full overflow-auto px-4 py-4 pb-24 md:px-6 md:py-6 md:pb-8">
       <div className="mx-auto max-w-7xl">
         <PageHeader
-          title="Agent setup"
-          description="The most powerful way to use OpenSEO is through the AI agent you already use. Set it up once, then ask it anything."
+          title="Configuração do agente"
+          description="O jeito mais poderoso de usar o dataSEO é pelo agente de IA que você já usa. Configure uma vez e pergunte o que quiser."
         />
 
         <Tabs
@@ -105,7 +120,7 @@ function AiPage() {
           className="mt-8"
         >
           <TabsList variant="line">
-            <TabsTrigger value="setup">Set up your agent</TabsTrigger>
+            <TabsTrigger value="setup">Configure seu agente</TabsTrigger>
             <TabsTrigger value="skills">Skills</TabsTrigger>
           </TabsList>
           <TabsContent value="setup">
@@ -117,12 +132,12 @@ function AiPage() {
                   <Card size="lg">
                     <CardHeader>
                       <CardTitle>
-                        <h2>Set up your agent</h2>
+                        <h2>Configure seu agente</h2>
                       </CardTitle>
                       <CardDescription>
-                        Paste the setup prompt into your agent to connect
-                        OpenSEO and install its SEO skills. It will guide you
-                        through any manual steps.
+                        Cole o prompt de configuração no seu agente para
+                        conectar o dataSEO e instalar as skills de SEO. Ele guia
+                        você nos passos manuais.
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -132,8 +147,8 @@ function AiPage() {
                           variant="default"
                           size="lg"
                           value={prompt}
-                          label="Copy setup prompt"
-                          successMessage="Setup prompt copied"
+                          label="Copiar prompt de configuração"
+                          successMessage="Prompt de configuração copiado"
                           onCopy={() =>
                             captureClientEvent("mcp:setup_prompt_copy")
                           }
@@ -144,21 +159,21 @@ function AiPage() {
                           rel="noreferrer"
                           className={MUTED_LINK_CLASS}
                         >
-                          Setup instructions
+                          Instruções de configuração
                           <ArrowUpRight className="size-3.5" />
                         </a>
                       </div>
                     </CardContent>
                     <CardFooter className="text-muted-foreground">
                       <p>
-                        Once connected, ask your agent to use{" "}
+                        Depois de conectar, peça ao seu agente para usar{" "}
                         <a
                           href={COACH_DOCS_URL}
                           target="_blank"
                           rel="noreferrer"
                           className={LINK_CLASS}
                         >
-                          SEO Coach
+                          Mentor de SEO
                         </a>{" "}
                         to help you choose what to do next.
                       </p>
@@ -168,12 +183,12 @@ function AiPage() {
                   <Card size="lg">
                     <CardHeader>
                       <CardTitle>
-                        <h2>Update your skills</h2>
+                        <h2>Atualize suas skills</h2>
                       </CardTitle>
                       <CardDescription>
-                        Already connected? Paste the update prompt into your
-                        agent to get the latest OpenSEO skills while preserving
-                        your connection settings and personal edits.
+                        Já conectou? Cole o prompt de atualização no seu agente
+                        para receber as skills mais recentes, mantendo a conexão
+                        e suas edições.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-wrap items-center gap-x-5 gap-y-3">
@@ -181,8 +196,8 @@ function AiPage() {
                         variant="default"
                         size="lg"
                         value={agentUpdatePrompt}
-                        label="Copy update prompt"
-                        successMessage="Update prompt copied"
+                        label="Copiar prompt de atualização"
+                        successMessage="Prompt de atualização copiado"
                         onCopy={() =>
                           captureClientEvent("mcp:update_prompt_copy")
                         }
@@ -193,7 +208,7 @@ function AiPage() {
                         rel="noreferrer"
                         className={MUTED_LINK_CLASS}
                       >
-                        Update instructions
+                        Instruções de atualização
                         <ArrowUpRight className="size-3.5" />
                       </a>
                     </CardContent>
@@ -214,7 +229,7 @@ function AiPage() {
                         rel="noreferrer"
                         className="font-medium"
                       >
-                        Setup guide
+                        Guia de configuração
                       </a>
                     </AlertDescription>
                   </Alert>
@@ -222,14 +237,14 @@ function AiPage() {
 
                 <div className="mt-10 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-border pt-5 text-xs text-muted-foreground">
                   <span>
-                    MCP server URL for this instance:{" "}
+                    URL do servidor MCP desta instalação:{" "}
                     <code className="font-mono text-foreground/80">
                       {mcpUrl}
                     </code>
                   </span>
                   <CopyButton
                     value={mcpUrl}
-                    successMessage="MCP URL copied"
+                    successMessage="URL do MCP copiada"
                     onCopy={() => captureClientEvent("mcp:setup_url_copy")}
                   />
                 </div>
@@ -240,10 +255,10 @@ function AiPage() {
             <section className="mt-6">
               <p className="text-sm text-muted-foreground">
                 {everyApp
-                  ? "Install them with npx skills add every-app/open-seo."
-                  : "The setup prompt installs these."}{" "}
-                Run one by name when you want a full report instead of a quick
-                answer.
+                  ? "Instale com npx skills add every-app/open-seo."
+                  : "O prompt de configuração instala estas."}{" "}
+                Rode uma pelo nome quando quiser um relatório completo em vez de
+                uma resposta rápida.
               </p>
               <ul className="mt-5 space-y-3 text-sm sm:space-y-2">
                 {SKILLS.map(([name, blurb]) => (
@@ -297,7 +312,7 @@ function EveryAppAgentSetup() {
             <code className="font-mono text-sm">{gatewayUrl}/mcp</code>
             <CopyButton
               value={`${gatewayUrl}/mcp`}
-              successMessage="MCP URL copied"
+              successMessage="URL do MCP copiada"
             />
           </CardContent>
         ) : null}
@@ -317,19 +332,19 @@ function EveryAppAgentSetup() {
           <code className="font-mono text-sm">{EVERY_APP_SKILLS_COMMAND}</code>
           <CopyButton
             value={EVERY_APP_SKILLS_COMMAND}
-            successMessage="Command copied"
+            successMessage="Comando copiado"
           />
         </CardContent>
         <CardFooter className="text-muted-foreground">
           <p>
-            Once connected, ask your agent to use{" "}
+            Depois de conectar, peça ao seu agente para usar{" "}
             <a
               href={COACH_DOCS_URL}
               target="_blank"
               rel="noreferrer"
               className={LINK_CLASS}
             >
-              SEO Coach
+              Mentor de SEO
             </a>{" "}
             to help you choose what to do next.
           </p>

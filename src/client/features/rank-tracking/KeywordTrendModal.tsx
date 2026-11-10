@@ -181,7 +181,7 @@ export function KeywordTrendModal({
               {locationName
                 ? formatLocationLabel(locationName, 2)
                 : (LOCATIONS[locationCode] ?? "US")}{" "}
-              &middot; Position over time
+              &middot; Posição ao longo do tempo
             </DialogDescription>
           </div>
           <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ export function KeywordTrendModal({
 
         <QueryState
           query={historyQuery}
-          errorFallback="Failed to load keyword history"
+          errorFallback="Não foi possível carregar o histórico da palavra"
           loading={<Skeleton className="h-56 w-full" />}
         >
           {() =>
@@ -265,7 +265,7 @@ export function KeywordTrendModal({
                           <TableHead>Dispositivo</TableHead>
                         )}
                         <TableHead>Posição</TableHead>
-                        <TableHead>Δ vs previous check</TableHead>
+                        <TableHead>Δ vs coleta anterior</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -427,10 +427,10 @@ function slugify(value: string): string {
 }
 
 const HISTORY_HEADERS = [
-  "Date (UTC)",
+  "Data (UTC)",
   "Dispositivo",
   "Posição",
-  "Change vs previous",
+  "Variação vs anterior",
 ];
 
 function historyExportRow(row: HistoryRow): CsvValue[] {

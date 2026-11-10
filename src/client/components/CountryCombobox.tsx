@@ -48,13 +48,9 @@ export function CountryCombobox({
         if (option) onChange(option.code);
       }}
     >
-      <ComboboxInput
-        id={id}
-        className="w-full"
-        placeholder="Search countries"
-      />
+      <ComboboxInput id={id} className="w-full" placeholder="Buscar países" />
       <ComboboxContent>
-        <ComboboxEmpty>No countries match.</ComboboxEmpty>
+        <ComboboxEmpty>Nenhum país encontrado.</ComboboxEmpty>
         <ComboboxList>
           {(option: LocationOption) => (
             <ComboboxItem key={option.code} value={option}>

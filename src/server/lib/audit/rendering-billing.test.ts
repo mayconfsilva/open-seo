@@ -98,7 +98,7 @@ describe("rendering credit lock", () => {
     });
     const error = await lockFor100Pages().catch((reason: unknown) => reason);
     expect(error).toMatchObject({ code: "INSUFFICIENT_CREDITS" });
-    expect(String(error)).toContain("needs $0.13 of credits");
+    expect(String(error)).toContain("exige $0.13 em créditos");
     expect(mocks.holdCredits).not.toHaveBeenCalled();
     expect(mocks.sendCreditsExhaustedEvent).toHaveBeenCalledWith(customer);
   });

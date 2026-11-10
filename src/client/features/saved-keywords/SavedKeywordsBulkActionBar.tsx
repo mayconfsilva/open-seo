@@ -37,24 +37,24 @@ export function SavedKeywordsBulkActionBar({
               icon={<Tags className="size-3.5" />}
               onClick={onOpenTags}
             >
-              Tag
+              Etiqueta
             </TableBulkActionButton>
 
             <TableBulkExportMenu
               busy={exportingSelection}
               actions={[
                 {
-                  label: "Copy keywords",
+                  label: "Copiar palavras",
                   icon: <Copy className="size-4" />,
                   onClick: onCopy,
                 },
                 {
-                  label: "Export to Sheets",
+                  label: "Exportar para o Planilhas",
                   icon: <Sheet className="size-4" />,
                   onClick: onExportSheets,
                 },
                 {
-                  label: "Export CSV",
+                  label: "Exportar CSV",
                   icon: <FileDown className="size-4" />,
                   onClick: onExportCsv,
                 },
@@ -68,7 +68,7 @@ export function SavedKeywordsBulkActionBar({
               onClick={onDelete}
               variant="danger"
             >
-              Delete
+              Excluir
             </TableBulkActionButton>
           </div>
         </>

@@ -78,7 +78,7 @@ export function DataTableFilterToggle({
       <SlidersHorizontal data-icon="inline-start" />
       Filtros
       {activeCount > 0 ? (
-        <Badge size="sm" aria-label={`${activeCount} active`}>
+        <Badge size="sm" aria-label={`${activeCount} ativo(s)`}>
           {activeCount}
         </Badge>
       ) : null}

@@ -71,19 +71,19 @@ const DEVICE_ITEMS: { value: SaveConfigInput["devices"]; label: string }[] = [
 const DEPTH_ITEMS = Array.from({ length: 10 }, (_, i) => i + 1).map(
   (pages) => ({
     value: pagesToDepth(pages),
-    label: `${pages} ${pages === 1 ? "page" : "pages"} (top ${pages * 10} results)`,
+    label: `${pages} ${pages === 1 ? "página" : "páginas"} (top ${pages * 10} resultados)`,
   }),
 );
 
 function validateConfig(values: ConfigFormValues) {
   const fields: Partial<Record<keyof ConfigFormValues, string>> = {};
   if (!values.domain.trim()) {
-    fields.domain = "Enter a domain";
+    fields.domain = "Informe um domínio";
   } else if (!domainField.safeParse(values.domain).success) {
     fields.domain = "Enter a valid domain, like example.com";
   }
   if (values.targetingMode === "local" && !values.locationName) {
-    fields.locationName = "Select a city or region for local targeting";
+    fields.locationName = "Escolha uma cidade ou região para foco local";
   }
   return Object.keys(fields).length > 0 ? { fields } : undefined;
 }
@@ -346,7 +346,7 @@ function RankTrackingConfigModalContent({
                   <field.SelectField
                     label="Profundidade da busca"
                     items={DEPTH_ITEMS}
-                    description="10 pages is ~8x more expensive than 1 page"
+                    description="10 páginas custam cerca de 8x mais que 1 página"
                   />
                 )}
               </form.AppField>
@@ -394,7 +394,7 @@ function CostEstimate({
     <div className="space-y-0.5 rounded-lg bg-muted px-3 py-2.5 text-xs text-muted-foreground">
       <div>
         <span className="font-mono font-semibold text-foreground">
-          up to ${costPerKeyword.toFixed(4)}
+          até US${costPerKeyword.toFixed(4)}
         </span>{" "}
         per keyword per check
       </div>

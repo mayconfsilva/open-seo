@@ -62,7 +62,7 @@ import {
 import { pageHead } from "@/client/lib/pageHead";
 
 export const Route = createFileRoute("/_app/p/$projectId/saved")({
-  head: () => pageHead("Saved Keywords"),
+  head: () => pageHead("Palavras salvas"),
   validateSearch: savedKeywordsSearchSchema,
   // The project switcher keeps this page; filter drafts must not follow.
   remountDeps: ({ params }) => params.projectId,
@@ -239,11 +239,13 @@ function SavedKeywordsPage() {
         count: result.deletedCount,
       });
       toast.success(
-        `${result.deletedCount} keyword${result.deletedCount !== 1 ? "s" : ""} removed`,
+        `${result.deletedCount} palavra${result.deletedCount !== 1 ? "s" : ""} removida${result.deletedCount !== 1 ? "s" : ""}`,
       );
     },
     onError: (error) => {
-      setRemoveError(getStandardErrorMessage(error, "Remove failed."));
+      setRemoveError(
+        getStandardErrorMessage(error, "Não foi possível remover."),
+      );
     },
   });
 
@@ -266,7 +268,7 @@ function SavedKeywordsPage() {
       setShowTagModal(false);
       void invalidateSavedKeywords();
       toast.success(
-        `Updated tags for ${result.taggedCount} keyword${result.taggedCount !== 1 ? "s" : ""}`,
+        `Etiquetas atualizadas em ${result.taggedCount} palavra${result.taggedCount !== 1 ? "s" : ""}`,
       );
     },
   });
@@ -276,7 +278,7 @@ function SavedKeywordsPage() {
     onSuccess: (result) => {
       void invalidateSavedKeywords();
       toast.success(
-        `Updated stats for ${result.updated} keyword${result.updated !== 1 ? "s" : ""}`,
+        `Dados atualizados em ${result.updated} palavra${result.updated !== 1 ? "s" : ""}`,
       );
     },
   });
@@ -329,7 +331,7 @@ function SavedKeywordsPage() {
         {savedKeywordsQuery.isError ? (
           <QueryError
             error={savedKeywordsQuery.error}
-            fallback="Failed to load saved keywords."
+            fallback="Não foi possível carregar as palavras salvas."
             onRetry={() => void savedKeywordsQuery.refetch()}
             isRetrying={isFetching}
           />
@@ -389,9 +391,9 @@ function SavedKeywordsPage() {
               .then(
                 () =>
                   toast.success(
-                    `${selectedCount} keyword${selectedCount !== 1 ? "s" : ""} copied`,
+                    `${selectedCount} palavra${selectedCount !== 1 ? "s" : ""} copiada${selectedCount !== 1 ? "s" : ""}`,
                   ),
-                () => toast.error("Could not copy to clipboard"),
+                () => toast.error("Não foi possível copiar"),
               );
           }}
           onOpenTags={() => setShowTagModal(true)}

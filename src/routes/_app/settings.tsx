@@ -32,7 +32,7 @@ function SettingsLayout() {
       <div className="mx-auto max-w-7xl space-y-8">
         <div className="space-y-4">
           <PageHeader title="Configurações" />
-          <NavTabs label="Settings sections">
+          <NavTabs label="Seções das configurações">
             {tabs.map((tab) => (
               <NavTab
                 key={tab.to}

@@ -11,49 +11,50 @@ import {
  * they get support; a self-hoster runs the server and can.
  */
 export const UNEXPECTED_ERROR_MESSAGE = isHostedClientAuthMode()
-  ? "Something went wrong on our end. Please try again, and contact support if it keeps happening."
-  : "Something went wrong. Please try again, or check the server logs for details.";
+  ? "Algo deu errado do nosso lado. Tente de novo e fale com o suporte se continuar."
+  : "Algo deu errado. Tente de novo ou veja os logs do servidor.";
 
 const STANDARD_MESSAGES: Record<ErrorCode, string> = {
-  UNAUTHENTICATED: "Please sign in and try again.",
+  UNAUTHENTICATED: "Entre e tente de novo.",
   AUTH_CONFIG_MISSING: isEveryAppClientAuthMode()
     ? "OpenSEO can't reach your Every App gateway for this right now. An owner or admin can check its setup with pnpm everyapp status."
     : "OpenSEO auth is not configured. Follow the README setup steps for Cloudflare Access.",
   PAYMENT_REQUIRED:
     "An active hosted subscription is required before you can use OpenSEO.",
   INSUFFICIENT_CREDITS:
-    "You don't have enough credits for this. Upgrade your plan or buy more credits to keep going.",
+    "Você não tem créditos suficientes. Mude de plano ou compre mais créditos para continuar.",
   PAYMENT_METHOD_REQUIRED:
     "We couldn't charge a card on file. Add or update your card in the billing portal, then try again.",
   PAYMENT_ACTION_REQUIRED:
     "Your bank needs more time or a confirmation for this charge. Check your balance in a minute; if nothing arrived, buy your first top-up with the Buy credits button, then turn on auto-reload.",
   AUDIT_RENDERING_UNAVAILABLE: isEveryAppClientAuthMode()
     ? GATEWAY_RENDERING_NOT_SET_UP_MESSAGE
-    : "JavaScript rendering is not configured on this deployment. Ask your administrator to enable a renderer.",
-  FORBIDDEN: "You do not have access to this resource.",
-  NOT_FOUND: "The requested resource was not found.",
+    : "A renderização de JavaScript não está configurada nesta instalação. Peça ao administrador para ativar.",
+  FORBIDDEN: "Você não tem acesso a este recurso.",
+  NOT_FOUND: "O item solicitado não foi encontrado.",
   AUDIT_CAPACITY_REACHED:
-    "You've reached audit capacity for your account. Delete old audits from your projects to start a new one.",
+    "Você atingiu o limite de auditorias. Exclua auditorias antigas para começar outra.",
   AUDIT_PAGE_LIMIT_EXCEEDED: `Free plan audits are limited to ${FREE_MAX_AUDIT_PAGES} pages. Upgrade to run larger audits.`,
   AUDIT_ALREADY_RUNNING:
-    "You've reached the limit of audits running at once. Wait for one to finish or delete it before starting another.",
-  VALIDATION_ERROR: "Please check your input and try again.",
+    "Você atingiu o limite de auditorias simultâneas. Espere uma terminar ou exclua antes de começar outra.",
+  VALIDATION_ERROR: "Confira os dados e tente de novo.",
   UNKNOWN_LOCATION:
-    "We couldn't find that city, county, or region. Pick a location from the list, or clear the field to search the whole country.",
-  CRAWL_TARGET_BLOCKED: "This crawl target is blocked by security policy.",
+    "Não encontramos essa cidade ou região. Escolha um local da lista ou limpe o campo para buscar no país inteiro.",
+  CRAWL_TARGET_BLOCKED:
+    "Este endereço está bloqueado pela política de segurança.",
   BACKLINKS_BILLING_ISSUE:
-    "The connected DataForSEO account has a billing or balance issue.",
+    "A conta da DataForSEO conectada tem um problema de cobrança ou saldo.",
   AI_SEARCH_BILLING_ISSUE:
-    "The connected DataForSEO account has a billing or balance issue.",
+    "A conta da DataForSEO conectada tem um problema de cobrança ou saldo.",
   AI_VISIBILITY_ERROR:
-    "The AI visibility request could not be completed. Review the tracking settings and try again.",
+    "Não foi possível concluir a consulta de visibilidade em IA. Revise as configurações e tente de novo.",
   DATAFORSEO_AUTH_FAILED: isEveryAppClientAuthMode()
     ? "DataForSEO isn't set up on your Every App gateway yet, or rejected the key it holds. An owner or admin sets it with pnpm everyapp secret set DATAFORSEO_API_KEY."
-    : "DataForSEO rejected the credentials. Check that DATAFORSEO_API_KEY is the base64 of your DataForSEO login:password, and that the DataForSEO account is verified and has API access.",
-  RATE_LIMITED: "Too many requests. Please wait and try again.",
+    : "A DataForSEO recusou as credenciais. Confira se DATAFORSEO_API_KEY é o base64 de login:senha da sua conta DataForSEO e se a conta está verificada e com acesso à API.",
+  RATE_LIMITED: "Requisições demais. Aguarde e tente de novo.",
   UPSTREAM_UNAVAILABLE:
-    "The data provider is temporarily unavailable. Please retry in a moment.",
-  CONFLICT: "This request conflicts with existing data.",
+    "O provedor de dados está fora do ar no momento. Tente de novo daqui a pouco.",
+  CONFLICT: "Esta ação conflita com dados existentes.",
   INTERNAL_ERROR: UNEXPECTED_ERROR_MESSAGE,
 };
 

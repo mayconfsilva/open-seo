@@ -66,8 +66,8 @@ export function LocalKeywordMap({
           <h3 className="text-sm font-semibold">{keyword.keyword}</h3>
           <p className="text-xs text-muted-foreground">
             {selectedScan
-              ? `${historical ? "Saved check" : "Latest check"} · ${new Date(selectedScan.createdAt).toLocaleString()}`
-              : "Not checked yet"}
+              ? `${historical ? "Coleta salva" : "Última coleta"} · ${new Date(selectedScan.createdAt).toLocaleString("pt-BR")}`
+              : "Ainda não coletado"}
           </p>
         </div>
         {historical && (
@@ -76,7 +76,7 @@ export function LocalKeywordMap({
             variant="ghost"
             onClick={() => onSearchChange({ keyword: keyword.id })}
           >
-            Back to latest
+            Voltar para a mais recente
           </Button>
         )}
       </div>
@@ -84,7 +84,7 @@ export function LocalKeywordMap({
       {query.isError && (
         <QueryError
           error={query.error}
-          fallback="Failed to load ranking results."
+          fallback="Não foi possível carregar as posições."
           onRetry={() => void query.refetch()}
         />
       )}
@@ -118,7 +118,7 @@ export function LocalKeywordMap({
         ) : (
           <Card className="justify-center px-6 py-0 shadow-none">
             <p className="text-center text-sm text-muted-foreground">
-              Run a check to see where this business ranks across the area.
+              Rode uma coleta para ver a posição desta empresa na área.
             </p>
           </Card>
         )}

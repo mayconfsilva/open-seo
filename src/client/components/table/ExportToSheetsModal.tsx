@@ -48,15 +48,15 @@ export function ExportToSheetsModal() {
             <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-success/15 text-success">
               <Check className="size-4" />
             </span>
-            Copied {rowCount} row{rowCount === 1 ? "" : "s"} to your clipboard
+            Copiado {rowCount} row{rowCount === 1 ? "" : "s"} to your clipboard
           </DialogTitle>
           <DialogDescription>
-            Open a new Google Sheet and paste to fill it.
+            Abra uma planilha nova do Google e cole para preencher.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button onClick={handleOpenSheet}>
-            Open new Google Sheet
+            Abrir planilha nova do Google
             <ExternalLink data-icon="inline-end" />
           </Button>
         </DialogFooter>

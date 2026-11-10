@@ -26,9 +26,9 @@ function PersonalSettings() {
   return (
     <div className="space-y-10">
       <section className="space-y-3">
-        <SectionHeader title="Appearance" />
+        <SectionHeader title="Aparência" />
         <div className="flex items-center justify-between gap-6">
-          <span className="text-sm">Theme</span>
+          <span className="text-sm">Tema</span>
           <ThemePreferenceRadio />
         </div>
       </section>
@@ -43,9 +43,9 @@ function PersonalSettings() {
         <PrivacySettings />
       ) : (
         <section className="space-y-3">
-          <SectionHeader title="About" />
+          <SectionHeader title="Sobre" />
           <div className="flex items-center justify-between gap-6">
-            <span className="text-sm">Version</span>
+            <span className="text-sm">Versão</span>
             <span className="font-mono text-sm text-muted-foreground">
               v{version}
             </span>

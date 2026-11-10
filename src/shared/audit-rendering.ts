@@ -73,14 +73,14 @@ function formatRenderingUsd(credits: number) {
 
 /** Why a hosted account cannot start a rendered audit of `maxPages` pages. */
 export function renderingCreditsNeededText(maxPages: number) {
-  return `Rendering up to ${maxPages.toLocaleString("en-US")} pages needs ${formatRenderingUsd(renderingHoldCredits(maxPages))} of credits available. Lower the page limit or add credits.`;
+  return `Renderizar até ${maxPages.toLocaleString("pt-BR")} páginas exige ${formatRenderingUsd(renderingHoldCredits(maxPages))} em créditos. Diminua o limite de páginas ou adicione créditos.`;
 }
 
 export const RENDERING_COST_NOTE =
-  "Sites that block our browser need an advanced renderer. If the cost is higher than expected, it will stop.";
+  "Sites que bloqueiam nosso navegador precisam de um renderizador avançado. Se o custo passar do previsto, ele para.";
 
 export function renderingCostText(maxPages: number) {
-  return `Costs up to ${formatRenderingUsd(renderingHoldCredits(maxPages))}.`;
+  return `Custa até ${formatRenderingUsd(renderingHoldCredits(maxPages))}.`;
 }
 
 export function renderingEstimateText(maxPages: number) {

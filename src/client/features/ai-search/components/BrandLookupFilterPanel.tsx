@@ -80,14 +80,14 @@ function FilterRangeInputs({
 }
 
 const PLATFORM_ITEMS = [
-  { value: "all", icon: null, label: "All" },
+  { value: "all", icon: null, label: "Todos" },
   { value: "chat_gpt", icon: null, label: formatPlatformLabel("chat_gpt") },
   { value: "google", icon: null, label: formatPlatformLabel("google") },
 ];
 
 function PlatformToggle({ form }: { form: AnyForm }) {
   return (
-    <DataTableFilterGroup label="Platform">
+    <DataTableFilterGroup label="Plataforma">
       <form.Field name="platform">
         {(field: StringField) => (
           <SegmentedToggle
@@ -116,13 +116,13 @@ function TopPagesFilters({
         <FilterTextInput
           form={form}
           name="include"
-          label="Include Terms"
+          label="Incluir termos"
           placeholder="reddit, forbes"
         />
         <FilterTextInput
           form={form}
           name="exclude"
-          label="Exclude Terms"
+          label="Excluir termos"
           placeholder="pinterest, /tag"
         />
       </div>
@@ -132,7 +132,7 @@ function TopPagesFilters({
         <div className="min-w-[220px]">
           <FilterRangeInputs
             form={form}
-            title="Source mentions"
+            title="Menções na fonte"
             minName="minMentions"
             maxName="maxMentions"
           />
@@ -153,13 +153,13 @@ function QueriesFilters({
         <FilterTextInput
           form={form}
           name="include"
-          label="Include Terms"
+          label="Incluir termos"
           placeholder="pricing, reviews"
         />
         <FilterTextInput
           form={form}
           name="exclude"
-          label="Exclude Terms"
+          label="Excluir termos"
           placeholder="login, download"
         />
       </div>
@@ -169,7 +169,7 @@ function QueriesFilters({
         <div className="min-w-[220px]">
           <FilterRangeInputs
             form={form}
-            title="AI search volume"
+            title="Volume de busca em IA"
             minName="minVolume"
             maxName="maxVolume"
           />

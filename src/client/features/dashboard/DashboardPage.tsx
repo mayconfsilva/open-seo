@@ -67,7 +67,7 @@ export function DashboardPage({
       <div className="px-4 py-4 md:px-6 md:py-6">
         <QueryError
           error={activationQuery.error}
-          fallback="Failed to load dashboard"
+          fallback="Não foi possível carregar o painel"
           onRetry={() => void activationQuery.refetch()}
           isRetrying={activationQuery.isFetching}
         />
@@ -138,7 +138,7 @@ export function DashboardPage({
         {activationQuery.isError ? (
           <QueryError
             error={activationQuery.error}
-            fallback="Failed to refresh dashboard"
+            fallback="Não foi possível atualizar o painel"
             onRetry={() => void activationQuery.refetch()}
             isRetrying={activationQuery.isFetching}
           />
@@ -147,7 +147,7 @@ export function DashboardPage({
         {overviewQuery.isError ? (
           <QueryError
             error={overviewQuery.error}
-            fallback="Failed to load site health"
+            fallback="Não foi possível carregar a saúde do site"
             onRetry={() => void overviewQuery.refetch()}
             isRetrying={overviewQuery.isFetching}
           />
@@ -239,8 +239,8 @@ export function DashboardPage({
               <EmptyState
                 variant="card"
                 icon={Link2}
-                title="See who links to your website"
-                description="Add your website to track new and lost backlinks and the sites sending them."
+                title="Veja quem aponta para seu site"
+                description="Cadastre o site para acompanhar backlinks novos e perdidos e os sites que os enviam."
                 action={
                   <Button
                     nativeButton={false}
@@ -251,7 +251,7 @@ export function DashboardPage({
                       />
                     }
                   >
-                    Add your website
+                    Cadastre seu site
                   </Button>
                 }
               />

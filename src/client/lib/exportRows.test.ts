@@ -30,7 +30,7 @@ describe("exportRows", () => {
         filename: "empty",
       });
 
-      expect(toast.error).toHaveBeenCalledWith("No data to export");
+      expect(toast.error).toHaveBeenCalledWith("Nada para exportar");
       expect(downloadFile).not.toHaveBeenCalled();
       expect(exportTableToSheets).not.toHaveBeenCalled();
       expect(writeText).not.toHaveBeenCalled();

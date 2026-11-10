@@ -30,8 +30,8 @@ export function ReportsList({
     return (
       <EmptyState
         icon={FileText}
-        title="No reports yet"
-        description="Run an OpenSEO skill such as seo-audit from Claude Code or Codex and the report will appear here."
+        title="Nenhum relatório ainda"
+        description="Rode uma skill do dataSEO, como a seo-audit, pelo Claude Code ou Codex e o relatório aparece aqui."
       />
     );
   }
@@ -42,10 +42,10 @@ export function ReportsList({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Created by</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Updated</TableHead>
+              <TableHead>Título</TableHead>
+              <TableHead>Criado por</TableHead>
+              <TableHead>Tipo</TableHead>
+              <TableHead>Atualizado</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
@@ -74,13 +74,13 @@ export function ReportsList({
                   {formatRelativeTime(report.updatedAt)}
                 </TableCell>
                 <TableCell className="w-10 text-right">
-                  <RowActionsMenu label={`Actions for ${report.title}`}>
+                  <RowActionsMenu label={`Ações de ${report.title}`}>
                     <DropdownMenuItem
                       variant="destructive"
                       onClick={() => onDelete(report)}
                     >
                       <Trash2 />
-                      Delete
+                      Excluir
                     </DropdownMenuItem>
                   </RowActionsMenu>
                 </TableCell>
@@ -91,7 +91,7 @@ export function ReportsList({
       </TableCard>
       {reports.length === REPORT_APP_LIST_LIMIT ? (
         <p className="text-xs text-muted-foreground">
-          Showing the {REPORT_APP_LIST_LIMIT} most recent reports.
+          Mostrando os {REPORT_APP_LIST_LIMIT} most recent reports.
         </p>
       ) : null}
     </div>

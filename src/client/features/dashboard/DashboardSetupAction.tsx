@@ -25,10 +25,10 @@ import { hasOrgPermission } from "@/lib/org-permissions";
 import type { DashboardSetupStep } from "@/types/schemas/dashboard";
 import { parseResearchTarget } from "@/shared/researchScope";
 
-const projectPrompt = `Use OpenSEO to set up a separate project for each website below. List my existing projects first and reuse matches so you don’t create duplicates. Set the country and language for each site, and ask me about anything missing.
+const projectPrompt = `Use o OpenSEO para criar um projeto separado para cada site abaixo. Liste primeiro meus projetos existentes e reaproveite os que já existem, para não criar duplicados. Defina o país e o idioma de cada site e me pergunte o que estiver faltando.
 
-Replace this list with my websites:
-- Project name — website — country — language`;
+Substitua esta lista pelos meus sites:
+- Nome do projeto — site — país — idioma`;
 
 export function DashboardSetupAction({
   step,
@@ -50,10 +50,10 @@ export function DashboardSetupAction({
   if (step === "competitor")
     return (
       <StepInputForm
-        description="Explore a competitor’s domain to discover the topics they rank for and the websites linking to them."
-        label="Competitor website"
+        description="Explore o domínio de um concorrente para descobrir os temas em que ele aparece e os sites que apontam para ele."
+        label="Site do concorrente"
         placeholder="competitor.com"
-        submitLabel="Explore competitor"
+        submitLabel="Explorar concorrente"
         validate={validateDomain}
         onSubmit={(value) => {
           onComplete();
@@ -68,12 +68,12 @@ export function DashboardSetupAction({
   if (step === "keywords")
     return (
       <StepInputForm
-        description="Start from one keyword that describes what you offer. You’ll get related searches with volume and difficulty."
-        label="Seed keyword"
+        description="Comece por uma palavra que descreva o que você oferece. Você recebe buscas relacionadas com volume e dificuldade."
+        label="Palavra inicial"
         placeholder="e.g. running shoes"
-        submitLabel="Get keyword ideas"
+        submitLabel="Ideias de palavras"
         validate={(value) =>
-          value.trim() ? undefined : "Enter a keyword to start from"
+          value.trim() ? undefined : "Digite uma palavra para começar"
         }
         onSubmit={(value) => {
           onComplete();
@@ -88,11 +88,11 @@ export function DashboardSetupAction({
   if (step === "audit")
     return (
       <StepInputForm
-        description="Crawl your site to find broken links, missing tags, and pages search engines can’t index. You can adjust the crawl size before it starts."
-        label="Site URL"
+        description="Rastreie o site para achar links quebrados, tags ausentes e páginas que os buscadores não conseguem indexar. Dá para ajustar o tamanho antes de começar."
+        label="URL do site"
         placeholder="https://example.com"
         defaultValue={domain ? `https://${domain}` : ""}
-        submitLabel="Set up audit"
+        submitLabel="Configurar auditoria"
         validate={validateDomain}
         onSubmit={(value) => {
           onComplete();
@@ -134,7 +134,7 @@ export function DashboardSetupAction({
   if (!canManage)
     return org.isPending ? (
       <p className="text-sm text-muted-foreground">
-        Checking workspace permissions…
+        Conferindo permissões da organização…
       </p>
     ) : org.isError ? (
       <p className="text-sm text-muted-foreground">
@@ -147,16 +147,14 @@ export function DashboardSetupAction({
     return (
       <div className="space-y-4">
         <p className="text-sm leading-relaxed text-muted-foreground">
-          Keep each website’s research, rankings, and connections in its own
-          project. Use the project switcher in the sidebar → New project
-          anytime.
+          Mantenha a pesquisa, as posições e as conexões de cada site no próprio
+          projeto. Use o seletor de projetos na barra lateral → Novo projeto
+          quando quiser.
         </p>
-        <Button onClick={() => setShowModal(true)}>
-          Create another project
-        </Button>
+        <Button onClick={() => setShowModal(true)}>Criar outro projeto</Button>
         <Collapsible className="rounded-lg border border-border p-4">
           <CollapsibleTrigger className="cursor-pointer text-sm font-medium">
-            Have a list of websites? Let your agent set them up.
+            Tem uma lista de sites? Deixe seu agente cadastrar.
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3 space-y-3">
             <p className="text-sm text-muted-foreground">
@@ -164,17 +162,17 @@ export function DashboardSetupAction({
                 to="/ai"
                 className="text-primary underline-offset-4 hover:underline"
               >
-                Connect your agent
+                Conecte seu agente
               </Link>
-              , then paste this prompt with your list of websites.
+              , depois cole este prompt com sua lista de sites.
             </p>
             <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-muted-foreground">
               {projectPrompt}
             </pre>
             <CopyButton
               value={projectPrompt}
-              label="Copy project prompt"
-              successMessage="Project prompt copied"
+              label="Copiar prompt de projetos"
+              successMessage="Prompt de projetos copiado"
             />
           </CollapsibleContent>
         </Collapsible>
@@ -186,10 +184,12 @@ export function DashboardSetupAction({
   return (
     <div className="space-y-4">
       <p className="text-sm leading-relaxed text-muted-foreground">
-        Bring a teammate into your workspace to share projects, research, and
-        results.
+        Traga alguém da equipe para a organização e compartilhe projetos,
+        pesquisas e resultados.
       </p>
-      <Button onClick={() => setShowModal(true)}>Invite a teammate</Button>
+      <Button onClick={() => setShowModal(true)}>
+        Convidar alguém da equipe
+      </Button>
       {showModal && (
         <InviteTeammateModal
           onClose={() => setShowModal(false)}
