@@ -41,7 +41,7 @@ export function ErrorState({
         pending={isRetrying}
         onClick={onRetry}
       >
-        Try again
+        Tentar de novo
       </Button>
     ) : null);
 
@@ -51,7 +51,7 @@ export function ErrorState({
         kind="error"
         variant="plain"
         size="lg"
-        title={title ?? "Something went wrong"}
+        title={title ?? "Algo deu errado"}
         description={message}
         action={button}
       />

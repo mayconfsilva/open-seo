@@ -78,7 +78,7 @@ export function useSelectionAnchor(): MutableRefObject<SelectionAnchor | null> {
 export function makeSelectionColumn<TData>(
   anchorRef: MutableRefObject<SelectionAnchor | null>,
   /** Names each row checkbox for screen readers. */
-  rowLabel: (row: Row<TData>) => string = () => "Select row",
+  rowLabel: (row: Row<TData>) => string = () => "Selecionar linha",
 ): ColumnDef<TData> {
   return {
     id: "select",
@@ -93,7 +93,7 @@ export function makeSelectionColumn<TData>(
         }
         disabled={!table.getRowModel().rows.some((row) => row.getCanSelect())}
         onCheckedChange={(checked) => table.toggleAllRowsSelected(checked)}
-        aria-label="Select all rows"
+        aria-label="Selecionar todas as linhas"
       />
     ),
     cell: ({ row, table }) => (
@@ -263,8 +263,8 @@ export function DataTable<TData>({
                     <EmptyState
                       kind="filtered"
                       variant="plain"
-                      title="No rows match these filters"
-                      description="Change or clear the filters to see more rows."
+                      title="Nenhuma linha atende a estes filtros"
+                      description="Mude ou limpe os filtros para ver mais linhas."
                       action={
                         onClearFilters ? (
                           <Button
@@ -272,7 +272,7 @@ export function DataTable<TData>({
                             size="sm"
                             onClick={onClearFilters}
                           >
-                            Clear filters
+                            Limpar filtros
                           </Button>
                         ) : undefined
                       }

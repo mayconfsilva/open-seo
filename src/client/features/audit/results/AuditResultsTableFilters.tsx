@@ -33,9 +33,9 @@ export function PagesFilterBar({
     <DataTableFilterPanel activeCount={activeFilterCount} onReset={onReset}>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
         <TextFilter
-          label="Search"
+          label="Buscar"
           value={filters.query}
-          placeholder="URL, title, meta"
+          placeholder="URL, título, meta"
           onChange={(query) => onChange({ ...filters, query })}
         />
         <SelectFilter
@@ -43,46 +43,46 @@ export function PagesFilterBar({
           value={filters.status}
           onChange={(status) => onChange({ ...filters, status })}
           options={[
-            ["all", "All"],
+            ["all", "Todos"],
             ["ok", "2xx"],
             ["redirect", "3xx"],
             ["error", "4xx/5xx"],
-            ["missing", "Missing"],
+            ["missing", "Sem status"],
           ]}
         />
         <SelectFilter
-          label="Crawl result"
+          label="Resultado do rastreamento"
           value={filters.fetchClass}
           onChange={(fetchClass) => onChange({ ...filters, fetchClass })}
           options={[
-            ["all", "All"],
-            ["ok", "Read"],
-            ["error", "Failed"],
-            ["blocked", "Blocked"],
-            ["rate_limited", "Rate limited"],
+            ["all", "Todos"],
+            ["ok", "Lida"],
+            ["error", "Falhou"],
+            ["blocked", "Bloqueada"],
+            ["rate_limited", "Limitada"],
           ]}
         />
         <SelectFilter
-          label="Alt text"
+          label="Texto alternativo"
           value={filters.missingAlt}
           onChange={(missingAlt) => onChange({ ...filters, missingAlt })}
           options={[
-            ["all", "All"],
-            ["yes", "Missing alt"],
-            ["no", "No missing alt"],
+            ["all", "Todos"],
+            ["yes", "Sem alt"],
+            ["no", "Com alt"],
           ]}
         />
       </div>
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
         <RangeFilter
-          label="Words"
+          label="Palavras"
           min={filters.minWords}
           max={filters.maxWords}
           onMinChange={(minWords) => onChange({ ...filters, minWords })}
           onMaxChange={(maxWords) => onChange({ ...filters, maxWords })}
         />
         <RangeFilter
-          label="Speed ms"
+          label="Velocidade (ms)"
           min={filters.minResponseMs}
           max={filters.maxResponseMs}
           onMinChange={(minResponseMs) =>
@@ -112,19 +112,19 @@ export function PerformanceFilterBar({
     <DataTableFilterPanel activeCount={activeFilterCount} onReset={onReset}>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
         <TextFilter
-          label="Search"
+          label="Buscar"
           value={filters.query}
           placeholder="URL"
           onChange={(query) => onChange({ ...filters, query })}
         />
         <SelectFilter
-          label="Device"
+          label="Dispositivo"
           value={filters.device}
           onChange={(device) => onChange({ ...filters, device })}
           options={[
-            ["all", "All"],
-            ["desktop", "Desktop"],
-            ["mobile", "Mobile"],
+            ["all", "Todos"],
+            ["desktop", "Computador"],
+            ["mobile", "Celular"],
           ]}
         />
         <SelectFilter
@@ -132,13 +132,13 @@ export function PerformanceFilterBar({
           value={filters.status}
           onChange={(status) => onChange({ ...filters, status })}
           options={[
-            ["all", "All"],
+            ["all", "Todos"],
             ["ok", "OK"],
-            ["failed", "Failed"],
+            ["failed", "Falhou"],
           ]}
         />
         <TextFilter
-          label="Max LCP s"
+          label="LCP máx. (s)"
           value={filters.maxLcpSeconds}
           placeholder="2.5"
           type="number"
@@ -147,7 +147,7 @@ export function PerformanceFilterBar({
       </div>
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
         <RangeFilter
-          label="Perf"
+          label="Desempenho"
           min={filters.minPerf}
           max={filters.maxPerf}
           onMinChange={(minPerf) => onChange({ ...filters, minPerf })}
@@ -183,7 +183,7 @@ export function ResultsTableToolbar({
     <DataTableToolbar
       actions={
         <span className="text-sm tabular-nums text-muted-foreground">
-          {resultCount.toLocaleString()} of {totalCount.toLocaleString()}
+          {resultCount.toLocaleString()} de {totalCount.toLocaleString()}
         </span>
       }
     >

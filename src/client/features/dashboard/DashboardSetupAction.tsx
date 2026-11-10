@@ -141,7 +141,7 @@ export function DashboardSetupAction({
         {getStandardErrorMessage(org.error)}
       </p>
     ) : (
-      <PermissionHint action="help with this step" />
+      <PermissionHint action="ajudar nesta etapa" />
     );
   if (step === "project")
     return (

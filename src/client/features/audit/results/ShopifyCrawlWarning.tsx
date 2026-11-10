@@ -57,8 +57,8 @@ export function ShopifyCrawlWarning({
   const canStoreCrawlerAccess = !useCrawlerAccessNeedsSetup(projectId);
   const setupHint = canStoreCrawlerAccess ? null : (
     <p className="text-muted-foreground">
-      A signature can't be saved here until crawler access is set up.{" "}
-      <CrawlerAccessSetupHint />
+      Não dá para salvar uma assinatura aqui até o acesso de crawler ser
+      configurado. <CrawlerAccessSetupHint />
     </p>
   );
   // A recorded credential id names the signature this crawl used, whatever
@@ -113,7 +113,7 @@ export function ShopifyCrawlWarning({
       disabled={isSaving}
       onClick={() => rerunMutation.mutate()}
     >
-      {rerunMutation.isPending ? "Starting…" : "Re-run audit"}
+      {rerunMutation.isPending ? "Iniciando…" : "Rodar auditoria de novo"}
     </Button>
   );
 
@@ -137,23 +137,23 @@ export function ShopifyCrawlWarning({
         <AlertDescription className="text-foreground">
           {signedAndStillLimited ? (
             <>
-              Shopify limited this crawl despite your signature. To check that
-              it was created for <span className="font-mono">{host}</span>,
-              paste it again in{" "}
+              O Shopify limitou este rastreamento mesmo com a sua assinatura.
+              Para conferir se ela foi criada para{" "}
+              <span className="font-mono">{host}</span>, cole de novo em{" "}
               <Link
                 to="/p/$projectId/settings/integrations"
                 params={{ projectId }}
               >
-                Project settings
+                Configurações do projeto
               </Link>
-              . If it was, Shopify is still throttling this store: re-run the
-              audit later or with fewer pages.
+              . Se foi, o Shopify continua limitando esta loja: rode a auditoria
+              mais tarde ou com menos páginas.
             </>
           ) : (
             <>
-              Crawler access is saved for{" "}
-              <span className="font-mono">{host}</span>. Re-run the audit to
-              crawl with it.
+              O acesso de crawler está salvo para{" "}
+              <span className="font-mono">{host}</span>. Rode a auditoria de
+              novo para rastrear com ele.
             </>
           )}
         </AlertDescription>
@@ -169,27 +169,30 @@ export function ShopifyCrawlWarning({
         {expiredCredential?.expiresAt ? (
           <>
             <AlertTitle>
-              Your Shopify signature for this store has expired.
+              A sua assinatura Shopify desta loja expirou.
             </AlertTitle>
             {setupHint}
             <p className="text-muted-foreground">
-              It ran out on{" "}
-              {new Date(expiredCredential.expiresAt).toLocaleDateString()}, so
-              requests after that went out unsigned and Shopify limited them.
+              Ela venceu em{" "}
+              {new Date(expiredCredential.expiresAt).toLocaleDateString(
+                "pt-BR",
+              )}
+              , então as requisições seguintes saíram sem assinatura e o Shopify
+              as limitou.
               {canStoreCrawlerAccess
-                ? " Signatures can't be renewed: create a fresh one in Shopify admin and paste it below to replace the stored values."
+                ? " Assinaturas não podem ser renovadas: crie uma nova no admin do Shopify e cole abaixo para substituir os valores salvos."
                 : null}
             </p>
           </>
         ) : (
           <>
-            <AlertTitle>Shopify limited this crawl.</AlertTitle>
+            <AlertTitle>O Shopify limitou este rastreamento.</AlertTitle>
             {setupHint}
             <p className="text-muted-foreground">
-              Shopify rate-limits crawlers it hasn't authorized, so parts of
-              this report are missing.
+              O Shopify limita crawlers que ele não autorizou, então partes
+              deste relatório estão faltando.
               {canStoreCrawlerAccess
-                ? " If you own this store, authorizing OpenSEO takes about a minute."
+                ? " Se a loja é sua, autorizar o dataSEO leva cerca de um minuto."
                 : null}
             </p>
           </>
@@ -199,14 +202,14 @@ export function ShopifyCrawlWarning({
           <>
             <ol className="list-decimal space-y-1 pl-5 text-muted-foreground">
               <li>
-                In Shopify admin, go to Online Store &rarr; Preferences &rarr;
-                Crawler access and click Create signature.
+                No admin do Shopify, vá em Loja virtual &rarr; Preferências
+                &rarr; Acesso de crawler e clique em Criar assinatura.
               </li>
               <li>
-                Pick the domain <span className="font-mono">{host}</span> and an
-                expiry (up to 3 months).
+                Escolha o domínio <span className="font-mono">{host}</span> e
+                uma validade (até 3 meses).
               </li>
-              <li>Paste the two values below.</li>
+              <li>Cole os dois valores abaixo.</li>
             </ol>
 
             {/* Keyed by host: the report stays mounted when the audit changes. */}
@@ -227,7 +230,7 @@ export function ShopifyCrawlWarning({
             target="_blank"
             rel="noreferrer"
           >
-            Shopify's crawler access guide
+            Guia de acesso de crawler do Shopify
           </a>
         </div>
       </div>

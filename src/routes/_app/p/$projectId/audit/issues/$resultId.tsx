@@ -6,7 +6,7 @@ import { pageHead } from "@/client/lib/pageHead";
 export const Route = createFileRoute(
   "/_app/p/$projectId/audit/issues/$resultId",
 )({
-  head: () => pageHead("Site Audit"),
+  head: () => pageHead("Auditoria"),
   validateSearch: lighthouseIssuesSearchSchema,
   component: AuditIssuesPage,
 });

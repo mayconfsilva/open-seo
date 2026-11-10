@@ -114,11 +114,12 @@ export function GscReEngagementModal({
       <DialogContent className="sm:max-w-lg" initialFocus={connectRef}>
         <DialogHeader>
           <DialogTitle className="text-lg">
-            Connect Google Search Console
+            Conectar o Google Search Console
           </DialogTitle>
           <DialogDescription>
-            Bring your real clicks, impressions, and rankings into OpenSEO and
-            query them from Claude or Codex over MCP. It never uses credits.
+            Traga os cliques, impressões e posições reais do seu site para o
+            dataSEO e consulte pelo Claude ou Codex via MCP. Não consome
+            créditos.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -127,14 +128,14 @@ export function GscReEngagementModal({
             className="px-2 text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:underline"
             onClick={handleDismiss}
           >
-            Maybe later
+            Agora não
           </button>
           <Button ref={connectRef} onClick={handleConnect}>
             {/* Google's mark needs a white tile to stay legible on a colored button. */}
             <span className="flex size-6 items-center justify-center rounded bg-white">
               <GoogleGlyph className="size-[16px]" />
             </span>
-            Connect with Google
+            Conectar com o Google
           </Button>
         </DialogFooter>
       </DialogContent>

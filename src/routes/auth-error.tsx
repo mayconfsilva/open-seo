@@ -10,7 +10,7 @@ const authErrorSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/auth-error")({
-  head: () => pageHead("Connection error"),
+  head: () => pageHead("Erro de conexão"),
   validateSearch: authErrorSearchSchema,
   component: AuthErrorPage,
 });

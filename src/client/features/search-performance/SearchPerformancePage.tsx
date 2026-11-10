@@ -193,7 +193,7 @@ export function SearchPerformancePage({
         isWeb,
       );
     } catch (error) {
-      toast.error(getStandardErrorMessage(error, "Export failed"));
+      toast.error(getStandardErrorMessage(error, "Falha ao exportar"));
     } finally {
       setIsExporting(false);
     }
@@ -214,7 +214,7 @@ export function SearchPerformancePage({
   const reportError = (
     <QueryError
       error={reportQuery.error}
-      fallback="Failed to load Search Console data"
+      fallback="Não foi possível carregar os dados do Search Console"
       onRetry={() => void reportQuery.refetch()}
       isRetrying={reportQuery.isFetching}
     />
@@ -245,10 +245,10 @@ export function SearchPerformancePage({
       <div className="mx-auto max-w-7xl space-y-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold">Search Performance</h1>
+            <h1 className="text-2xl font-semibold">Busca no Google</h1>
             <p className="text-sm text-muted-foreground">
-              See your site&apos;s clicks, impressions, CTR, and position from
-              Google Search Console.
+              Cliques, impressões, CTR e posição do seu site, direto do Google
+              Search Console.
             </p>
           </div>
           {report?.connected ? (
@@ -257,7 +257,7 @@ export function SearchPerformancePage({
               params={{ projectId }}
               className="shrink-0 self-start text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline sm:mt-1"
             >
-              Change property
+              Trocar propriedade
             </Link>
           ) : null}
         </div>
@@ -304,13 +304,13 @@ export function SearchPerformancePage({
                   <>
                     <TabsTrigger value="striking">
                       {reportQuery.isPlaceholderData
-                        ? "Striking distance"
-                        : `Striking distance (${report.strikingDistance.length})`}
+                        ? "Quase no topo"
+                        : `Quase no topo (${report.strikingDistance.length})`}
                     </TabsTrigger>
-                    <TabsTrigger value="queries">Queries</TabsTrigger>
+                    <TabsTrigger value="queries">Consultas</TabsTrigger>
                   </>
                 ) : null}
-                <TabsTrigger value="pages">Pages</TabsTrigger>
+                <TabsTrigger value="pages">Páginas</TabsTrigger>
               </DataTableTabs>
               <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-2">
                 <Button
@@ -320,10 +320,10 @@ export function SearchPerformancePage({
                   aria-expanded={showFilters}
                   aria-controls="search-performance-filters"
                   onClick={() => setShowFilters((current) => !current)}
-                  title="Toggle table filters"
+                  title="Mostrar ou esconder filtros"
                 >
                   <SlidersHorizontal data-icon="inline-start" />
-                  Filters
+                  Filtros
                   {activeFilterCount > 0 ? (
                     <Badge size="sm">{activeFilterCount}</Badge>
                   ) : null}
@@ -341,7 +341,7 @@ export function SearchPerformancePage({
               {showFilters ? filtersPanel : null}
               {reportQuery.isPlaceholderData ? (
                 <div className="p-8 text-sm" role="status">
-                  Loading matching results…
+                  Carregando resultados…
                 </div>
               ) : tab === "striking" ? (
                 <StrikingDistanceTable
@@ -362,7 +362,7 @@ export function SearchPerformancePage({
                 <DimensionSection
                   projectId={projectId}
                   tableQuery={tableQuery}
-                  keyLabel={tab === "queries" ? "Query" : "Page"}
+                  keyLabel={tab === "queries" ? "Consulta" : "Página"}
                   showPosition={isWeb}
                   page={page}
                   pageSize={pageSize}

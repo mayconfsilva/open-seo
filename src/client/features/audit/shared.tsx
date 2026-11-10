@@ -40,7 +40,7 @@ export function formatDate(dateStr: string): string {
 }
 
 export function formatStartedAt(dateStr: string): string {
-  return parseDbTimestamp(dateStr).toLocaleString("en-US", {
+  return parseDbTimestamp(dateStr).toLocaleString("pt-BR", {
     month: "short",
     day: "numeric",
     hour: "numeric",
@@ -52,7 +52,7 @@ export function StatusBadge({ status }: { status: string }) {
   if (status === "running") {
     return (
       <Badge variant="info">
-        <Spinner /> Running
+        <Spinner /> Em andamento
       </Badge>
     );
   }
@@ -60,14 +60,14 @@ export function StatusBadge({ status }: { status: string }) {
   if (status === "completed") {
     return (
       <Badge variant="success">
-        <CheckCircle /> Done
+        <CheckCircle /> Concluída
       </Badge>
     );
   }
 
   return (
     <Badge variant="destructive">
-      <AlertCircle /> Failed
+      <AlertCircle /> Falhou
     </Badge>
   );
 }
@@ -167,7 +167,7 @@ export function BotProtectionAdvice({
       >
         LibreCrawl
       </a>{" "}
-      or{" "}
+      ou{" "}
       <a
         href="https://www.screamingfrog.co.uk/seo-spider/"
         target="_blank"
@@ -181,15 +181,16 @@ export function BotProtectionAdvice({
   if (!rendered && canRender) {
     return (
       <>
-        Turn on Render JavaScript and run the audit again. To avoid the extra
-        cost, use a free desktop crawler like {desktopCrawlers}.
+        Ative Renderizar JavaScript e rode a auditoria de novo. Para evitar o
+        custo extra, use um crawler gratuito para computador, como{" "}
+        {desktopCrawlers}.
       </>
     );
   }
   return (
     <>
-      {rendered ? "Rendering couldn't get past it. " : null}
-      Try a free desktop crawler like {desktopCrawlers}.
+      {rendered ? "Nem a renderização conseguiu passar. " : null}
+      Tente um crawler gratuito para computador, como {desktopCrawlers}.
     </>
   );
 }

@@ -20,12 +20,13 @@ export function RenderingWarnings({ data }: { data: AuditResultsData }) {
         <Alert variant="warning">
           <ShieldAlert />
           <AlertTitle>
-            Some pages may need JavaScript to show their content.
+            Algumas páginas podem precisar de JavaScript para mostrar o
+            conteúdo.
           </AlertTitle>
           <AlertDescription>
             {rendered
-              ? "They were still loading after rendering, so we couldn't check them."
-              : "Turn on Render JavaScript and run the audit again to check them."}
+              ? "Elas ainda estavam carregando depois da renderização, então não foi possível verificá-las."
+              : "Ative Renderizar JavaScript e rode a auditoria de novo para verificá-las."}
           </AlertDescription>
         </Alert>
       )}
@@ -34,18 +35,19 @@ export function RenderingWarnings({ data }: { data: AuditResultsData }) {
         <Alert variant="warning">
           <ShieldAlert />
           <AlertTitle>
-            We couldn't read {unreadCount}{" "}
-            {unreadCount === 1 ? "page" : "pages"}.
+            Não foi possível ler {unreadCount}{" "}
+            {unreadCount === 1 ? "página" : "páginas"}.
           </AlertTitle>
           <AlertDescription>
-            To see them, open Pages and filter Crawl result by Failed.
+            Para vê-las, abra Páginas e filtre Resultado do rastreamento por
+            Falhou.
           </AlertDescription>
         </Alert>
       )}
 
       {rendered && (
         <p className="text-sm text-muted-foreground">
-          JavaScript rendering was enabled for this audit.
+          A renderização de JavaScript estava ativada nesta auditoria.
         </p>
       )}
     </>

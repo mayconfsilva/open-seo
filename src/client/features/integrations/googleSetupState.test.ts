@@ -100,9 +100,9 @@ describe.each(["gsc", "ga4", "onboarding"] as const)(
   (surface) => {
     it("opens property selection without a browser resume flag after authorization", () => {
       const html = renderSetup(surface, true);
-      expect(html).toContain("Choose property");
-      expect(html).toContain("Add Google account");
-      expect(html).not.toContain("Connect with Google");
+      expect(html).toContain("Escolher propriedade");
+      expect(html).toContain("Adicionar conta Google");
+      expect(html).not.toContain("Conectar com o Google");
     });
   },
 );
@@ -111,9 +111,9 @@ it.each(["gsc", "ga4"] as const)(
   "does not automatically open property editing for a %s viewer",
   (surface) => {
     const html = renderSetup(surface, true, false, false);
-    expect(html).not.toContain("Choose property");
-    expect(html).not.toContain("Save property");
-    expect(html).toContain("Manage Google accounts");
+    expect(html).not.toContain("Escolher propriedade");
+    expect(html).not.toContain("Salvar propriedade");
+    expect(html).toContain("Gerenciar contas Google");
   },
 );
 
@@ -122,7 +122,7 @@ describe("onboarding connection actions", () => {
     const html = renderSetup("onboarding", true, false, true, {
       connectionError: "refetch",
     });
-    expect(html).toContain("Choose property");
+    expect(html).toContain("Escolher propriedade");
     expect(html).not.toContain("check your Google connection.");
     expect(html.match(/Save and continue/g)).toHaveLength(1);
     expect(html.match(/Skip for now/g)).toHaveLength(1);
@@ -143,8 +143,8 @@ describe("onboarding connection actions", () => {
       connectionError: "initial",
     });
     expect(html).toContain("Couldn&#x27;t check your Google connection.");
-    expect(html).toContain("Try again");
-    expect(html).not.toContain("Choose property");
+    expect(html).toContain("Tentar de novo");
+    expect(html).not.toContain("Escolher propriedade");
     expect(html).toMatch(/disabled=""[^>]*>Save and continue/);
   });
 });
@@ -163,12 +163,12 @@ describe("Search Console website setup guidance", () => {
       const html = renderSetup(surface, true, false, true, {
         accounts: [emptyAccount],
       });
-      expect(html).toContain("We couldn’t find your website");
+      expect(html).toContain("Não encontramos o seu site");
       expect(html).toContain("owner@example.com");
-      expect(html).not.toContain("Choose property");
+      expect(html).not.toContain("Escolher propriedade");
       expect(html).toContain("/blogs/google-search-console-setup");
-      expect(html).toContain("Refresh");
-      expect(html).toContain("Use a different Google account");
+      expect(html).toContain("Atualizar");
+      expect(html).toContain("Usar outra conta Google");
       if (surface === "onboarding") expect(html).toContain("Skip for now");
     },
   );
@@ -187,8 +187,8 @@ describe("Search Console website setup guidance", () => {
       const html = renderSetup("gsc", true, false, true, {
         accounts: [{ ...emptyAccount, ...patch }],
       });
-      expect(html).toContain("Choose property");
-      expect(html).not.toContain("We couldn’t find your website");
+      expect(html).toContain("Escolher propriedade");
+      expect(html).not.toContain("Não encontramos o seu site");
     },
   );
 });

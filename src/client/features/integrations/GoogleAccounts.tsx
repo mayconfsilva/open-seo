@@ -24,21 +24,23 @@ type AccountsProps = {
 };
 
 export function accountLabel(account: GooglePickerAccount) {
-  return account.email ?? `Google account · ${account.accountId.slice(-6)}`;
+  return account.email ?? `Conta Google · ${account.accountId.slice(-6)}`;
 }
 
 export function accountStatus(
   account: GooglePickerAccount,
   provider: "gsc" | "ga4",
 ) {
-  if (account.requiresReconnect) return "Connection expired";
+  if (account.requiresReconnect) return "Conexão expirada";
   if (account.unavailable) {
     return account.apiDisabled
-      ? "Search Console API isn't enabled"
-      : "Couldn't load properties";
+      ? "A API do Search Console não está ativada"
+      : "Não foi possível carregar as propriedades";
   }
   if (account.properties.length === 0) {
-    return provider === "gsc" ? "No websites found" : "No properties found";
+    return provider === "gsc"
+      ? "Nenhum site encontrado"
+      : "Nenhuma propriedade encontrada";
   }
   return null;
 }
@@ -87,15 +89,15 @@ export function GoogleAccounts({
           <span className="truncate">
             {props.accounts.length === 1
               ? accountLabel(props.accounts[0])
-              : `${props.accounts.length} Google accounts`}
+              : `${props.accounts.length} contas Google`}
           </span>
           <ChevronDown className="size-3.5 shrink-0" />
         </PopoverTrigger>
         <PopoverContent align="start" className="w-80">
           <PopoverHeader>
-            <PopoverTitle>Google accounts</PopoverTitle>
+            <PopoverTitle>Contas Google</PopoverTitle>
             <PopoverDescription>
-              Properties come from these accounts.
+              As propriedades vêm destas contas.
             </PopoverDescription>
           </PopoverHeader>
           <AccountList
@@ -143,7 +145,7 @@ function AddAccountButton({
         pending={linking}
       >
         {linking ? null : <Plus className="size-4" />}
-        {linking ? "Opening Google…" : "Add Google account"}
+        {linking ? "Abrindo o Google…" : "Adicionar conta Google"}
       </Button>
     </div>
   );
@@ -180,7 +182,7 @@ function AccountRow({
               rel="noopener noreferrer"
               className="underline underline-offset-4"
             >
-              How to enable it ↗
+              Como ativar ↗
             </a>
           </>
         ) : null}
@@ -191,20 +193,20 @@ function AccountRow({
             variant="ghost"
             size="xs"
             onClick={onReconnect}
-            aria-label={`Reconnect ${label}`}
+            aria-label={`Reconectar ${label}`}
             disabled={linking}
             aria-busy={linking}
           >
-            {linking ? "Opening Google…" : "Reconnect"}
+            {linking ? "Abrindo o Google…" : "Reconectar"}
           </Button>
         ) : account.unavailable ? (
           <Button
             variant="ghost"
             size="xs"
             onClick={onRetry}
-            aria-label={`Retry ${label}`}
+            aria-label={`Tentar de novo ${label}`}
           >
-            Try again
+            Tentar de novo
           </Button>
         ) : null}
         {onRemove ? (
@@ -214,9 +216,9 @@ function AccountRow({
             className="text-muted-foreground hover:text-destructive"
             disabled={saving}
             onClick={onRemove}
-            aria-label={`Remove ${label}`}
+            aria-label={`Remover ${label}`}
           >
-            Remove
+            Remover
           </Button>
         ) : null}
       </span>

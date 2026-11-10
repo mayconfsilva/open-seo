@@ -83,9 +83,9 @@ export function AuditDetail({
     return (
       <div className="px-4 py-4 md:px-6 md:py-6">
         <div className="mx-auto max-w-7xl space-y-4">
-          <BackButton onClick={onBack}>All audits</BackButton>
+          <BackButton onClick={onBack}>Todas as auditorias</BackButton>
           <QueryError
-            fallback="We could not load this audit. It may have been deleted."
+            fallback="Não foi possível carregar esta auditoria. Ela pode ter sido excluída."
             onRetry={() => void statusQuery.refetch()}
             isRetrying={statusQuery.isFetching}
           />
@@ -119,7 +119,7 @@ export function AuditDetail({
     <div className="px-4 py-4 md:px-6 md:py-6 pb-24 md:pb-8 overflow-auto">
       <div className="mx-auto max-w-7xl space-y-4">
         <div className="space-y-3">
-          <BackButton onClick={onBack}>All audits</BackButton>
+          <BackButton onClick={onBack}>Todas as auditorias</BackButton>
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <h1 className="text-2xl font-semibold tracking-tight">
@@ -128,7 +128,8 @@ export function AuditDetail({
               {!isRunning && <StatusBadge status={status.status} />}
             </div>
             <p className="text-sm text-muted-foreground">
-              Site audit &middot; Started {formatStartedAt(status.startedAt)}
+              Auditoria do site &middot; Iniciada em{" "}
+              {formatStartedAt(status.startedAt)}
             </p>
           </div>
         </div>
@@ -145,16 +146,16 @@ export function AuditDetail({
           <Alert variant="destructive">
             <AlertCircle />
             <AlertTitle>
-              This audit stopped before it crawled any pages.
+              Esta auditoria parou antes de rastrear qualquer página.
             </AlertTitle>
             <AlertDescription>
               <p>
-                Run a new audit to try again, or email{" "}
-                <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> if this
-                keeps happening.
+                Rode uma nova auditoria para tentar de novo, ou escreva para{" "}
+                <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> se
+                continuar acontecendo.
               </p>
               {status.errorCode ? (
-                <p className="font-mono text-xs">Code: {status.errorCode}</p>
+                <p className="font-mono text-xs">Código: {status.errorCode}</p>
               ) : null}
             </AlertDescription>
           </Alert>
@@ -164,7 +165,7 @@ export function AuditDetail({
           <Alert variant="warning">
             <AlertCircle />
             <AlertTitle>
-              This site's bot protection blocked our crawler.
+              A proteção contra bots deste site bloqueou nosso crawler.
             </AlertTitle>
             <AlertDescription>
               <BotProtectionAdvice
@@ -179,14 +180,14 @@ export function AuditDetail({
           <Alert variant="warning">
             <AlertCircle />
             <AlertTitle>
-              This audit stopped early after {partialPageCount} page
+              Esta auditoria parou antes, depois de {partialPageCount} página
               {partialPageCount === 1 ? "" : "s"}.
             </AlertTitle>
             <AlertDescription>
-              The results below cover everything crawled before it stopped. Run
-              a new audit to try again, or email{" "}
-              <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> if this
-              keeps happening.
+              Os resultados abaixo cobrem tudo o que foi rastreado antes da
+              parada. Rode uma nova auditoria para tentar de novo, ou escreva
+              para <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> se
+              continuar acontecendo.
             </AlertDescription>
           </Alert>
         )}
@@ -194,7 +195,7 @@ export function AuditDetail({
         {(isComplete || isFailed) && (
           <QueryState
             query={resultsQuery}
-            errorFallback="Failed to load the audit results"
+            errorFallback="Não foi possível carregar os resultados da auditoria"
           >
             {(data) =>
               (isComplete || failedWithResults) && (
@@ -242,14 +243,14 @@ function ProgressCard({
   const isLighthousePhase = status.currentPhase === "lighthouse";
   const phaseLabel =
     status.currentPhase === "discovery"
-      ? "Discovery"
+      ? "Descoberta"
       : status.currentPhase === "crawling"
-        ? "Crawling"
+        ? "Rastreando"
         : status.currentPhase === "lighthouse"
           ? "Lighthouse"
           : status.currentPhase === "finalizing"
-            ? "Finalizing"
-            : "Running";
+            ? "Finalizando"
+            : "Em andamento";
   const progress = isLighthousePhase ? lighthouseProgress : crawlProgress;
 
   const crawlProgressQuery = useQuery({
@@ -266,7 +267,9 @@ function ProgressCard({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-medium">
             <Spinner className="text-primary" aria-hidden />
-            {isLighthousePhase ? "Running Lighthouse checks" : "Crawling pages"}
+            {isLighthousePhase
+              ? "Rodando verificações do Lighthouse"
+              : "Rastreando páginas"}
           </CardTitle>
           <CardAction>
             <Badge variant="secondary">{phaseLabel}</Badge>
@@ -276,12 +279,12 @@ function ProgressCard({
           <Progress value={progress}>
             <ProgressLabel className="font-normal">
               {isLighthousePhase
-                ? `${lighthouseDone} / ${status.lighthouseTotal} checks${
+                ? `${lighthouseDone} / ${status.lighthouseTotal} verificações${
                     status.lighthouseFailed > 0
-                      ? ` (${status.lighthouseFailed} failed)`
+                      ? ` (${status.lighthouseFailed} com falha)`
                       : ""
                   }`
-                : `${status.pagesCrawled} / ${status.pagesTotal} pages`}
+                : `${status.pagesCrawled} / ${status.pagesTotal} páginas`}
             </ProgressLabel>
             <ProgressValue />
           </Progress>
@@ -292,10 +295,11 @@ function ProgressCard({
         <Card size="sm">
           <CardHeader>
             <CardTitle className="font-medium text-muted-foreground">
-              Crawled Pages ({crawledUrls.length})
+              Páginas rastreadas ({crawledUrls.length})
             </CardTitle>
             <CardAction className="text-xs text-muted-foreground">
-              Updated {new Date(crawledUrls[0].crawledAt).toLocaleTimeString()}
+              Atualizado às{" "}
+              {new Date(crawledUrls[0].crawledAt).toLocaleTimeString("pt-BR")}
             </CardAction>
           </CardHeader>
           <CardContent className="max-h-[400px] overflow-y-auto">
