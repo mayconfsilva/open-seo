@@ -36,6 +36,11 @@ beforeAll(async () => {
       organization_id TEXT PRIMARY KEY, plan_id TEXT, suspended_at TEXT,
       updated_at TEXT
     );
+    CREATE TABLE user (id TEXT PRIMARY KEY, created_at INTEGER NOT NULL);
+    CREATE TABLE member (
+      id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, user_id TEXT NOT NULL,
+      role TEXT NOT NULL
+    );
     CREATE TABLE rank_snapshots (
       id INTEGER PRIMARY KEY AUTOINCREMENT, run_id TEXT NOT NULL, checked_at TEXT NOT NULL
     );
@@ -43,6 +48,11 @@ beforeAll(async () => {
     INSERT INTO projects VALUES
       ('site', 'org', 'Site', 'site.com', NULL, NULL),
       ('other', 'org_other', 'Other', 'other.com', NULL, NULL);
+    -- The first account owns the platform; its organization has no quota.
+    INSERT INTO user VALUES ('platform_owner', 1), ('partner', 2);
+    INSERT INTO member VALUES
+      ('m1', 'org_platform', 'platform_owner', 'owner'),
+      ('m2', 'org', 'partner', 'owner');
     INSERT INTO platform_plans VALUES ('small', 'Pequeno', 3, NULL);
     INSERT INTO organization_platform_settings VALUES ('org', 'small', NULL, NULL);
     INSERT INTO rank_tracking_configs VALUES
@@ -85,5 +95,11 @@ describe("PlanUsageService.fitsQuota", () => {
     // Plan of 3 queries, 2 used this month.
     expect(await PlanUsageService.fitsQuota("org", 1, now)).toBe(true);
     expect(await PlanUsageService.fitsQuota("org", 2, now)).toBe(false);
+  });
+
+  it("never limits the platform owner's own organization", async () => {
+    expect(await PlanUsageService.fitsQuota("org_platform", 1_000_000)).toBe(
+      true,
+    );
   });
 });

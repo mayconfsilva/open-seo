@@ -144,6 +144,7 @@ async function fitsQuota(
       toRankTrackingTimestamp(monthStart(year, month + 1)),
     ),
   ]);
+  if (plan.monthlyQueries === null) return true;
   const used = sumBy(counts, (row) => row.queries);
   return used + queries <= plan.monthlyQueries;
 }

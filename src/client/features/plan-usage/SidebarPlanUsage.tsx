@@ -23,14 +23,16 @@ export function SidebarPlanUsage({ ready }: { ready: boolean }) {
         <div className="flex items-baseline justify-between gap-2">
           <span className="text-[12.5px] font-semibold">{usage.plan.name}</span>
           <span className="text-[11.5px] text-muted-foreground tabular-nums">
-            {usedPercent(usage)}% usado
+            {usage.plan.monthlyQueries === null
+              ? "Sem limite"
+              : `${usedPercent(usage)}% usado`}
           </span>
         </div>
         <PlanMeter usage={usage} />
         <p className="text-[11.5px] leading-snug text-muted-foreground">
-          {formatQueries(usage.used)} de{" "}
-          {formatQueries(usage.plan.monthlyQueries)} consultas · renova em{" "}
-          {formatPlanDay(usage.renewsAt)}
+          {usage.plan.monthlyQueries === null
+            ? `${formatQueries(usage.used)} consultas este mês`
+            : `${formatQueries(usage.used)} de ${formatQueries(usage.plan.monthlyQueries)} consultas · renova em ${formatPlanDay(usage.renewsAt)}`}
         </p>
         <Link
           to="/consumo"

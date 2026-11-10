@@ -20,6 +20,17 @@ async function getFirstUserId() {
   return first?.id ?? null;
 }
 
+/** Organizations the platform owner owns: they have no query quota. */
+async function listPlatformOwnerOrganizationIds() {
+  const ownerId = await getFirstUserId();
+  if (!ownerId) return [];
+  const rows = await db
+    .select({ organizationId: member.organizationId })
+    .from(member)
+    .where(and(eq(member.userId, ownerId), eq(member.role, "owner")));
+  return rows.map((row) => row.organizationId);
+}
+
 async function listPlans() {
   return db
     .select()
@@ -91,7 +102,7 @@ async function upsertOrganizationSettings(input: {
 
 /** Every organization with its owner, plan, status and live project count. */
 async function listOrganizations() {
-  const [orgs, owners, settings, projectCounts] = await Promise.all([
+  const [orgs, owners, settings, projectCounts, unlimited] = await Promise.all([
     db
       .select({
         id: organization.id,
@@ -124,6 +135,7 @@ async function listOrganizations() {
       .from(projects)
       .where(and(isNull(projects.archivedAt), isNull(projects.draftSince)))
       .groupBy(projects.organizationId),
+    listPlatformOwnerOrganizationIds(),
   ]);
   return orgs.map((org) => {
     const setting = settings.find((row) => row.organizationId === org.id);
@@ -135,6 +147,7 @@ async function listOrganizations() {
       ownerEmail: owner?.email ?? null,
       ownerName: owner?.name ?? null,
       planId: setting?.planId ?? null,
+      unlimited: unlimited.includes(org.id),
       suspendedAt: setting?.suspendedAt ?? null,
       projects:
         projectCounts.find((row) => row.organizationId === org.id)?.projects ??
@@ -243,6 +256,7 @@ async function findUserIdByEmail(email: string) {
 
 export const PlatformRepository = {
   getFirstUserId,
+  listPlatformOwnerOrganizationIds,
   listPlans,
   getPlan,
   insertPlan,

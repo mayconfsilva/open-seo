@@ -43,8 +43,8 @@ export function PlanUsagePage() {
 function PlanUsageContent({ usage }: { usage: PlanUsage }) {
   const quota = usage.plan.monthlyQueries;
   const projected = usage.used + usage.upcoming;
-  const available = Math.max(0, quota - usage.used);
-  const overBy = projected - quota;
+  const available = quota === null ? null : Math.max(0, quota - usage.used);
+  const overBy = quota === null ? 0 : projected - quota;
   const monthName = formatPlanDate(usage.monthStart, { month: "long" });
   const renewsOn = formatPlanDay(usage.renewsAt);
 
@@ -72,7 +72,9 @@ function PlanUsageContent({ usage }: { usage: PlanUsage }) {
             {formatQueries(usage.used)}
           </span>
           <span className="text-[14px] text-muted-foreground">
-            de {formatQueries(quota)} consultas · {usedPercent(usage)}% usado
+            {quota === null
+              ? "consultas este mês · sem limite de franquia"
+              : `de ${formatQueries(quota)} consultas · ${usedPercent(usage)}% usado`}
           </span>
         </div>
         <PlanMeter usage={usage} segments={40} />
@@ -80,18 +82,18 @@ function PlanUsageContent({ usage }: { usage: PlanUsage }) {
           <Figure
             swatch="bg-(--rank-1)"
             label="Usado no mês"
-            value={usage.used}
+            value={formatQueries(usage.used)}
           />
           <Figure
             swatch="bg-(--rank-2)"
             label="Previsto até renovar"
-            value={usage.upcoming}
+            value={formatQueries(usage.upcoming)}
             note="Coletas agendadas que ainda vão rodar"
           />
           <Figure
             swatch="bg-track"
             label="Disponível agora"
-            value={available}
+            value={available === null ? "Ilimitado" : formatQueries(available)}
           />
         </dl>
         {overBy > 0 ? (
@@ -187,7 +189,7 @@ function Figure({
 }: {
   swatch: string;
   label: string;
-  value: number;
+  value: string;
   note?: string;
 }) {
   return (
@@ -196,9 +198,7 @@ function Figure({
         <span className={`size-2.5 rounded-[2px] ${swatch}`} aria-hidden />
         {label}
       </dt>
-      <dd className="text-[18px] font-semibold tabular-nums">
-        {formatQueries(value)}
-      </dd>
+      <dd className="text-[18px] font-semibold tabular-nums">{value}</dd>
       {note ? (
         <dd className="text-[12px] text-muted-foreground">{note}</dd>
       ) : null}
@@ -274,10 +274,9 @@ function ProjectsTable({ usage }: { usage: PlanUsage }) {
                     : "—"}
                 </td>
                 <td className="px-4 py-2.5 text-right tabular-nums">
-                  {Math.round(
-                    ((project.used + project.upcoming) / quota) * 100,
-                  )}
-                  %
+                  {quota === null
+                    ? "—"
+                    : `${Math.round(((project.used + project.upcoming) / quota) * 100)}%`}
                 </td>
               </tr>
             ))}
@@ -290,7 +289,7 @@ function ProjectsTable({ usage }: { usage: PlanUsage }) {
 
 function History({ usage }: { usage: PlanUsage }) {
   const quota = usage.plan.monthlyQueries;
-  const top = Math.max(quota, ...usage.history.map((month) => month.used));
+  const top = Math.max(quota ?? 1, ...usage.history.map((month) => month.used));
   return (
     <section className="flex flex-col gap-3 rounded-lg border border-border bg-card p-5">
       <h2 className="text-[15px] font-semibold">Últimos meses</h2>
@@ -324,7 +323,9 @@ function History({ usage }: { usage: PlanUsage }) {
         })}
       </ul>
       <p className="text-[12px] text-muted-foreground">
-        Franquia de {formatQueries(quota)} consultas por mês.
+        {quota === null
+          ? "Sem limite de franquia."
+          : `Franquia de ${formatQueries(quota)} consultas por mês.`}
       </p>
     </section>
   );
