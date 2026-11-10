@@ -240,10 +240,12 @@ function Comparison({
             />
           </div>
         </div>
-        <div className="overflow-x-auto">
+        {/* Scrolls inside its own box so the header can stay on top: a
+            horizontal-scroll wrapper would otherwise pin it to nothing. */}
+        <div className="max-h-[70vh] overflow-auto border-t border-hairline">
           <table className="w-full text-[13px]">
-            <thead>
-              <tr className="border-y border-hairline bg-subtle text-left text-[11.5px] text-muted-foreground">
+            <thead className="sticky top-0 z-10 bg-subtle shadow-[inset_0_-1px_0_var(--color-hairline)]">
+              <tr className="text-left text-[11.5px] text-muted-foreground">
                 <th className="px-4 py-2 font-medium">Palavra</th>
                 <SortHeader
                   label="Volume"
