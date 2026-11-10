@@ -47,15 +47,15 @@ export function PromptResearchPage({
   return (
     <div className="space-y-4">
       <PageHeader
-        title="Prompt Research"
-        description="Find the questions people ask AI about your market, and the sites the answers cite."
+        title="Pesquisa de prompts"
+        description="Encontre as perguntas que as pessoas fazem à IA sobre seu mercado e os sites citados nas respostas."
         backLink={
           keyword && state?.configured ? (
             <BackLink
               to="/p/$projectId/ai-visibility/research"
               params={{ projectId }}
             >
-              Relevant keywords
+              Palavras relevantes
             </BackLink>
           ) : undefined
         }
@@ -63,8 +63,8 @@ export function PromptResearchPage({
       {!state?.configured ? (
         <EmptyState
           icon={Telescope}
-          title="Prompt research starts with a tracker"
-          description="Set up prompt tracking to research prompts for your topics."
+          title="A pesquisa de prompts começa com um acompanhamento"
+          description="Configure o acompanhamento de prompts para pesquisar prompts dos seus temas."
           action={
             <Button
               size="sm"
@@ -73,7 +73,7 @@ export function PromptResearchPage({
                 <Link to="/p/$projectId/ai-visibility" params={{ projectId }} />
               }
             >
-              Set up prompt tracking
+              Configurar acompanhamento de prompts
             </Button>
           }
         />
@@ -108,9 +108,9 @@ function KeywordList({ projectId }: { projectId: string }) {
   return (
     <div className="overflow-hidden rounded-lg border bg-card border-border">
       <div className="border-b p-4 border-border">
-        <h2 className="font-medium">Relevant keywords</h2>
+        <h2 className="font-medium">Palavras relevantes</h2>
         <p className="text-sm text-muted-foreground">
-          Select a keyword to see the prompts people ask AI about it.
+          Escolha uma palavra para ver os prompts que as pessoas fazem à IA sobre ela.
         </p>
       </div>
       {query.isPending ? (
@@ -124,15 +124,15 @@ function KeywordList({ projectId }: { projectId: string }) {
         />
       ) : !query.data.keywords.length ? (
         <p className="p-10 text-center text-sm text-muted-foreground">
-          Add topics to your tracker, or search a keyword above.
+          Adicione temas ao acompanhamento ou busque uma palavra acima.
         </p>
       ) : (
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Keyword</TableHead>
+              <TableHead>Palavra</TableHead>
               <TableHead className="w-10">
-                <span className="sr-only">Open</span>
+                <span className="sr-only">Abrir</span>
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -189,7 +189,7 @@ function KeywordSearch({
       onSubmit={(event) => {
         event.preventDefault();
         if (!draft.trim()) {
-          setError("Enter a keyword.");
+          setError("Digite uma palavra.");
           return;
         }
         void navigate({
@@ -205,7 +205,7 @@ function KeywordSearch({
           id="ai-keyword-research-cost"
           className="text-xs text-muted-foreground"
         >
-          About $0.25 in credits per keyword.
+          Cerca de US$ 0,25 em créditos por palavra.
         </p>
       }
     >
@@ -215,8 +215,8 @@ function KeywordSearch({
           setDraft(event.target.value);
           setError(null);
         }}
-        placeholder="Enter a keyword"
-        aria-label="Keyword"
+        placeholder="Digite uma palavra"
+        aria-label="Palavra"
         aria-invalid={error ? true : undefined}
         aria-describedby={
           error

@@ -50,16 +50,16 @@ export function PromptHistoryPage({
       <PageHeader
         backLink={
           <BackLink to="/p/$projectId/ai-visibility" params={{ projectId }}>
-            All tracked prompts
+            Todos os prompts acompanhados
           </BackLink>
         }
         title={
           <span className="whitespace-pre-wrap" data-ph-mask>
-            {prompt?.text ?? retainedPrompt ?? "Prompt analysis"}
+            {prompt?.text ?? retainedPrompt ?? "Análise do prompt"}
           </span>
         }
         description={
-          prompt ? `${prompt.topic} · Prompt analysis` : "Prompt analysis"
+          prompt ? `${prompt.topic} · Análise do prompt` : "Análise do prompt"
         }
         actions={
           state?.tracker &&
@@ -71,7 +71,7 @@ export function PromptHistoryPage({
               onClick={() => setChecking(true)}
             >
               <Play />
-              Run now
+              Rodar agora
             </Button>
           )
         }

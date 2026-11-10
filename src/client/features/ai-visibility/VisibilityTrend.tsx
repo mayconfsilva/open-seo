@@ -35,13 +35,13 @@ function notice(trend: AiTrend, collecting: boolean) {
   const { days } = trend;
   switch (trend.comparison) {
     case "incomplete":
-      return `Fewer than 90% of planned answers were collected in one period, so no change is shown. Failed collections never count as lost visibility.`;
+      return `Menos de 90% das respostas previstas foram coletadas em um dos períodos, então a variação não aparece. Coletas que falham nunca contam como perda de visibilidade.`;
     case "scope_changed":
-      return `No prompt and engine has answers for the same market and brand in both periods. The tracked scope changed, so the periods cannot be compared.`;
+      return `Nenhum prompt e IA tem respostas para o mesmo mercado e marca nos dois períodos. O escopo mudou, então os períodos não são comparáveis.`;
     case "no_data":
       return collecting
-        ? "Collecting answers. Visibility appears here when the run finishes."
-        : `There are no finished runs in the last ${days} days.`;
+        ? "Coletando respostas. A visibilidade aparece aqui quando a execução terminar."
+        : `Nenhuma execução concluída nos últimos ${days} dias.`;
     default:
       return null;
   }
@@ -66,7 +66,7 @@ export function VisibilityTrend({
     <div className="px-4 pt-2 pb-6">
       <section className="space-y-3 rounded-lg border border-border p-3">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="text-sm font-medium">Visibility over time</h2>
+          <h2 className="text-sm font-medium">Visibilidade ao longo do tempo</h2>
           <SegmentedToggle
             showLabels
             items={periods}
@@ -149,7 +149,7 @@ function TrendSummary({ trend }: { trend: AiTrend }) {
   const rows = [
     {
       key: "all",
-      label: <span className="font-medium">All engines</span>,
+      label: <span className="font-medium">Todas as IAs</span>,
       mentions: trend.mentions,
       citations: trend.citations,
     },
@@ -167,8 +167,8 @@ function TrendSummary({ trend }: { trend: AiTrend }) {
       <TableHeader>
         <TableRow>
           <TableHead />
-          <TableHead>Brand mentions</TableHead>
-          <TableHead>Owned citations</TableHead>
+          <TableHead>Menções à marca</TableHead>
+          <TableHead>Citações do seu site</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

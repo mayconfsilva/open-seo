@@ -18,7 +18,7 @@ export function SamSetupGate({
     <GateCard
       icon={Wrench}
       tone="warning"
-      title="Enable AI Features"
+      title="Ativar recursos de IA"
       description={
         <>
           {isEveryAppClientAuthMode() ? (
@@ -31,19 +31,17 @@ export function SamSetupGate({
             </p>
           ) : (
             <p>
-              SAM, OpenSEO&apos;s in-app AI agent, needs an OpenRouter API key.
-              Create a key on OpenRouter, set it as the{" "}
-              <code>OPENROUTER_API_KEY</code> environment variable, restart
-              OpenSEO, then confirm here.
+              O SAM, agente de IA do dataSEO, precisa de uma chave de API do OpenRouter. Crie uma chave no OpenRouter, defina como a variável{" "}
+              <code>OPENROUTER_API_KEY</code> , reinicie o dataSEO e confirme aqui.
             </p>
           )}
           <p className="text-xs">
-            Step-by-step instructions for every deployment are in the{" "}
+            O passo a passo para cada instalação está no{" "}
             <Link
               className="underline underline-offset-2 hover:text-foreground"
               to="/help/openrouter-api-key"
             >
-              OpenRouter API key setup guide
+              guia de configuração da chave do OpenRouter
             </Link>
             .
           </p>
@@ -52,7 +50,7 @@ export function SamSetupGate({
       actions={
         <>
           <Button size="lg" pending={isRefetching} onClick={onRetry}>
-            Confirm API Key
+            Confirmar chave de API
           </Button>
           <Button
             size="lg"
@@ -66,7 +64,7 @@ export function SamSetupGate({
               />
             }
           >
-            Open OpenRouter Keys
+            Abrir chaves do OpenRouter
           </Button>
         </>
       }

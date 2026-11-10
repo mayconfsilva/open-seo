@@ -48,7 +48,7 @@ export function ChatComposer({
           onChange={(event) => setValue(event.target.value)}
           onKeyDown={handleKey}
           rows={1}
-          placeholder="Ask SAM to research, analyze, or track anything…"
+          placeholder="Peça ao SAM para pesquisar, analisar ou acompanhar qualquer coisa…"
           className="max-h-40 min-h-0 px-3 leading-relaxed"
         />
         <InputGroupAddon align="inline-end">
@@ -57,7 +57,7 @@ export function ChatComposer({
               variant="secondary"
               size="icon-sm"
               className="rounded-full"
-              aria-label="Stop"
+              aria-label="Parar"
               onClick={onStop}
             >
               <Square className="size-3.5 fill-current" />
@@ -68,7 +68,7 @@ export function ChatComposer({
               variant="default"
               size="icon-sm"
               className="rounded-full"
-              aria-label="Send message"
+              aria-label="Enviar mensagem"
               disabled={!value.trim()}
             >
               <ArrowUp />

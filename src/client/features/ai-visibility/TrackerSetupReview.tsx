@@ -39,17 +39,17 @@ export function TrackerSetupReview({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        Review your changes before saving.{" "}
+        Revise as mudanças antes de salvar.{" "}
         {enabled
-          ? "These settings apply to your enabled schedule."
+          ? "Estas configurações valem para o agendamento ativo."
           : creating
-            ? "Tracking runs weekly. The first check is a week from now; use Run now for results sooner."
-            : "Track weekly to collect fresh answers once a week. A tracker that has never run on a schedule also runs its first check now."}
+            ? "O acompanhamento roda toda semana. A primeira coleta é daqui a uma semana; use Rodar agora para ter resultados antes."
+            : "Acompanhe semanalmente para coletar respostas novas toda semana. Um acompanhamento que nunca rodou agendado também faz a primeira coleta agora."}
       </p>
       <dl className="grid grid-cols-2 gap-4 rounded-lg border p-4 text-sm border-border">
         {review.patch.engines && (
           <div>
-            <dt className="text-muted-foreground">Engines</dt>
+            <dt className="text-muted-foreground">IAs</dt>
             <dd className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
               {review.patch.engines?.map((engine) => (
                 <EngineLabel key={engine} engine={engine} />
@@ -59,19 +59,19 @@ export function TrackerSetupReview({
         )}
         {review.patch.prompts !== undefined && (
           <div>
-            <dt className="text-muted-foreground">New prompts</dt>
+            <dt className="text-muted-foreground">Novos prompts</dt>
             <dd className="mt-1">{review.patch.prompts?.length ?? 0}</dd>
           </div>
         )}
         {review.patch.prompts?.[0]?.topic && (
           <div>
-            <dt className="text-muted-foreground">Topic</dt>
+            <dt className="text-muted-foreground">Tema</dt>
             <dd className="mt-1">{review.patch.prompts[0].topic}</dd>
           </div>
         )}
         {review.patch.locationCode && review.patch.languageCode && (
           <div>
-            <dt className="text-muted-foreground">Market</dt>
+            <dt className="text-muted-foreground">Mercado</dt>
             <dd className="mt-1">
               {aiMarketLabel({
                 locationCode: review.patch.locationCode,
@@ -86,7 +86,7 @@ export function TrackerSetupReview({
           className="max-h-56 space-y-2 overflow-y-auto rounded-lg border p-4 border-border"
           data-ph-mask
         >
-          <h3 className="text-sm font-semibold">Prompts to add</h3>
+          <h3 className="text-sm font-semibold">Prompts a adicionar</h3>
           {review.patch.prompts.map((prompt) => (
             <p
               key={prompt.text}
@@ -99,13 +99,12 @@ export function TrackerSetupReview({
       )}
       <div className="space-y-1 rounded-lg bg-muted/60 p-4 text-sm">
         <p>
-          Each run collects <strong>{review.estimate.observations}</strong>{" "}
+          Cada execução coleta <strong>{review.estimate.observations}</strong>{" "}
           {review.estimate.observations === 1 ? "answer" : "answers"} for{" "}
           <strong>{aiMoney(review.estimate.costUsd)}</strong>
         </p>
         <p>
-          <strong>{aiMoney(review.estimate.monthlyCostUsd)}</strong> estimated
-          per month if it runs {review.estimate.scheduleInterval}.
+          <strong>{aiMoney(review.estimate.monthlyCostUsd)}</strong> estimados por mês se rodar {review.estimate.scheduleInterval}.
         </p>
       </div>
       {!!error && <AiQueryError error={error} />}
@@ -116,7 +115,7 @@ export function TrackerSetupReview({
           disabled={pending}
           onClick={onBack}
         >
-          Back to editing
+          Voltar à edição
         </Button>
         <Button
           type="button"
@@ -128,10 +127,10 @@ export function TrackerSetupReview({
             <Loader2 className="size-4 animate-spin" />
           )}
           {enabled
-            ? "Save reviewed changes"
+            ? "Salvar mudanças revisadas"
             : creating
-              ? "Save and track weekly"
-              : "Save as paused"}
+              ? "Salvar e acompanhar toda semana"
+              : "Salvar pausado"}
         </Button>
         {paused && (
           <Button
@@ -144,7 +143,7 @@ export function TrackerSetupReview({
             {pending && scheduling && (
               <Loader2 className="size-4 animate-spin" />
             )}
-            Save and track weekly
+            Salvar e acompanhar toda semana
           </Button>
         )}
       </DialogFooter>

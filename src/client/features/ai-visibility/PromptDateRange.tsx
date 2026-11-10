@@ -23,11 +23,11 @@ interface PromptPeriod {
 }
 
 const options = [
-  { value: PromptRange.Last7, label: "Last 7 days" },
-  { value: PromptRange.Last28, label: "Last 28 days" },
-  { value: PromptRange.Last90, label: "Last 90 days" },
-  { value: PromptRange.All, label: "All available history" },
-  { value: PromptRange.Custom, label: "Custom range" },
+  { value: PromptRange.Last7, label: "Últimos 7 dias" },
+  { value: PromptRange.Last28, label: "Últimos 28 dias" },
+  { value: PromptRange.Last90, label: "Últimos 90 dias" },
+  { value: PromptRange.All, label: "Todo o histórico" },
+  { value: PromptRange.Custom, label: "Período personalizado" },
 ];
 
 function localDate(value: Date) {
@@ -81,7 +81,7 @@ export function PromptDateRange({
             );
         }}
       >
-        <SelectTrigger size="sm" aria-label="Analysis date range">
+        <SelectTrigger size="sm" aria-label="Período da análise">
           <CalendarDays className="size-3.5" />
           <SelectValue />
         </SelectTrigger>
@@ -97,7 +97,7 @@ export function PromptDateRange({
         <>
           <Input
             type="date"
-            aria-label="Period start date"
+            aria-label="Início do período"
             className="h-7 w-36 text-xs"
             value={value.start}
             max={value.end || undefined}
@@ -108,7 +108,7 @@ export function PromptDateRange({
           <span className="text-xs text-muted-foreground">to</span>
           <Input
             type="date"
-            aria-label="Period end date"
+            aria-label="Fim do período"
             className="h-7 w-36 text-xs"
             value={value.end}
             min={value.start || undefined}
@@ -118,7 +118,7 @@ export function PromptDateRange({
           />
           {(!value.start || !value.end || value.start > value.end) && (
             <p role="alert" className="w-full text-xs text-destructive">
-              Choose a start date on or before the end date.
+              Escolha um início igual ou anterior ao fim.
             </p>
           )}
         </>

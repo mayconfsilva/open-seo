@@ -125,7 +125,7 @@ export function TrackingCostReview({
     (mode === "check" ? cost?.runNowCostUsd : cost?.costUsd) ?? 0;
   const start = useMutation({
     mutationFn: async () => {
-      if (!cost) throw new Error("Review the estimate before starting.");
+      if (!cost) throw new Error("Confira a estimativa antes de começar.");
       if (mode === "schedule") {
         const result = await setAiVisibilitySchedule({
           data: {
@@ -158,10 +158,10 @@ export function TrackingCostReview({
     <FormDialog
       title={
         mode === "check"
-          ? "Run now"
+          ? "Rodar agora"
           : tracker.enabled
-            ? "Change tracking schedule"
-            : "Schedule tracking"
+            ? "Mudar frequência"
+            : "Agendar acompanhamento"
       }
       onClose={() => {
         if (!start.isPending) onClose();
@@ -169,7 +169,7 @@ export function TrackingCostReview({
       actions={
         <>
           <Button variant="ghost" disabled={start.isPending} onClick={onClose}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             disabled={
@@ -184,10 +184,10 @@ export function TrackingCostReview({
           >
             {start.isPending && <Loader2 className="size-4 animate-spin" />}
             {mode === "check"
-              ? "Run now"
+              ? "Rodar agora"
               : tracker.enabled
-                ? "Save schedule"
-                : "Start tracking"}
+                ? "Salvar frequência"
+                : "Começar a acompanhar"}
           </Button>
         </>
       }
@@ -220,19 +220,19 @@ export function TrackingCostReview({
             )}
             <Field>
               <FieldLabel>
-                {mode === "schedule" ? "Cost per run" : "Cost"}
+                {mode === "schedule" ? "Custo por execução" : "Custo"}
               </FieldLabel>
               <span className="text-2xl font-semibold tabular-nums">
                 {aiMoney(runCostUsd)}
               </span>
               <FieldDescription>
                 {/* No per-answer price: engines cost different amounts. */}
-                {`${cost.observations} ${cost.observations === 1 ? "answer" : "answers"}${mode === "schedule" ? ` · about ${aiMoney(cost.monthlyCostUsd)} a month (${cost.checksPerMonth} ${cost.checksPerMonth === 1 ? "run" : "runs"})` : " · live answers, ready in a few minutes"}`}
+                {`${cost.observations} ${cost.observations === 1 ? "resposta" : "respostas"}${mode === "schedule" ? ` · cerca de ${aiMoney(cost.monthlyCostUsd)} por mês (${cost.checksPerMonth} ${cost.checksPerMonth === 1 ? "execução" : "execuções"})` : " · respostas ao vivo, prontas em poucos minutos"}`}
               </FieldDescription>
               {/* Pausing keeps the next check, so only a tracker never scheduled has none. */}
               {mode === "check" && tracker.nextCheckAt && (
                 <FieldDescription>
-                  Your scheduled tracking doesn't change.
+                  O acompanhamento agendado não muda.
                 </FieldDescription>
               )}
             </Field>

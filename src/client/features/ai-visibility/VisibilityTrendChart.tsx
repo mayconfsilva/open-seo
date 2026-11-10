@@ -13,8 +13,8 @@ import {
 import type { AiTrend } from "@/shared/ai-visibility";
 
 export const trendSeries = [
-  { key: "mentionRate", label: "Brand mentions", color: "#2563eb" },
-  { key: "citationRate", label: "Owned citations", color: "#e69f00" },
+  { key: "mentionRate", label: "Menções à marca", color: "#2563eb" },
+  { key: "citationRate", label: "Citações do seu site", color: "#e69f00" },
 ] as const;
 
 const chartConfig: ChartConfig = Object.fromEntries(
@@ -47,13 +47,13 @@ export function VisibilityTrendChart({ trend }: { trend: AiTrend }) {
     time: Date.parse(run.createdAt),
     mentionRate: run.mentionRate,
     citationRate: run.citationRate,
-    collected: `${run.coverage.answered} of ${run.coverage.expected} answers collected`,
+    collected: `${run.coverage.answered} de ${run.coverage.expected} respostas coletadas`,
   }));
   return (
     <ChartContainer
       config={chartConfig}
       className="h-[220px]"
-      aria-label="Daily brand mention and owned citation rate"
+      aria-label="Taxa diária de menções à marca e citações do seu site"
     >
       <LineChart data={data} margin={{ left: 0, right: 12, top: 8, bottom: 0 }}>
         <ChartGrid />
@@ -71,7 +71,7 @@ export function VisibilityTrendChart({ trend }: { trend: AiTrend }) {
               labelFormatter={(label) => {
                 const point = data.find((item) => item.time === Number(label));
                 return point
-                  ? `${new Date(point.time).toLocaleString()} · ${point.collected}`
+                  ? `${new Date(point.time).toLocaleString("pt-BR")} · ${point.collected}`
                   : "";
               }}
               valueFormatter={(value) => `${String(value)}%`}

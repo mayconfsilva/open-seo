@@ -27,7 +27,7 @@ const promptColumns: ColumnDef<AiResearchedPrompt>[] = [
         <span>{prompt.text}</span>
         {prompt.tracked && (
           <Badge variant="secondary" className="ml-2">
-            Tracked
+            Acompanhado
           </Badge>
         )}
         {prompt.variants.length > 0 && (
@@ -44,18 +44,18 @@ const promptColumns: ColumnDef<AiResearchedPrompt>[] = [
   },
   {
     id: "sources",
-    header: "Sources",
+    header: "Fontes",
     meta: { headerClassName: "w-40" },
     cell: ({ row: { original: prompt } }) => (
       <>
         <span className="text-sm">
           {prompt.sources.length
-            ? `${prompt.sources.length} ${prompt.sources.length === 1 ? "source" : "sources"}`
-            : "No sources"}
+            ? `${prompt.sources.length} ${prompt.sources.length === 1 ? "fonte" : "fontes"}`
+            : "Sem fontes"}
         </span>
         {prompt.ownDomainCited && (
           <Badge variant="success" size="sm" className="ml-2">
-            You
+            Você
           </Badge>
         )}
       </>
@@ -63,14 +63,14 @@ const promptColumns: ColumnDef<AiResearchedPrompt>[] = [
   },
   {
     id: "expand",
-    header: () => <span className="sr-only">Details</span>,
+    header: () => <span className="sr-only">Detalhes</span>,
     meta: { headerClassName: "w-10" },
     cell: ({ row }) => (
       <Button
         variant="ghost"
         size="icon-sm"
         aria-expanded={row.getIsExpanded()}
-        aria-label={`Show sources for ${row.original.text}`}
+        aria-label={`Ver fontes de ${row.original.text}`}
         onClick={() => row.toggleExpanded()}
       >
         {row.getIsExpanded() ? <ChevronDown /> : <ChevronRight />}
@@ -97,7 +97,7 @@ export function PromptResearchTable({
     () => [
       makeSelectionColumn<AiResearchedPrompt>(
         selectAnchorRef,
-        (row) => `Select ${row.original.text}`,
+        (row) => `Selecionar ${row.original.text}`,
       ),
       ...promptColumns,
     ],
@@ -126,8 +126,8 @@ function PromptSources({ prompt }: { prompt: AiResearchedPrompt }) {
     <div className="space-y-2 py-1 pl-10">
       <Badge variant={prompt.brandMentioned ? "success" : "outline"}>
         {prompt.brandMentioned
-          ? "Your brand is mentioned"
-          : "Your brand is not mentioned"}
+          ? "Sua marca é mencionada"
+          : "Sua marca não é mencionada"}
       </Badge>
       {prompt.sources.length ? (
         <ul className="space-y-1.5">
@@ -144,7 +144,7 @@ function PromptSources({ prompt }: { prompt: AiResearchedPrompt }) {
               />
               {source.own && (
                 <Badge variant="success" size="sm">
-                  You
+                  Você
                 </Badge>
               )}
             </li>
@@ -152,7 +152,7 @@ function PromptSources({ prompt }: { prompt: AiResearchedPrompt }) {
         </ul>
       ) : (
         <p className="text-sm text-muted-foreground">
-          The AI answered from memory and cited no sources.
+          A IA respondeu de memória e não citou fontes.
         </p>
       )}
     </div>

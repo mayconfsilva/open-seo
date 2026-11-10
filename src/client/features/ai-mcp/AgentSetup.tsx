@@ -47,7 +47,7 @@ export function AgentSetup({
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Set up your agent
+          Configure seu agente
         </h1>
         <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground">
           {AGENT_SETUP_DESCRIPTION}
@@ -78,7 +78,7 @@ export function AgentSetup({
             <Icon data-icon="inline-start" />
             {/* "Add to" drops on narrow screens so both buttons fit one row. */}
             <span>
-              <span className="max-sm:sr-only">Add to </span>
+              <span className="max-sm:sr-only">Adicionar ao </span>
               {name}
             </span>
           </Button>
@@ -90,11 +90,11 @@ export function AgentSetup({
             className="mt-3 flex items-center justify-center gap-1.5 text-sm font-medium text-success"
           >
             <Check className="size-4" aria-hidden />
-            Connected
+            Conectado
           </p>
         ) : copied ? (
           <p className="mt-3 text-center text-xs text-muted-foreground">
-            Paste it into your agent and approve the connection.
+            Cole no seu agente e aprove a conexão.
           </p>
         ) : null}
       </AgentSetupPanel>
@@ -113,7 +113,7 @@ export function AgentSetup({
               }
               onClick={onFinish}
             >
-              Go to dashboard <ArrowRight className="size-4" />
+              Ir para o painel <ArrowRight className="size-4" />
             </Button>
           }
         />

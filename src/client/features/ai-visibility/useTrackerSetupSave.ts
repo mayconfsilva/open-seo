@@ -47,7 +47,7 @@ export function useTrackerSetupSave({
       onSaved(result.state, result.run);
       if (result.scheduleError)
         toast.error(
-          `${result.state.tracker?.enabled ? "Weekly tracking is on, but the first check couldn't start." : "Prompts saved. We couldn't start weekly tracking."} ${getStandardErrorMessage(result.scheduleError)}`,
+          `${result.state.tracker?.enabled ? "O acompanhamento semanal está ligado, mas a primeira coleta não começou." : "Prompts salvos. Não foi possível iniciar o acompanhamento semanal."} ${getStandardErrorMessage(result.scheduleError)}`,
         );
     },
   });

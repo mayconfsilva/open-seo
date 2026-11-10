@@ -40,7 +40,7 @@ export function SuggestedCompetitors({
       });
     },
     onSuccess: (_, domain) => {
-      toast.success(`${domain} added as a competitor`);
+      toast.success(`${domain} adicionado como concorrente`);
       void Promise.all([
         queryClient.invalidateQueries({ queryKey: aiVisibilityKey(projectId) }),
         queryClient.invalidateQueries({
@@ -61,9 +61,9 @@ export function SuggestedCompetitors({
   const top = rows.slice(0, 5);
   return (
     <div className="space-y-3 border-t border-border p-4">
-      <h2 className="text-sm font-semibold">Suggested competitors</h2>
+      <h2 className="text-sm font-semibold">Concorrentes sugeridos</h2>
       <p className="text-xs text-muted-foreground">
-        Other sites AI answers cite most for your prompts.
+        Outros sites que as respostas de IA mais citam nos seus prompts.
       </p>
       <div className="divide-y divide-border">
         {top.map((row) => (
@@ -86,7 +86,7 @@ export function SuggestedCompetitors({
               onClick={() => add.mutate(row.domain)}
             >
               <Plus />
-              Add
+              Adicionar
             </Button>
           </div>
         ))}

@@ -162,7 +162,7 @@ export function AiResearchSetupGate({
           <WebsiteResearchProgress
             missingOverview={data.missingOverview}
             missingCompetitors={data.missingCompetitors}
-            note="You can leave this page; setup keeps running."
+            note="Você pode sair desta página; a configuração continua."
           />
         </div>
       );
@@ -177,26 +177,25 @@ export function AiResearchSetupGate({
                 <Sparkles className="size-5" />
               </div>
               <h1 className="text-2xl font-semibold tracking-tight">
-                Set up AI visibility
+                Configurar a visibilidade em IA
               </h1>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                We’ll research your brand and find the most relevant topics to
-                monitor.
+                Vamos pesquisar sua marca e encontrar os temas mais relevantes para acompanhar.
               </p>
             </div>
             {getErrorCode(start.error) === "INSUFFICIENT_CREDITS" ? (
-              <InsufficientCreditsError title="We couldn’t set up AI visibility" />
+              <InsufficientCreditsError title="Não foi possível configurar a visibilidade em IA" />
             ) : (
               failed && (
                 <Alert variant="destructive">
                   <AlertDescription>
                     {unreadable
-                      ? "We couldn’t read this website. Its bot protection may be blocking us. Describe your business below and try again, or check the URL in project settings."
+                      ? "Não conseguimos ler este site. A proteção contra robôs pode estar bloqueando. Descreva o negócio abaixo e tente de novo, ou confira a URL nas configurações do projeto."
                       : !start.isError && data.failure === "subrequest_limit"
-                        ? "Setup needs more outgoing requests than Cloudflare Workers Free allows (50). Upgrade to Workers Paid or run the Docker edition, then try again."
+                        ? "A configuração precisa de mais requisições do que o plano gratuito do Cloudflare Workers permite (50). Use o Workers pago ou a edição Docker e tente de novo."
                         : isEveryAppClientAuthMode()
                           ? "We couldn’t finish setting up AI visibility. It needs DataForSEO and OpenRouter on your Every App gateway: if they aren’t set up yet, an owner or admin runs pnpm everyapp secret set DATAFORSEO_API_KEY OPENROUTER_API_KEY. Then try again."
-                          : "We couldn’t finish setting up AI visibility. Try again."}
+                          : "Não foi possível concluir a configuração da visibilidade em IA. Tente de novo."}
                   </AlertDescription>
                 </Alert>
               )
@@ -204,7 +203,7 @@ export function AiResearchSetupGate({
             {unreadable && (
               <Field>
                 <FieldLabel htmlFor="business-overview">
-                  What you sell, who buys it, and where
+                  O que você vende, quem compra e onde
                 </FieldLabel>
                 <Textarea
                   id="business-overview"
@@ -215,7 +214,7 @@ export function AiResearchSetupGate({
                 />
                 {saveOverview.isError && (
                   <p className="text-sm text-destructive">
-                    We couldn’t save your description. Try again.
+                    Não foi possível salvar a descrição. Tente de novo.
                   </p>
                 )}
               </Field>
@@ -229,12 +228,12 @@ export function AiResearchSetupGate({
                   overview.trim() ? saveOverview.mutate() : start.mutate()
                 }
               >
-                {failed ? "Try again" : "Start research"}
+                {failed ? "Tentar de novo" : "Iniciar pesquisa"}
               </Button>
               <p className="text-xs leading-relaxed text-muted-foreground">
                 {isEveryAppClientAuthMode()
-                  ? "Research and a first run of your prompts use the DataForSEO and OpenRouter keys on your Every App gateway."
-                  : "Research and a first run of your prompts use a small amount of usage credits."}
+                  ? "A pesquisa e a primeira execução dos prompts usam as chaves da DataForSEO e do OpenRouter do seu gateway Every App."
+                  : "A pesquisa e a primeira execução dos prompts usam poucos créditos."}
               </p>
             </div>
           </CardContent>

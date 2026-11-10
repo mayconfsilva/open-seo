@@ -67,7 +67,7 @@ const COUNTRY_ITEMS: Array<{
   value: WebSearchCountrySelection;
   label: string;
 }> = [
-  { value: "default", label: "No country preference" },
+  { value: "default", label: "Sem preferência de país" },
   ...sortBy(
     WEB_SEARCH_COUNTRY_CODES.map((code) => ({
       value: code,
@@ -81,10 +81,10 @@ function getCountryNote(model: PromptExplorerModel, form: FormValues) {
   if (!form.webSearch || form.webSearchCountryCode === "default") return null;
   const label = formatModelLabel(model);
   if (ignoresWebSearchCountry(model)) {
-    return `${label} can’t specify a country.`;
+    return `${label} não permite escolher país.`;
   }
   if (supportsWebSearchCountry(model, form.webSearchCountryCode)) return null;
-  return `${label} can’t specify this country.`;
+  return `${label} não permite escolher este país.`;
 }
 
 export function PromptExplorerForm({
@@ -145,7 +145,7 @@ export function PromptExplorerForm({
               autoFocus
             />
             <FieldDescription className="flex items-center justify-between">
-              <span>What your customers might ask AI.</span>
+              <span>O que seus clientes perguntariam a uma IA.</span>
               <span
                 className={cn(
                   "tabular-nums",
@@ -160,7 +160,7 @@ export function PromptExplorerForm({
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <Field>
               <FieldLabel htmlFor="prompt-explorer-brand">
-                Highlight brand (optional)
+                Destacar marca (opcional)
               </FieldLabel>
               <Input
                 id="prompt-explorer-brand"
@@ -170,13 +170,13 @@ export function PromptExplorerForm({
                 spellCheck={false}
               />
               <FieldDescription>
-                We&apos;ll flag whether each model mentions this brand.
+                Vamos indicar se cada modelo menciona esta marca.
               </FieldDescription>
             </Field>
 
             <FieldSet className="gap-0">
               <FieldLegend variant="label" className="mb-2">
-                Models
+                Modelos
               </FieldLegend>
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1.5">
                 {PROMPT_EXPLORER_MODELS.map((model) => {
@@ -204,7 +204,7 @@ export function PromptExplorerForm({
                             render={
                               <button
                                 type="button"
-                                aria-label={`About ${formatModelLabel(model)} and country targeting`}
+                                aria-label={`Sobre ${formatModelLabel(model)} e a escolha de país`}
                                 className="text-muted-foreground"
                               />
                             }
@@ -228,7 +228,7 @@ export function PromptExplorerForm({
                   checked={form.webSearch}
                   onCheckedChange={onWebSearchChange}
                 />
-                Allow web search
+                Permitir busca na web
               </Label>
               <Combobox
                 items={countryItems}
@@ -245,12 +245,12 @@ export function PromptExplorerForm({
                 disabled={!form.webSearch}
               >
                 <ComboboxInput
-                  aria-label="Web search country"
-                  placeholder="Search countries"
+                  aria-label="País da busca na web"
+                  placeholder="Buscar países"
                   className="w-full sm:w-80"
                 />
                 <ComboboxContent>
-                  <ComboboxEmpty>No supported countries match.</ComboboxEmpty>
+                  <ComboboxEmpty>Nenhum país compatível.</ComboboxEmpty>
                   <ComboboxList>
                     {(item: (typeof COUNTRY_ITEMS)[number]) => (
                       <ComboboxItem key={item.value} value={item}>
@@ -265,7 +265,7 @@ export function PromptExplorerForm({
                   render={
                     <button
                       type="button"
-                      aria-label="About country targeting"
+                      aria-label="Sobre a escolha de país"
                       className="text-muted-foreground"
                     />
                   }
@@ -273,9 +273,7 @@ export function PromptExplorerForm({
                   <Info className="size-4" />
                 </TooltipTrigger>
                 <TooltipContent>
-                  A country guides web search when a model supports it. Models
-                  may answer without searching. Leave it unset to run all
-                  selected models.
+                  O país orienta a busca na web quando o modelo permite. Os modelos podem responder sem buscar. Deixe vazio para rodar todos os modelos escolhidos.
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -284,7 +282,7 @@ export function PromptExplorerForm({
               className="px-6"
               disabled={supportedModels.length === 0}
             >
-              Run {supportedModels.length}{" "}
+              Rodar {supportedModels.length}{" "}
               {supportedModels.length === 1 ? "model" : "models"}
             </Button>
           </div>

@@ -111,7 +111,7 @@ export function ResearchPageShell<TData>({
               cause={query.error}
               fallback={
                 resultData
-                  ? `${errorMessage} Showing earlier results.`
+                  ? `${errorMessage} Mostrando resultados anteriores.`
                   : errorMessage
               }
               onRetry={() => void query.refetch()}

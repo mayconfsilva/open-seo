@@ -44,8 +44,8 @@ export function PromptRate({
       className="flex flex-col text-sm tabular-nums"
       title={
         rows
-          ? `${count} of ${eligible.length} eligible answers`
-          : "No results available"
+          ? `${count} de ${eligible.length} respostas válidas`
+          : "Nenhum resultado disponível"
       }
     >
       {aiRate(count, eligible.length)}
@@ -87,14 +87,14 @@ function ResultList({
 }
 
 function engineResult(engine: AiEngine, row: AiObservationRow | undefined) {
-  if (!row) return "No result available";
-  if (row.status === "failed") return "Failed";
-  if (row.status === "pending") return "Running";
+  if (!row) return "Nenhum resultado disponível";
+  if (row.status === "failed") return "Falhou";
+  if (row.status === "pending") return "Rodando";
   if (row.answerStatus === "no_answer") return aiNoAnswerLabel(engine);
-  if (row.answerStatus !== "answered") return "Answer unavailable";
+  if (row.answerStatus !== "answered") return "Resposta indisponível";
   return row.brands.find((brand) => brand.own)?.mentioned
-    ? "Mentioned"
-    : "Not mentioned";
+    ? "Mencionada"
+    : "Não mencionada";
 }
 
 /** Each engine's logo, colored by its result, with one hover list for them all. */
@@ -182,9 +182,7 @@ export function CompetitorStack({
     <Tooltip>
       <TooltipTrigger
         delay={100}
-        aria-label={`Competitors named: ${named
-          .map((brand) => brand.name)
-          .join(", ")}`}
+        aria-label={`Concorrentes citados: ${named .map((brand) => brand.name) .join(", ")}`}
         className="flex items-center"
       >
         {shown.map((brand) => (
@@ -207,7 +205,7 @@ export function CompetitorStack({
             key: brand.domain,
             icon: <DomainFavicon domain={brand.domain} />,
             label: brand.name,
-            value: `${brand.mentions} of ${brand.answers}`,
+            value: `${brand.mentions} de ${brand.answers}`,
           }))}
           more={more}
         />

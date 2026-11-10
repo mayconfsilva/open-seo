@@ -32,14 +32,14 @@ export function PromptSummary({ summaries }: { summaries: AiBrandSummary[] }) {
   return (
     <div className="overflow-hidden rounded-lg border bg-card border-border">
       <h2 className="border-b px-4 py-2 text-sm font-medium border-border">
-        Brand comparison
+        Comparação de marcas
       </h2>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Brand</TableHead>
-            <TableHead>Mentioned</TableHead>
-            <TableHead>Cited</TableHead>
+            <TableHead>Marca</TableHead>
+            <TableHead>Mencionada</TableHead>
+            <TableHead>Citada</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -51,14 +51,14 @@ export function PromptSummary({ summaries }: { summaries: AiBrandSummary[] }) {
                   {aiBrandLabel(brand)}
                   {brand.own && (
                     <Badge variant="secondary" size="sm">
-                      You
+                      Você
                     </Badge>
                   )}
                 </span>
               </TableCell>
               <TableCell
                 className="tabular-nums"
-                title={`${brand.mentions} of ${brand.answers} answers`}
+                title={`${brand.mentions} de ${brand.answers} respostas`}
               >
                 {aiRate(brand.mentions, brand.answers)}
                 {brand.answers > 0 && (
@@ -69,7 +69,7 @@ export function PromptSummary({ summaries }: { summaries: AiBrandSummary[] }) {
               </TableCell>
               <TableCell
                 className="tabular-nums"
-                title={`${brand.citations} of ${brand.answers} answers`}
+                title={`${brand.citations} de ${brand.answers} respostas`}
               >
                 {aiRate(brand.citations, brand.answers)}
                 {brand.answers > 0 && (
@@ -83,7 +83,7 @@ export function PromptSummary({ summaries }: { summaries: AiBrandSummary[] }) {
           {!summaries.length && (
             <TableRow>
               <TableCell colSpan={3} className="py-4 text-muted-foreground">
-                No brand evidence is available for this period yet.
+                Ainda não há evidências de marca neste período.
               </TableCell>
             </TableRow>
           )}
@@ -97,7 +97,7 @@ export function PromptSummary({ summaries }: { summaries: AiBrandSummary[] }) {
             className="h-auto px-0 text-muted-foreground hover:text-foreground"
             onClick={() => setExpanded(true)}
           >
-            Show {hiddenCount} more
+            Mostrar {hiddenCount} more
           </Button>
         </div>
       )}

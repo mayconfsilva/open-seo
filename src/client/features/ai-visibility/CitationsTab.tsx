@@ -86,8 +86,8 @@ export function CitationsTab({
           <SegmentedToggle
             showLabels
             items={[
-              { value: "url", label: "Pages", icon: null },
-              { value: "domain", label: "Domains", icon: null },
+              { value: "url", label: "Páginas", icon: null },
+              { value: "domain", label: "Domínios", icon: null },
             ]}
             value={groupBy}
             onChange={(value) => {
@@ -106,7 +106,7 @@ export function CitationsTab({
               reset();
             }}
           >
-            <SelectTrigger size="sm" aria-label="Filter source ownership">
+            <SelectTrigger size="sm" aria-label="Filtrar por dono da fonte">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -119,7 +119,7 @@ export function CitationsTab({
           </Select>
           {state.engines.length > 1 && (
             <EngineFilter
-              label="Filter sources by engine"
+              label="Filtrar fontes por IA"
               engines={state.engines}
               value={engines}
               onChange={(next) => {
@@ -132,7 +132,7 @@ export function CitationsTab({
       )}
       {!runId ? (
         <p className="p-10 text-center text-sm text-muted-foreground">
-          Run{" "}
+          Rodar{" "}
           <Link
             to="/p/$projectId/ai-visibility"
             params={{ projectId }}
@@ -140,7 +140,7 @@ export function CitationsTab({
           >
             prompt tracking
           </Link>{" "}
-          to see which pages AI answers cite.
+          para ver quais páginas as respostas de IA citam.
         </p>
       ) : query.isPending ? (
         <SkeletonTableRows rows={6} columns={5} className="p-4" />
@@ -154,8 +154,8 @@ export function CitationsTab({
       ) : !query.data.rows.length ? (
         <p className="p-10 text-center text-sm text-muted-foreground">
           {collecting
-            ? "Collecting answers. Cited pages appear here as answers arrive."
-            : "No citations match these filters."}
+            ? "Coletando respostas. As páginas citadas aparecem aqui conforme as respostas chegam."
+            : "Nenhuma citação com estes filtros."}
         </p>
       ) : (
         <SourcesTable
@@ -174,7 +174,7 @@ export function CitationsTab({
             disabled={!cursor}
             onClick={() => setCursor(undefined)}
           >
-            First page
+            Primeira página
           </Button>
           <Button
             variant="ghost"
@@ -182,7 +182,7 @@ export function CitationsTab({
             disabled={!query.data?.nextCursor}
             onClick={() => setCursor(query.data?.nextCursor ?? undefined)}
           >
-            Next page <ArrowRight />
+            Próxima página <ArrowRight />
           </Button>
         </div>
       )}
@@ -191,10 +191,10 @@ export function CitationsTab({
 }
 
 const OWNERSHIP_ITEMS = [
-  { value: "all", label: "All ownership" },
-  { value: "own", label: "Your domains" },
-  { value: "competitor", label: "Competitor domains" },
-  { value: "other", label: "Third-party domains" },
+  { value: "all", label: "Todos os donos" },
+  { value: "own", label: "Seus domínios" },
+  { value: "competitor", label: "Domínios de concorrentes" },
+  { value: "other", label: "Domínios de terceiros" },
 ] as const;
 
 function SourcesTable({
@@ -216,12 +216,12 @@ function SourcesTable({
       <TableHeader>
         <TableRow>
           <TableHead>
-            {groupBy === "domain" ? "Domain" : "Cited page"}
+            {groupBy === "domain" ? "Domínio" : "Página citada"}
           </TableHead>
-          <TableHead>Ownership</TableHead>
-          <TableHead>Answers</TableHead>
+          <TableHead>Dono</TableHead>
+          <TableHead>Respostas</TableHead>
           <TableHead>Prompts</TableHead>
-          <TableHead>Engines</TableHead>
+          <TableHead>IAs</TableHead>
           <TableHead />
         </TableRow>
       </TableHeader>
@@ -279,10 +279,10 @@ function SourceRow({
         </TableCell>
         <TableCell className="whitespace-nowrap text-xs">
           {row.ownership === "own"
-            ? "Your domain"
+            ? "Seu domínio"
             : row.ownership === "competitor"
-              ? "Competitor"
-              : "Third party"}
+              ? "Concorrente"
+              : "Terceiro"}
         </TableCell>
         <TableCell>{row.answerCount}</TableCell>
         <TableCell>{row.promptCount}</TableCell>
@@ -311,7 +311,7 @@ function SourceRow({
             variant="ghost"
             size="icon-sm"
             aria-expanded={expanded}
-            aria-label={`Show prompts that cited ${row.title || row.url || row.domain}`}
+            aria-label={`Ver prompts que citaram ${row.title || row.url || row.domain}`}
           >
             {expanded ? <ChevronDown /> : <ChevronRight />}
           </Button>

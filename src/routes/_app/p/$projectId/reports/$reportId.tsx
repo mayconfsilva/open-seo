@@ -183,7 +183,7 @@ function ReportDetailPage() {
               <dd>{report.templateName ?? report.skill ?? "—"}</dd>
             </div>
             <div className="flex items-baseline gap-1.5">
-              <dt className="text-muted-foreground">Updated</dt>
+              <dt className="text-muted-foreground">Atualizado</dt>
               <dd title={new Date(report.updatedAt).toLocaleString()}>
                 {formatRelativeTime(report.updatedAt)}
               </dd>
