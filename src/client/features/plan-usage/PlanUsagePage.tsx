@@ -1,11 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle } from "lucide-react";
-import { QueryState } from "@/client/components/QueryState";
+import { QueryError, QueryState } from "@/client/components/QueryState";
 import { Alert, AlertDescription } from "@/client/components/ui/alert";
 import { Badge } from "@/client/components/ui/badge";
+import { organizationContextQueryOptions } from "@/client/features/team/organizationQueries";
+import { hasOrgPermission } from "@/lib/org-permissions";
 import {
   PlanMeter,
+  dataforseoBalanceQueryOptions,
+  formatUsd,
   formatPlanDate,
   formatPlanDay,
   formatQueries,
@@ -105,11 +109,62 @@ function PlanUsageContent({ usage }: { usage: PlanUsage }) {
         </p>
       </section>
 
+      <DataforseoBalance />
+
       <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <ProjectsTable usage={usage} />
         <History usage={usage} />
       </div>
     </div>
+  );
+}
+
+/** The money left on the DataForSEO account, for owners and admins. */
+function DataforseoBalance() {
+  const org = useQuery(organizationContextQueryOptions());
+  const canSee =
+    org.data !== undefined &&
+    hasOrgPermission(org.data.role, { integration: ["manage"] });
+  const balance = useQuery({
+    ...dataforseoBalanceQueryOptions(),
+    enabled: canSee,
+  });
+  if (!canSee) return null;
+
+  return (
+    <section className="flex flex-col gap-2 rounded-lg border border-border bg-card p-5">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="text-[15px] font-semibold">Saldo na DataForSEO</h2>
+        {balance.data ? (
+          <span className="text-[12.5px] text-muted-foreground">
+            Consultado às{" "}
+            {new Date(balance.data.checkedAt).toLocaleTimeString("pt-BR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </span>
+        ) : null}
+      </div>
+      {balance.isError ? (
+        <QueryError
+          fallback="Não foi possível consultar o saldo agora. Confira a chave da DataForSEO."
+          onRetry={() => void balance.refetch()}
+          isRetrying={balance.isFetching}
+        />
+      ) : (
+        <span className="text-[28px] font-semibold tabular-nums">
+          {balance.data
+            ? balance.data.balanceUsd === null
+              ? "—"
+              : formatUsd(balance.data.balanceUsd)
+            : "…"}
+        </span>
+      )}
+      <p className="text-[12px] text-muted-foreground">
+        Crédito que ainda resta na conta da DataForSEO usada por esta
+        instalação. As recargas são feitas no painel da DataForSEO.
+      </p>
+    </section>
   );
 }
 

@@ -162,17 +162,11 @@ function RankSummaryContent({
 
       <PositionBandsChart points={trendQuery.data} />
 
+      {/* Movers and the competitor bars share the wide column so it is about
+          as tall as the attention list beside it. */}
       <div className="grid items-start gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+        <div className="flex flex-col gap-4 lg:col-span-2">
           <MoversCard projectId={projectId} up={stats.up} down={stats.down} />
-        </div>
-        <div className="flex flex-col gap-4">
-          <AttentionCard
-            projectId={projectId}
-            rows={rows}
-            device={device}
-            competitors={competitorData?.positions ?? []}
-          />
           <CompetitorsTop10
             projectId={projectId}
             you={{ name: main.domain, value: stats.top10 }}
@@ -180,6 +174,12 @@ function RankSummaryContent({
             base={stats.checked}
           />
         </div>
+        <AttentionCard
+          projectId={projectId}
+          rows={rows}
+          device={device}
+          competitors={competitorData?.positions ?? []}
+        />
       </div>
     </section>
   );
