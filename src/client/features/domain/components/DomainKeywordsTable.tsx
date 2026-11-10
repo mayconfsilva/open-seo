@@ -61,7 +61,7 @@ export function DomainKeywordsTable({
     () => [
       makeSelectionColumn<KeywordRow>(selectAnchorRef),
       keywordColumnHelper.accessor("keyword", {
-        header: () => "Keyword",
+        header: () => "Palavra",
         cell: ({ getValue }) => (
           <span className="font-medium">{getValue()}</span>
         ),
@@ -69,7 +69,7 @@ export function DomainKeywordsTable({
       keywordColumnHelper.accessor("position", {
         header: () => (
           <SortableHeader
-            label="Rank"
+            label="Posição"
             column={domainSortColumn(
               sortMode === "rank",
               currentSortOrder,
@@ -95,7 +95,7 @@ export function DomainKeywordsTable({
       keywordColumnHelper.accessor("traffic", {
         header: () => (
           <SortableHeader
-            label="Traffic"
+            label="Tráfego"
             column={domainSortColumn(
               sortMode === "traffic",
               currentSortOrder,
@@ -109,7 +109,7 @@ export function DomainKeywordsTable({
         header: () => (
           <SortableHeader
             label="CPC"
-            helpText="Cost per click in USD."
+            helpText="Custo por clique em dólares."
             column={domainSortColumn(sortMode === "cpc", currentSortOrder, () =>
               onSortClick("cpc"),
             )}
@@ -137,8 +137,8 @@ export function DomainKeywordsTable({
       keywordColumnHelper.accessor("keywordDifficulty", {
         header: () => (
           <SortableHeader
-            label="Score"
-            helpText="Organic ranking difficulty (0-100): higher means harder to reach Google's top 10."
+            label="Nota"
+            helpText="Dificuldade orgânica (0 a 100): quanto maior, mais difícil chegar ao top 10 do Google."
             column={domainSortColumn(
               sortMode === "score",
               currentSortOrder,
@@ -174,7 +174,7 @@ export function DomainKeywordsTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "No keywords match this search." }}
+      empty={{ title: "Nenhuma palavra com essa busca." }}
       {...frame}
     />
   );

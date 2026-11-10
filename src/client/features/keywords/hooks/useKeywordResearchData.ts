@@ -180,7 +180,7 @@ export function useKeywordResearchData(
       displayedLocationCode,
       request.locationName
         ? formatLocationLabel(request.locationName)
-        : LOCATIONS[displayedLocationCode] || "Unknown",
+        : LOCATIONS[displayedLocationCode] || "Desconhecido",
       request.locationName,
     );
   }, [
@@ -196,7 +196,7 @@ export function useKeywordResearchData(
   const rows = hasSearched ? (researchQuery.data?.rows ?? []) : [];
   const researchError =
     hasSearched && researchQuery.isError
-      ? getStandardErrorMessage(researchQuery.error, "Research failed.")
+      ? getStandardErrorMessage(researchQuery.error, "A pesquisa falhou.")
       : null;
 
   return {

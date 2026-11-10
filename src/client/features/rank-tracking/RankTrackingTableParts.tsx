@@ -21,23 +21,23 @@ const FEATURE_SHORT_LABELS: Record<string, string> = {
   ai_overview: "AI",
   local_pack: "Local",
   knowledge_panel: "KP",
-  video: "Video",
+  video: "Vídeo",
   images: "Img",
   shopping: "Shop",
-  top_stories: "News",
+  top_stories: "Notícias",
 };
 
 const FEATURE_TOOLTIPS: Record<string, string> = {
   featured_snippet:
-    "Featured Snippet — highlighted answer box at top of results",
-  people_also_ask: "People Also Ask — expandable related questions",
-  ai_overview: "AI Overview — AI-generated summary at top of search",
-  local_pack: "Local Pack — map with local business listings",
-  knowledge_panel: "Knowledge Panel — info box about an entity",
-  video: "Video — video results shown in the SERP",
-  images: "Images — image results shown in the SERP",
-  shopping: "Shopping — product listings with prices",
-  top_stories: "Top Stories — news articles carousel",
+    "Featured Snippet: caixa de resposta em destaque no topo",
+  people_also_ask: "As pessoas também perguntam: perguntas relacionadas",
+  ai_overview: "Visão geral de IA: resumo gerado por IA no topo",
+  local_pack: "Pacote local: mapa com empresas locais",
+  knowledge_panel: "Painel de conhecimento: caixa de informações sobre uma entidade",
+  video: "Vídeo: resultados em vídeo na SERP",
+  images: "Imagens: resultados de imagem na SERP",
+  shopping: "Shopping: produtos com preço",
+  top_stories: "Principais notícias: carrossel de notícias",
 };
 
 export function SerpFeatureTags({ features }: { features: string[] }) {
@@ -197,26 +197,26 @@ function buildRankTrackingExport(
     "Palavra",
     // Exports lack the table's tooltip, so name the city inline.
     locationName
-      ? `Local volume (${formatLocationLabel(locationName, 2)})`
+      ? `Volume local (${formatLocationLabel(locationName, 2)})`
       : "Volume",
     "KD",
     "CPC",
     ...(showDesktop
       ? [
-          "Desktop Position",
-          "Desktop Change",
-          "Desktop URL",
-          "Desktop SERP Features",
-          "Desktop Checked At (UTC)",
+          "Posição no computador",
+          "Variação no computador",
+          "URL no computador",
+          "Recursos da SERP no computador",
+          "Coletado no computador em (UTC)",
         ]
       : []),
     ...(showMobile
       ? [
-          "Mobile Position",
-          "Mobile Change",
-          "Mobile URL",
-          "Mobile SERP Features",
-          "Mobile Checked At (UTC)",
+          "Posição no celular",
+          "Variação no celular",
+          "URL no celular",
+          "Recursos da SERP no celular",
+          "Coletado no celular em (UTC)",
         ]
       : []),
   ];

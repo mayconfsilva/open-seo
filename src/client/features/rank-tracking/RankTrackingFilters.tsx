@@ -256,7 +256,7 @@ function RangeFilter({
         <Input
           className="h-7"
           placeholder="Mín."
-          aria-label={`${title} min`}
+          aria-label={`${title} mín.`}
           type="number"
           value={minValue}
           onChange={(e) => onMinChange(e.target.value)}
@@ -264,7 +264,7 @@ function RangeFilter({
         <Input
           className="h-7"
           placeholder="Máx."
-          aria-label={`${title} max`}
+          aria-label={`${title} máx.`}
           type="number"
           value={maxValue}
           onChange={(e) => onMaxChange(e.target.value)}

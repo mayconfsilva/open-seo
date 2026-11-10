@@ -18,12 +18,12 @@ import { formatLocationLabel } from "@/shared/keyword-locations";
 function keywordResearchHeaders(locationName?: string) {
   const scope = locationName ? ` (${formatLocationLabel(locationName)})` : "";
   return [
-    "Keyword",
+    "Palavra",
     `Volume${scope}`,
     `CPC${scope}`,
     `Competition${scope}`,
-    "Score",
-    "Intent",
+    "Nota",
+    "Intenção",
   ];
 }
 
@@ -147,7 +147,7 @@ export function useSaveAndExportActions(params: SaveExportActionParams) {
             source_feature: "keyword_research",
             keyword_count: count,
           });
-          toast.success(`Saved ${count} keywords`);
+          toast.success(`${count} palavras salvas`);
           setShowSaveDialog(false);
         },
       },

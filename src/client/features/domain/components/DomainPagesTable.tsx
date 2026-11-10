@@ -41,7 +41,7 @@ export function DomainPagesTable({
     () => [
       pageColumnHelper.display({
         id: "page",
-        header: () => "Page",
+        header: () => "Página",
         cell: ({ row }) => (
           <ExternalUrlCell
             value={row.original.page}
@@ -56,7 +56,7 @@ export function DomainPagesTable({
       pageColumnHelper.accessor("organicTraffic", {
         header: () => (
           <SortableHeader
-            label="Organic Traffic"
+            label="Tráfego orgânico"
             column={domainSortColumn(
               toPageSortMode(sortMode) === "traffic",
               currentSortOrder,
@@ -69,7 +69,7 @@ export function DomainPagesTable({
       pageColumnHelper.accessor("keywords", {
         header: () => (
           <SortableHeader
-            label="Keywords"
+            label="Palavras"
             column={domainSortColumn(
               toPageSortMode(sortMode) === "keywords",
               currentSortOrder,
@@ -93,7 +93,7 @@ export function DomainPagesTable({
   return (
     <DataTable
       table={table}
-      empty={{ title: "No pages match this search." }}
+      empty={{ title: "Nenhuma página com essa busca." }}
       {...frame}
     />
   );

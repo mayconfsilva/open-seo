@@ -38,18 +38,18 @@ const EMPTY_PAGES_ROWS: PageRow[] = [];
 const PAGE_TEXT_FILTERS = [
   {
     key: "include",
-    label: "Include Page Terms",
-    placeholder: "pricing, tools, guides",
+    label: "Incluir termos na página",
+    placeholder: "preços, ferramentas, guias",
   },
   {
     key: "exclude",
-    label: "Exclude Page Terms",
-    placeholder: "blog, tag, archive",
+    label: "Excluir termos na página",
+    placeholder: "blog, tag, arquivo",
   },
 ] as const;
 const PAGE_RANGE_FILTERS = [
-  { title: "Traffic", minKey: "minTraffic", maxKey: "maxTraffic" },
-  { title: "Keywords", minKey: "minVol", maxKey: "maxVol" },
+  { title: "Tráfego", minKey: "minTraffic", maxKey: "maxTraffic" },
+  { title: "Palavras", minKey: "minVol", maxKey: "maxVol" },
 ] as const;
 
 type Props = {
@@ -176,7 +176,7 @@ export function PagesTab({
         query.isError ? (
           <QueryError
             error={query.error}
-            fallback="Failed to load pages."
+            fallback="Não foi possível carregar as páginas."
             onRetry={() => void query.refetch()}
             isRetrying={isFetching}
           />

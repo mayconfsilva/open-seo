@@ -89,7 +89,7 @@ export function MoreMenu({
           }}
           onClose={() => setConfirmingRefresh(false)}
         >
-          This fetches new volume, difficulty, and CPC for all{" "}
+          Isto busca volume, dificuldade e CPC atualizados para todas as{" "}
           {trackedKeywordCount} tracked keyword
           {trackedKeywordCount !== 1 ? "s" : ""}. Each keyword uses credits.
           Rankings do not change.

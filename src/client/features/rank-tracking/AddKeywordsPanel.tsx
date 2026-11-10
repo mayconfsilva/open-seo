@@ -74,7 +74,7 @@ export function AddKeywordsPanel({
               .filter(Boolean);
             if (lines.some((l) => l.length > MAX_TRACKED_KEYWORD_LENGTH)) {
               toast.error(
-                `Keywords must be ${MAX_TRACKED_KEYWORD_LENGTH} characters or fewer.`,
+                `As palavras devem ter no máximo ${MAX_TRACKED_KEYWORD_LENGTH} caracteres.`,
               );
               return;
             }

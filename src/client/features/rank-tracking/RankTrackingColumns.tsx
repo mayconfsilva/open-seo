@@ -26,15 +26,15 @@ export const RANK_TRACKING_HEADER_CLASS =
   "text-xs uppercase tracking-wide text-muted-foreground";
 
 const HEADER_TOOLTIPS: Record<string, string> = {
-  keyword: "The search term being tracked in Google",
-  volume: "Estimated monthly search volume from Google",
-  kd: "Keyword difficulty score (0-100) — higher means harder to rank",
-  cpc: "Average cost per click in Google Ads (USD)",
+  keyword: "O termo acompanhado no Google",
+  volume: "Volume mensal de buscas estimado pelo Google",
+  kd: "Dificuldade da palavra (0 a 100): quanto maior, mais difícil posicionar",
+  cpc: "Custo médio por clique no Google Ads (US$)",
   desktopPosition:
-    "Current Google ranking position, showing change from the comparison period",
+    "Posição atual no Google, com a variação em relação ao período de comparação",
   mobilePosition:
-    "Current Google ranking position, showing change from the comparison period",
-  url: "The page on your site that ranks for this keyword",
+    "Posição atual no Google, com a variação em relação ao período de comparação",
+  url: "A página do seu site que aparece para esta palavra",
   serp: "Special result features appearing on the search results page (e.g. AI Overview, People Also Ask)",
 };
 
@@ -51,7 +51,7 @@ function makeVolumeColumn(locationLabel?: string): ColumnDef<RankTrackingRow> {
         label={locationLabel ? "Volume local" : "Volume"}
         title={
           locationLabel
-            ? `Estimated monthly searches in ${locationLabel} from Google Ads`
+            ? `Buscas mensais estimadas em ${locationLabel} pelo Google Ads`
             : HEADER_TOOLTIPS.volume
         }
         className={RANK_TRACKING_HEADER_CLASS}

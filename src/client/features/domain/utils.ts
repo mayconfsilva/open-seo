@@ -84,7 +84,7 @@ type ExportTable = { headers: string[]; rows: (string | number | null)[][] };
 
 export function keywordsToTable(rows: KeywordRow[]): ExportTable {
   return {
-    headers: ["Keyword", "Rank", "Volume", "Traffic", "CPC", "URL", "Score"],
+    headers: ["Palavra", "Posição", "Volume", "Tráfego", "CPC", "URL", "Nota"],
     rows: rows.map((row) => [
       row.keyword,
       row.position,
@@ -99,7 +99,7 @@ export function keywordsToTable(rows: KeywordRow[]): ExportTable {
 
 export function pagesToTable(rows: PageRow[]): ExportTable {
   return {
-    headers: ["Page", "Organic Traffic", "Keywords"],
+    headers: ["Página", "Tráfego orgânico", "Palavras"],
     rows: rows.map((row) => [row.page, row.organicTraffic, row.keywords]),
   };
 }

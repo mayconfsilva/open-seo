@@ -19,7 +19,7 @@ const VARIANTS: Record<
 
 const SHORT_LABELS: Record<KeywordIntent, string> = {
   informational: "Info",
-  commercial: "Comm",
+  commercial: "Com",
   transactional: "Trans",
   navigational: "Nav",
   unknown: "?",
@@ -27,11 +27,11 @@ const SHORT_LABELS: Record<KeywordIntent, string> = {
 
 /** Full intent labels, shared with the keyword filters so both stay in sync. */
 export const INTENT_LABELS: Record<KeywordIntent, string> = {
-  informational: "Informational",
-  commercial: "Commercial",
-  transactional: "Transactional",
-  navigational: "Navigational",
-  unknown: "Unknown",
+  informational: "Informacional",
+  commercial: "Comercial",
+  transactional: "Transacional",
+  navigational: "Navegacional",
+  unknown: "Desconhecido",
 };
 
 const DESCRIPTIONS: Record<
@@ -41,27 +41,27 @@ const DESCRIPTIONS: Record<
   informational: {
     label: INTENT_LABELS.informational,
     description:
-      "The searcher wants information or answers. Use this for educational content, guides, and comparison-light explainers.",
+      "Quem busca quer informação ou respostas. Use para conteúdo educativo, guias e explicações.",
   },
   commercial: {
     label: INTENT_LABELS.commercial,
     description:
-      "The searcher is researching options before a purchase. Treat this as buying intent for comparisons, alternatives, and product-led pages.",
+      "Quem busca está avaliando opções antes de comprar. Trate como intenção de compra para comparações, alternativas e páginas de produto.",
   },
   transactional: {
     label: INTENT_LABELS.transactional,
     description:
-      "The searcher is ready to complete an action, often a purchase. Prioritize clear offers, pricing, trials, or conversion paths.",
+      "Quem busca está pronto para agir, geralmente comprar. Priorize ofertas claras, preços, testes ou caminhos de conversão.",
   },
   navigational: {
     label: INTENT_LABELS.navigational,
     description:
-      "The searcher is looking for a specific site, brand, or page. These queries usually reward matching the expected destination.",
+      "Quem busca procura um site, marca ou página específica. Essas buscas costumam favorecer o destino esperado.",
   },
   unknown: {
     label: INTENT_LABELS.unknown,
     description:
-      "Intent was not available for this keyword, so avoid making content strategy decisions from this badge alone.",
+      "A intenção não está disponível para esta palavra, então não decida a estratégia de conteúdo só por este selo.",
   },
 };
 
@@ -79,7 +79,7 @@ export function IntentBadge({ intent }: { intent: KeywordIntent }) {
             className="h-6 min-w-11 cursor-help font-semibold"
           />
         }
-        aria-label={`${details.label} search intent`}
+        aria-label={`Intenção de busca: ${details.label}`}
       >
         {SHORT_LABELS[intent]}
       </TooltipTrigger>

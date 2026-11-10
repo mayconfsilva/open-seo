@@ -287,7 +287,7 @@ export function KeywordSuggestionStep({
       <>
         <StepHeader
           title="Nenhuma posição encontrada"
-          description={`We couldn't find any keywords ${domain} currently ranks for. You can add keywords manually.`}
+          description={`Não encontramos palavras em que ${domain} esteja posicionado hoje. Você pode adicionar palavras manualmente.`}
         />
         <DialogFooter>
           <Button onClick={onClose}>Pular</Button>
@@ -337,7 +337,7 @@ export function KeywordSuggestionStep({
             pending={addMutation.isPending}
             disabled={selectedCount === 0}
           >
-            Save Keyword{selectedCount !== 1 ? "s" : ""}
+            Salvar palavra{selectedCount !== 1 ? "s" : ""}
           </Button>
         </div>
       </DialogFooter>

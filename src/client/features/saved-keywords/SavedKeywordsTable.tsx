@@ -53,7 +53,7 @@ export function SavedKeywordsTable({
       makeSelectionColumn<SavedKeywordRow>(selectAnchorRef),
       columnHelper.accessor("keyword", {
         header: ({ column }) => (
-          <SortableHeader column={column} label="Keyword" />
+          <SortableHeader column={column} label="Palavra" />
         ),
         cell: ({ getValue }) => (
           <span className="font-medium">{getValue()}</span>
@@ -76,8 +76,8 @@ export function SavedKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Competition"
-            helpText="Paid-search competition from Google Ads (0-1): higher means more advertisers bidding."
+            label="Concorrência"
+            helpText="Concorrência em anúncios do Google Ads (0 a 1): quanto maior, mais anunciantes disputando."
           />
         ),
         cell: ({ getValue }) => {
@@ -89,14 +89,14 @@ export function SavedKeywordsTable({
         header: ({ column }) => (
           <SortableHeader
             column={column}
-            label="Difficulty"
-            helpText="Organic ranking difficulty (0-100): higher means harder to reach Google's top 10."
+            label="Dificuldade"
+            helpText="Dificuldade orgânica (0 a 100): quanto maior, mais difícil chegar ao top 10 do Google."
           />
         ),
         cell: ({ getValue }) => <ScoreBadge value={getValue()} />,
       }),
       columnHelper.accessor("intent", {
-        header: () => "Intent",
+        header: () => "Intenção",
         cell: ({ getValue }) => (
           <IntentBadge intent={normalizeIntent(getValue())} />
         ),
@@ -104,14 +104,14 @@ export function SavedKeywordsTable({
       }),
       columnHelper.display({
         id: "tags",
-        header: () => "Tags",
+        header: () => "Etiquetas",
         cell: ({ row }) => <TagList tags={row.original.tags} />,
         enableSorting: false,
         meta: { cellClassName: "min-w-40 max-w-64" },
       }),
       columnHelper.accessor("fetchedAt", {
         header: ({ column }) => (
-          <SortableHeader column={column} label="Last Fetched" />
+          <SortableHeader column={column} label="Última busca" />
         ),
         cell: ({ getValue }) => (
           <span className="text-xs text-muted-foreground">
@@ -144,8 +144,8 @@ export function SavedKeywordsTable({
       isFiltered={hasActiveFilters}
       onClearFilters={onClearFilters}
       empty={{
-        title: "No saved keywords yet",
-        description: "Use the Keyword Research page to find and save keywords.",
+        title: "Nenhuma palavra salva ainda",
+        description: "Use a Pesquisa de palavras para encontrar e salvar palavras.",
       }}
       toolbar={toolbar}
       footer={footer}

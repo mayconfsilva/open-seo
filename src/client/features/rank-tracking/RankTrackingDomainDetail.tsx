@@ -334,7 +334,7 @@ export function RankTrackingDomainDetail({
           ) : (
             <QueryState
               query={resultsQuery}
-              errorFallback="Failed to load rank data"
+              errorFallback="Não foi possível carregar as posições"
               loading={<SkeletonCard />}
             >
               {(results) => (

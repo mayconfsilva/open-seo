@@ -121,7 +121,7 @@ export function RankTrackingOverview({
 
         <QueryState
           query={trendQuery}
-          errorFallback="Failed to load position history"
+          errorFallback="Não foi possível carregar o histórico de posições"
           loading={<Skeleton className="h-[220px] w-full" />}
         >
           {() =>

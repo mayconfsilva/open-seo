@@ -202,11 +202,11 @@ export function KeywordResearchPage(input: Props) {
     <div className="px-4 py-4 md:px-6 md:py-6 pb-24 md:pb-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-4">
         <PageHeader
-          title="Keyword Research"
+          title="Pesquisa de palavras"
           description={
             controller.hasSearched
               ? undefined
-              : "Discover keyword ideas, search demand, and ranking opportunities."
+              : "Descubra ideias de palavras, demanda de busca e oportunidades de posicionamento."
           }
           backLink={
             controller.hasSearched ? (
@@ -214,7 +214,7 @@ export function KeywordResearchPage(input: Props) {
                 data-testid="keyword-research-recent-searches"
                 onClick={showRecentSearches}
               >
-                Recent searches
+                Buscas recentes
               </BackButton>
             ) : undefined
           }
@@ -313,7 +313,7 @@ function KeywordSaveDialog({
 
   return (
     <FormDialog
-      title={`Save ${controller.selectedKeywordRows.length} Keywords`}
+      title={`Salvar ${controller.selectedKeywordRows.length} palavras`}
       onClose={() => controller.setShowSaveDialog(false)}
       actions={
         <>
@@ -321,22 +321,22 @@ function KeywordSaveDialog({
             variant="outline"
             onClick={() => controller.setShowSaveDialog(false)}
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             pending={controller.savePending}
             onClick={controller.confirmSave}
           >
-            Save
+            Salvar
           </Button>
         </>
       }
     >
       <div className="space-y-2 text-sm text-muted-foreground">
-        <p>These keywords will be saved to your current project.</p>
+        <p>Estas palavras serão salvas no projeto atual.</p>
         {controller.locationName ? (
           <p>
-            Saved keywords show national metrics. The local volume for{" "}
+            As palavras salvas mostram métricas nacionais. O volume local de{" "}
             {formatLocationLabel(controller.locationName)} is not saved.
           </p>
         ) : null}

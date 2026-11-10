@@ -52,21 +52,21 @@ const EMPTY_KEYWORDS: KeywordRow[] = [];
 const KEYWORD_TEXT_FILTERS = [
   {
     key: "include",
-    label: "Include Terms",
-    placeholder: "audit, checker, template",
+    label: "Incluir termos",
+    placeholder: "auditoria, verificador, modelo",
   },
   {
     key: "exclude",
-    label: "Exclude Terms",
-    placeholder: "jobs, salary, course",
+    label: "Excluir termos",
+    placeholder: "vagas, salário, curso",
   },
 ] as const;
 const KEYWORD_RANGE_FILTERS = [
-  { title: "Traffic", minKey: "minTraffic", maxKey: "maxTraffic" },
+  { title: "Tráfego", minKey: "minTraffic", maxKey: "maxTraffic" },
   { title: "Volume", minKey: "minVol", maxKey: "maxVol" },
-  { title: "CPC (USD)", minKey: "minCpc", maxKey: "maxCpc", step: "0.01" },
-  { title: "Score (KD)", minKey: "minKd", maxKey: "maxKd" },
-  { title: "Rank", minKey: "minRank", maxKey: "maxRank" },
+  { title: "CPC (US$)", minKey: "minCpc", maxKey: "maxCpc", step: "0.01" },
+  { title: "Nota (KD)", minKey: "minKd", maxKey: "maxKd" },
+  { title: "Posição", minKey: "minRank", maxKey: "maxRank" },
 ] as const;
 
 type Props = {
@@ -240,17 +240,17 @@ export function KeywordsTab({
               onClick={handleSaveKeywords}
               disabled={!canSaveKeywords}
             >
-              Save Keywords
+              Salvar palavras
             </TableBulkActionButton>
             <TableBulkExportMenu
               actions={[
                 {
-                  label: "Export to Sheets",
+                  label: "Exportar para o Planilhas",
                   icon: <Sheet className="size-4" />,
                   onClick: () => exportSelection("sheets"),
                 },
                 {
-                  label: "Download CSV",
+                  label: "Baixar CSV",
                   icon: <Download className="size-4" />,
                   onClick: () => exportSelection("csv"),
                 },
@@ -276,7 +276,7 @@ export function KeywordsTab({
           query.isError ? (
             <QueryError
               error={query.error}
-              fallback="Failed to load keywords."
+              fallback="Não foi possível carregar as palavras."
               onRetry={() => void query.refetch()}
               isRetrying={isFetching}
             />
@@ -311,8 +311,8 @@ export function KeywordsTab({
               <span className="text-sm text-muted-foreground">
                 ·{" "}
                 {selectedKeywords.size > 0
-                  ? `${selectedKeywords.size} selected`
-                  : "Select keywords to save"}
+                  ? `${selectedKeywords.size} selecionada(s)`
+                  : "Selecione palavras para salvar"}
               </span>
             </DomainTableToolbar>
           </>

@@ -30,8 +30,7 @@ export function ScheduledChecksPausedAlert({
           <span className="font-medium">
             As coletas agendadas estão pausadas
           </span>{" "}
-          while our rankings data provider recovers from an outage. They'll
-          catch up automatically once it's back.
+          enquanto o provedor de dados de posição se recupera de uma falha. Elas voltam sozinhas quando ele normalizar.
         </p>
       </AlertDescription>
     </Alert>

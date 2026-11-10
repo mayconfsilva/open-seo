@@ -54,7 +54,7 @@ export function ImportKeywordsButton({ projectId }: { projectId: string }) {
     },
     onSuccess: (count) => {
       setOpen(false);
-      toast.success(`Imported ${count} keyword${count === 1 ? "" : "s"}`);
+      toast.success(`${count} palavra${count === 1 ? "" : "s"} importada${count === 1 ? "" : "s"}`);
     },
     // Saved chunks stay saved when a later step fails, so refresh either way.
     onSettled: () =>
@@ -65,7 +65,7 @@ export function ImportKeywordsButton({ projectId }: { projectId: string }) {
     <>
       <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
         <Upload data-icon="inline-start" />
-        Import keywords
+        Importar palavras
       </Button>
       {open ? (
         <ImportKeywordsDialog
@@ -135,16 +135,15 @@ function ImportKeywordsDialog({
     >
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Import keywords</DialogTitle>
+          <DialogTitle>Importar palavras</DialogTitle>
           <DialogDescription>
-            Paste one keyword per line, or a CSV with keywords in the first
-            column. They are saved for this project&apos;s country and language.
+            Cole uma palavra por linha, ou um CSV com as palavras na primeira coluna. Elas são salvas com o país e o idioma do projeto.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor={listId}>Keywords</Label>
+            <Label htmlFor={listId}>Palavras</Label>
             <Textarea
               id={listId}
               rows={8}
@@ -160,13 +159,13 @@ function ImportKeywordsDialog({
               }
             >
               {tooMany
-                ? `${keywords.length.toLocaleString()} keywords. Import up to ${MAX_IMPORT_KEYWORDS.toLocaleString()} at a time.`
-                : `${keywords.length.toLocaleString()} keyword${keywords.length === 1 ? "" : "s"} to import`}
+                ? `${keywords.length.toLocaleString("pt-BR")} palavras. Importe até ${MAX_IMPORT_KEYWORDS.toLocaleString("pt-BR")} por vez.`
+                : `${keywords.length.toLocaleString("pt-BR")} palavra${keywords.length === 1 ? "" : "s"} para importar`}
             </p>
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor={tagId}>Tag (optional)</Label>
+            <Label htmlFor={tagId}>Etiqueta (opcional)</Label>
             <Input
               id={tagId}
               value={tag}
@@ -183,14 +182,14 @@ function ImportKeywordsDialog({
               onCheckedChange={(checked) => setFetchStats(checked)}
             />
             <Label htmlFor={statsId} className="font-normal leading-snug">
-              Fetch volume, difficulty, and CPC now. Each keyword uses credits.
+              Buscar volume, dificuldade e CPC agora. Cada palavra usa créditos.
             </Label>
           </div>
         </div>
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose} disabled={isPending}>
-            Cancel
+            Cancelar
           </Button>
           <Button
             disabled={!canImport}
@@ -198,7 +197,7 @@ function ImportKeywordsDialog({
               onImport({ keywords, tag: tag.trim() || null, fetchStats })
             }
           >
-            {isPending ? "Importing..." : "Import"}
+            {isPending ? "Importing..." : "Importar"}
           </Button>
         </DialogFooter>
       </DialogContent>

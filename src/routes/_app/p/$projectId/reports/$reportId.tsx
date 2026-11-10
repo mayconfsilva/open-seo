@@ -177,7 +177,7 @@ function ReportDetailPage() {
               <dd>{formatCreatedBy(report)}</dd>
             </div>
             <div className="flex items-baseline gap-1.5">
-              <dt className="text-muted-foreground">Type</dt>
+              <dt className="text-muted-foreground">Tipo</dt>
               {/* As in the list's Type column: the template name when the
                     report followed one, else the skill, else an em dash. */}
               <dd>{report.templateName ?? report.skill ?? "—"}</dd>
@@ -239,7 +239,7 @@ function ReportDetailPage() {
                   onClick={() => setShowDelete(true)}
                 >
                   <Trash2 />
-                  Delete
+                  Excluir
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
