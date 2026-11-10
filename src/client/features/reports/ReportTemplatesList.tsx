@@ -27,8 +27,8 @@ export function ReportTemplatesList({
     return (
       <EmptyState
         icon={LayoutTemplate}
-        title="No templates yet"
-        description="A template is a reusable brief for a kind of report: who it is for, which sections it has, how it sounds."
+        title="Nenhum modelo ainda"
+        description="Um modelo é um roteiro reutilizável para um tipo de relatório: para quem é, quais seções tem e qual o tom."
       />
     );
   }
@@ -38,9 +38,9 @@ export function ReportTemplatesList({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Updated</TableHead>
+            <TableHead>Nome</TableHead>
+            <TableHead>Descrição</TableHead>
+            <TableHead>Atualizado</TableHead>
             <TableHead />
           </TableRow>
         </TableHeader>
@@ -63,17 +63,17 @@ export function ReportTemplatesList({
                 {formatRelativeTime(template.updatedAt)}
               </TableCell>
               <TableCell className="w-10 text-right">
-                <RowActionsMenu label={`Actions for ${template.name}`}>
+                <RowActionsMenu label={`Ações de ${template.name}`}>
                   <DropdownMenuItem onClick={() => onEdit(template)}>
                     <Pencil />
-                    Edit
+                    Editar
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     variant="destructive"
                     onClick={() => onDelete(template)}
                   >
                     <Trash2 />
-                    Delete
+                    Excluir
                   </DropdownMenuItem>
                 </RowActionsMenu>
               </TableCell>

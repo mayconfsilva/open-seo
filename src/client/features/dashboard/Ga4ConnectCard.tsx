@@ -27,9 +27,9 @@ export function Ga4ConnectCard({
   const dismissMutation = useMutation({
     mutationFn: () => dismissDashboardGa4Card({ data: { projectId } }),
     onSuccess: () => {
-      toast.success("Use another analytics provider?", {
+      toast.success("Usa outra ferramenta de análise?", {
         description:
-          "Connect its MCP server to your AI agent to work with your analytics data.",
+          "Conecte o servidor MCP dela ao seu agente de IA para usar seus dados de análise.",
         duration: 10000,
       });
       void queryClient.invalidateQueries({
@@ -48,10 +48,10 @@ export function Ga4ConnectCard({
           variant="plain"
           icon={ChartLine}
           title="Do you use Google Analytics 4?"
-          description="Bring your organic traffic and conversions into your dashboard."
+          description="Traga seu tráfego orgânico e conversões para o painel."
           action={
             <div className="flex flex-wrap justify-center gap-2">
-              <Button onClick={() => setUsesGa4(true)}>Yes, connect GA4</Button>
+              <Button onClick={() => setUsesGa4(true)}>Sim, conectar o GA4</Button>
               <Button
                 variant="outline"
                 disabled={dismissMutation.isPending}
@@ -60,7 +60,7 @@ export function Ga4ConnectCard({
                   dismissMutation.mutate();
                 }}
               >
-                No
+                Não
               </Button>
             </div>
           }

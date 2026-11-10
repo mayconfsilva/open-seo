@@ -24,10 +24,10 @@ export function keywordWildcardError(
 ): string | null {
   if (!hasKeywordWildcard(seed)) return null;
   if (!wildcardAnchor(seed)) {
-    return "Add at least one word besides *, like best * for dogs.";
+    return "Inclua pelo menos uma palavra além do *, como melhor * para cachorro.";
   }
   if (!isLabsLocationCode(locationCode)) {
-    return "Wildcard search isn't available for this country.";
+    return "A busca com * não está disponível para este país.";
   }
   return null;
 }

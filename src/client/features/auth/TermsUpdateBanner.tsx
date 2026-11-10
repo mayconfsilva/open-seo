@@ -20,7 +20,7 @@ export function TermsUpdateBanner() {
     // The session is served from a signed cookie cache, so bypass it to pick
     // up the new acceptance and hide the banner.
     onSuccess: () => refetch({ query: { disableCookieCache: true } }),
-    onError: () => toast.error("We couldn't record your acceptance."),
+    onError: () => toast.error("Não foi possível registrar seu aceite."),
   });
 
   if (!session || session.user.termsAcceptedVersion === CURRENT_TERMS_VERSION) {
@@ -46,7 +46,7 @@ export function TermsUpdateBanner() {
           pending={acceptMutation.isPending}
           onClick={() => acceptMutation.mutate()}
         >
-          Accept
+          Aceitar
         </Button>
       </div>
     </AppBanner>

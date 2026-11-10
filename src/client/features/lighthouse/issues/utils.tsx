@@ -2,15 +2,15 @@ import type { CsvValue } from "@/client/lib/csv";
 import type { CategoryTab, LighthouseIssue } from "./types";
 
 const ISSUE_HEADERS = [
-  "Category",
-  "Severity",
-  "Score",
-  "Title",
-  "Display Value",
-  "Description",
-  "Impact (ms)",
-  "Impact (bytes)",
-  "Affected Items",
+  "Categoria",
+  "Gravidade",
+  "Nota",
+  "Título",
+  "Valor exibido",
+  "Descrição",
+  "Impacto (ms)",
+  "Impacto (bytes)",
+  "Itens afetados",
 ];
 
 function issuesToRows(issues: LighthouseIssue[]): CsvValue[][] {
@@ -32,7 +32,7 @@ export function issuesToTable(issues: LighthouseIssue[]) {
 }
 
 export function categoryLabel(category: CategoryTab) {
-  if (category === "best-practices") return "Best practices";
-  if (category === "all") return "All";
+  if (category === "best-practices") return "Boas práticas";
+  if (category === "all") return "Todos";
   return `${category.charAt(0).toUpperCase()}${category.slice(1)}`;
 }

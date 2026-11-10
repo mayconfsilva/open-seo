@@ -26,7 +26,7 @@ export const MAX_READS_PER_CHECK = 6;
 
 /** How long a check takes, shown before and during one. */
 export const RANK_CHECK_DURATION_COPY =
-  "Usually takes about an hour, up to 2 hours.";
+  "Costuma levar cerca de uma hora, até 2 horas.";
 
 /** Soft application limit for keywords per rank tracking config */
 export const MAX_KEYWORDS_PER_CONFIG = 1000;

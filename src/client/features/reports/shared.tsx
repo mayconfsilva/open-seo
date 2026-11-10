@@ -67,7 +67,7 @@ export function useDeleteReport(projectId: string, onDeleted?: () => void) {
         project_id: projectId,
         report_id: reportId,
       });
-      toast.success("Report deleted");
+      toast.success("Relatório excluído");
       void queryClient.invalidateQueries({
         queryKey: reportsQueryKey(projectId),
       });
@@ -95,14 +95,14 @@ export function DeleteReportModal({
 }) {
   return (
     <ConfirmDialog
-      title={`Delete \u201c${title}\u201d?`}
-      confirmLabel="Delete report"
+      title={`Excluir \u201c${title}\u201d?`}
+      confirmLabel="Excluir relatório"
       destructive
       pending={isPending}
       onClose={onClose}
       onConfirm={onConfirm}
     >
-      This cannot be undone.
+      Não dá para desfazer.
     </ConfirmDialog>
   );
 }
@@ -158,9 +158,9 @@ export function ShareReportModal({
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(url);
-      toast.success("Link copied");
+      toast.success("Link copiado");
     } catch {
-      toast.error("Clipboard not available");
+      toast.error("Área de transferência indisponível");
     }
   };
 
@@ -173,7 +173,7 @@ export function ShareReportModal({
     >
       <DialogContent className="sm:max-w-lg">
         <DialogHeader className="min-w-0 pr-8">
-          <DialogTitle>Share</DialogTitle>
+          <DialogTitle>Compartilhar</DialogTitle>
           <DialogDescription className="truncate">
             {report.title}
           </DialogDescription>
@@ -182,11 +182,11 @@ export function ShareReportModal({
         <div className="rounded-lg border border-border">
           <Field orientation="horizontal" className="p-4">
             <FieldContent>
-              <FieldLabel htmlFor={switchId}>Public link</FieldLabel>
+              <FieldLabel htmlFor={switchId}>Link público</FieldLabel>
               <FieldDescription id={`${switchId}-description`}>
                 {shared
-                  ? "Anyone with the link can view. No sign-in needed."
-                  : "Only members of your organization can open it. A link that was open can keep loading for up to a minute."}
+                  ? "Qualquer pessoa com o link pode ver, sem login."
+                  : "Só membros da sua organização podem abrir. Um link que estava aberto pode continuar carregando por até um minuto."}
               </FieldDescription>
             </FieldContent>
             <Switch
@@ -206,7 +206,7 @@ export function ShareReportModal({
                 <Input
                   readOnly
                   value={url}
-                  aria-label="Share link"
+                  aria-label="Compartilhar link"
                   onFocus={(event) => event.target.select()}
                   className="min-w-0 flex-1 basis-64"
                 />
@@ -215,22 +215,22 @@ export function ShareReportModal({
                     variant="outline"
                     size="icon"
                     nativeButton={false}
-                    aria-label="Open link"
-                    title="Open"
+                    aria-label="Abrir link"
+                    title="Abrir"
                     render={<a href={url} target="_blank" rel="noreferrer" />}
                   >
                     <ExternalLink />
                   </Button>
                   <Button onClick={() => void copy()}>
                     <Copy data-icon="inline-start" />
-                    Copy link
+                    Copiar link
                   </Button>
                 </div>
               </div>
               <p className="text-xs text-muted-foreground">
-                Shows the latest saved version. Hidden from search engines.
+                Mostra a última versão salva. Oculto dos buscadores.
                 {report.sharedAt
-                  ? ` Link created ${formatRelativeTime(report.sharedAt)}.`
+                  ? `Link criado ${formatRelativeTime(report.sharedAt)}.`
                   : ""}
               </p>
             </div>
@@ -243,7 +243,7 @@ export function ShareReportModal({
           <p className="text-sm text-destructive">
             {getStandardErrorMessage(
               mutation.error,
-              "Failed to update sharing",
+              "Não foi possível atualizar o compartilhamento",
             )}
           </p>
         ) : null}

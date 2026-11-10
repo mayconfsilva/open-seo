@@ -51,10 +51,10 @@ export function CountryCombobox({
       <ComboboxInput
         id={id}
         className="w-full"
-        placeholder="Search countries"
+        placeholder="Buscar países"
       />
       <ComboboxContent>
-        <ComboboxEmpty>No countries match.</ComboboxEmpty>
+        <ComboboxEmpty>Nenhum país encontrado.</ComboboxEmpty>
         <ComboboxList>
           {(option: LocationOption) => (
             <ComboboxItem key={option.code} value={option}>

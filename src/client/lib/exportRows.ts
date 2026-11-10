@@ -25,7 +25,7 @@ export async function exportRows(args: {
 }): Promise<void> {
   const { format, feature, headers, rows, filename, scope } = args;
   if (rows.length === 0) {
-    toast.error("No data to export");
+    toast.error("Nada para exportar");
     return;
   }
 
@@ -44,9 +44,9 @@ export async function exportRows(args: {
   if (format === "copy-json") {
     try {
       await navigator.clipboard.writeText(JSON.stringify(records, null, 2));
-      toast.success("Copied data");
+      toast.success("Dados copiados");
     } catch {
-      toast.error("Could not copy to clipboard");
+      toast.error("Não foi possível copiar");
       return;
     }
   } else if (format === "json") {

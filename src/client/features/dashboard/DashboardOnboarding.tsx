@@ -63,14 +63,13 @@ export function DashboardOnboarding({
 
   return (
     <section
-      aria-label="Onboarding checklist"
+      aria-label="Primeiros passos"
       className="overflow-hidden rounded-xl border border-border bg-card"
     >
       <header className="border-b border-border px-5 py-5 sm:px-6">
-        <h2 className="text-lg font-semibold">Get started</h2>
+        <h2 className="text-lg font-semibold">Comece por aqui</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Research competitors and keywords, audit your site, and connect your
-          tools.
+          Pesquise concorrentes e palavras, audite o site e conecte suas ferramentas.
         </p>
       </header>
       <Accordion
@@ -137,13 +136,13 @@ export function DashboardOnboarding({
                   <span className="text-sm">{item.label}</span>
                   <Button
                     variant="ghost"
-                    aria-label={`Restore ${item.label}`}
+                    aria-label={`Restaurar ${item.label}`}
                     disabled={dismiss.isPending}
                     onClick={() =>
                       dismiss.mutate({ step: item.id, dismissed: false })
                     }
                   >
-                    <RotateCcw data-icon="inline-start" /> Restore
+                    <RotateCcw data-icon="inline-start" /> Restaurar
                   </Button>
                 </li>
               ))}

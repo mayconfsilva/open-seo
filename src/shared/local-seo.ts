@@ -49,7 +49,7 @@ export function localGridZoom(spacingKm: number, latitude: number) {
 
 /** The grid as a customer reads it, e.g. "9 points across 4 km". */
 export function localAreaLabel(grid: { gridSize: number; spacingKm: number }) {
-  return `${grid.gridSize * grid.gridSize} points across ${(grid.gridSize - 1) * grid.spacingKm} km`;
+  return `${grid.gridSize * grid.gridSize} pontos em ${(grid.gridSize - 1) * grid.spacingKm} km`;
 }
 
 /** Row zero is the northern edge; points are in row-major order. */
@@ -87,10 +87,10 @@ type RankedPoint = {
 };
 
 export function localPointLabel(point: RankedPoint) {
-  if (point.status === LocalPointStatus.Pending) return "Pending";
-  if (point.status === LocalPointStatus.Failed) return "Search failed";
+  if (point.status === LocalPointStatus.Pending) return "Pendente";
+  if (point.status === LocalPointStatus.Failed) return "A busca falhou";
   if (point.rank != null) return `#${point.rank}`;
   return (point.resultsCount ?? 0) >= LOCAL_RANK_DEPTH
-    ? "Not in returned top 20"
-    : `Not found · ${point.resultsCount ?? 0} listings returned`;
+    ? "Fora do top 20 retornado"
+    : `Não encontrado · ${point.resultsCount ?? 0} fichas retornadas`;
 }

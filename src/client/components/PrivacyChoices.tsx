@@ -95,7 +95,7 @@ export async function updatePrivacyChoices(
   const result = await authClient.updateUser({
     analyticsOptedOut: !next.analytics,
   });
-  if (result.error) toast.error("We couldn't save your analytics setting.");
+  if (result.error) toast.error("Não foi possível salvar sua preferência de dados de uso.");
 }
 
 /** Starts and stops PostHog to match the current choices. */

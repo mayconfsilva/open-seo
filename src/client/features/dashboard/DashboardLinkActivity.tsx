@@ -30,19 +30,18 @@ export function DashboardLinkActivity({
     retry: false,
   });
   return (
-    <QueryState query={query} errorFallback="Could not load new links">
+    <QueryState query={query} errorFallback="Não foi possível carregar os links novos">
       {(data) => (
         <CardShell
-          title="New backlinks"
+          title="Backlinks novos"
           icon={<Link2 className="size-5" />}
           titleInfo={
-            <DashboardInfo label="About new links">
+            <DashboardInfo label="Sobre os links novos">
               <p>
-                Links to your website found in the past week. We show new
-                linking sites first.
+                Links para seu site encontrados na última semana. Os sites novos aparecem primeiro.
               </p>
               <p className="mt-2">
-                A link may be older than the date it was found.
+                Um link pode ser mais antigo que a data em que foi encontrado.
               </p>
             </DashboardInfo>
           }
@@ -52,9 +51,9 @@ export function DashboardLinkActivity({
               params={{ projectId }}
               search={{ tab: "backlinks" }}
               className={moreDetailsClass}
-              aria-label="View all new backlinks"
+              aria-label="Ver todos os backlinks novos"
             >
-              View all
+              Ver tudo
             </Link>
           }
         >
@@ -63,7 +62,7 @@ export function DashboardLinkActivity({
             <Table className={cardTableClass}>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Referring domain</TableHead>
+                  <TableHead>Domínio de origem</TableHead>
                   <TableHead className="text-right">Backlinks</TableHead>
                 </TableRow>
               </TableHeader>
@@ -87,8 +86,8 @@ export function DashboardLinkActivity({
             <Table className={cardTableClass}>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Referring page</TableHead>
-                  <TableHead>Anchor</TableHead>
+                  <TableHead>Página de origem</TableHead>
+                  <TableHead>Âncora</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -111,8 +110,8 @@ export function DashboardLinkActivity({
             <EmptyState
               variant="plain"
               icon={Link2}
-              title="No new links this week"
-              description="Explore the sites already linking to you."
+              title="Nenhum link novo esta semana"
+              description="Explore os sites que já apontam para você."
               action={
                 <Button
                   variant="outline"
@@ -125,7 +124,7 @@ export function DashboardLinkActivity({
                     />
                   }
                 >
-                  View backlinks
+                  Ver backlinks
                 </Button>
               }
             />

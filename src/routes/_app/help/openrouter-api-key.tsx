@@ -9,14 +9,14 @@ import { pageHead } from "@/client/lib/pageHead";
 const OPENROUTER_KEYS_URL = "https://openrouter.ai/settings/keys";
 
 export const Route = createFileRoute("/_app/help/openrouter-api-key")({
-  head: () => pageHead("OpenRouter API key"),
+  head: () => pageHead("Chave de API do OpenRouter"),
   component: OpenrouterApiKeyHelpPage,
 });
 
 function OpenrouterApiKeyHelpPage() {
   const accountStep = (
     <li>
-      Create an account at{" "}
+      Crie uma conta em{" "}
       <a
         className={helpLinkClassName}
         href="https://openrouter.ai"
@@ -25,7 +25,7 @@ function OpenrouterApiKeyHelpPage() {
       >
         openrouter.ai
       </a>{" "}
-      and add credits (pay-as-you-go, like DataForSEO).
+      e adicione créditos (pré-pago, como na DataForSEO).
     </li>
   );
   const keyStep = (
@@ -39,17 +39,15 @@ function OpenrouterApiKeyHelpPage() {
       >
         OpenRouter API Keys
       </a>{" "}
-      and click "Create API Key".
+      e clique em "Create API Key".
     </li>
   );
   return (
     <SecretHelpPage
-      title="Set up your OpenRouter API key"
+      title="Configure sua chave de API do OpenRouter"
       intro={
         <>
-          OpenSEO needs the <code>OPENROUTER_API_KEY</code> secret before AI
-          features like SAM, the in-app SEO agent, can run. It is optional —
-          everything else in OpenSEO works without it.
+          OpenSEO needs the <code>OPENROUTER_API_KEY</code> antes de usar recursos de IA como o SAM, o agente de SEO do app. É opcional: todo o resto funciona sem ela.
         </>
       }
       everyAppIntro="SAM, prompt suggestions and website research run on OpenRouter. On Every App the gateway holds the key once, for every app."
@@ -59,19 +57,18 @@ function OpenrouterApiKeyHelpPage() {
           {accountStep}
           {keyStep}
           <li>
-            Save the key as the <code>OPENROUTER_API_KEY</code> secret in your
-            environment:
+            Salve a chave como a variável <code>OPENROUTER_API_KEY</code> no seu ambiente:
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>
-                Docker self-hosting: <code>.env</code>
+                Docker: <code>.env</code>
               </li>
-              <li>Cloudflare: set it in the Workers UI (see below)</li>
+              <li>Cloudflare: defina no painel do Workers (veja abaixo)</li>
               <li>
-                Local development: <code>.env.local</code>
+                Desenvolvimento local: <code>.env.local</code>
               </li>
             </ul>
           </li>
-          <li>Restart OpenSEO.</li>
+          <li>Reinicie o dataSEO.</li>
         </>
       }
       everyAppSteps={
@@ -83,11 +80,11 @@ function OpenrouterApiKeyHelpPage() {
             the key:
             <CommandBlock command="pnpm everyapp secret set OPENROUTER_API_KEY" />
           </li>
-          <li>Reload OpenSEO.</li>
+          <li>Recarregue o dataSEO.</li>
         </>
       }
-      dashboardPasteStep="Paste your OpenRouter API key and save."
-      terminalPromptHint="Paste your OpenRouter API key when prompted."
+      dashboardPasteStep="Cole sua chave do OpenRouter e salve."
+      terminalPromptHint="Cole sua chave do OpenRouter quando pedir."
     />
   );
 }

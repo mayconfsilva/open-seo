@@ -33,7 +33,7 @@ export const Route = createFileRoute("/report-map/$grant/copyright")({
           .safeParse(query);
         if (!viewport.success || !(await verifyReportMapGrant(params.grant)))
           return Response.json(
-            { error: "Not found." },
+            { error: "Não encontrado." },
             { status: 404, headers },
           );
         const copyright = await GoogleMapsService.getCopyright(viewport.data);

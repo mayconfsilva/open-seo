@@ -5,7 +5,7 @@ import { usesBetterAuth } from "@/lib/auth-mode";
 
 async function handleAuthRequest(request: Request) {
   if (!usesBetterAuth(env.AUTH_MODE)) {
-    return new Response("Not found", {
+    return new Response("Não encontrado", {
       status: 404,
     });
   }
@@ -31,7 +31,7 @@ async function handleAuthRequest(request: Request) {
     const { success } = await env.AUTH_RATE_LIMIT.limit({ key: ip });
     if (!success) {
       return Response.json(
-        { message: "Too many sign-in attempts. Try again in a minute." },
+        { message: "Tentativas de login demais. Tente de novo em um minuto." },
         { status: 429 },
       );
     }

@@ -142,7 +142,7 @@ export function AuthenticatedAppLayout({
 function MobileTopBar() {
   return (
     <div className="flex shrink-0 items-center gap-1 border-b border-border bg-card px-2 py-1.5 md:hidden">
-      <SidebarTrigger aria-label="Toggle sidebar" />
+      <SidebarTrigger aria-label="Abrir/fechar barra lateral" />
       <Link to="/" className="ml-1">
         <img src="/logo-dataseo.png" alt="dataSEO" className="h-5 w-auto" />
       </Link>

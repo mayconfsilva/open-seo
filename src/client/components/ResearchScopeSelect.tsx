@@ -38,7 +38,7 @@ export function ResearchScopeSelect({
   onChange,
   disabledReason,
   className,
-  "aria-label": ariaLabel = "Research scope",
+  "aria-label": ariaLabel = "Escopo da pesquisa",
 }: Props) {
   return (
     <Select

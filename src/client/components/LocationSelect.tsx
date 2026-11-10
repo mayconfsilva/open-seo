@@ -65,11 +65,11 @@ export function LocationSelect({
     >
       <ComboboxInput
         className={className}
-        placeholder="Select country"
-        aria-label="Country"
+        placeholder="Escolha o país"
+        aria-label="País"
       />
       <ComboboxContent>
-        <ComboboxEmpty>No countries match.</ComboboxEmpty>
+        <ComboboxEmpty>Nenhum país encontrado.</ComboboxEmpty>
         <ComboboxList>
           {(option: LocationOption) => (
             <ComboboxItem key={option.code} value={option}>
@@ -88,11 +88,11 @@ function groupLocationOptions(selected: LocationOption | null) {
     // The selected country needs no heading: it sits first with its check.
     { value: "", items: selected ? [selected] : [] },
     {
-      value: "Popular",
+      value: "Mais usados",
       items: rest.filter((option) => POPULAR_LOCATION_CODES.has(option.code)),
     },
     {
-      value: "All countries",
+      value: "Todos os países",
       items: rest.filter((option) => !POPULAR_LOCATION_CODES.has(option.code)),
     },
   ];
@@ -107,7 +107,7 @@ export function LocationChipSelect({
   const selected =
     LOCATION_OPTIONS.find((option) => option.code === value) ?? null;
   const groups = useMemo(() => groupLocationOptions(selected), [selected]);
-  const label = selected?.label ?? "Select country";
+  const label = selected?.label ?? "Escolha o país";
 
   return (
     <Combobox
@@ -121,7 +121,7 @@ export function LocationChipSelect({
       }}
     >
       <ComboboxTrigger
-        aria-label={`Country: ${label}`}
+        aria-label={`País: ${label}`}
         render={<Button variant="outline" className="font-normal" />}
       >
         <CountryFlag locationCode={value} />
@@ -130,14 +130,14 @@ export function LocationChipSelect({
       <ComboboxContent className="w-64">
         <ComboboxInput
           showTrigger={false}
-          placeholder="Search"
-          aria-label="Search countries"
+          placeholder="Buscar"
+          aria-label="Buscar países"
         >
           <InputGroupAddon>
             <Search />
           </InputGroupAddon>
         </ComboboxInput>
-        <ComboboxEmpty>No countries match.</ComboboxEmpty>
+        <ComboboxEmpty>Nenhum país encontrado.</ComboboxEmpty>
         <ComboboxList>
           {(group: LocationGroup) => (
             <ComboboxGroup key={group.value} items={group.items}>

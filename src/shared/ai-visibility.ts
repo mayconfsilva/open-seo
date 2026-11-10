@@ -41,7 +41,7 @@ export const AI_LIVE_RECORD_COST_USD = 0.004;
 export type AiScheduleInterval = "daily" | "weekly" | "monthly";
 export type AiObservationStatus = "pending" | "completed" | "failed";
 /** Prompts without a chosen topic are grouped here. */
-export const AI_DEFAULT_TOPIC = "General";
+export const AI_DEFAULT_TOPIC = "Geral";
 export interface AiPrompt {
   id: string;
   text: string;
@@ -340,14 +340,14 @@ function liveUnsupportedLocations(engine: AiModelApiEngine): number[] {
 
 /** "In progress" while a collection is unfinished. */
 export function aiObservationStatusLabel(status: AiObservationStatus): string {
-  return status === "pending" ? "In progress" : status;
+  return status === "pending" ? "Em andamento" : status;
 }
 
 /** An empty AI Overviews result means Google showed no overview. */
 export function aiNoAnswerLabel(engine: AiEngine): string {
   return engine === "google_ai_overview"
-    ? "No AI Overview shown"
-    : "No substantive answer";
+    ? "Sem Visão geral de IA"
+    : "Sem resposta relevante";
 }
 
 /** The selected engines that cannot collect in this country. */

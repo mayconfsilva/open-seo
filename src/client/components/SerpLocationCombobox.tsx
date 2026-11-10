@@ -60,12 +60,12 @@ function useSerpLocationSearch(countryCode: string) {
   const results = searching || !trimmed ? [] : (searchQuery.data ?? []);
 
   const emptyMessage = !trimmed
-    ? "Type a city, county, or region"
+    ? "Digite uma cidade ou região"
     : searching
       ? "Searching..."
       : searchQuery.isError
-        ? "Unable to load locations"
-        : `No locations found for "${trimmed}"`;
+        ? "Não foi possível carregar os locais"
+        : `Nenhum local encontrado para "${trimmed}"`;
 
   return { setQuery, searching, results, emptyMessage };
 }
@@ -98,7 +98,7 @@ export function SerpLocationCombobox({
   value,
   onChange,
   countryCode,
-  placeholder = "Search cities...",
+  placeholder = "Buscar cidades...",
   id,
   invalid,
 }: Props) {
@@ -204,8 +204,8 @@ export function SerpLocationChip({
         <ComboboxContent className="w-80">
           <ComboboxInput
             showTrigger={false}
-            placeholder="Search"
-            aria-label={`Search ${label.toLowerCase()}`}
+            placeholder="Buscar"
+            aria-label={`Buscar ${label.toLowerCase()}`}
           >
             <InputGroupAddon>
               {searching ? <Spinner /> : <Search />}
@@ -220,7 +220,7 @@ export function SerpLocationChip({
           variant="outline"
           size="icon"
           className="-ml-px rounded-l-none focus-visible:z-10"
-          aria-label={`Clear ${label.toLowerCase()}`}
+          aria-label={`Limpar ${label.toLowerCase()}`}
           onClick={() => onChange(undefined)}
         >
           <X />

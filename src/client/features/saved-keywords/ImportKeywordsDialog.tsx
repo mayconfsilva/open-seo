@@ -149,7 +149,7 @@ function ImportKeywordsDialog({
               rows={8}
               value={text}
               onChange={(event) => setText(event.target.value)}
-              placeholder={"best running shoes\nrunning shoes for flat feet"}
+              placeholder={"tênis de corrida tênis para pé chato"}
             />
             <p
               className={

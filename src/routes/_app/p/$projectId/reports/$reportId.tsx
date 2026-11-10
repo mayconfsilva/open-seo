@@ -43,7 +43,7 @@ import { pageHead } from "@/client/lib/pageHead";
 const reportDetailSearchSchema = z.object({ full: z.boolean().optional() });
 
 export const Route = createFileRoute("/_app/p/$projectId/reports/$reportId")({
-  head: () => pageHead("Reports"),
+  head: () => pageHead("Relatórios"),
   validateSearch: reportDetailSearchSchema,
   component: ReportDetailPage,
 });
@@ -100,7 +100,7 @@ function ReportDetailPage() {
 
   const loadError = {
     error: reportQuery.error,
-    fallback: "Failed to load the report",
+    fallback: "Não foi possível carregar o relatório",
     onRetry: () => void reportQuery.refetch(),
     isRetrying: reportQuery.isFetching,
   };
@@ -114,7 +114,7 @@ function ReportDetailPage() {
       <div className="px-4 py-4 md:px-6 md:py-6">
         <div className="mx-auto max-w-7xl space-y-4">
           <BackLink to="/p/$projectId/reports" params={{ projectId }}>
-            Reports
+            Relatórios
           </BackLink>
           {/* A deleted report and another project's report are the same
               answer on purpose, so ids cannot be probed. Retrying either
@@ -122,13 +122,13 @@ function ReportDetailPage() {
           {notFound ? (
             <QueryError
               variant="page"
-              title="Report not found"
+              title="Relatório não encontrado"
               fallback="This report does not exist or you do not have access to it."
             />
           ) : (
             <QueryError
               variant="page"
-              title="Couldn't load the report"
+              title="Não foi possível carregar o relatório"
               {...loadError}
             />
           )}
@@ -166,14 +166,14 @@ function ReportDetailPage() {
       <PageHeader
         backLink={
           <BackLink to="/p/$projectId/reports" params={{ projectId }}>
-            Reports
+            Relatórios
           </BackLink>
         }
         title={report.title}
         description={
           <dl className="flex flex-wrap items-baseline gap-x-6 gap-y-1 text-foreground">
             <div className="flex items-baseline gap-1.5">
-              <dt className="text-muted-foreground">Created by</dt>
+              <dt className="text-muted-foreground">Criado por</dt>
               <dd>{formatCreatedBy(report)}</dd>
             </div>
             <div className="flex items-baseline gap-1.5">
@@ -204,12 +204,12 @@ function ReportDetailPage() {
                 ) : (
                   <Lock data-icon="inline-start" />
                 )}
-                Share
+                Compartilhar
               </Button>
             ) : (
               <Button onClick={exportPdf}>
                 <FileDown data-icon="inline-start" />
-                Export
+                Exportar
               </Button>
             )}
             <DropdownMenu>
@@ -218,7 +218,7 @@ function ReportDetailPage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    aria-label="Report actions"
+                    aria-label="Ações do relatório"
                   />
                 }
               >
@@ -229,7 +229,7 @@ function ReportDetailPage() {
                   <>
                     <DropdownMenuItem onClick={exportPdf}>
                       <FileDown />
-                      Export
+                      Exportar
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                   </>
@@ -259,8 +259,8 @@ function ReportDetailPage() {
           <Button
             variant="ghost"
             size="icon-sm"
-            aria-label="Full screen"
-            title="Full screen"
+            aria-label="Tela cheia"
+            title="Tela cheia"
             onClick={() =>
               void navigate({ search: () => ({ full: true }), replace: true })
             }
@@ -271,8 +271,8 @@ function ReportDetailPage() {
             variant="ghost"
             size="icon-sm"
             nativeButton={false}
-            aria-label="Open in new tab"
-            title="Open in new tab"
+            aria-label="Abrir em nova aba"
+            title="Abrir em nova aba"
             render={
               <a href={`/r/${report.id}`} target="_blank" rel="noreferrer" />
             }
@@ -333,7 +333,7 @@ function FullScreenReport({
         <span className="truncate text-sm font-medium">{title}</span>
         <Button ref={exitRef} variant="ghost" onClick={onExit}>
           <Minimize2 data-icon="inline-start" />
-          Exit
+          Sair
         </Button>
       </div>
       <div className="min-h-0 flex-1 p-2">

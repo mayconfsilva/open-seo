@@ -81,7 +81,7 @@ function LargeCrawlDialog({
     <ConfirmDialog
       title={
         priced
-          ? `Render up to ${pageCount} pages?`
+          ? `Renderizar até ${pageCount} páginas?`
           : "Iniciar uma auditoria grande?"
       }
       confirmLabel={priced ? "Iniciar auditoria" : "Continuar"}
@@ -90,8 +90,7 @@ function LargeCrawlDialog({
     >
       {priced ? (
         <>
-          {RENDERING_COST_NOTE} Rendered audits can take longer than regular
-          audits.
+          {RENDERING_COST_NOTE} Auditorias com renderização podem demorar mais que as normais.
           <span className="mt-3 block font-semibold text-foreground">
             {renderingCostText(pages)}
           </span>

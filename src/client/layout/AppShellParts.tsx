@@ -94,7 +94,7 @@ function LegacyDockerBanner() {
           setDismissed(true);
         }}
       >
-        Dismiss
+        Dispensar
       </button>
     </AppBanner>
   );

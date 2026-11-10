@@ -77,7 +77,7 @@ export function LighthouseIssuesScreen({
   // Runs stored before issue details were kept have no issues to list.
   const emptyMessage =
     issuesQuery.data != null && !issuesQuery.data.hasIssueDetails
-      ? "This Lighthouse run was saved without issue details. Re-run the audit to see them."
+      ? "Este teste Lighthouse foi salvo sem os detalhes dos problemas. Rode a auditoria de novo para vê-los."
       : undefined;
 
   return (
@@ -104,7 +104,7 @@ export function LighthouseIssuesScreen({
             <div className="p-4">
               <QueryError
                 error={issuesQuery.error}
-                fallback="Failed to load Lighthouse issues."
+                fallback="Não foi possível carregar os problemas do Lighthouse."
                 // A missing result stays missing, so retry cannot help.
                 onRetry={
                   getErrorCode(issuesQuery.error) === "NOT_FOUND"
@@ -173,10 +173,10 @@ function useLighthouseIssuesActions({
     try {
       const exported = await exportMutation.mutateAsync(data);
       downloadFile(exported.content, exported.filename, "application/json");
-      toast.success("Download started");
+      toast.success("Download iniciado");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Failed to export payload";
+        error instanceof Error ? error.message : "Não foi possível exportar os dados";
       toast.error(message);
     }
   };
@@ -201,7 +201,7 @@ function useLighthouseIssuesActions({
       toast.success(toastMessage);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Failed to copy payload";
+        error instanceof Error ? error.message : "Não foi possível copiar os dados";
       toast.error(message);
     }
   };

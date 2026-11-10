@@ -22,8 +22,8 @@ export function CommandBlock({ command }: { command: string }) {
       </pre>
       <CopyButton
         value={command}
-        successMessage="Command copied"
-        label="Copy command"
+        successMessage="Comando copiado"
+        label="Copiar comando"
         variant="ghost"
         size="icon-xs"
       />
@@ -69,7 +69,7 @@ export function SecretHelpPage({
         <Card>
           <CardHeader>
             <CardTitle>
-              <h2>Steps</h2>
+              <h2>Passos</h2>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -81,7 +81,7 @@ export function SecretHelpPage({
 
         {everyApp ? (
           <p className="text-sm text-muted-foreground">
-            Not an owner or admin? Send this page to one.
+            Não é dono nem administrador? Envie esta página para um deles.
           </p>
         ) : (
           <Card>
@@ -97,7 +97,7 @@ export function SecretHelpPage({
                   <code>Workers &amp; Pages</code> and open your OpenSEO Worker.
                 </li>
                 <li>
-                  Open <code>Settings</code>.
+                  Abrir <code>Settings</code>.
                 </li>
                 <li>
                   Go to <code>Variables &amp; Secrets</code> and add a new
