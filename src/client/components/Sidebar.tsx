@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { cn } from "cn";
 import {
   ArrowLeftRight,
+  Building2,
   Check,
   ChevronLeft,
   CircleHelp,
@@ -37,6 +38,7 @@ import {
 } from "@/lib/auth-mode";
 import { everyAppAccountQueryOptions } from "@/client/features/every-app/everyAppAccountQueries";
 import { BILLING_ROUTE } from "@/shared/billing";
+import { getPlatformAccess } from "@/serverFunctions/platform";
 import {
   Sidebar as UiSidebar,
   SidebarContent,
@@ -273,6 +275,12 @@ function AccountFooter({ ready }: { ready: boolean }) {
   const organizations = everyApp
     ? []
     : (orgContextQuery.data?.organizations ?? []);
+  const platformAccessQuery = useQuery({
+    queryKey: ["platform-access"],
+    queryFn: () => getPlatformAccess(),
+    enabled: Boolean(email) && !everyApp,
+    staleTime: 5 * 60 * 1000,
+  });
   const activeOrganizationId = orgContextQuery.data?.organizationId;
 
   async function handleSwitchOrganization(organizationId: string) {
@@ -293,6 +301,13 @@ function AccountFooter({ ready }: { ready: boolean }) {
   return (
     <UiSidebarFooter className="gap-0 border-t border-sidebar-border pb-safe">
       <SidebarMenu>
+        {platformAccessQuery.data?.isPlatformAdmin ? (
+          <SidebarNavLink
+            icon={Building2}
+            label="Plataforma"
+            linkProps={{ to: "/plataforma" }}
+          />
+        ) : null}
         <SidebarNavLink
           icon={CircleHelp}
           label="Ajuda"

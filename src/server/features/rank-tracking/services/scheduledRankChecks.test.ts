@@ -49,6 +49,12 @@ const mocks = vi.hoisted(() => ({
   getFlag: vi.fn<(flag: string) => Promise<boolean>>(),
 }));
 
+vi.mock("@/server/features/plan-usage/PlanUsageService", () => ({
+  PlanUsageService: { fitsQuota: async () => true },
+}));
+vi.mock("@/server/features/platform/PlatformService", () => ({
+  PlatformService: { isOrganizationSuspended: async () => false },
+}));
 vi.mock("cloudflare:workers", () => ({
   env: { FLAGS: { getBooleanValue: mocks.getFlag } },
 }));

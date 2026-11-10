@@ -25,6 +25,7 @@ import { Route as AppAiRouteImport } from './routes/_app/ai'
 import { Route as AppBillingRouteImport } from './routes/_app/billing'
 import { Route as AppConsumoRouteImport } from './routes/_app/consumo'
 import { Route as AppNewProjectRouteImport } from './routes/_app/new-project'
+import { Route as AppPlataformaRouteImport } from './routes/_app/plataforma'
 import { Route as AppProjectsRouteImport } from './routes/_app/projects'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppSupportRouteImport } from './routes/_app/support'
@@ -46,9 +47,11 @@ import { Route as AppHelpOpenrouterApiKeyRouteImport } from './routes/_app/help/
 import { Route as AppPProjectIdRouteRouteImport } from './routes/_app/p/$projectId/route'
 import { Route as AppSettingsIndexRouteImport } from './routes/_app/settings/index'
 import { Route as AppSettingsOrganizationRouteImport } from './routes/_app/settings/organization'
+import { Route as AuthConviteParceiroTokenRouteImport } from './routes/_auth.convite-parceiro.$token'
 import { Route as AuthenticatedOnboardingIndexRouteImport } from './routes/_authenticated.onboarding.index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiAutumnSplatRouteImport } from './routes/api/autumn/$'
+import { Route as ApiPartnerInvitationTokenRouteImport } from './routes/api/partner-invitation.$token'
 import { Route as ReportMapGrantCopyrightRouteImport } from './routes/report-map/$grant/copyright'
 import { Route as STokenIndexRouteImport } from './routes/s/$token/index'
 import { Route as STokenOgDotpngRouteImport } from './routes/s/$token/og[.]png'
@@ -168,6 +171,11 @@ const AppNewProjectRoute = AppNewProjectRouteImport.update({
   path: '/new-project',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppPlataformaRoute = AppPlataformaRouteImport.update({
+  id: '/plataforma',
+  path: '/plataforma',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppProjectsRoute = AppProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -274,6 +282,12 @@ const AppSettingsOrganizationRoute = AppSettingsOrganizationRouteImport.update({
   path: '/organization',
   getParentRoute: () => AppSettingsRoute,
 } as any)
+const AuthConviteParceiroTokenRoute =
+  AuthConviteParceiroTokenRouteImport.update({
+    id: '/convite-parceiro/$token',
+    path: '/convite-parceiro/$token',
+    getParentRoute: () => AuthRoute,
+  } as any)
 const AuthenticatedOnboardingIndexRoute =
   AuthenticatedOnboardingIndexRouteImport.update({
     id: '/onboarding/',
@@ -290,6 +304,12 @@ const ApiAutumnSplatRoute = ApiAutumnSplatRouteImport.update({
   path: '/api/autumn/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPartnerInvitationTokenRoute =
+  ApiPartnerInvitationTokenRouteImport.update({
+    id: '/api/partner-invitation/$token',
+    path: '/api/partner-invitation/$token',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ReportMapGrantCopyrightRoute = ReportMapGrantCopyrightRouteImport.update({
   id: '/report-map/$grant/copyright',
   path: '/report-map/$grant/copyright',
@@ -521,6 +541,7 @@ export interface FileRoutesByFullPath {
   '/billing': typeof AppBillingRoute
   '/consumo': typeof AppConsumoRoute
   '/new-project': typeof AppNewProjectRoute
+  '/plataforma': typeof AppPlataformaRoute
   '/projects': typeof AppProjectsRoute
   '/settings': typeof AppSettingsRouteWithChildren
   '/support': typeof AppSupportRoute
@@ -541,8 +562,10 @@ export interface FileRoutesByFullPath {
   '/help/dataforseo-api-key': typeof AppHelpDataforseoApiKeyRoute
   '/help/openrouter-api-key': typeof AppHelpOpenrouterApiKeyRoute
   '/settings/organization': typeof AppSettingsOrganizationRoute
+  '/convite-parceiro/$token': typeof AuthConviteParceiroTokenRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/autumn/$': typeof ApiAutumnSplatRoute
+  '/api/partner-invitation/$token': typeof ApiPartnerInvitationTokenRoute
   '/report-map/$grant/copyright': typeof ReportMapGrantCopyrightRoute
   '/s/$token/og.png': typeof STokenOgDotpngRoute
   '/s/$token/raw': typeof STokenRawRoute
@@ -598,6 +621,7 @@ export interface FileRoutesByTo {
   '/billing': typeof AppBillingRoute
   '/consumo': typeof AppConsumoRoute
   '/new-project': typeof AppNewProjectRoute
+  '/plataforma': typeof AppPlataformaRoute
   '/projects': typeof AppProjectsRoute
   '/support': typeof AppSupportRoute
   '/sign-in': typeof AuthSignInRoute
@@ -616,8 +640,10 @@ export interface FileRoutesByTo {
   '/help/dataforseo-api-key': typeof AppHelpDataforseoApiKeyRoute
   '/help/openrouter-api-key': typeof AppHelpOpenrouterApiKeyRoute
   '/settings/organization': typeof AppSettingsOrganizationRoute
+  '/convite-parceiro/$token': typeof AuthConviteParceiroTokenRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/autumn/$': typeof ApiAutumnSplatRoute
+  '/api/partner-invitation/$token': typeof ApiPartnerInvitationTokenRoute
   '/report-map/$grant/copyright': typeof ReportMapGrantCopyrightRoute
   '/s/$token/og.png': typeof STokenOgDotpngRoute
   '/s/$token/raw': typeof STokenRawRoute
@@ -673,6 +699,7 @@ export interface FileRoutesById {
   '/_app/billing': typeof AppBillingRoute
   '/_app/consumo': typeof AppConsumoRoute
   '/_app/new-project': typeof AppNewProjectRoute
+  '/_app/plataforma': typeof AppPlataformaRoute
   '/_app/projects': typeof AppProjectsRoute
   '/_app/settings': typeof AppSettingsRouteWithChildren
   '/_app/support': typeof AppSupportRoute
@@ -694,8 +721,10 @@ export interface FileRoutesById {
   '/_app/help/dataforseo-api-key': typeof AppHelpDataforseoApiKeyRoute
   '/_app/help/openrouter-api-key': typeof AppHelpOpenrouterApiKeyRoute
   '/_app/settings/organization': typeof AppSettingsOrganizationRoute
+  '/_auth/convite-parceiro/$token': typeof AuthConviteParceiroTokenRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/autumn/$': typeof ApiAutumnSplatRoute
+  '/api/partner-invitation/$token': typeof ApiPartnerInvitationTokenRoute
   '/report-map/$grant/copyright': typeof ReportMapGrantCopyrightRoute
   '/s/$token/og.png': typeof STokenOgDotpngRoute
   '/s/$token/raw': typeof STokenRawRoute
@@ -754,6 +783,7 @@ export interface FileRouteTypes {
     | '/billing'
     | '/consumo'
     | '/new-project'
+    | '/plataforma'
     | '/projects'
     | '/settings'
     | '/support'
@@ -774,8 +804,10 @@ export interface FileRouteTypes {
     | '/help/dataforseo-api-key'
     | '/help/openrouter-api-key'
     | '/settings/organization'
+    | '/convite-parceiro/$token'
     | '/api/auth/$'
     | '/api/autumn/$'
+    | '/api/partner-invitation/$token'
     | '/report-map/$grant/copyright'
     | '/s/$token/og.png'
     | '/s/$token/raw'
@@ -831,6 +863,7 @@ export interface FileRouteTypes {
     | '/billing'
     | '/consumo'
     | '/new-project'
+    | '/plataforma'
     | '/projects'
     | '/support'
     | '/sign-in'
@@ -849,8 +882,10 @@ export interface FileRouteTypes {
     | '/help/dataforseo-api-key'
     | '/help/openrouter-api-key'
     | '/settings/organization'
+    | '/convite-parceiro/$token'
     | '/api/auth/$'
     | '/api/autumn/$'
+    | '/api/partner-invitation/$token'
     | '/report-map/$grant/copyright'
     | '/s/$token/og.png'
     | '/s/$token/raw'
@@ -905,6 +940,7 @@ export interface FileRouteTypes {
     | '/_app/billing'
     | '/_app/consumo'
     | '/_app/new-project'
+    | '/_app/plataforma'
     | '/_app/projects'
     | '/_app/settings'
     | '/_app/support'
@@ -926,8 +962,10 @@ export interface FileRouteTypes {
     | '/_app/help/dataforseo-api-key'
     | '/_app/help/openrouter-api-key'
     | '/_app/settings/organization'
+    | '/_auth/convite-parceiro/$token'
     | '/api/auth/$'
     | '/api/autumn/$'
+    | '/api/partner-invitation/$token'
     | '/report-map/$grant/copyright'
     | '/s/$token/og.png'
     | '/s/$token/raw'
@@ -990,6 +1028,7 @@ export interface RootRouteChildren {
   RReportIdRoute: typeof RReportIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiAutumnSplatRoute: typeof ApiAutumnSplatRoute
+  ApiPartnerInvitationTokenRoute: typeof ApiPartnerInvitationTokenRoute
   ReportMapGrantCopyrightRoute: typeof ReportMapGrantCopyrightRoute
   STokenOgDotpngRoute: typeof STokenOgDotpngRoute
   STokenRawRoute: typeof STokenRawRoute
@@ -1112,6 +1151,13 @@ declare module '@tanstack/react-router' {
       path: '/new-project'
       fullPath: '/new-project'
       preLoaderRoute: typeof AppNewProjectRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/plataforma': {
+      id: '/_app/plataforma'
+      path: '/plataforma'
+      fullPath: '/plataforma'
+      preLoaderRoute: typeof AppPlataformaRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/_app/projects': {
@@ -1261,6 +1307,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsOrganizationRouteImport
       parentRoute: typeof AppSettingsRoute
     }
+    '/_auth/convite-parceiro/$token': {
+      id: '/_auth/convite-parceiro/$token'
+      path: '/convite-parceiro/$token'
+      fullPath: '/convite-parceiro/$token'
+      preLoaderRoute: typeof AuthConviteParceiroTokenRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_authenticated/onboarding/': {
       id: '/_authenticated/onboarding/'
       path: '/onboarding'
@@ -1280,6 +1333,13 @@ declare module '@tanstack/react-router' {
       path: '/api/autumn/$'
       fullPath: '/api/autumn/$'
       preLoaderRoute: typeof ApiAutumnSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/partner-invitation/$token': {
+      id: '/api/partner-invitation/$token'
+      path: '/api/partner-invitation/$token'
+      fullPath: '/api/partner-invitation/$token'
+      preLoaderRoute: typeof ApiPartnerInvitationTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/report-map/$grant/copyright': {
@@ -1698,6 +1758,7 @@ interface AppRouteRouteChildren {
   AppBillingRoute: typeof AppBillingRoute
   AppConsumoRoute: typeof AppConsumoRoute
   AppNewProjectRoute: typeof AppNewProjectRoute
+  AppPlataformaRoute: typeof AppPlataformaRoute
   AppProjectsRoute: typeof AppProjectsRoute
   AppSettingsRoute: typeof AppSettingsRouteWithChildren
   AppSupportRoute: typeof AppSupportRoute
@@ -1713,6 +1774,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppBillingRoute: AppBillingRoute,
   AppConsumoRoute: AppConsumoRoute,
   AppNewProjectRoute: AppNewProjectRoute,
+  AppPlataformaRoute: AppPlataformaRoute,
   AppProjectsRoute: AppProjectsRoute,
   AppSettingsRoute: AppSettingsRouteWithChildren,
   AppSupportRoute: AppSupportRoute,
@@ -1730,11 +1792,13 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 interface AuthRouteChildren {
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
+  AuthConviteParceiroTokenRoute: typeof AuthConviteParceiroTokenRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
+  AuthConviteParceiroTokenRoute: AuthConviteParceiroTokenRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
@@ -1791,6 +1855,7 @@ const rootRouteChildren: RootRouteChildren = {
   RReportIdRoute: RReportIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiAutumnSplatRoute: ApiAutumnSplatRoute,
+  ApiPartnerInvitationTokenRoute: ApiPartnerInvitationTokenRoute,
   ReportMapGrantCopyrightRoute: ReportMapGrantCopyrightRoute,
   STokenOgDotpngRoute: STokenOgDotpngRoute,
   STokenRawRoute: STokenRawRoute,

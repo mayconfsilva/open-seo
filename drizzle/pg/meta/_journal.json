@@ -365,6 +365,13 @@
       "when": 1794250797079,
       "tag": "0051_mixed_lord_tyger",
       "breakpoints": true
+    },
+    {
+      "idx": 52,
+      "version": "7",
+      "when": 1794335801075,
+      "tag": "0052_outgoing_meteorite",
+      "breakpoints": true
     }
   ]
 }

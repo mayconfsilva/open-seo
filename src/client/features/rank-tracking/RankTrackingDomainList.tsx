@@ -349,6 +349,12 @@ function DomainRow({
             Coleta agendada pulada: requer plano pago
           </p>
         )}
+        {summary.lastSkipReason === "quota_exceeded" && (
+          <p className="flex items-center gap-1 text-xs text-warning">
+            <AlertTriangle className="size-3" />
+            Coleta agendada pulada: a franquia do mês acabou
+          </p>
+        )}
       </div>
       <div className="hidden sm:flex items-center gap-6 text-sm pointer-events-none">
         {summary.keywordCount > 0 && (

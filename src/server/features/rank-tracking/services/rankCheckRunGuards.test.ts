@@ -9,6 +9,9 @@ const mocks = vi.hoisted(() => ({
   getWorkflow: vi.fn(),
 }));
 
+vi.mock("@/server/features/plan-usage/PlanUsageService", () => ({
+  PlanUsageService: { assertFitsQuota: async () => undefined },
+}));
 vi.mock("cloudflare:workers", () => ({
   env: {
     RANK_CHECK_WORKFLOW: { get: mocks.getWorkflow },

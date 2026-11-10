@@ -14,6 +14,10 @@ import { prefetchBillingAccount } from "@/client/features/billing/billingAccount
 import { FreePlanBanner } from "@/client/features/billing/FreePlanBanner";
 import { TermsUpdateBanner } from "@/client/features/auth/TermsUpdateBanner";
 import { PageLoading } from "@/client/components/Spinner";
+import { StatusScreen } from "@/client/components/StatusScreen";
+import { Button } from "@/client/components/ui/button";
+import { getErrorCode } from "@/client/lib/error-messages";
+import { authClient } from "@/lib/auth-client";
 import { getLastProjectId } from "@/client/lib/active-project";
 import { AuthenticatedAppLayout } from "@/client/layout/AppShell";
 import { useOnboardingRedirect } from "@/client/features/onboarding/useOnboardingRedirect";
@@ -34,7 +38,7 @@ function AppRouteLayout() {
   // check. The check only redirects (signed out, unverified email): every
   // data call enforces auth on the server.
   const ready = authGate.canRenderAuthenticatedContent;
-  useClientPortalRedirect(ready);
+  const suspended = useClientPortalRedirect(ready);
 
   // Billing, fix-payment, and the upgrade page all read this one cached
   // account, so loading it once here lets them open without waiting. The free
@@ -50,6 +54,8 @@ function AppRouteLayout() {
   if (!isOnboarded && !getLastProjectId()) {
     return <PageLoading />;
   }
+
+  if (suspended) return <SuspendedOrganizationScreen />;
 
   return (
     <AuthenticatedAppLayout
@@ -83,4 +89,28 @@ function useClientPortalRedirect(ready: boolean) {
       void navigate({ to: "/portal", replace: true });
     }
   }, [role, navigate]);
+  return getErrorCode(orgQuery.error) === "ORGANIZATION_SUSPENDED";
+}
+
+// dataSEO: the platform owner suspended this organization.
+function SuspendedOrganizationScreen() {
+  return (
+    <StatusScreen
+      logo
+      title="Acesso suspenso"
+      description="O acesso desta organização está suspenso. Fale com o administrador da plataforma para reativar."
+      footer={
+        <Button
+          variant="outline"
+          onClick={() =>
+            void authClient.signOut().then(() => {
+              window.location.href = "/sign-in";
+            })
+          }
+        >
+          Sair
+        </Button>
+      }
+    />
+  );
 }

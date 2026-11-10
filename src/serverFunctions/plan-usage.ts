@@ -1,5 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
+import { env } from "cloudflare:workers";
+import { getAuthMode } from "@/lib/auth-mode";
 import { hasOrgPermission } from "@/lib/org-permissions";
+import { PlatformService } from "@/server/features/platform/PlatformService";
 import { fetchUserData } from "@/server/lib/dataforseo/appendix";
 import { AppError } from "@/server/lib/errors";
 import { PlanUsageService } from "@/server/features/plan-usage/PlanUsageService";
@@ -19,9 +22,13 @@ export const getPlanUsage = createServerFn({ method: "POST" })
 export const getDataforseoBalance = createServerFn({ method: "POST" })
   .middleware(requireAuthenticatedContext)
   .handler(async ({ context }) => {
-    if (!hasOrgPermission(context.role, { integration: ["manage"] })) {
-      throw new AppError("FORBIDDEN");
-    }
+    // With partners (accounts mode) the key is the platform owner's, so only
+    // they see its balance.
+    const allowed =
+      getAuthMode(env.AUTH_MODE) === "password"
+        ? await PlatformService.isPlatformAdmin(context.userId)
+        : hasOrgPermission(context.role, { integration: ["manage"] });
+    if (!allowed) throw new AppError("FORBIDDEN");
     const data = await fetchUserData();
     return {
       balanceUsd: data?.money?.balance ?? null,

@@ -5,7 +5,9 @@ import { QueryError, QueryState } from "@/client/components/QueryState";
 import { Alert, AlertDescription } from "@/client/components/ui/alert";
 import { Badge } from "@/client/components/ui/badge";
 import { organizationContextQueryOptions } from "@/client/features/team/organizationQueries";
+import { getClientAuthMode } from "@/lib/auth-mode";
 import { hasOrgPermission } from "@/lib/org-permissions";
+import { getPlatformAccess } from "@/serverFunctions/platform";
 import {
   PlanMeter,
   dataforseoBalanceQueryOptions,
@@ -122,9 +124,18 @@ function PlanUsageContent({ usage }: { usage: PlanUsage }) {
 /** The money left on the DataForSEO account, for owners and admins. */
 function DataforseoBalance() {
   const org = useQuery(organizationContextQueryOptions());
+  const platform = useQuery({
+    queryKey: ["platform-access"],
+    queryFn: () => getPlatformAccess(),
+    enabled: getClientAuthMode() === "password",
+    staleTime: 5 * 60 * 1000,
+  });
+  // With partners, the DataForSEO key is the platform owner's alone.
   const canSee =
-    org.data !== undefined &&
-    hasOrgPermission(org.data.role, { integration: ["manage"] });
+    getClientAuthMode() === "password"
+      ? platform.data?.isPlatformAdmin === true
+      : org.data !== undefined &&
+        hasOrgPermission(org.data.role, { integration: ["manage"] });
   const balance = useQuery({
     ...dataforseoBalanceQueryOptions(),
     enabled: canSee,

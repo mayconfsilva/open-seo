@@ -1,6 +1,8 @@
 import { env } from "cloudflare:workers";
 import type { BillingCustomerContext } from "@/server/billing/subscription";
 import { RankTrackingRepository } from "@/server/features/rank-tracking/repositories/RankTrackingRepository";
+import { PlanUsageService } from "@/server/features/plan-usage/PlanUsageService";
+import { devicesCount } from "@/shared/rank-tracking";
 import type {
   RankCheckTriggerResult,
   RankTrackingConfig,
@@ -122,6 +124,14 @@ export async function beginRankCheckRun(input: {
   trigger: "manual" | "scheduled";
   workflowStartErrorMessage: string;
 }): Promise<RankCheckTriggerResult> {
+  // dataSEO: a manual check must fit what is left of the month's quota; the
+  // scheduler checks before it claims a slot.
+  if (input.trigger === "manual") {
+    await PlanUsageService.assertFitsQuota(
+      input.billingCustomer.organizationId,
+      input.keywordsTotal * devicesCount(input.config.devices),
+    );
+  }
   // At most two attempts: once normally, once after clearing a stale blocker.
   for (let attempt = 0; attempt < 2; attempt++) {
     const runId = crypto.randomUUID();

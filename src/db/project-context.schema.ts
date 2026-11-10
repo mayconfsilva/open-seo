@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { sql } from "drizzle-orm";
 import { projects } from "./app.schema";
-import { invitation, user } from "./better-auth-schema";
+import { invitation, organization, user } from "./better-auth-schema";
 
 // ============================================================================
 // Project memory: the shared AI context every surface (SAM, MCP, settings UI)
@@ -176,4 +176,61 @@ export const invitationProjects = sqliteTable(
       .references(() => projects.id, { onDelete: "cascade" }),
   },
   (table) => [primaryKey({ columns: [table.invitationId, table.projectId] })],
+);
+
+// dataSEO: plans the platform owner offers, each with a monthly quota of
+// queries (one keyword on one device in one rank check).
+export const platformPlans = sqliteTable("platform_plans", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  monthlyQueries: integer("monthly_queries").notNull(),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`(current_timestamp)`),
+});
+
+// dataSEO: the platform owner's settings for one organization. No row means
+// the default plan and not suspended.
+export const organizationPlatformSettings = sqliteTable(
+  "organization_platform_settings",
+  {
+    organizationId: text("organization_id")
+      .primaryKey()
+      .references(() => organization.id, { onDelete: "cascade" }),
+    planId: text("plan_id").references(() => platformPlans.id, {
+      onDelete: "set null",
+    }),
+    suspendedAt: text("suspended_at"),
+    updatedAt: text("updated_at")
+      .notNull()
+      .default(sql`(current_timestamp)`),
+  },
+);
+
+// dataSEO: a single-use link that creates a partner agency's account and
+// organization. Only the token's hash is stored.
+export const partnerInvitations = sqliteTable(
+  "partner_invitations",
+  {
+    id: text("id").primaryKey(),
+    tokenHash: text("token_hash").notNull(),
+    agencyName: text("agency_name").notNull(),
+    email: text("email").notNull(),
+    planId: text("plan_id").references(() => platformPlans.id, {
+      onDelete: "set null",
+    }),
+    createdByUserId: text("created_by_user_id").references(() => user.id, {
+      onDelete: "set null",
+    }),
+    createdAt: text("created_at")
+      .notNull()
+      .default(sql`(current_timestamp)`),
+    expiresAt: text("expires_at").notNull(),
+    acceptedAt: text("accepted_at"),
+    revokedAt: text("revoked_at"),
+    organizationId: text("organization_id").references(() => organization.id, {
+      onDelete: "set null",
+    }),
+  },
+  (table) => [uniqueIndex("partner_invitations_token_idx").on(table.tokenHash)],
 );

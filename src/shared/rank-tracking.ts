@@ -130,7 +130,10 @@ type ScheduledRankTrackingInterval = Exclude<
 export type RankTrackingSkipReason =
   | "plan_required"
   | "no_keywords"
-  | "insufficient_credits";
+  | "insufficient_credits"
+  // dataSEO: the organization's monthly quota is used up, or it is suspended.
+  | "quota_exceeded"
+  | "suspended";
 
 export function estimateScheduledRankCheckCredits(
   keywords: readonly string[],
