@@ -264,7 +264,7 @@ export function DashboardPage({
 }
 
 /** The dashboard before its data arrives; the landing redirect shows it too. */
-export function DashboardSkeleton() {
+function DashboardSkeleton() {
   return (
     <div className="px-4 py-4 md:px-6 md:py-6" aria-busy>
       <div className="mx-auto flex max-w-7xl flex-col gap-5">

@@ -40,12 +40,21 @@ function renderChecklist(activation = fresh) {
 }
 
 describe("dashboard onboarding visibility", () => {
-  it("keeps skipped steps available to restore", () => {
+  it("keeps skipped steps restorable while other steps remain", () => {
     const markup = renderChecklist({
       ...fresh,
-      dismissedSteps: setupSteps.map((step) => step.id),
+      dismissedSteps: ["competitor"],
     });
-    expect(markup).toContain("saved for later");
+    expect(markup).toContain("1 para depois");
+  });
+
+  it("hides once no step is left to do, even with skipped steps", () => {
+    expect(
+      renderChecklist({
+        ...fresh,
+        dismissedSteps: setupSteps.map((step) => step.id),
+      }),
+    ).toBe("");
   });
 
   it("renders nothing once every step is complete", () => {

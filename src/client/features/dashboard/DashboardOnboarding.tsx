@@ -46,6 +46,23 @@ export function DashboardOnboarding({
       captureClientEvent("dashboard:setup_step_defer", { step, dismissed });
     },
   });
+  // Hiding the card saves every open step for later; the card stays away
+  // until one is restored, which only happens from this card, so it is gone
+  // for good on this project.
+  const hideAll = useMutation({
+    mutationFn: async (stepIds: DashboardSetupStep[]) => {
+      for (const step of stepIds) {
+        await setDashboardStepDismissed({
+          data: { projectId, step, dismissed: true },
+        });
+      }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["dashboardActivation", projectId],
+      });
+    },
+  });
   const steps = setupSteps.filter(
     (step) => step.id !== "team" || usesBetterAuthClient(),
   );
@@ -59,19 +76,31 @@ export function DashboardOnboarding({
     (step) => getStepStatus(activation, step.id) === "skipped",
   );
 
-  if (remaining.length === 0 && deferred.length === 0) return null;
+  // Once nothing is left to do, the card goes away even if some steps were
+  // saved for later: the project is set up.
+  if (remaining.length === 0) return null;
 
   return (
     <section
       aria-label="Primeiros passos"
       className="overflow-hidden rounded-xl border border-border bg-card"
     >
-      <header className="border-b border-border px-5 py-5 sm:px-6">
-        <h2 className="text-lg font-semibold">Comece por aqui</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Pesquise concorrentes e palavras, audite o site e conecte suas
-          ferramentas.
-        </p>
+      <header className="flex items-start justify-between gap-4 border-b border-border px-5 py-5 sm:px-6">
+        <div>
+          <h2 className="text-lg font-semibold">Comece por aqui</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Pesquise concorrentes e palavras, audite o site e conecte suas
+            ferramentas.
+          </p>
+        </div>
+        <Button
+          variant="ghost"
+          className="shrink-0 text-muted-foreground"
+          disabled={hideAll.isPending || dismiss.isPending}
+          onClick={() => hideAll.mutate(remaining.map((step) => step.id))}
+        >
+          Ocultar
+        </Button>
       </header>
       <Accordion
         value={selected ? [selected] : []}
@@ -125,7 +154,7 @@ export function DashboardOnboarding({
         <Collapsible className="border-t border-border">
           <CollapsibleTrigger className="group flex w-full items-center gap-2 px-5 py-4 text-left text-sm text-muted-foreground outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset sm:px-6">
             <ChevronRight className="size-4 transition-transform group-data-panel-open:rotate-90" />
-            {deferred.length} saved for later
+            {deferred.length} para depois
           </CollapsibleTrigger>
           <CollapsibleContent>
             <ul className="space-y-1 px-5 pb-4 sm:px-6">
@@ -155,7 +184,8 @@ export function DashboardOnboarding({
         <Collapsible className="border-t border-border">
           <CollapsibleTrigger className="group flex w-full items-center gap-2 px-5 py-4 text-left text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset sm:px-6">
             <Check className="size-4 text-success" />
-            {completed.length} completed
+            {completed.length}{" "}
+            {completed.length === 1 ? "concluído" : "concluídos"}
             <ChevronRight className="ml-auto size-4 text-muted-foreground transition-transform group-data-panel-open:rotate-90" />
           </CollapsibleTrigger>
           <CollapsibleContent>
