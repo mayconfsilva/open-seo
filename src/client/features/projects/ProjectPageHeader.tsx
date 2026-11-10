@@ -19,7 +19,7 @@ export function ProjectPageHeader({
       title={title}
       description={project?.name ?? " "}
       backLink={
-        showBackLink ? <BackLink to="/projects">Projects</BackLink> : undefined
+        showBackLink ? <BackLink to="/projects">Projetos</BackLink> : undefined
       }
     />
   );

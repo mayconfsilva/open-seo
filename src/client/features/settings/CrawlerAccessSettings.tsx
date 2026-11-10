@@ -52,7 +52,7 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
       await queryClient.invalidateQueries({
         queryKey: crawlerCredentialsQueryKey,
       });
-      toast.success("Crawler access removed");
+      toast.success("Acesso do rastreador removido");
     },
   });
 
@@ -70,17 +70,14 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
             size="sm"
             onClick={() => setIsAdding((value) => !value)}
           >
-            {isAdding ? "Cancel" : "Connect"}
+            {isAdding ? "Cancelar" : "Conectar"}
           </Button>
         </CardAction>
       </CardHeader>
       {isAdding ? (
         <CardContent className="space-y-4">
           <p className="text-muted-foreground">
-            Let the audit crawler through Shopify. Paste the signature you
-            created in Shopify admin under Online Store &rarr; Preferences
-            &rarr; Crawler access. Every audit of that domain in your
-            organization sends it with each request.
+            Libere o rastreador da auditoria na Shopify. Cole a assinatura criada no admin da Shopify em Loja virtual &rarr; Preferências &rarr; Acesso de rastreadores. Toda auditoria desse domínio na sua organização envia a assinatura em cada requisição.
           </p>
           <CrawlerAccessForm
             projectId={projectId}
@@ -93,17 +90,17 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
         <CardContent>
           {credentialsQuery.isError ? (
             <p className="text-sm text-destructive">
-              We couldn't load your crawler access.
+              Não foi possível carregar os acessos do rastreador.
             </p>
           ) : credentials.length > 0 ? (
             <TableCard>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Domain</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Added</TableHead>
-                    <TableHead>Expires</TableHead>
+                    <TableHead>Domínio</TableHead>
+                    <TableHead>Tipo</TableHead>
+                    <TableHead>Adicionado</TableHead>
+                    <TableHead>Expira</TableHead>
                     <TableHead className="w-10" />
                   </TableRow>
                 </TableHeader>
@@ -114,7 +111,7 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
                         {credential.host}
                       </TableCell>
                       <TableCell className="text-muted-foreground">
-                        Shopify signature
+                        Assinatura da Shopify
                       </TableCell>
                       <TableCell className="text-muted-foreground">
                         {formatDate(credential.createdAt)}
@@ -122,16 +119,16 @@ export function CrawlerAccessSettings({ projectId }: { projectId: string }) {
                       <TableCell className="text-muted-foreground">
                         {credential.expiresAt
                           ? formatDate(credential.expiresAt)
-                          : "Unknown"}
+                          : "Desconhecido"}
                         {isCrawlerAccessExpired(credential.expiresAt) && (
-                          <span className="ml-2 text-destructive">Expired</span>
+                          <span className="ml-2 text-destructive">Expirado</span>
                         )}
                       </TableCell>
                       <TableCell>
                         <Button
                           variant="ghost"
                           size="icon-xs"
-                          aria-label={`Remove crawler access for ${credential.host}`}
+                          aria-label={`Remover acesso do rastreador para ${credential.host}`}
                           disabled={deleteMutation.isPending}
                           onClick={() => deleteMutation.mutate(credential.id)}
                         >

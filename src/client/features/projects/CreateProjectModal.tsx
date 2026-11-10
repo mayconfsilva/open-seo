@@ -32,7 +32,7 @@ import { createProject } from "@/serverFunctions/projects";
 import { isEveryAppClientAuthMode } from "@/lib/auth-mode";
 
 const createProjectSchema = z.object({
-  name: z.string().trim().min(1, "Project name is required"),
+  name: z.string().trim().min(1, "Informe o nome do projeto"),
   domain: z.string(),
   market: z.object({ locationCode: z.number(), languageCode: z.string() }),
 });
@@ -41,7 +41,7 @@ const createProjectSchema = z.object({
 const SERVER_FIELD_ERRORS: Record<string, Record<string, string>> = {
   VALIDATION_ERROR: { domain: "Enter a valid domain, like acme.com." },
   CONFLICT: {
-    name: 'A project named "Default" with no domain already exists. Pick a different name or add a domain.',
+    name: "Já existe um projeto chamado \"Default\" sem domínio. Escolha outro nome ou informe um domínio.",
   },
 };
 
@@ -74,7 +74,7 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
         queryKey: ["dashboardActivation"],
       });
       onClose();
-      toast.success("Project created");
+      toast.success("Projeto criado");
       toastInitialAudit(created.initialAudit);
       // Continue setup through the new project’s dashboard.
       void navigate({
@@ -122,14 +122,14 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
         <form.AppForm>
           <form.Form className="flex flex-col gap-4">
             <DialogHeader>
-              <DialogTitle>New project</DialogTitle>
+              <DialogTitle>Novo projeto</DialogTitle>
             </DialogHeader>
 
             <form.AppField name="name">
               {(field) => (
                 <field.TextField
-                  label="Name"
-                  placeholder="Acme Inc."
+                  label="Nome"
+                  placeholder="Empresa Exemplo"
                   maxLength={120}
                   required
                 />
@@ -138,21 +138,21 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
 
             <p className="text-sm text-muted-foreground">
               {isEveryAppClientAuthMode()
-                ? "Adding your website starts a 50-page site audit."
-                : "Adding your website starts a 50-page scan with JavaScript rendering. Rendering uses your credits."}
+                ? "Cadastrar o site inicia uma auditoria de 50 páginas."
+                : "Cadastrar o site inicia uma varredura de 50 páginas com renderização de JavaScript. A renderização usa seus créditos."}
             </p>
             <form.AppField name="domain">
               {(field) => (
                 <field.TextField
                   label={
                     <>
-                      Domain{" "}
+                      Domínio{" "}
                       <span className="font-normal text-muted-foreground">
                         (optional)
                       </span>
                     </>
                   }
-                  description="You can connect Search Console and set up rank tracking after creating the project."
+                  description="Você pode conectar o Search Console e configurar o monitoramento de posições depois de criar o projeto."
                   placeholder="example.com"
                   maxLength={255}
                 />
@@ -169,9 +169,7 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
                 )}
               </form.Field>
               <FieldDescription>
-                Keyword, SERP, and domain data uses this country and language
-                unless a call asks for a different one. Change it later in
-                project settings.
+                Os dados de palavras, SERP e domínio usam este país e idioma, a menos que uma consulta peça outro. Dá para mudar depois nas configurações do projeto.
               </FieldDescription>
             </div>
 
@@ -182,9 +180,9 @@ export function CreateProjectModal({ onClose }: { onClose: () => void }) {
                 onClick={onClose}
                 disabled={createMutation.isPending}
               >
-                Cancel
+                Cancelar
               </Button>
-              <form.SubmitButton>Create project</form.SubmitButton>
+              <form.SubmitButton>Criar projeto</form.SubmitButton>
             </DialogFooter>
           </form.Form>
         </form.AppForm>

@@ -77,11 +77,11 @@ export function WebsiteSetupReview({
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">
               {research.preserveCompetitors
-                ? "Complete project setup"
-                : "Edit your brand and competitors"}
+                ? "Concluir configuração do projeto"
+                : "Edite sua marca e concorrentes"}
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              You can edit your{" "}
+              Você pode editar{" "}
               <Link
                 to="/p/$projectId/context"
                 params={{ projectId }}
@@ -94,7 +94,7 @@ export function WebsiteSetupReview({
           </div>
           <fieldset disabled={saving} className="min-w-0 space-y-5">
             <Field>
-              <FieldLabel htmlFor="setup-brand-name">Brand name</FieldLabel>
+              <FieldLabel htmlFor="setup-brand-name">Nome da marca</FieldLabel>
               <Input
                 id="setup-brand-name"
                 value={brandName}
@@ -103,22 +103,22 @@ export function WebsiteSetupReview({
                 required
               />
               <FieldDescription>
-                We look for this name in AI answers.
+                Procuramos este nome nas respostas de IA.
               </FieldDescription>
             </Field>
             {research.preserveCompetitors ? (
               <p className="text-sm text-muted-foreground">
-                We’ll use the competitors already saved in your project context.
+                Vamos usar os concorrentes já salvos no contexto do projeto.
               </p>
             ) : (
               <div className="overflow-hidden rounded-lg border border-border">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Website</TableHead>
+                      <TableHead>Nome</TableHead>
+                      <TableHead>Site</TableHead>
                       <TableHead>
-                        <span className="sr-only">Actions</span>
+                        <span className="sr-only">Ações</span>
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -166,7 +166,7 @@ export function WebsiteSetupReview({
                             setEditing(id);
                           }}
                         >
-                          <Plus className="size-4" /> Add competitor
+                          <Plus className="size-4" /> Adicionar concorrente
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -177,15 +177,14 @@ export function WebsiteSetupReview({
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>
-                  We couldn’t save your project. Check the competitor names and
-                  websites, then try again.
+                  Não foi possível salvar o projeto. Confira os nomes e sites dos concorrentes e tente de novo.
                 </AlertDescription>
               </Alert>
             )}
             <div className="flex items-center justify-between gap-3">
               {onBack ? (
                 <Button type="button" variant="outline" onClick={onBack}>
-                  Back
+                  Voltar
                 </Button>
               ) : (
                 <span />
@@ -200,7 +199,7 @@ export function WebsiteSetupReview({
                 }
               >
                 {saving && <LoaderCircle className="size-4 animate-spin" />}{" "}
-                Continue
+                Continuar
               </Button>
             </div>
           </fieldset>
